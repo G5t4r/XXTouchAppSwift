@@ -81,7 +81,7 @@ extension StartUpSettingViewController {
       guard let `self` = self else { return }
       if let data = data {
         let json = JSON(data: data)
-        switch json["code"].intValue {
+        switch json["code"].intValue { 
         case 0:
           self.startUpCell.switches.on = json["data"]["startup_run"].boolValue
           self.currentSelectedScriptName = json["data"]["startup_script"].stringValue
