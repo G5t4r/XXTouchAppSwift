@@ -13,7 +13,6 @@ class ScriptViewController: UIViewController {
   
   private let tableView = UITableView(frame: CGRectZero, style: .Plain)
   private var scriptList = [ScriptModel]()
-  private var scriptNames = [String]()
   private var oldNameTitle = ""
   private let renameView = RenameView()
   private let blurView = JCRBlurView()
@@ -87,6 +86,7 @@ class ScriptViewController: UIViewController {
     blurView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(blurTap)))
     renameView.luaButton.addTarget(self, action: #selector(luaClick(_:)), forControlEvents: .TouchUpInside)
     renameView.txtButton.addTarget(self, action: #selector(txtClick(_:)), forControlEvents: .TouchUpInside)
+    renameView.newNameTextField.addTarget(self, action: #selector(editingChanged), forControlEvents: .EditingChanged)
   }
   
   private func fetchScriptList() {
@@ -97,7 +97,6 @@ class ScriptViewController: UIViewController {
       guard let `self` = self else { return }
       self.view.hideHUD()
       if let data = data {
-        self.scriptNames.removeAll()
         self.scriptList.removeAll()
         let json = JSON(data: data)
         switch json["code"].intValue {
@@ -105,8 +104,7 @@ class ScriptViewController: UIViewController {
           let list = json["data"]["list"]
           for item in list.dictionaryValue {
             if item.1["mode"].stringValue != "directory" {
-              let model = ScriptModel(item.1)
-              self.scriptNames.append(item.0)
+              let model = ScriptModel(item.1, name: item.0)
               self.scriptList.append(model)
             }
           }
@@ -172,12 +170,22 @@ class ScriptViewController: UIViewController {
     /// TODO 扫一扫
   }
   
+  @objc private func editingChanged() {
+    if (self.oldNameTitle + self.oldExtensionName) != (renameView.newNameTextField.text! + self.extensionName) && renameView.newNameTextField.text?.characters.count != 0{
+      renameView.submitButton.enabled = true
+      renameView.submitButton.backgroundColor = ThemeManager.Theme.tintColor
+    } else {
+      renameView.submitButton.enabled = false
+      renameView.submitButton.backgroundColor = ThemeManager.Theme.lightTextColor
+    }
+  }
+  
   @objc private func info(button: UIButton) {
     /// ActionSheet
     let indexPath = NSIndexPath(forRow: button.tag, inSection: 0)
-    let string = scriptNames[indexPath.row] as NSString
+    let string = scriptList[indexPath.row].name as NSString
     self.oldNameTitle = string.substringWithRange(NSMakeRange(0, string.length-4))
-    self.oldExtensionName = Suffix.haveSuffix(scriptNames[indexPath.row])
+    self.oldExtensionName = Suffix.haveSuffix(scriptList[indexPath.row].name)
     self.extensionName = self.oldExtensionName
     updateButtonStatus(self.oldExtensionName)
     let actionSheet = UIActionSheet()
@@ -194,10 +202,10 @@ class ScriptViewController: UIViewController {
   
   @objc private func submit() {
     renameView.newNameTextField.resignFirstResponder()
-    guard renameView.newNameTextField.text?.characters.count != 0 else {
-      alert(title: Constants.Text.prompt, message: "文件名不能为空", delegate: nil, cancelButtonTitle: Constants.Text.ok)
-      return
-    }
+    //    guard renameView.newNameTextField.text?.characters.count != 0 else {
+    //      alert(title: Constants.Text.prompt, message: "文件名不能为空", delegate: nil, cancelButtonTitle: Constants.Text.ok)
+    //      return
+    //    }
     renameFile()
   }
   
@@ -212,17 +220,19 @@ class ScriptViewController: UIViewController {
   @objc private func luaClick(button: UIButton) {
     buttonCustomStatus(selectedButton: button, unselectedButton: renameView.txtButton)
     extensionName = button.titleLabel!.text!
+    editingChanged()
   }
   
   @objc private func txtClick(button: UIButton) {
     buttonCustomStatus(selectedButton: button, unselectedButton: renameView.luaButton)
     extensionName = button.titleLabel!.text!
+    editingChanged()
   }
   
   private func buttonCustomStatus(selectedButton selectedButton: UIButton, unselectedButton: UIButton) {
     selectedButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
     selectedButton.backgroundColor = ThemeManager.Theme.redBackgroundColor
-    unselectedButton.setTitleColor(ThemeManager.Theme.tintColor, forState: .Normal)
+    unselectedButton.setTitleColor(ThemeManager.Theme.lightTextColor, forState: .Normal)
     unselectedButton.backgroundColor = ThemeManager.Theme.separatorColor
   }
   
@@ -296,12 +306,12 @@ extension ScriptViewController {
 
 extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return self.scriptNames.count
+    return self.scriptList.count
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier(NSStringFromClass(ScriptCell), forIndexPath: indexPath) as! ScriptCell
-    cell.bind(scriptNames[indexPath.row], model: scriptList[indexPath.row])
+    cell.bind(scriptList[indexPath.row])
     cell.leftUtilityButtons = leftButtons()
     cell.rightUtilityButtons = rightButtons()
     cell.delegate = self
@@ -336,7 +346,6 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
     cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
     
     NSUserDefaults.standardUserDefaults().setInteger(indexPath.row, forKey: "currentScript")
-    navigationItem.leftBarButtonItem?.enabled = true
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -349,7 +358,7 @@ extension ScriptViewController: SWTableViewCellDelegate {
     switch index {
     case 0:
       if let indexPath = tableView.indexPathForCell(cell) {
-        let fileName = scriptNames[indexPath.row]
+        let fileName = scriptList[indexPath.row].name
         let scriptDetailViewController = ScriptDetailViewController(fileName: fileName)
         self.navigationController?.pushViewController(scriptDetailViewController, animated: true)
       }
@@ -362,7 +371,7 @@ extension ScriptViewController: SWTableViewCellDelegate {
     case 0:
       /// 删除文件
       if let indexPath = tableView.indexPathForCell(cell) {
-        let parameters = ["filename":self.scriptNames[indexPath.row]]
+        let parameters = ["filename" : scriptList[indexPath.row].name]
         let request = Network.sharedManager.post(url: ServiceURL.Url.removeFile, timeout:Constants.Timeout.request, parameters: parameters)
         let session = Network.sharedManager.session()
         let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
@@ -371,7 +380,7 @@ extension ScriptViewController: SWTableViewCellDelegate {
             let json = JSON(data: data)
             switch json["code"].intValue {
             case 0:
-              self.scriptNames.removeAtIndex(indexPath.row)
+              self.scriptList.removeAtIndex(indexPath.row)
               self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
               self.tableView.setEditing(false, animated: true)
               self.view.showHUD(.Message, text: Constants.Text.removeSuccessful, autoHide: true, autoHideDelay: 0.5)

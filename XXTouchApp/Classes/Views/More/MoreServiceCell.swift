@@ -11,7 +11,7 @@ import UIKit
 class MoreServiceCell: UITableViewCell {
   private let titleLabel = UILabel()
   private let hostLabel = UILabel()
-  let switches = UISwitch()
+  let switches = Switches()
   
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -29,7 +29,6 @@ class MoreServiceCell: UITableViewCell {
     titleLabel.textColor = UIColor.blackColor()
     hostLabel.textColor = ThemeManager.Theme.tintColor
     hostLabel.font = UIFont.systemFontOfSize(13)
-    
     
     contentView.addSubview(titleLabel)
     contentView.addSubview(hostLabel)

@@ -19,6 +19,7 @@ class Constants {
 extension Constants {
   class Text {
     static let prompt = "提示"
+    static let warning = "警告"
     static let ok = "确定"
     static let saveSuccessful = "保存成功"
     static let editSuccessful = "修改成功"

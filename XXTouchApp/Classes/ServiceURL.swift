@@ -69,5 +69,15 @@ extension ServiceURL {
     static let setRecordVolumeDownOn = baseURLString + "/set_record_volume_down_on"
     /// 设置录制不包含音量减键
     static let setRecordVolumeDownOff = baseURLString + "/set_record_volume_down_off"
+    
+    
+    /// 获取开机启动设置
+    static let getStartupConf = baseURLString + "/get_startup_conf"
+    /// 启用开机启动
+    static let setStartupRunOn = baseURLString + "/set_startup_run_on"
+    /// 禁用开机启动
+    static let setStartupRunOff = baseURLString + "/set_startup_run_off"
+    /// 选择开机启动脚本
+    static let selectStartupScriptFile = baseURLString + "/select_startup_script_file"
   }
 }

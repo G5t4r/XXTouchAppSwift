@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		2C20D81C1D0FC74A009A4990 /* UIViewController+Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20D81B1D0FC74A009A4990 /* UIViewController+Transition.swift */; };
 		2C20D81F1D0FCB8E009A4990 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20D81E1D0FCB8E009A4990 /* KeyboardManager.swift */; };
+		2C54F0DA1D17E436005F35AD /* StartUpListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C54F0D91D17E436005F35AD /* StartUpListCell.swift */; };
+		2C54F0DD1D17ED5D005F35AD /* UserSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C54F0DC1D17ED5D005F35AD /* UserSettingViewController.swift */; };
+		2C54F0E21D17F492005F35AD /* Switches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C54F0E11D17F492005F35AD /* Switches.swift */; };
 		2C67AB411CFD218E008D53E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C67AB401CFD218E008D53E8 /* Assets.xcassets */; };
 		2C67AB4F1CFD218E008D53E8 /* XXTouchAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C67AB4E1CFD218E008D53E8 /* XXTouchAppTests.swift */; };
 		2C67AB811CFD2AAA008D53E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C67AB7B1CFD2AAA008D53E8 /* AppDelegate.swift */; };
@@ -84,6 +87,9 @@
 /* Begin PBXFileReference section */
 		2C20D81B1D0FC74A009A4990 /* UIViewController+Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Transition.swift"; sourceTree = "<group>"; };
 		2C20D81E1D0FCB8E009A4990 /* KeyboardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
+		2C54F0D91D17E436005F35AD /* StartUpListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartUpListCell.swift; sourceTree = "<group>"; };
+		2C54F0DC1D17ED5D005F35AD /* UserSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingViewController.swift; sourceTree = "<group>"; };
+		2C54F0E11D17F492005F35AD /* Switches.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Switches.swift; sourceTree = "<group>"; };
 		2C67AB361CFD218E008D53E8 /* XXTouchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XXTouchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C67AB401CFD218E008D53E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2C67AB451CFD218E008D53E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -181,6 +187,30 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		2C54F0D61D17DF97005F35AD /* StartUpSetting */ = {
+			isa = PBXGroup;
+			children = (
+				2C54F0D91D17E436005F35AD /* StartUpListCell.swift */,
+			);
+			name = StartUpSetting;
+			sourceTree = "<group>";
+		};
+		2C54F0DB1D17ED47005F35AD /* UserSetting */ = {
+			isa = PBXGroup;
+			children = (
+				2C54F0DC1D17ED5D005F35AD /* UserSettingViewController.swift */,
+			);
+			name = UserSetting;
+			sourceTree = "<group>";
+		};
+		2C54F0E01D17F483005F35AD /* General */ = {
+			isa = PBXGroup;
+			children = (
+				2C54F0E11D17F492005F35AD /* Switches.swift */,
+			);
+			name = General;
+			sourceTree = "<group>";
+		};
 		2C67AB2D1CFD218E008D53E8 = {
 			isa = PBXGroup;
 			children = (
@@ -256,6 +286,7 @@
 		2C67AB7D1CFD2AAA008D53E8 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				2C54F0E01D17F483005F35AD /* General */,
 				2C67AB831CFD2BDC008D53E8 /* Extensions */,
 				2CF749CB1D0536BD007A273B /* Helps */,
 				2CF749D61D0577A7007A273B /* More */,
@@ -413,13 +444,6 @@
 			path = StartUpSetting;
 			sourceTree = "<group>";
 		};
-		2CC84C041D17B58000D4230D /* StartUpSetting */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = StartUpSetting;
-			sourceTree = "<group>";
-		};
 		2CC84C071D17B65F00D4230D /* General */ = {
 			isa = PBXGroup;
 			children = (
@@ -431,10 +455,9 @@
 		2CD2F55F1D127A2E001C873F /* More */ = {
 			isa = PBXGroup;
 			children = (
+				2C54F0D61D17DF97005F35AD /* StartUpSetting */,
 				2CC84C071D17B65F00D4230D /* General */,
 				2CD2F56E1D13BFF2001C873F /* KeyBoardSetting */,
-				2CD2F5741D13E9BF001C873F /* RecordSetting */,
-				2CC84C041D17B58000D4230D /* StartUpSetting */,
 				2CD2F5621D127B90001C873F /* MoreCustomCell.swift */,
 				2CD2F5641D128366001C873F /* MoreServiceCell.swift */,
 			);
@@ -461,13 +484,6 @@
 			isa = PBXGroup;
 			children = (
 				2CD2F5721D13E7F3001C873F /* RecordSettingViewController.swift */,
-			);
-			path = RecordSetting;
-			sourceTree = "<group>";
-		};
-		2CD2F5741D13E9BF001C873F /* RecordSetting */ = {
-			isa = PBXGroup;
-			children = (
 			);
 			path = RecordSetting;
 			sourceTree = "<group>";
@@ -512,6 +528,7 @@
 		2CF749D61D0577A7007A273B /* More */ = {
 			isa = PBXGroup;
 			children = (
+				2C54F0DB1D17ED47005F35AD /* UserSetting */,
 				2CD2F56A1D13B0B1001C873F /* KeyBoardSetting */,
 				2CD2F5711D13E7CE001C873F /* RecordSetting */,
 				2CC84C011D17B45500D4230D /* StartUpSetting */,
@@ -712,6 +729,8 @@
 				2C7340CB1D11008100CED0F3 /* IQToolbar.swift in Sources */,
 				2C7340BF1D11008100CED0F3 /* IQUIScrollView+Additions.swift in Sources */,
 				2C67AB811CFD2AAA008D53E8 /* AppDelegate.swift in Sources */,
+				2C54F0DD1D17ED5D005F35AD /* UserSettingViewController.swift in Sources */,
+				2C54F0DA1D17E436005F35AD /* StartUpListCell.swift in Sources */,
 				2CD2F5631D127B90001C873F /* MoreCustomCell.swift in Sources */,
 				2CC84C031D17B48600D4230D /* StartUpSettingViewController.swift in Sources */,
 				2CD2F5731D13E7F3001C873F /* RecordSettingViewController.swift in Sources */,
@@ -722,6 +741,7 @@
 				2C7340C01D11008100CED0F3 /* IQUITextFieldView+Additions.swift in Sources */,
 				2C7340C91D11008100CED0F3 /* IQBarButtonItem.swift in Sources */,
 				2C7342E01D1140AE00CED0F3 /* ConstraintMaker.swift in Sources */,
+				2C54F0E21D17F492005F35AD /* Switches.swift in Sources */,
 				2C7340C51D11008100CED0F3 /* IQKeyboardManagerConstantsInternal.swift in Sources */,
 				2C7342DE1D1140AE00CED0F3 /* ConstraintDescription.swift in Sources */,
 				2C7342ED1D123E9C00CED0F3 /* RenameView.swift in Sources */,

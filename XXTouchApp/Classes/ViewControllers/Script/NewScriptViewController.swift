@@ -90,6 +90,7 @@ class NewScriptViewController: UIViewController {
     blurView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(blurTap)))
     newNameView.luaButton.addTarget(self, action: #selector(luaClick(_:)), forControlEvents: .TouchUpInside)
     newNameView.txtButton.addTarget(self, action: #selector(txtClick(_:)), forControlEvents: .TouchUpInside)
+    newNameView.newNameTextField.addTarget(self, action: #selector(editingChanged), forControlEvents: .EditingChanged)
   }
   
   private func bind() {
@@ -109,16 +110,16 @@ class NewScriptViewController: UIViewController {
   private func buttonCustomStatus(selectedButton selectedButton: UIButton, unselectedButton: UIButton) {
     selectedButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
     selectedButton.backgroundColor = ThemeManager.Theme.redBackgroundColor
-    unselectedButton.setTitleColor(ThemeManager.Theme.tintColor, forState: .Normal)
+    unselectedButton.setTitleColor(ThemeManager.Theme.lightTextColor, forState: .Normal)
     unselectedButton.backgroundColor = ThemeManager.Theme.separatorColor
   }
   
   @objc private func submit() {
     newNameView.newNameTextField.resignFirstResponder()
-    guard newNameView.newNameTextField.text?.characters.count != 0 else {
-      alert(title: Constants.Text.prompt, message: "文件名不能为空", delegate: nil, cancelButtonTitle: Constants.Text.ok)
-      return
-    }
+    //    guard newNameView.newNameTextField.text?.characters.count != 0 else {
+    //      alert(title: Constants.Text.prompt, message: "文件名不能为空", delegate: nil, cancelButtonTitle: Constants.Text.ok)
+    //      return
+    //    }
     addScript()
   }
   
@@ -127,6 +128,16 @@ class NewScriptViewController: UIViewController {
       closeNewNameViewAnimator()
     } else {
       newNameView.newNameTextField.resignFirstResponder()
+    }
+  }
+  
+  @objc private func editingChanged() {
+    if newNameView.newNameTextField.text?.characters.count != 0{
+      newNameView.submitButton.enabled = true
+      newNameView.submitButton.backgroundColor = ThemeManager.Theme.tintColor
+    } else {
+      newNameView.submitButton.enabled = false
+      newNameView.submitButton.backgroundColor = ThemeManager.Theme.lightTextColor
     }
   }
   

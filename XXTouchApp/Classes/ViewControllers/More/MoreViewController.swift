@@ -313,6 +313,8 @@ extension MoreViewController {
     case 1: self.navigationController?.pushViewController(RecordSettingViewController(), animated: true)
     /// 开机启动设置
     case 2: self.navigationController?.pushViewController(StartUpSettingViewController(), animated: true)
+    /// 用户偏好设置
+    case 3: self.navigationController?.pushViewController(UserSettingViewController(), animated: true)
     default:break
     }
   }
