@@ -83,12 +83,12 @@ class KeyBoardSettingViewController: UIViewController {
 
 extension KeyBoardSettingViewController {
   private func getVolumeActionConf() {
-    //    self.view.showHUD()
+    self.view.showHUD()
     let request = Network.sharedManager.post(url: ServiceURL.Url.getVolumeActionConf, timeout:Constants.Timeout.request)
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      //      self.view.hideHUD()
+      self.view.hideHUD()
       if let data = data {
         let json = JSON(data: data)
         switch json["code"].intValue {
@@ -169,7 +169,7 @@ extension KeyBoardSettingViewController: UITableViewDelegate, UITableViewDataSou
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return 30
+    return 35
   }
   
   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -189,12 +189,10 @@ extension KeyBoardSettingViewController: UIActionSheetDelegate {
   }
   
   func setVolumeAction(url: String, index: Int) {
-    self.view.showHUD()
     let request = Network.sharedManager.post(url: url, timeout:Constants.Timeout.request, value: String(index))
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      self.view.hideHUD()
       if let data = data {
         let json = JSON(data: data)
         switch json["code"].intValue {

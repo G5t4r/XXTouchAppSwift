@@ -55,10 +55,12 @@ class RecordSettingViewController: UIViewController {
 
 extension RecordSettingViewController {
   private func getRecordConf() {
+    self.view.showHUD()
     let request = Network.sharedManager.post(url: ServiceURL.Url.getRecordConf, timeout:Constants.Timeout.request)
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
+      self.view.hideHUD()
       if let data = data {
         let json = JSON(data: data)
         switch json["code"].intValue {

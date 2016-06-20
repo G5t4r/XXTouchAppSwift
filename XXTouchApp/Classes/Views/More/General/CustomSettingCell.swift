@@ -10,7 +10,7 @@ import UIKit
 
 class CustomSettingCell: UITableViewCell {
   private let titleLabel = UILabel()
-  let switches = UISwitch()
+  let switches = Switches()
   
   init(title: String, color: UIColor = UIColor.blackColor()) {
     super.init(style: .Default, reuseIdentifier: nil)

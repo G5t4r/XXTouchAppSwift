@@ -19,7 +19,7 @@ extension UIView {
     let hud = MBProgressHUD.showHUDAddedTo(self, animated: animated)
     hud.animationType = .Zoom
     hud.userInteractionEnabled = false
-    hud.opacity = 0.8
+    hud.opacity = 0.6
     
     switch type {
     case .Completed:

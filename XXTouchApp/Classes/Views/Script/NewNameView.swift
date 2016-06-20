@@ -35,6 +35,8 @@ class NewNameView: UIView {
     submitButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
     submitButton.backgroundColor = ThemeManager.Theme.tintColor
     submitButton.layer.cornerRadius = 5
+    submitButton.enabled = false
+    submitButton.backgroundColor = ThemeManager.Theme.lightTextColor
     
     luaButton.setTitle(".lua", forState: .Normal)
     luaButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
@@ -43,7 +45,7 @@ class NewNameView: UIView {
     luaButton.backgroundColor = ThemeManager.Theme.redBackgroundColor
     
     txtButton.setTitle(".txt", forState: .Normal)
-    txtButton.setTitleColor(ThemeManager.Theme.tintColor, forState: .Normal)
+    txtButton.setTitleColor(ThemeManager.Theme.lightTextColor, forState: .Normal)
     txtButton.layer.cornerRadius = 3
     txtButton.contentEdgeInsets = UIEdgeInsetsMake(1, 8, 1, 8)
     txtButton.backgroundColor = ThemeManager.Theme.separatorColor
