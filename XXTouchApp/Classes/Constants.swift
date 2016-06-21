@@ -31,6 +31,7 @@ extension Constants {
     static let cancel = "取消"
     static let createDone = "创建完成"
     static let paySuccessful = "充值成功"
+    static let copy = "已经复制到剪贴板"
   }
 }
 

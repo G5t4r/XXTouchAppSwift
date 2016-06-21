@@ -9,10 +9,7 @@
 import UIKit
 
 class ApplicationDetailCell: UITableViewCell {
-  private let appNameLabel = UILabel()
-  private let appPackageNameLabel = UILabel()
-  private let appBundlePathLabel = UILabel()
-  private let appDataPathLabel = UILabel()
+  private let titleLabel = UILabel()
   
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -27,42 +24,19 @@ class ApplicationDetailCell: UITableViewCell {
   private func setupUI() {
     self.selectionStyle = .None
     
-    appNameLabel.text = "应用名称："
-    appPackageNameLabel.text = "应用包名："
-    appBundlePathLabel.text = "应用包路径："
-    appDataPathLabel.text = "应用数据路径："
+    titleLabel.textColor = UIColor(rgb: 0x3d85c6)
     
-    contentView.addSubview(appNameLabel)
-    contentView.addSubview(appPackageNameLabel)
-    contentView.addSubview(appBundlePathLabel)
-    contentView.addSubview(appDataPathLabel)
+    contentView.addSubview(titleLabel)
   }
   
   private func makeConstriants() {
-    appNameLabel.snp_makeConstraints { (make) in
-      make.top.equalTo(contentView).offset(15)
-      make.leading.equalTo(contentView).offset(20)
-    }
-    
-    appPackageNameLabel.snp_makeConstraints { (make) in
-      make.top.equalTo(appNameLabel.snp_bottom).offset(10)
-      make.leading.equalTo(appNameLabel)
-    }
-    
-    appBundlePathLabel.snp_makeConstraints { (make) in
-      make.top.equalTo(appPackageNameLabel.snp_bottom).offset(10)
-      make.leading.equalTo(appNameLabel)
-    }
-    
-    appDataPathLabel.snp_makeConstraints { (make) in
-      make.top.equalTo(appBundlePathLabel.snp_bottom).offset(10)
-      make.leading.equalTo(appNameLabel)
+    titleLabel.snp_makeConstraints { (make) in
+      make.centerY.equalTo(contentView)
+      make.leading.equalTo(contentView).offset(10)
     }
   }
   
-  func bind(model: ApplicationListModel) {
-    
+  func bind(title: String) {
+    titleLabel.text = title
   }
-  
-  
 }

@@ -11,7 +11,10 @@ import UIKit
 class ApplicationDetailViewController: UIViewController {
   private let model: ApplicationListModel
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
-  private let applicationDetailCell = ApplicationDetailCell()
+  private let appNameCell = ApplicationDetailCell()
+  private let appPackageNameCell = ApplicationDetailCell()
+  private let appDataPathCell = ApplicationDetailCell()
+  private let appBundlePathCell = ApplicationDetailCell()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -51,16 +54,45 @@ class ApplicationDetailViewController: UIViewController {
 }
 
 extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataSource {
+  func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    return 4
+  }
+  
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return 1
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    return applicationDetailCell
+    switch indexPath.section {
+    case 0:
+      appNameCell.bind(model.name)
+      return appNameCell
+    case 1:
+      appPackageNameCell.bind(model.packageName)
+      return appPackageNameCell
+    case 2:
+      appBundlePathCell.bind(model.bundlePath)
+      return appBundlePathCell
+    case 3:
+      appDataPathCell.bind(model.dataPath)
+      return appDataPathCell
+    default: return UITableViewCell()
+    }
+  }
+  
+  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    switch indexPath.section {
+    case 0: UIPasteboard.generalPasteboard().string = model.name
+    case 1: UIPasteboard.generalPasteboard().string = model.packageName
+    case 2: UIPasteboard.generalPasteboard().string = model.bundlePath
+    case 3: UIPasteboard.generalPasteboard().string = model.dataPath
+    default: break
+    }
+    self.view.showHUD(.Message, text: Constants.Text.copy, autoHide: true, autoHideDelay: 0.7)
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return 0.01
+    return 30
   }
   
   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -68,6 +100,16 @@ extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataS
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return 140
+    return 40
+  }
+  
+  func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    switch section {
+    case 0: return "应用名称"
+    case 1: return "应用包名"
+    case 2: return "应用包路径"
+    case 3: return "应用数据路径"
+    default: return nil
+    }
   }
 }
