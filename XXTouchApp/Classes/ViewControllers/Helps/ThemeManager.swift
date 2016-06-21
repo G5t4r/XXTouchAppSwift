@@ -15,12 +15,14 @@ extension ThemeManager {
   class Theme {
     static let tintColor = UIColor(rgb: 0x0f64ff)
     static let separatorColor = UIColor(rgb: 0xdadada)
+    static let lightBackgroundColor = UIColor(rgb: 0xcccccc)
     static let textColor = UIColor.blackColor()
     static let darkTextColor = UIColor(rgb: 0x666666)
     static let lightTextColor = UIColor(rgb: 0x999999)
     static let lightGrayBackgroundColor = UIColor(rgb: 0xeeeeee)
     static let yellowGrayBackgroundColor = UIColor(rgb: 0xf4f4f4)
     static let redBackgroundColor = UIColor(rgb: 0xe06666)
+    static let greenBackgroundColor = UIColor(rgb: 0x02a66f)
   }
 }
 
