@@ -13,9 +13,9 @@ class StartUpSettingViewController: UIViewController {
   private var scriptList = [ScriptModel]()
   private var currentSelectedScriptName = ""
   
-  private lazy var startUpCell: CustomSettingCell = {
-    let recordVolumeUpCell = CustomSettingCell(title: "开机启动")
-    return recordVolumeUpCell
+  private lazy var startUpCell: StartUpCell = {
+    let startUpCell = StartUpCell(title: "开机启动", info: "开机启动脚本可能是一个危险的操作，例如脚本本身会重启设备，那么将会出现开机之后脚本将设备再次重启的情况，这种情况需要按音量键-键启动设备并删除自启动的脚本")
+    return startUpCell
   }()
   
   override func viewDidLoad() {
@@ -52,21 +52,11 @@ class StartUpSettingViewController: UIViewController {
 extension StartUpSettingViewController {
   @objc private func startUpValueChanged(switchState: UISwitch) {
     if switchState.on {
-      self.alertOther(title: Constants.Text.warning, message: "开机启动脚本可能是一个危险的操作；\n例如脚本本身会重启设备，那么将会出现开机之后脚本将设备再次重启的情况，这种情况需要按音量键-键启动设备并删除自启动的脚本；\n是否需要继续打开开机启动？", delegate: self, cancelButtonTitle: Constants.Text.cancel, otherButtonTitles: Constants.Text.ok)
+      setStartupRun(ServiceURL.Url.setStartupRunOn)
+      startUpCell.updataInfoColor(UIColor.redColor())
     } else {
-      //      setStartupRun(ServiceURL.Url.setStartupRunOff)
-    }
-  }
-}
-
-extension StartUpSettingViewController: UIAlertViewDelegate {
-  func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-    switch buttonIndex {
-    case 0:break
-    //      setStartupRun(ServiceURL.Url.setStartupRunOn)
-    case 1:
-      startUpCell.switches.setOn(false, animated: true)
-    default:break
+      setStartupRun(ServiceURL.Url.setStartupRunOff)
+      startUpCell.updataInfoColor(ThemeManager.Theme.lightTextColor)
     }
   }
 }
@@ -81,9 +71,12 @@ extension StartUpSettingViewController {
       guard let `self` = self else { return }
       if let data = data {
         let json = JSON(data: data)
-        switch json["code"].intValue {
+        switch json["code"].intValue { 
         case 0:
           self.startUpCell.switches.on = json["data"]["startup_run"].boolValue
+          if self.startUpCell.switches.on {
+            self.startUpCell.updataInfoColor(UIColor.redColor())
+          }
           self.currentSelectedScriptName = json["data"]["startup_script"].stringValue
           self.fetchScriptList()
         default:
@@ -245,7 +238,7 @@ extension StartUpSettingViewController: UITableViewDelegate, UITableViewDataSour
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     switch indexPath.section {
-    case 0: return 50
+    case 0: return 100
     default: return 52
     }
   }
