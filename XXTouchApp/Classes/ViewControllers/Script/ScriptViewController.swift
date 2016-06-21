@@ -42,6 +42,7 @@ class ScriptViewController: UIViewController {
     tableView.dataSource = self
     tableView.contentInset.bottom = Constants.Size.tabBarHeight
     tableView.scrollIndicatorInsets.bottom = tableView.contentInset.bottom
+    tableView.separatorStyle = .None
     let header = MJRefreshNormalHeader.init(refreshingBlock: { [weak self] _ in
       guard let `self` = self else { return }
       self.fetchScriptList()
@@ -115,7 +116,7 @@ class ScriptViewController: UIViewController {
         let row = NSUserDefaults.standardUserDefaults().integerForKey("currentScript")
         if row >= 0 {
           let indexPath = NSIndexPath(forRow: row, inSection: 0)
-          self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .Top)
+          self.tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
           let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! ScriptCell
           cell.scriptSelectedHidden(false)
           cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
@@ -323,7 +324,7 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
     if isSelected {
       cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
     } else {
-      cell.backgroundColor = UIColor.clearColor()
+      cell.backgroundColor = UIColor.whiteColor()
     }
     
     return cell
@@ -333,7 +334,7 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
     for cell in tableView.visibleCells {
       let cell = cell as! ScriptCell
       cell.scriptSelectedHidden(true)
-      cell.backgroundColor = UIColor.clearColor()
+      cell.backgroundColor = UIColor.whiteColor()
     }
     for model in scriptList {
       model.isSelected = false

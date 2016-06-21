@@ -13,6 +13,7 @@ class ScriptCell: SWTableViewCell {
   private let scriptSelectedImage = UIImageView(image: UIImage(named: "selected"))
   private let nameLabel = UILabel()
   private let scriptTime = UILabel()
+  private let bottomLine = UIView()
   let infoButton = UIButton(type: .Custom)
   
   
@@ -36,11 +37,14 @@ class ScriptCell: SWTableViewCell {
     
     scriptImage.contentMode = .ScaleAspectFit
     
+    bottomLine.backgroundColor = ThemeManager.Theme.lightBackgroundColor
+    
     contentView.addSubview(scriptImage)
     contentView.addSubview(nameLabel)
     contentView.addSubview(scriptTime)
     contentView.addSubview(infoButton)
     contentView.addSubview(scriptSelectedImage)
+    contentView.addSubview(bottomLine)
   }
   
   private func makeConstriants() {
@@ -69,6 +73,11 @@ class ScriptCell: SWTableViewCell {
       make.trailing.equalTo(infoButton.snp_leading).offset(-20)
       make.centerY.equalTo(contentView)
       make.width.height.equalTo(22)
+    }
+    
+    bottomLine.snp_makeConstraints { (make) in
+      make.bottom.leading.trailing.equalTo(contentView)
+      make.height.equalTo(0.5)
     }
   }
   

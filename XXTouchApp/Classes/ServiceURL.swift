@@ -79,5 +79,37 @@ extension ServiceURL {
     static let setStartupRunOff = baseURLString + "/set_startup_run_off"
     /// 选择开机启动脚本
     static let selectStartupScriptFile = baseURLString + "/select_startup_script_file"
+    
+    
+    /// 获得用户偏好配置
+    static let getUserConf = baseURLString + "/get_user_conf"
+    /// 禁止显示 “无 SIM 卡” 状态栏文字
+    static let setNosimStatusbarOn = baseURLString + "/set_no_nosim_statusbar_on"
+    /// 不禁止显示 “无 SIM 卡” 状态栏文字
+    static let setNosimStatusbarOff = baseURLString + "/set_no_nosim_statusbar_off"
+    /// 禁止 “无 SIM 卡” 弹窗弹出
+    static let setNosimAlertOn = baseURLString + "/set_no_nosim_alert_on"
+    /// 不禁止 “无 SIM 卡” 弹窗弹出
+    static let setNosimAlertOff = baseURLString + "/set_no_nosim_alert_off"
+    /// 禁止 “低电量” 弹窗弹出
+    static let setNoLowPowerAlertOn = baseURLString + "/set_no_low_power_alert_on"
+    /// 不禁止 “低电量” 弹窗弹出
+    static let setNoLowPowerAlertOff = baseURLString + "/set_no_low_power_alert_off"
+    /// 禁止 “使用推送通知来连接 iTunes” 弹窗弹出
+    static let setNoNeedPushidAlertOn = baseURLString + "/set_no_need_pushid_alert_on"
+    /// 不禁止 “使用推送通知来连接 iTunes” 弹窗弹出
+    static let setNoNeedPushidAlertOff = baseURLString + "/set_no_need_pushid_alert_off"
+    
+    
+    /// 获得当前设备的授权信息
+    static let deviceAuthInfo = baseURLString + "/device_auth_info"
+    /// 绑定一个授权码
+    static let bindCode = baseURLString + "/bind_code"
+    /// 获取本地缓存剩余时间戳
+    static let expireDate = baseURLString + "/expire_date"
+    
+    
+    /// 获取设备已安装应用程序信息
+    static let bundles = baseURLString + "/bundles"
   }
 }

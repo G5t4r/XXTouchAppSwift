@@ -13,6 +13,8 @@ class StartUpListCell: UITableViewCell {
   private let scriptSelectedImage = UIImageView(image: UIImage(named: "selected"))
   private let nameLabel = UILabel()
   private let scriptTime = UILabel()
+  private let bottomLine = UIView()
+  private let topLine = UIView()
   
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -32,10 +34,15 @@ class StartUpListCell: UITableViewCell {
     
     scriptImage.contentMode = .ScaleAspectFit
     
+    bottomLine.backgroundColor = ThemeManager.Theme.lightBackgroundColor
+    topLine.backgroundColor = ThemeManager.Theme.lightBackgroundColor
+    
     contentView.addSubview(scriptImage)
     contentView.addSubview(nameLabel)
     contentView.addSubview(scriptTime)
     contentView.addSubview(scriptSelectedImage)
+    contentView.addSubview(bottomLine)
+    contentView.addSubview(topLine)
   }
   
   private func makeConstriants() {
@@ -58,6 +65,17 @@ class StartUpListCell: UITableViewCell {
       make.trailing.equalTo(contentView).offset(-20)
       make.centerY.equalTo(contentView)
       make.width.height.equalTo(22)
+    }
+    
+    bottomLine.snp_makeConstraints { (make) in
+      make.bottom.leading.trailing.equalTo(contentView)
+      make.height.equalTo(0.5)
+    }
+    
+    topLine.snp_makeConstraints { (make) in
+      make.leading.trailing.equalTo(contentView)
+      make.height.equalTo(0.5)
+      make.top.equalTo(contentView).offset(-0.5)
     }
   }
   

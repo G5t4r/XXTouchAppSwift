@@ -169,7 +169,7 @@ extension KeyBoardSettingViewController: UITableViewDelegate, UITableViewDataSou
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return 35
+    return 30
   }
   
   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

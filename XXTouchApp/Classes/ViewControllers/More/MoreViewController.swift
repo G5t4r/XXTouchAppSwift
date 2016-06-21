@@ -24,6 +24,20 @@ class MoreViewController: UIViewController {
     return iconServiceList
   }()
   
+  private lazy var authorizationList: [String] = {
+    let authorizationList = [
+      "授权"
+    ]
+    return authorizationList
+  }()
+  
+  private lazy var iconAuthorizationList: [String] = {
+    let iconAuthorizationList = [
+      "authorization"
+    ]
+    return iconAuthorizationList
+  }()
+  
   private lazy var settingList: [String] = {
     let settingList = [
       "按键设置",
@@ -87,14 +101,16 @@ class MoreViewController: UIViewController {
   private lazy var titleList: [String] = {
     let titleList = [
       "服务",
+      "授权",
       "设置",
       "系统",
       "帮助"
     ]
     return titleList
   }()
-  private let moreServiceCell = MoreServiceCell()
   private var host = ""
+  private let remoteButton = UIButton(type: .Custom)
+  private let remoteButtonHeight: CGFloat = 35
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -114,18 +130,32 @@ class MoreViewController: UIViewController {
     
     tableView.delegate = self
     tableView.dataSource = self
+    tableView.contentInset.bottom = remoteButtonHeight
+    tableView.scrollIndicatorInsets.bottom = tableView.contentInset.bottom
+    
+    remoteButton.setTitle("远程服务读取中", forState: .Normal)
+    remoteButton.backgroundColor = ThemeManager.Theme.lightTextColor
+    remoteButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+    remoteButton.alpha = 0.95
     
     view.addSubview(tableView)
+    view.addSubview(remoteButton)
   }
   
   private func makeConstriants() {
     tableView.snp_makeConstraints { (make) in
       make.edges.equalTo(view)
     }
+    
+    remoteButton.snp_makeConstraints { (make) in
+      make.leading.trailing.equalTo(view)
+      make.bottom.equalTo(view).offset(-Constants.Size.tabBarHeight)
+      make.height.equalTo(remoteButtonHeight)
+    }
   }
   
   private func setupAction() {
-    moreServiceCell.switches.addTarget(self, action: #selector(remoteValueChanged(_:)), forControlEvents: .ValueChanged)
+    remoteButton.addTarget(self, action: #selector(remoteClick(_:)), forControlEvents: .TouchUpInside)
   }
   
 }
@@ -137,37 +167,27 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     switch section {
-    case 0:return 2
-    case 1:return settingList.count
-    case 2:return systemList.count
-    case 3:return helpList.count
+    case 0: return 1
+    case 1: return 1
+    case 2: return settingList.count
+    case 3: return systemList.count
+    case 4: return helpList.count
     default:
       return 0
     }
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    switch indexPath.section {
-    case 0:
-      switch indexPath.row {
-      case 0:return 60
-      default:return 40
-      }
-    default:
-      return 40
-    }
+    return 40
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     switch indexPath.section {
-    case 0:
-      switch indexPath.row {
-      case 0:return moreServiceCell
-      default:return MoreCustomCell(icon: iconServiceList[0], title: serviceList[0])
-      }
-    case 1:return MoreCustomCell(icon: iconSettingList[indexPath.row], title: settingList[indexPath.row])
-    case 2:return MoreCustomCell(icon: iconSystemList[indexPath.row], title: systemList[indexPath.row])
-    case 3:return MoreCustomCell(icon: iconHelpList[indexPath.row], title: helpList[indexPath.row])
+    case 0: return MoreCustomCell(icon: iconServiceList[indexPath.row], title: serviceList[indexPath.row])
+    case 1: return MoreCustomCell(icon: iconAuthorizationList[indexPath.row], title: authorizationList[indexPath.row])
+    case 2: return MoreCustomCell(icon: iconSettingList[indexPath.row], title: settingList[indexPath.row])
+    case 3: return MoreCustomCell(icon: iconSystemList[indexPath.row], title: systemList[indexPath.row])
+    case 4: return MoreCustomCell(icon: iconHelpList[indexPath.row], title: helpList[indexPath.row])
     default:
       return UITableViewCell()
     }
@@ -176,9 +196,13 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     switch indexPath.section {
     /// 服务
-    case 0:return service(indexPath.row)
+    case 0: return service(indexPath.row)
+    /// 授权
+    case 1: return authorization(indexPath.row)
     /// 设置
-    case 1:return key(indexPath.row)
+    case 2: return key(indexPath.row)
+    /// 系统
+    case 3: return system(indexPath.row)
     default:break
     }
   }
@@ -199,25 +223,21 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - 服务
 extension MoreViewController {
   private func fetchRemoteAccessStatus() {
-    //    self.view.showHUD()
     let request = Network.sharedManager.post(url: ServiceURL.Url.isRemoteAccessOpened, timeout:Constants.Timeout.request)
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      //      self.view.hideHUD()
       if let data = data {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
-          var title: String
           if json["data"]["opened"].boolValue {
-            self.moreServiceCell.switches.on = true
-            title = "远程服务已打开"
+            self.remoteButton.selected = true
+            self.remoteButtonUpdate(self.host, backgroundColor: ThemeManager.Theme.greenBackgroundColor)
           } else {
-            title = "远程服务已关闭"
-            self.moreServiceCell.switches.on = false
+            self.remoteButton.selected = false
+            self.remoteButtonUpdate("远程服务已关闭", backgroundColor: ThemeManager.Theme.lightTextColor)
           }
-          self.moreServiceCell.bind(title, host: self.host)
         default:
           self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
         }
@@ -229,32 +249,34 @@ extension MoreViewController {
     task.resume()
   }
   
-  @objc private func remoteValueChanged(switchState: UISwitch) {
-    if switchState.on {
+  @objc private func remoteClick(button: UIButton) {
+    if !button.selected {
       // 打开远程服务
+      button.selected = true
       openAndCloseRemoteAccess(ServiceURL.Url.openRemoteAccess)
     } else {
       // 关闭远程服务
+      button.selected = false
       openAndCloseRemoteAccess(ServiceURL.Url.closeRemoteAccess)
     }
   }
   
   private func openAndCloseRemoteAccess(url: String) {
+    self.view.showHUD()
     let request = Network.sharedManager.post(url: url, timeout:Constants.Timeout.request)
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
+      self.view.hideHUD()
       if let data = data {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
-          var title: String
-          if self.moreServiceCell.switches.on {
-            title = "远程服务已打开"
+          if self.remoteButton.selected {
+            self.remoteButtonUpdate(self.host, backgroundColor: ThemeManager.Theme.greenBackgroundColor)
           } else {
-            title = "远程服务已关闭"
+            self.remoteButtonUpdate("远程服务已关闭", backgroundColor: ThemeManager.Theme.lightTextColor)
           }
-          self.moreServiceCell.bind(title, host: self.host)
         default:
           self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
         }
@@ -266,13 +288,25 @@ extension MoreViewController {
     task.resume()
   }
   
+  private func remoteButtonUpdate(title: String, backgroundColor: UIColor) {
+    self.remoteButton.setTitle(title, forState: .Normal)
+    self.remoteButton.backgroundColor = backgroundColor
+  }
+  
   private func service(rowIndex: Int) {
     switch rowIndex {
-    /// 远程服务
-    case 0:break
     /// 重启服务
-    case 1:
+    case 0:
       self.alertOther(title: Constants.Text.prompt, message: "确定重启XXTouch服务么？", delegate: self, cancelButtonTitle: Constants.Text.cancel, otherButtonTitles: Constants.Text.ok)
+    default:break
+    }
+  }
+}
+
+extension MoreViewController: UIAlertViewDelegate {
+  func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    switch buttonIndex {
+    case 0:restart()
     default:break
     }
   }
@@ -302,10 +336,21 @@ extension MoreViewController {
     task.resume()
   }
 }
+// MARK: - 授权
+extension MoreViewController {
+  private func authorization(rowIndex: Int) {
+    switch rowIndex {
+    /// 授权
+    case 0: self.navigationController?.pushViewController(AuthorizationViewController(), animated: true)
+    default:break
+    }
+  }
+}
+
 
 // MARK: - 设置
 extension MoreViewController {
-  func key(rowIndex: Int) {
+  private func key(rowIndex: Int) {
     switch rowIndex {
     /// 按键设置
     case 0: self.navigationController?.pushViewController(KeyBoardSettingViewController(), animated: true)
@@ -320,10 +365,12 @@ extension MoreViewController {
   }
 }
 
-extension MoreViewController: UIAlertViewDelegate {
-  func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-    switch buttonIndex {
-    case 0:restart()
+// MARK: - 系统
+extension MoreViewController {
+  private func system(rowIndex: Int) {
+    switch rowIndex {
+    /// 应用列表
+    case 0: self.navigationController?.pushViewController(ApplicationListViewController(), animated: true)
     default:break
     }
   }

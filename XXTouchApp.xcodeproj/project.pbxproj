@@ -12,6 +12,14 @@
 		2C54F0DA1D17E436005F35AD /* StartUpListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C54F0D91D17E436005F35AD /* StartUpListCell.swift */; };
 		2C54F0DD1D17ED5D005F35AD /* UserSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C54F0DC1D17ED5D005F35AD /* UserSettingViewController.swift */; };
 		2C54F0E21D17F492005F35AD /* Switches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C54F0E11D17F492005F35AD /* Switches.swift */; };
+		2C54F0E51D18D1DA005F35AD /* UserSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C54F0E41D18D1DA005F35AD /* UserSettingCell.swift */; };
+		2C54F0E81D18EA99005F35AD /* ApplicationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C54F0E71D18EA99005F35AD /* ApplicationListViewController.swift */; };
+		2C54F0EB1D1907BC005F35AD /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C54F0EA1D1907BC005F35AD /* AuthorizationViewController.swift */; };
+		2C54F0EE1D190BE4005F35AD /* AuthorizationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C54F0ED1D190BE4005F35AD /* AuthorizationCell.swift */; };
+		2C54F0F01D1916E5005F35AD /* AuthorizationBindCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C54F0EF1D1916E5005F35AD /* AuthorizationBindCell.swift */; };
+		2C54F0F41D1926CA005F35AD /* ApplicationListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C54F0F31D1926CA005F35AD /* ApplicationListModel.swift */; };
+		2C54F0F71D192805005F35AD /* ApplicationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C54F0F61D192805005F35AD /* ApplicationListCell.swift */; };
+		2C54F0F91D193559005F35AD /* ApplicationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C54F0F81D193559005F35AD /* ApplicationDetailViewController.swift */; };
 		2C67AB411CFD218E008D53E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C67AB401CFD218E008D53E8 /* Assets.xcassets */; };
 		2C67AB4F1CFD218E008D53E8 /* XXTouchAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C67AB4E1CFD218E008D53E8 /* XXTouchAppTests.swift */; };
 		2C67AB811CFD2AAA008D53E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C67AB7B1CFD2AAA008D53E8 /* AppDelegate.swift */; };
@@ -60,6 +68,7 @@
 		2CD2F56D1D13B0D6001C873F /* KeyBoardSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD2F56C1D13B0D6001C873F /* KeyBoardSettingViewController.swift */; };
 		2CD2F5701D13C00D001C873F /* KeyBoardSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD2F56F1D13C00D001C873F /* KeyBoardSettingCell.swift */; };
 		2CD2F5731D13E7F3001C873F /* RecordSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD2F5721D13E7F3001C873F /* RecordSettingViewController.swift */; };
+		2CF18BF71D1946B5007535CD /* ApplicationDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF18BF61D1946B5007535CD /* ApplicationDetailCell.swift */; };
 		2CF749B91CFD72C2007A273B /* ServiceURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF749B81CFD72C2007A273B /* ServiceURL.swift */; };
 		2CF749BB1CFD80A0007A273B /* ScriptDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF749BA1CFD80A0007A273B /* ScriptDetailViewController.swift */; };
 		2CF749BF1CFD8552007A273B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF749BE1CFD8552007A273B /* Constants.swift */; };
@@ -91,6 +100,14 @@
 		2C54F0D91D17E436005F35AD /* StartUpListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartUpListCell.swift; sourceTree = "<group>"; };
 		2C54F0DC1D17ED5D005F35AD /* UserSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingViewController.swift; sourceTree = "<group>"; };
 		2C54F0E11D17F492005F35AD /* Switches.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Switches.swift; sourceTree = "<group>"; };
+		2C54F0E41D18D1DA005F35AD /* UserSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingCell.swift; sourceTree = "<group>"; };
+		2C54F0E71D18EA99005F35AD /* ApplicationListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationListViewController.swift; sourceTree = "<group>"; };
+		2C54F0EA1D1907BC005F35AD /* AuthorizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationViewController.swift; sourceTree = "<group>"; };
+		2C54F0ED1D190BE4005F35AD /* AuthorizationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationCell.swift; sourceTree = "<group>"; };
+		2C54F0EF1D1916E5005F35AD /* AuthorizationBindCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationBindCell.swift; sourceTree = "<group>"; };
+		2C54F0F31D1926CA005F35AD /* ApplicationListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationListModel.swift; sourceTree = "<group>"; };
+		2C54F0F61D192805005F35AD /* ApplicationListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationListCell.swift; sourceTree = "<group>"; };
+		2C54F0F81D193559005F35AD /* ApplicationDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationDetailViewController.swift; sourceTree = "<group>"; };
 		2C67AB361CFD218E008D53E8 /* XXTouchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XXTouchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C67AB401CFD218E008D53E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2C67AB451CFD218E008D53E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -145,6 +162,7 @@
 		2CD2F56C1D13B0D6001C873F /* KeyBoardSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyBoardSettingViewController.swift; sourceTree = "<group>"; };
 		2CD2F56F1D13C00D001C873F /* KeyBoardSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyBoardSettingCell.swift; sourceTree = "<group>"; };
 		2CD2F5721D13E7F3001C873F /* RecordSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordSettingViewController.swift; sourceTree = "<group>"; };
+		2CF18BF61D1946B5007535CD /* ApplicationDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationDetailCell.swift; sourceTree = "<group>"; };
 		2CF749B81CFD72C2007A273B /* ServiceURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceURL.swift; sourceTree = "<group>"; };
 		2CF749BA1CFD80A0007A273B /* ScriptDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptDetailViewController.swift; sourceTree = "<group>"; };
 		2CF749BE1CFD8552007A273B /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -212,6 +230,57 @@
 				2C54F0E11D17F492005F35AD /* Switches.swift */,
 			);
 			name = General;
+			sourceTree = "<group>";
+		};
+		2C54F0E31D18D1B6005F35AD /* UserSetting */ = {
+			isa = PBXGroup;
+			children = (
+				2C54F0E41D18D1DA005F35AD /* UserSettingCell.swift */,
+			);
+			name = UserSetting;
+			sourceTree = "<group>";
+		};
+		2C54F0E61D18EA76005F35AD /* ApplicationList */ = {
+			isa = PBXGroup;
+			children = (
+				2C54F0E71D18EA99005F35AD /* ApplicationListViewController.swift */,
+				2C54F0F81D193559005F35AD /* ApplicationDetailViewController.swift */,
+			);
+			name = ApplicationList;
+			sourceTree = "<group>";
+		};
+		2C54F0E91D1907B2005F35AD /* Authorization */ = {
+			isa = PBXGroup;
+			children = (
+				2C54F0EA1D1907BC005F35AD /* AuthorizationViewController.swift */,
+			);
+			name = Authorization;
+			sourceTree = "<group>";
+		};
+		2C54F0EC1D190BD1005F35AD /* Authorization */ = {
+			isa = PBXGroup;
+			children = (
+				2C54F0ED1D190BE4005F35AD /* AuthorizationCell.swift */,
+				2C54F0EF1D1916E5005F35AD /* AuthorizationBindCell.swift */,
+			);
+			name = Authorization;
+			sourceTree = "<group>";
+		};
+		2C54F0F11D19269D005F35AD /* More */ = {
+			isa = PBXGroup;
+			children = (
+				2C54F0F31D1926CA005F35AD /* ApplicationListModel.swift */,
+			);
+			name = More;
+			sourceTree = "<group>";
+		};
+		2C54F0F51D1927F8005F35AD /* ApplicationList */ = {
+			isa = PBXGroup;
+			children = (
+				2C54F0F61D192805005F35AD /* ApplicationListCell.swift */,
+				2CF18BF61D1946B5007535CD /* ApplicationDetailCell.swift */,
+			);
+			name = ApplicationList;
 			sourceTree = "<group>";
 		};
 		2C67AB2D1CFD218E008D53E8 = {
@@ -458,6 +527,9 @@
 		2CD2F55F1D127A2E001C873F /* More */ = {
 			isa = PBXGroup;
 			children = (
+				2C54F0F51D1927F8005F35AD /* ApplicationList */,
+				2C54F0EC1D190BD1005F35AD /* Authorization */,
+				2C54F0E31D18D1B6005F35AD /* UserSetting */,
 				2C54F0D61D17DF97005F35AD /* StartUpSetting */,
 				2CC84C071D17B65F00D4230D /* General */,
 				2CD2F56E1D13BFF2001C873F /* KeyBoardSetting */,
@@ -515,6 +587,7 @@
 		2CF749CE1D053A09007A273B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2C54F0F11D19269D005F35AD /* More */,
 				2CF749CF1D053A29007A273B /* Script */,
 			);
 			path = Model;
@@ -531,6 +604,8 @@
 		2CF749D61D0577A7007A273B /* More */ = {
 			isa = PBXGroup;
 			children = (
+				2C54F0E91D1907B2005F35AD /* Authorization */,
+				2C54F0E61D18EA76005F35AD /* ApplicationList */,
 				2C54F0DB1D17ED47005F35AD /* UserSetting */,
 				2CD2F56A1D13B0B1001C873F /* KeyBoardSetting */,
 				2CD2F5711D13E7CE001C873F /* RecordSetting */,
@@ -709,10 +784,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C54F0F01D1916E5005F35AD /* AuthorizationBindCell.swift in Sources */,
 				2CD2F56D1D13B0D6001C873F /* KeyBoardSettingViewController.swift in Sources */,
 				2C7340C41D11008100CED0F3 /* IQKeyboardManagerConstants.swift in Sources */,
 				2CF749D81D0577C4007A273B /* MoreViewController.swift in Sources */,
 				2C7342E51D1140AE00CED0F3 /* LayoutConstraint.swift in Sources */,
+				2C54F0EB1D1907BC005F35AD /* AuthorizationViewController.swift in Sources */,
 				2C7340C71D11008100CED0F3 /* IQKeyboardReturnKeyHandler.swift in Sources */,
 				2C7342DF1D1140AE00CED0F3 /* ConstraintItem.swift in Sources */,
 				2CD2F5651D128366001C873F /* MoreServiceCell.swift in Sources */,
@@ -723,7 +800,9 @@
 				2CF749CD1D0536CB007A273B /* Formatter.swift in Sources */,
 				2CF749BB1CFD80A0007A273B /* ScriptDetailViewController.swift in Sources */,
 				2C7342DD1D1140AE00CED0F3 /* ConstraintAttributes.swift in Sources */,
+				2C54F0F71D192805005F35AD /* ApplicationListCell.swift in Sources */,
 				2C7342E81D1140AE00CED0F3 /* ViewController+SnapKit.swift in Sources */,
+				2C54F0E51D18D1DA005F35AD /* UserSettingCell.swift in Sources */,
 				2C7342EB1D1144C000CED0F3 /* Network.swift in Sources */,
 				2C20D81C1D0FC74A009A4990 /* UIViewController+Transition.swift in Sources */,
 				95F94B821D1832C300532016 /* StartUpCell.swift in Sources */,
@@ -732,6 +811,7 @@
 				2CF749CA1CFDA16F007A273B /* ScriptCell.swift in Sources */,
 				2C7340CB1D11008100CED0F3 /* IQToolbar.swift in Sources */,
 				2C7340BF1D11008100CED0F3 /* IQUIScrollView+Additions.swift in Sources */,
+				2CF18BF71D1946B5007535CD /* ApplicationDetailCell.swift in Sources */,
 				2C67AB811CFD2AAA008D53E8 /* AppDelegate.swift in Sources */,
 				2C54F0DD1D17ED5D005F35AD /* UserSettingViewController.swift in Sources */,
 				2C54F0DA1D17E436005F35AD /* StartUpListCell.swift in Sources */,
@@ -745,6 +825,8 @@
 				2C7340C01D11008100CED0F3 /* IQUITextFieldView+Additions.swift in Sources */,
 				2C7340C91D11008100CED0F3 /* IQBarButtonItem.swift in Sources */,
 				2C7342E01D1140AE00CED0F3 /* ConstraintMaker.swift in Sources */,
+				2C54F0F41D1926CA005F35AD /* ApplicationListModel.swift in Sources */,
+				2C54F0F91D193559005F35AD /* ApplicationDetailViewController.swift in Sources */,
 				2C54F0E21D17F492005F35AD /* Switches.swift in Sources */,
 				2C7340C51D11008100CED0F3 /* IQKeyboardManagerConstantsInternal.swift in Sources */,
 				2C7342DE1D1140AE00CED0F3 /* ConstraintDescription.swift in Sources */,
@@ -754,6 +836,7 @@
 				2C20D81F1D0FCB8E009A4990 /* KeyboardManager.swift in Sources */,
 				2CD2F5671D13A1C0001C873F /* Sizer.swift in Sources */,
 				2C7342F31D1260D800CED0F3 /* NewNameView.swift in Sources */,
+				2C54F0E81D18EA99005F35AD /* ApplicationListViewController.swift in Sources */,
 				2CF749C71CFD8D1E007A273B /* UIColor+RGB.swift in Sources */,
 				2C7340C11D11008100CED0F3 /* IQUIView+Hierarchy.swift in Sources */,
 				2CC84C091D17B69200D4230D /* CustomSettingCell.swift in Sources */,
@@ -769,6 +852,7 @@
 				2CF749C51CFD8BA6007A273B /* NewScriptViewController.swift in Sources */,
 				2CF749D11D053A41007A273B /* ScriptModel.swift in Sources */,
 				2CD2F5691D13A280001C873F /* UIDevice+DeviceCheck.swift in Sources */,
+				2C54F0EE1D190BE4005F35AD /* AuthorizationCell.swift in Sources */,
 				2CF749BF1CFD8552007A273B /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

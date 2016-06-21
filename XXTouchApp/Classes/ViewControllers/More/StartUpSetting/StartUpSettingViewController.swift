@@ -33,6 +33,7 @@ class StartUpSettingViewController: UIViewController {
     tableView.registerClass(StartUpListCell.self, forCellReuseIdentifier: NSStringFromClass(StartUpListCell))
     tableView.delegate = self
     tableView.dataSource = self
+    tableView.separatorStyle = .None
     
     view.addSubview(tableView)
   }
@@ -238,14 +239,14 @@ extension StartUpSettingViewController: UITableViewDelegate, UITableViewDataSour
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     switch indexPath.section {
-    case 0: return 100
+    case 0: return 120
     default: return 52
     }
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     switch section {
-    case 1: return 35
+    case 1: return 30
     default: return 0.01
     }
   }
