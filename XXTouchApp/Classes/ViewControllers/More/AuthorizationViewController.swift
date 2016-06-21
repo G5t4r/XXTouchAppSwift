@@ -45,7 +45,11 @@ class AuthorizationViewController: UIViewController {
 
 extension AuthorizationViewController {
   @objc private func editingChanged(textField: UITextField) {
-    if textField.text?.characters.count <= 0 {
+    let string = textField.text! as NSString
+    let zero = string.rangeOfString("0")
+    let one = string.rangeOfString("1")
+    let two = string.rangeOfString("2")
+    if zero.length > 0 || one.length > 0 || two.length > 0 || textField.text?.characters.count != 16{
       submitUpdate(titleColor: ThemeManager.Theme.lightTextColor, backgroundColor: ThemeManager.Theme.separatorColor, enabled: false)
     } else {
       submitUpdate(titleColor: UIColor.whiteColor(), backgroundColor: ThemeManager.Theme.redBackgroundColor, enabled: true)
@@ -106,7 +110,7 @@ extension AuthorizationViewController {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
-          let time = json["data"]["expire_date"].doubleValue - (NSDate().timeIntervalSince1970*1000)
+          let time = json["data"]["expire_date"].doubleValue - NSDate().timeIntervalSince1970
           if time < 60 {
             self.authorizationCell.bind("设备尚未获得授权")
           } else {

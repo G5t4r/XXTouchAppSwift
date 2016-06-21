@@ -11,6 +11,7 @@ import UIKit
 class ApplicationListCell: UITableViewCell {
   private let packageNameLabel = UILabel()
   private let bottomLine = UIView()
+  private let iconImageView = UIImageView()
   
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -30,14 +31,21 @@ class ApplicationListCell: UITableViewCell {
     
     bottomLine.backgroundColor = ThemeManager.Theme.lightBackgroundColor
     
+    contentView.addSubview(iconImageView)
     contentView.addSubview(packageNameLabel)
     contentView.addSubview(bottomLine)
   }
   
   private func makeConstriants() {
+    iconImageView.snp_makeConstraints { (make) in
+      make.leading.equalTo(contentView).offset(10)
+      make.centerY.equalTo(contentView)
+      make.width.height.equalTo(36)
+    }
+    
     packageNameLabel.snp_makeConstraints { (make) in
       make.centerY.equalTo(contentView)
-      make.leading.equalTo(contentView).offset(15)
+      make.leading.equalTo(iconImageView.snp_trailing).offset(10)
     }
     
     bottomLine.snp_makeConstraints { (make) in
@@ -47,6 +55,7 @@ class ApplicationListCell: UITableViewCell {
   }
   
   func bind(model: ApplicationListModel) {
+    iconImageView.image = Base64.base64StringToUIImage(model.iconBase64)
     packageNameLabel.text = model.name
   }
 }
