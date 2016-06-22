@@ -101,7 +101,13 @@ extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataS
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return UITableViewAutomaticDimension
+    switch indexPath.section {
+    case 2:
+      return 80
+    case 3:
+      return 80
+    default: return 45
+    }
   }
   
   func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
