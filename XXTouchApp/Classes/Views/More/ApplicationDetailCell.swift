@@ -9,7 +9,7 @@
 import UIKit
 
 class ApplicationDetailCell: UITableViewCell {
-  private let titleLabel = UILabel()
+  let titleLabel = UILabel()
   
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -32,9 +32,8 @@ class ApplicationDetailCell: UITableViewCell {
   
   private func makeConstriants() {
     titleLabel.snp_makeConstraints { (make) in
-      make.top.equalTo(contentView).offset(10)
+      make.centerY.equalTo(contentView)
       make.leading.trailing.equalTo(contentView).inset(20)
-      make.bottom.equalTo(contentView).offset(-10)
     }
   }
   

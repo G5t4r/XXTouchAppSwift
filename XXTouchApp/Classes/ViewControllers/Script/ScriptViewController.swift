@@ -124,11 +124,11 @@ class ScriptViewController: UIViewController {
           let model = self.scriptList[indexPath.row]
           model.isSelected = true
         }
-        self.tableView.mj_header.endRefreshing()
       }
       if error != nil {
         self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
       }
+      self.tableView.mj_header.endRefreshing()
     }
     task.resume()
   }

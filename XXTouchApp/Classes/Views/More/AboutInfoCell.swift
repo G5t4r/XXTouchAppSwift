@@ -10,7 +10,7 @@ import UIKit
 
 class AboutInfoCell: UITableViewCell {
   private let titleLabel = UILabel()
-  private let valueLabel = UILabel()
+  let valueLabel = UILabel()
   
   init(title: String) {
     super.init(style: .Default, reuseIdentifier: nil)
@@ -43,7 +43,6 @@ class AboutInfoCell: UITableViewCell {
       make.centerY.equalTo(contentView)
       make.trailing.equalTo(contentView).offset(-20)
       make.leading.equalTo(titleLabel.snp_trailing).offset(10)
-      make.bottom.equalTo(titleLabel).offset(-10)
     }
   }
   
