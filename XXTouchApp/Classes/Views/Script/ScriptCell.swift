@@ -13,7 +13,6 @@ class ScriptCell: SWTableViewCell {
   private let scriptSelectedImage = UIImageView(image: UIImage(named: "selected"))
   private let nameLabel = UILabel()
   private let scriptTime = UILabel()
-  private let bottomLine = UIView()
   let infoButton = UIButton(type: .Custom)
   
   
@@ -30,32 +29,31 @@ class ScriptCell: SWTableViewCell {
   private func setupUI() {
     self.selectionStyle = .None
     scriptTime.textColor = ThemeManager.Theme.lightTextColor
-    scriptTime.font = UIFont.systemFontOfSize(10)
+    scriptTime.font = UIFont.systemFontOfSize(11)
     scriptSelectedImage.hidden = true
     
     infoButton.setImage(UIImage(named: "infoIcon"), forState: .Normal)
     
     scriptImage.contentMode = .ScaleAspectFit
     
-    bottomLine.backgroundColor = ThemeManager.Theme.lightBackgroundColor
-    
     contentView.addSubview(scriptImage)
     contentView.addSubview(nameLabel)
     contentView.addSubview(scriptTime)
     contentView.addSubview(infoButton)
     contentView.addSubview(scriptSelectedImage)
-    contentView.addSubview(bottomLine)
   }
   
   private func makeConstriants() {
     scriptImage.snp_makeConstraints { (make) in
-      make.top.leading.equalTo(contentView).inset(10)
+      make.leading.equalTo(contentView).inset(15)
+      make.height.width.equalTo(40)
+      make.centerY.equalTo(contentView)
     }
     
     nameLabel.snp_makeConstraints { (make) in
-      make.top.equalTo(contentView).offset(7)
+      make.top.equalTo(contentView).offset(10)
       make.trailing.equalTo(contentView).offset(-100)
-      make.leading.equalTo(contentView).offset(50)
+      make.leading.equalTo(contentView).offset(60)
     }
     
     scriptTime.snp_makeConstraints { (make) in
@@ -73,11 +71,6 @@ class ScriptCell: SWTableViewCell {
       make.trailing.equalTo(infoButton.snp_leading).offset(-20)
       make.centerY.equalTo(contentView)
       make.width.height.equalTo(22)
-    }
-    
-    bottomLine.snp_makeConstraints { (make) in
-      make.bottom.leading.trailing.equalTo(contentView)
-      make.height.equalTo(0.5)
     }
   }
   

@@ -25,7 +25,7 @@ class KeyBoardSettingCell: UITableViewCell {
   private func setupUI() {
     self.accessoryType = .DisclosureIndicator
     self.selectionStyle = .None
-    infoLabel.font = UIFont.systemFontOfSize(11)
+    infoLabel.font = UIFont.systemFontOfSize(12)
     infoLabel.textColor = ThemeManager.Theme.lightTextColor
     infoLabel.numberOfLines = 0
     
@@ -35,13 +35,13 @@ class KeyBoardSettingCell: UITableViewCell {
   
   private func makeConstriants() {
     titleLabel.snp_makeConstraints { (make) in
-      make.top.equalTo(contentView).offset(5)
-      make.leading.trailing.equalTo(contentView).inset(15)
+      make.top.equalTo(contentView).offset(10)
+      make.leading.trailing.equalTo(contentView).inset(20)
     }
     
     infoLabel.snp_makeConstraints { (make) in
       make.top.equalTo(titleLabel.snp_bottom).offset(5)
-      make.leading.trailing.equalTo(contentView).inset(15)
+      make.leading.trailing.equalTo(titleLabel)
     }
   }
   

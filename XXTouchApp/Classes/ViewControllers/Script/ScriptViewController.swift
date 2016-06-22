@@ -11,7 +11,7 @@ import WebKit
 
 class ScriptViewController: UIViewController {
   
-  private let tableView = UITableView(frame: CGRectZero, style: .Plain)
+  private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private var scriptList = [ScriptModel]()
   private var oldNameTitle = ""
   private let renameView = RenameView()
@@ -42,7 +42,8 @@ class ScriptViewController: UIViewController {
     tableView.dataSource = self
     tableView.contentInset.bottom = Constants.Size.tabBarHeight
     tableView.scrollIndicatorInsets.bottom = tableView.contentInset.bottom
-    tableView.separatorStyle = .None
+    tableView.backgroundColor = UIColor.whiteColor()
+    //    tableView.separatorStyle = .None
     let header = MJRefreshNormalHeader.init(refreshingBlock: { [weak self] _ in
       guard let `self` = self else { return }
       self.fetchScriptList()
@@ -257,30 +258,34 @@ class ScriptViewController: UIViewController {
         self.renameView.transform = CGAffineTransformIdentity
     })
   }
+  
+  private func openRenameViewAnimator() {
+    navigationController?.tabBarController?.tabBar.hidden = true
+    navigationController?.setNavigationBarHidden(true, animated: true)
+    renameView.newNameTextField.text = self.oldNameTitle
+    renameView.hidden = false
+    blurView.hidden = false
+    renameView.alpha = 1
+    renameView.transform = CGAffineTransformTranslate(renameView.transform, 0, self.view.frame.height/2)
+    UIView.animateWithDuration(animationDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 15, options: [], animations: {
+      self.renameView.transform = CGAffineTransformIdentity
+      self.blurView.alpha = 1
+      }, completion: { (_) in
+        
+    })
+  }
 }
 
 extension ScriptViewController: UIActionSheetDelegate {
   func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
+    guard buttonIndex != actionSheet.cancelButtonIndex else { return }
     switch buttonIndex {
     /// 运行
     case 0:break
     /// 停止
     case 1:break
     /// 重命名
-    case 2:
-      navigationController?.tabBarController?.tabBar.hidden = true
-      navigationController?.setNavigationBarHidden(true, animated: true)
-      renameView.newNameTextField.text = self.oldNameTitle
-      renameView.hidden = false
-      blurView.hidden = false
-      renameView.alpha = 1
-      renameView.transform = CGAffineTransformTranslate(renameView.transform, 0, self.view.frame.height/2)
-      UIView.animateWithDuration(animationDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 15, options: [], animations: {
-        self.renameView.transform = CGAffineTransformIdentity
-        self.blurView.alpha = 1
-        }, completion: { (_) in
-          
-      })
+    case 2: openRenameViewAnimator()
     default:break
     }
   }
@@ -350,7 +355,15 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return 52
+    return 60
+  }
+  
+  func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    return 0.01
+  }
+  
+  func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    return 0.01
   }
 }
 

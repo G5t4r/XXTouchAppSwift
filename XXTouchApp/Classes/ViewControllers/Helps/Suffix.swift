@@ -12,11 +12,13 @@ class Suffix {
   enum Section: Int {
     case Lua
     case Txt
+    case Xxt
     
     var title: String {
       switch self {
       case .Lua: return ".lua"
       case .Txt: return ".txt"
+      case .Xxt: return ".xxt"
       }
     }
   }

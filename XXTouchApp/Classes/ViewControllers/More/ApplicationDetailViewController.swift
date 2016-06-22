@@ -38,6 +38,7 @@ class ApplicationDetailViewController: UIViewController {
     
     tableView.delegate  = self
     tableView.dataSource = self
+    tableView.estimatedRowHeight = 45
     
     view.addSubview(tableView)
   }
@@ -100,7 +101,7 @@ extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataS
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return 40
+    return UITableViewAutomaticDimension
   }
   
   func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

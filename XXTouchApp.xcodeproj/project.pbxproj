@@ -62,13 +62,18 @@
 		2CC84C031D17B48600D4230D /* StartUpSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC84C021D17B48600D4230D /* StartUpSettingViewController.swift */; };
 		2CC84C091D17B69200D4230D /* CustomSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC84C081D17B69200D4230D /* CustomSettingCell.swift */; };
 		2CD2F5631D127B90001C873F /* MoreCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD2F5621D127B90001C873F /* MoreCustomCell.swift */; };
-		2CD2F5651D128366001C873F /* MoreServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD2F5641D128366001C873F /* MoreServiceCell.swift */; };
 		2CD2F5671D13A1C0001C873F /* Sizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD2F5661D13A1C0001C873F /* Sizer.swift */; };
 		2CD2F5691D13A280001C873F /* UIDevice+DeviceCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD2F5681D13A280001C873F /* UIDevice+DeviceCheck.swift */; };
 		2CD2F56D1D13B0D6001C873F /* KeyBoardSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD2F56C1D13B0D6001C873F /* KeyBoardSettingViewController.swift */; };
 		2CD2F5701D13C00D001C873F /* KeyBoardSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD2F56F1D13C00D001C873F /* KeyBoardSettingCell.swift */; };
 		2CD2F5731D13E7F3001C873F /* RecordSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD2F5721D13E7F3001C873F /* RecordSettingViewController.swift */; };
 		2CF18BF71D1946B5007535CD /* ApplicationDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF18BF61D1946B5007535CD /* ApplicationDetailCell.swift */; };
+		2CF18BFA1D1A440B007535CD /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF18BF91D1A440B007535CD /* AboutViewController.swift */; };
+		2CF18BFF1D1A5E31007535CD /* DevelopDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF18BFE1D1A5E31007535CD /* DevelopDocumentViewController.swift */; };
+		2CF18C021D1A728B007535CD /* AboutTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF18C011D1A728B007535CD /* AboutTitleCell.swift */; };
+		2CF18C041D1A741B007535CD /* DeviceInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF18C031D1A741B007535CD /* DeviceInfoModel.swift */; };
+		2CF18C061D1A80BC007535CD /* AboutInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF18C051D1A80BC007535CD /* AboutInfoCell.swift */; };
+		2CF18C081D1A96FC007535CD /* AboutEmailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF18C071D1A96FC007535CD /* AboutEmailCell.swift */; };
 		2CF749B91CFD72C2007A273B /* ServiceURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF749B81CFD72C2007A273B /* ServiceURL.swift */; };
 		2CF749BB1CFD80A0007A273B /* ScriptDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF749BA1CFD80A0007A273B /* ScriptDetailViewController.swift */; };
 		2CF749BF1CFD8552007A273B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF749BE1CFD8552007A273B /* Constants.swift */; };
@@ -157,13 +162,18 @@
 		2CC84C021D17B48600D4230D /* StartUpSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartUpSettingViewController.swift; sourceTree = "<group>"; };
 		2CC84C081D17B69200D4230D /* CustomSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSettingCell.swift; sourceTree = "<group>"; };
 		2CD2F5621D127B90001C873F /* MoreCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreCustomCell.swift; sourceTree = "<group>"; };
-		2CD2F5641D128366001C873F /* MoreServiceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreServiceCell.swift; sourceTree = "<group>"; };
 		2CD2F5661D13A1C0001C873F /* Sizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sizer.swift; sourceTree = "<group>"; };
 		2CD2F5681D13A280001C873F /* UIDevice+DeviceCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+DeviceCheck.swift"; sourceTree = "<group>"; };
 		2CD2F56C1D13B0D6001C873F /* KeyBoardSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyBoardSettingViewController.swift; sourceTree = "<group>"; };
 		2CD2F56F1D13C00D001C873F /* KeyBoardSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyBoardSettingCell.swift; sourceTree = "<group>"; };
 		2CD2F5721D13E7F3001C873F /* RecordSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordSettingViewController.swift; sourceTree = "<group>"; };
 		2CF18BF61D1946B5007535CD /* ApplicationDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationDetailCell.swift; sourceTree = "<group>"; };
+		2CF18BF91D1A440B007535CD /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		2CF18BFE1D1A5E31007535CD /* DevelopDocumentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevelopDocumentViewController.swift; sourceTree = "<group>"; };
+		2CF18C011D1A728B007535CD /* AboutTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutTitleCell.swift; sourceTree = "<group>"; };
+		2CF18C031D1A741B007535CD /* DeviceInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceInfoModel.swift; sourceTree = "<group>"; };
+		2CF18C051D1A80BC007535CD /* AboutInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutInfoCell.swift; sourceTree = "<group>"; };
+		2CF18C071D1A96FC007535CD /* AboutEmailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutEmailCell.swift; sourceTree = "<group>"; };
 		2CF749B81CFD72C2007A273B /* ServiceURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceURL.swift; sourceTree = "<group>"; };
 		2CF749BA1CFD80A0007A273B /* ScriptDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptDetailViewController.swift; sourceTree = "<group>"; };
 		2CF749BE1CFD8552007A273B /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -272,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				2C54F0F31D1926CA005F35AD /* ApplicationListModel.swift */,
+				2CF18C031D1A741B007535CD /* DeviceInfoModel.swift */,
 			);
 			name = More;
 			sourceTree = "<group>";
@@ -529,6 +540,7 @@
 		2CD2F55F1D127A2E001C873F /* More */ = {
 			isa = PBXGroup;
 			children = (
+				2CF18C001D1A725E007535CD /* About */,
 				2C54F0F51D1927F8005F35AD /* ApplicationList */,
 				2C54F0EC1D190BD1005F35AD /* Authorization */,
 				2C54F0E31D18D1B6005F35AD /* UserSetting */,
@@ -536,7 +548,6 @@
 				2CC84C071D17B65F00D4230D /* General */,
 				2CD2F56E1D13BFF2001C873F /* KeyBoardSetting */,
 				2CD2F5621D127B90001C873F /* MoreCustomCell.swift */,
-				2CD2F5641D128366001C873F /* MoreServiceCell.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -563,6 +574,32 @@
 				2CD2F5721D13E7F3001C873F /* RecordSettingViewController.swift */,
 			);
 			path = RecordSetting;
+			sourceTree = "<group>";
+		};
+		2CF18BF81D1A43F9007535CD /* About */ = {
+			isa = PBXGroup;
+			children = (
+				2CF18BF91D1A440B007535CD /* AboutViewController.swift */,
+			);
+			name = About;
+			sourceTree = "<group>";
+		};
+		2CF18BFD1D1A5CFE007535CD /* DevelopDocument */ = {
+			isa = PBXGroup;
+			children = (
+				2CF18BFE1D1A5E31007535CD /* DevelopDocumentViewController.swift */,
+			);
+			name = DevelopDocument;
+			sourceTree = "<group>";
+		};
+		2CF18C001D1A725E007535CD /* About */ = {
+			isa = PBXGroup;
+			children = (
+				2CF18C011D1A728B007535CD /* AboutTitleCell.swift */,
+				2CF18C051D1A80BC007535CD /* AboutInfoCell.swift */,
+				2CF18C071D1A96FC007535CD /* AboutEmailCell.swift */,
+			);
+			name = About;
 			sourceTree = "<group>";
 		};
 		2CF749C81CFD9069007A273B /* Script */ = {
@@ -607,6 +644,8 @@
 		2CF749D61D0577A7007A273B /* More */ = {
 			isa = PBXGroup;
 			children = (
+				2CF18BFD1D1A5CFE007535CD /* DevelopDocument */,
+				2CF18BF81D1A43F9007535CD /* About */,
 				2C54F0E91D1907B2005F35AD /* Authorization */,
 				2C54F0E61D18EA76005F35AD /* ApplicationList */,
 				2C54F0DB1D17ED47005F35AD /* UserSetting */,
@@ -795,16 +834,17 @@
 				2C54F0EB1D1907BC005F35AD /* AuthorizationViewController.swift in Sources */,
 				2C7340C71D11008100CED0F3 /* IQKeyboardReturnKeyHandler.swift in Sources */,
 				2C7342DF1D1140AE00CED0F3 /* ConstraintItem.swift in Sources */,
-				2CD2F5651D128366001C873F /* MoreServiceCell.swift in Sources */,
 				2C7340C21D11008100CED0F3 /* IQUIViewController+Additions.swift in Sources */,
 				2C7342E11D1140AE00CED0F3 /* ConstraintRelation.swift in Sources */,
 				2C73408B1D10FC6100CED0F3 /* SwiftyJSON.swift in Sources */,
 				2C7340CA1D11008100CED0F3 /* IQTitleBarButtonItem.swift in Sources */,
 				2CF749CD1D0536CB007A273B /* Formatter.swift in Sources */,
+				2CF18C041D1A741B007535CD /* DeviceInfoModel.swift in Sources */,
 				2CF749BB1CFD80A0007A273B /* ScriptDetailViewController.swift in Sources */,
 				2C7342DD1D1140AE00CED0F3 /* ConstraintAttributes.swift in Sources */,
 				2C54F0F71D192805005F35AD /* ApplicationListCell.swift in Sources */,
 				2C7342E81D1140AE00CED0F3 /* ViewController+SnapKit.swift in Sources */,
+				2CF18C081D1A96FC007535CD /* AboutEmailCell.swift in Sources */,
 				2C54F0E51D18D1DA005F35AD /* UserSettingCell.swift in Sources */,
 				2C7342EB1D1144C000CED0F3 /* Network.swift in Sources */,
 				2C20D81C1D0FC74A009A4990 /* UIViewController+Transition.swift in Sources */,
@@ -817,13 +857,16 @@
 				2CF18BF71D1946B5007535CD /* ApplicationDetailCell.swift in Sources */,
 				2C67AB811CFD2AAA008D53E8 /* AppDelegate.swift in Sources */,
 				2C54F0DD1D17ED5D005F35AD /* UserSettingViewController.swift in Sources */,
+				2CF18BFA1D1A440B007535CD /* AboutViewController.swift in Sources */,
 				2C54F0DA1D17E436005F35AD /* StartUpListCell.swift in Sources */,
 				2CD2F5631D127B90001C873F /* MoreCustomCell.swift in Sources */,
 				2CC84C031D17B48600D4230D /* StartUpSettingViewController.swift in Sources */,
 				2CD2F5731D13E7F3001C873F /* RecordSettingViewController.swift in Sources */,
 				2CF749C31CFD8867007A273B /* UIView+HUD.swift in Sources */,
+				2CF18BFF1D1A5E31007535CD /* DevelopDocumentViewController.swift in Sources */,
 				2CD2F5701D13C00D001C873F /* KeyBoardSettingCell.swift in Sources */,
 				2CF749D31D0562BE007A273B /* ThemeManager.swift in Sources */,
+				2CF18C021D1A728B007535CD /* AboutTitleCell.swift in Sources */,
 				2C7340BE1D11008100CED0F3 /* IQNSArray+Sort.swift in Sources */,
 				2C7340C01D11008100CED0F3 /* IQUITextFieldView+Additions.swift in Sources */,
 				2C7340C91D11008100CED0F3 /* IQBarButtonItem.swift in Sources */,
@@ -842,6 +885,7 @@
 				2C54F0E81D18EA99005F35AD /* ApplicationListViewController.swift in Sources */,
 				2CF749C71CFD8D1E007A273B /* UIColor+RGB.swift in Sources */,
 				2C7340C11D11008100CED0F3 /* IQUIView+Hierarchy.swift in Sources */,
+				2CF18C061D1A80BC007535CD /* AboutInfoCell.swift in Sources */,
 				2CC84C091D17B69200D4230D /* CustomSettingCell.swift in Sources */,
 				2C7342E31D1140AE00CED0F3 /* EdgeInsets.swift in Sources */,
 				2C7342E21D1140AE00CED0F3 /* Debugging.swift in Sources */,
