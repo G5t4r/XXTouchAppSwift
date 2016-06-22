@@ -14,8 +14,9 @@ extension UIViewController {
     alertView.show()
   }
   
-  func alertOther(title title: String, message: String, delegate: UIAlertViewDelegate?, cancelButtonTitle: String?, otherButtonTitles: String) {
+  func alertOther(title title: String, message: String, delegate: UIAlertViewDelegate?, cancelButtonTitle: String?, otherButtonTitles: String, tag: Int = 0) {
     let alertView = UIAlertView()
+    alertView.tag = tag
     alertView.title = title
     alertView.message = message
     alertView.delegate = delegate

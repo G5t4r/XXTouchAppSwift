@@ -18,7 +18,7 @@ extension UIView {
                autoHide: Bool = false, autoHideDelay: NSTimeInterval = 1.25, completionHandler: ()->() = {}) {
     let hud = MBProgressHUD.showHUDAddedTo(self, animated: animated)
     hud.animationType = .Zoom
-    hud.userInteractionEnabled = false
+    //    hud.userInteractionEnabled = false
     hud.opacity = 0.6
     
     switch type {

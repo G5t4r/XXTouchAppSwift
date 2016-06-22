@@ -174,8 +174,8 @@ extension AuthorizationViewController: UITableViewDelegate, UITableViewDataSourc
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     switch indexPath.section {
-    case 0: return 40
-    case 1: return 120
+    case 0: return 45
+    case 1: return 125
     default: return 0.01
     }
   }

@@ -41,12 +41,12 @@ class AuthorizationBindCell: UITableViewCell {
   private func makeConstriants() {
     codeTextField.snp_makeConstraints { (make) in
       make.top.equalTo(contentView).offset(15)
-      make.leading.trailing.equalTo(contentView).inset(15)
+      make.leading.trailing.equalTo(contentView).inset(20)
       make.height.equalTo(40)
     }
     
     sumbitButton.snp_makeConstraints { (make) in
-      make.top.equalTo(codeTextField.snp_bottom).offset(10)
+      make.top.equalTo(codeTextField.snp_bottom).offset(15)
       make.leading.trailing.equalTo(codeTextField)
       make.height.equalTo(codeTextField)
     }

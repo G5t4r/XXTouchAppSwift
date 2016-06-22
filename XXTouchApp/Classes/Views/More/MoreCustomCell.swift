@@ -35,14 +35,14 @@ class MoreCustomCell: UITableViewCell {
   
   private func makeConstriants() {
     icon.snp_makeConstraints { (make) in
-      make.leading.equalTo(contentView).offset(10)
+      make.leading.equalTo(contentView).offset(20)
       make.centerY.equalTo(contentView)
-      make.height.width.equalTo(22)
+      make.height.width.equalTo(36)
     }
     
     titleLabel.snp_makeConstraints { (make) in
       make.centerY.equalTo(icon)
-      make.leading.equalTo(icon.snp_trailing).offset(10)
+      make.leading.equalTo(icon.snp_trailing).offset(15)
     }
   }
 }

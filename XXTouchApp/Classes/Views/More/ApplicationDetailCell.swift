@@ -25,14 +25,16 @@ class ApplicationDetailCell: UITableViewCell {
     self.selectionStyle = .None
     
     titleLabel.textColor = UIColor(rgb: 0x3d85c6)
+    titleLabel.numberOfLines = 0
     
     contentView.addSubview(titleLabel)
   }
   
   private func makeConstriants() {
     titleLabel.snp_makeConstraints { (make) in
-      make.centerY.equalTo(contentView)
-      make.leading.equalTo(contentView).offset(10)
+      make.top.equalTo(contentView).offset(10)
+      make.leading.trailing.equalTo(contentView).inset(20)
+      make.bottom.equalTo(contentView).offset(-10)
     }
   }
   

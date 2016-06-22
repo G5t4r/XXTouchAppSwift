@@ -32,7 +32,7 @@ class UserSettingCell: UITableViewCell {
   private func makeConstriants() {
     titleLabel.snp_makeConstraints { (make) in
       make.centerY.equalTo(contentView)
-      make.leading.trailing.equalTo(contentView).inset(15)
+      make.leading.trailing.equalTo(contentView).inset(20)
     }
   }
   

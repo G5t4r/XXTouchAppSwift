@@ -111,5 +111,21 @@ extension ServiceURL {
     
     /// 获取设备已安装应用程序信息
     static let bundles = baseURLString + "/bundles"
+    
+    
+    /// 清空GPS伪装信息
+    static let clearGps = baseURLString + "/clear_gps"
+    /// 清理 UI 缓存
+    static let clearUIcache = baseURLString + "/uicache"
+    /// 全清设备
+    static let clearAll = baseURLString + "/clear_all"
+    /// 注销设备
+    static let respring = baseURLString + "/respring"
+    /// 重启设备
+    static let reboot2 = baseURLString + "/reboot2"
+    
+    
+    /// 开发文档
+    static let developDocument = baseURLString + "/help.html"
   }
 }

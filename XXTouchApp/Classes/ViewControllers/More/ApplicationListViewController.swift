@@ -9,7 +9,7 @@
 import UIKit
 
 class ApplicationListViewController: UIViewController {
-  private let tableView = UITableView(frame: CGRectZero, style: .Plain)
+  private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private var appList = [ApplicationListModel]()
   
   override func viewDidLoad() {
@@ -27,7 +27,7 @@ class ApplicationListViewController: UIViewController {
     tableView.delegate  = self
     tableView.dataSource = self
     tableView.registerClass(ApplicationListCell.self, forCellReuseIdentifier: NSStringFromClass(ApplicationListCell))
-    tableView.separatorStyle = .None
+    tableView.backgroundColor = UIColor.whiteColor()
     
     view.addSubview(tableView)
   }
@@ -91,6 +91,14 @@ extension ApplicationListViewController: UITableViewDelegate, UITableViewDataSou
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return 50
+    return 55
+  }
+  
+  func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    return 0.01
+  }
+  
+  func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    return 0.01
   }
 }
