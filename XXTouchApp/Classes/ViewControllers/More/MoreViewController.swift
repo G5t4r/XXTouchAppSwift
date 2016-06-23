@@ -110,7 +110,7 @@ class MoreViewController: UIViewController {
   }()
   private var host = ""
   private let remoteButton = UIButton(type: .Custom)
-  private let remoteButtonHeight: CGFloat = 35
+  private let remoteButtonHeight: CGFloat = 40
   
   override func viewDidLoad() {
     super.viewDidLoad()

@@ -42,7 +42,7 @@ class AboutInfoCell: UITableViewCell {
     valueLabel.snp_makeConstraints { (make) in
       make.centerY.equalTo(contentView)
       make.trailing.equalTo(contentView).offset(-20)
-      make.leading.equalTo(titleLabel.snp_trailing).offset(10)
+      make.leading.equalTo(contentView).offset(90)
     }
   }
   

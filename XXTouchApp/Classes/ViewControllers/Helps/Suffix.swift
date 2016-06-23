@@ -26,10 +26,14 @@ class Suffix {
   /// 末尾是否包含.lua 或 .txt
   class func haveSuffix(string: String) -> String {
     let isLua = string.hasSuffix(".lua")
+    let isXxt = string.hasSuffix(".xxt")
     //    let isTxt = string.hasSuffix(".txt")
     if isLua {
       return Section.Lua.title
+    } else if isXxt {
+      return Section.Xxt.title
+    } else {
+      return Section.Txt.title
     }
-    return Section.Txt.title
   }
 }
