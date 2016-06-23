@@ -38,7 +38,7 @@ class NewScriptViewController: UIViewController {
   private func setupUI() {
     view.backgroundColor = UIColor.whiteColor()
     navigationItem.title = "新建文件"
-    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "下一步", style: .Plain, target: self, action: #selector(next))
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "下一步", style: .Plain, target: self, action: #selector(next(_:)))
     
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
     
@@ -154,7 +154,8 @@ class NewScriptViewController: UIViewController {
     })
   }
   
-  @objc private func next() {
+  @objc private func next(button: UIBarButtonItem) {
+    button.enabled = false
     if textView.text.characters.count == 0 {
       self.data = Constants.Text.startScript
     } else {
@@ -171,7 +172,7 @@ class NewScriptViewController: UIViewController {
       self.newNameView.transform = CGAffineTransformIdentity
       self.blurView.alpha = 1
       }, completion: { (_) in
-        
+        button.enabled = true
     })
   }
   
