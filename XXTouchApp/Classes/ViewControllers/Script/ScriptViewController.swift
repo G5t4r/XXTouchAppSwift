@@ -123,6 +123,7 @@ class ScriptViewController: UIViewController {
           cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
           let model = self.scriptList[indexPath.row]
           model.isSelected = true
+          self.selectScriptFile(model.name)
         }
       }
       if error != nil {
@@ -168,8 +169,27 @@ class ScriptViewController: UIViewController {
     self.navigationController?.pushViewController(newScriptViewController, animated: true)
   }
   
+  /// 扫一扫
   @objc private func sweep() {
-    /// TODO 扫一扫
+    self.view.showHUD()
+    let request = Network.sharedManager.post(url: ServiceURL.Url.bindQrcode, timeout:Constants.Timeout.request)
+    let session = Network.sharedManager.session()
+    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+      guard let `self` = self else { return }
+      self.view.hideHUD()
+      if let data = data {
+        let json = JSON(data: data)
+        switch json["code"].intValue {
+        case 0: break
+        default:
+          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        }
+      }
+      if error != nil {
+        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+      }
+    }
+    task.resume()
   }
   
   @objc private func editingChanged() {
@@ -183,31 +203,51 @@ class ScriptViewController: UIViewController {
   }
   
   @objc private func info(button: UIButton) {
-    /// ActionSheet
     let indexPath = NSIndexPath(forRow: button.tag, inSection: 0)
     let string = scriptList[indexPath.row].name as NSString
     self.oldNameTitle = string.substringWithRange(NSMakeRange(0, string.length-4))
     self.oldExtensionName = Suffix.haveSuffix(scriptList[indexPath.row].name)
     self.extensionName = self.oldExtensionName
     updateButtonStatus(self.oldExtensionName)
+    /// ActionSheet
     let actionSheet = UIActionSheet()
     actionSheet.title = self.oldNameTitle+self.oldExtensionName
     actionSheet.delegate = self
-    actionSheet.destructiveButtonIndex = 0
-    actionSheet.cancelButtonIndex = 3
-    actionSheet.addButtonWithTitle("运行")
-    actionSheet.addButtonWithTitle("停止")
+    if self.oldExtensionName != Suffix.Section.Txt.title {
+      actionSheet.destructiveButtonIndex = 0
+      actionSheet.cancelButtonIndex = 3
+      actionSheet.addButtonWithTitle("运行")
+      actionSheet.addButtonWithTitle("停止")
+    } else {
+      actionSheet.cancelButtonIndex = 1
+    }
     actionSheet.addButtonWithTitle("重命名")
     actionSheet.addButtonWithTitle(Constants.Text.cancel)
     actionSheet.showInView(view)
+    
+    guard self.oldExtensionName != Suffix.Section.Txt.title else { return }
+    
+    for cell in tableView.visibleCells {
+      let cell = cell as! ScriptCell
+      cell.scriptSelectedHidden(true)
+      cell.backgroundColor = UIColor.whiteColor()
+    }
+    for model in scriptList {
+      model.isSelected = false
+    }
+    
+    let cell = tableView.cellForRowAtIndexPath(indexPath) as! ScriptCell
+    cell.scriptSelectedHidden(false)
+    let model = scriptList[indexPath.row]
+    model.isSelected = true
+    cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
+    
+    NSUserDefaults.standardUserDefaults().setInteger(indexPath.row, forKey: "currentScript")
+    selectScriptFile(scriptList[indexPath.row].name)
   }
   
   @objc private func submit() {
     renameView.newNameTextField.resignFirstResponder()
-    //    guard renameView.newNameTextField.text?.characters.count != 0 else {
-    //      alert(title: Constants.Text.prompt, message: "文件名不能为空", delegate: nil, cancelButtonTitle: Constants.Text.ok)
-    //      return
-    //    }
     renameFile()
   }
   
@@ -279,15 +319,110 @@ class ScriptViewController: UIViewController {
 extension ScriptViewController: UIActionSheetDelegate {
   func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
     guard buttonIndex != actionSheet.cancelButtonIndex else { return }
-    switch buttonIndex {
-    /// 运行
-    case 0:break
-    /// 停止
-    case 1:break
-    /// 重命名
-    case 2: openRenameViewAnimator()
-    default:break
+    if self.oldExtensionName != Suffix.Section.Txt.title {
+      switch buttonIndex {
+      /// 运行
+      case 0: launchScriptFile()
+      /// 停止
+      case 1: isRunning()
+      /// 重命名
+      case 2: openRenameViewAnimator()
+      default:break
+      }
+    } else {
+      /// 重命名
+      if buttonIndex == 0 {
+        openRenameViewAnimator()
+      }
     }
+  }
+  
+  private func launchScriptFile() {
+    self.view.showHUD()
+    let request = Network.sharedManager.post(url: ServiceURL.Url.launchScriptFile, timeout: Constants.Timeout.request)
+    let session = Network.sharedManager.session()
+    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+      guard let `self` = self else { return }
+      self.view.hideHUD()
+      if let data = data {
+        let json = JSON(data: data)
+        switch json["code"].intValue {
+        case 0:
+          self.view.showHUD(.Message, text: json["message"].stringValue, autoHide: true, autoHideDelay: 0.5)
+        case 2:
+          let messgae = json["message"].stringValue + "\n" + json["detail"].stringValue
+          self.alert(title: Constants.Text.prompt, message: messgae, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        default:
+          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        }
+      }
+      if error != nil {
+        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+      }
+    }
+    task.resume()
+  }
+  
+  private func stopScriptFile() {
+    let request = Network.sharedManager.post(url: ServiceURL.Url.recycle, timeout: Constants.Timeout.request)
+    let session = Network.sharedManager.session()
+    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+      guard let `self` = self else { return }
+      if let data = data {
+        let json = JSON(data: data)
+        switch json["code"].intValue {
+        case 0:
+          self.view.showHUD(.Message, text: json["message"].stringValue, autoHide: true, autoHideDelay: 0.5)
+        default:
+          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        }
+      }
+      if error != nil {
+        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+      }
+    }
+    task.resume()
+  }
+  
+  private func selectScriptFile(name: String) {
+    let request = Network.sharedManager.post(url: ServiceURL.Url.selectScriptFile, timeout: Constants.Timeout.request, parameters: ["filename" : name])
+    let session = Network.sharedManager.session()
+    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+      guard let `self` = self else { return }
+      if let data = data {
+        let json = JSON(data: data)
+        switch json["code"].intValue {
+        case 0: break
+        default:
+          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        }
+      }
+      if error != nil {
+        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+      }
+    }
+    task.resume()
+  }
+  
+  private func isRunning() {
+    self.view.showHUD()
+    let request = Network.sharedManager.post(url: ServiceURL.Url.isRunning, timeout: Constants.Timeout.request)
+    let session = Network.sharedManager.session()
+    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+      guard let `self` = self else { return }
+      self.view.hideHUD()
+      if let data = data {
+        let json = JSON(data: data)
+        switch json["code"].intValue {
+        case 0: self.view.showHUD(.Message, text: Constants.Text.notRuningScript, autoHide: true, autoHideDelay: 0.7)
+        default: self.stopScriptFile()
+        }
+      }
+      if error != nil {
+        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+      }
+    }
+    task.resume()
   }
 }
 
@@ -336,6 +471,12 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    let suffix = Suffix.haveSuffix(scriptList[indexPath.row].name)
+    guard suffix != Suffix.Section.Txt.title else {
+      self.view.showHUD(.Message, text: Constants.Text.notSelected, autoHide: true, autoHideDelay: 0.7)
+      return
+    }
+    
     for cell in tableView.visibleCells {
       let cell = cell as! ScriptCell
       cell.scriptSelectedHidden(true)
@@ -352,6 +493,7 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
     cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
     
     NSUserDefaults.standardUserDefaults().setInteger(indexPath.row, forKey: "currentScript")
+    selectScriptFile(scriptList[indexPath.row].name)
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -373,6 +515,11 @@ extension ScriptViewController: SWTableViewCellDelegate {
     case 0:
       if let indexPath = tableView.indexPathForCell(cell) {
         let fileName = scriptList[indexPath.row].name
+        let suffix = Suffix.haveSuffix(fileName)
+        guard suffix != Suffix.Section.Xxt.title else {
+          self.view.showHUD(.Message, text: Constants.Text.notEnScript, autoHide: true, autoHideDelay: 0.7)
+          return
+        }
         let scriptDetailViewController = ScriptDetailViewController(fileName: fileName)
         self.navigationController?.pushViewController(scriptDetailViewController, animated: true)
       }
@@ -415,18 +562,6 @@ extension ScriptViewController: SWTableViewCellDelegate {
   func swipeableTableViewCellShouldHideUtilityButtonsOnSwipe(cell: SWTableViewCell!) -> Bool {
     return true
   }
-  
-  //  func swipeableTableViewCell(cell: SWTableViewCell!, scrollingToState state: SWCellState) {
-  //    switch state {
-  //    case .CellStateLeft:
-  //      if let indexPath = tableView.indexPathForCell(cell) {
-  //        let fileName = scriptNames[indexPath.row]
-  //        let scriptDetailViewController = ScriptDetailViewController(fileName: fileName)
-  //        self.navigationController?.pushViewController(scriptDetailViewController, animated: true)
-  //      }
-  //    default:break
-  //    }
-  //  }
 }
 
 extension ScriptViewController: NewScriptViewControllerDelegate {

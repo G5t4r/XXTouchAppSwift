@@ -33,7 +33,6 @@ class StartUpSettingViewController: UIViewController {
     tableView.registerClass(StartUpListCell.self, forCellReuseIdentifier: NSStringFromClass(StartUpListCell))
     tableView.delegate = self
     tableView.dataSource = self
-    tableView.estimatedRowHeight = 50
     
     view.addSubview(tableView)
   }
@@ -239,7 +238,7 @@ extension StartUpSettingViewController: UITableViewDelegate, UITableViewDataSour
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     switch indexPath.section {
-    case 0: return UITableViewAutomaticDimension
+    case 0: return 120
     default: return 60
     }
   }

@@ -35,6 +35,8 @@ extension ServiceURL {
     static let removeFile = baseURLString + "/remove_script_file"
     /// 重命名一个文件或目录
     static let renameFile = baseURLString + "/rename_file"
+    /// 获取当前已经选择的脚本文件
+    static let getSelectedScriptFile = baseURLString + "/get_selected_script_file"
     
     
     /// 获取远程服务开启状态
@@ -127,5 +129,17 @@ extension ServiceURL {
     
     /// 开发文档
     static let developDocument = baseURLString + "/help.html"
+    
+    
+    /// 扫一扫
+    static let bindQrcode = baseURLString + "/bind_qrcode"
+    
+    
+    /// 运行脚本
+    static let launchScriptFile = baseURLString + "/launch_script_file"
+    /// 停止脚本
+    static let recycle = baseURLString + "/recycle"
+    /// 判断脚本运行状态
+    static let isRunning = baseURLString + "/is_running"
   }
 }

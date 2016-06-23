@@ -47,7 +47,6 @@ class StartUpCell: UITableViewCell {
       make.top.equalTo(titleLabel.snp_bottom).offset(5)
       make.leading.equalTo(contentView).offset(20)
       make.trailing.equalTo(contentView).offset(-85)
-      make.bottom.equalTo(contentView).offset(-10)
     }
     
     switches.snp_makeConstraints { (make) in
