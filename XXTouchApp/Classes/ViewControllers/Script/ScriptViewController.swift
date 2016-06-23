@@ -33,9 +33,9 @@ class ScriptViewController: UIViewController {
     view.backgroundColor = UIColor.whiteColor()
     
     let rightImage = UIImage(named: "new")!.imageWithRenderingMode(.AlwaysOriginal)
-    navigationItem.rightBarButtonItem = UIBarButtonItem(image: rightImage, style: .Plain, target: self, action: #selector(addScript))
+    navigationItem.rightBarButtonItem = UIBarButtonItem(image: rightImage, style: .Plain, target: self, action: #selector(addScript(_:)))
     let leftImage = UIImage(named: "sweep")!.imageWithRenderingMode(.AlwaysOriginal)
-    navigationItem.leftBarButtonItem = UIBarButtonItem(image: leftImage, style: .Plain, target: self, action: #selector(sweep))
+    navigationItem.leftBarButtonItem = UIBarButtonItem(image: leftImage, style: .Plain, target: self, action: #selector(sweep(_:)))
     
     tableView.registerClass(ScriptCell.self, forCellReuseIdentifier: NSStringFromClass(ScriptCell))
     tableView.delegate = self
@@ -91,13 +91,44 @@ class ScriptViewController: UIViewController {
     renameView.newNameTextField.addTarget(self, action: #selector(editingChanged), forControlEvents: .EditingChanged)
   }
   
+  private func getSelectedScriptFile() {
+    let request = Network.sharedManager.post(url: ServiceURL.Url.getSelectedScriptFile, timeout:Constants.Timeout.request)
+    let session = Network.sharedManager.session()
+    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+      guard let `self` = self else { return }
+      self.view.hideHUD()
+      if let data = data {
+        let json = JSON(data: data)
+        switch json["code"].intValue {
+        case 0:
+          for cell in self.tableView.visibleCells {
+            let indexPath = self.tableView.indexPathForCell(cell)
+            if self.scriptList[indexPath!.row].name == json["data"]["filename"].stringValue {
+              self.tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
+              let cell = self.tableView.cellForRowAtIndexPath(indexPath!) as! ScriptCell
+              cell.scriptSelectedHidden(false)
+              cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
+              let model = self.scriptList[indexPath!.row]
+              model.isSelected = true
+            }
+          }
+        default:
+          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        }
+      }
+      if error != nil {
+        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+      }
+    }
+    task.resume()
+  }
+  
   private func fetchScriptList() {
     self.view.showHUD()
     let request = Network.sharedManager.post(url: ServiceURL.Url.getFileList, timeout:Constants.Timeout.dataRequest, parameters: ["directory":"lua/scripts/"])
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      self.view.hideHUD()
       if let data = data {
         self.scriptList.removeAll()
         let json = JSON(data: data)
@@ -114,17 +145,7 @@ class ScriptViewController: UIViewController {
         }
         self.scriptList.sortInPlace({ $0.time > $1.time })
         self.tableView.reloadData()
-        let row = NSUserDefaults.standardUserDefaults().integerForKey("currentScript")
-        if row >= 0 {
-          let indexPath = NSIndexPath(forRow: row, inSection: 0)
-          self.tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
-          let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! ScriptCell
-          cell.scriptSelectedHidden(false)
-          cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
-          let model = self.scriptList[indexPath.row]
-          model.isSelected = true
-          self.selectScriptFile(model.name)
-        }
+        self.getSelectedScriptFile()
       }
       if error != nil {
         self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
@@ -163,24 +184,32 @@ class ScriptViewController: UIViewController {
     task.resume()
   }
   
-  @objc private func addScript() {
+  @objc private func addScript(button: UIBarButtonItem) {
     let newScriptViewController = NewScriptViewController()
     newScriptViewController.delegate = self
     self.navigationController?.pushViewController(newScriptViewController, animated: true)
   }
   
   /// 扫一扫
-  @objc private func sweep() {
+  @objc private func sweep(button: UIBarButtonItem) {
+    button.enabled = false
     self.view.showHUD()
     let request = Network.sharedManager.post(url: ServiceURL.Url.bindQrcode, timeout:Constants.Timeout.request)
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      self.view.hideHUD()
       if let data = data {
         let json = JSON(data: data)
         switch json["code"].intValue {
-        case 0: break
+        case 0:
+          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(3 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
+            self.view.hideHUD()
+            button.enabled = true
+          })
+        case 3:
+          self.view.hideHUD()
+          button.enabled = true
+          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
         default:
           self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
         }
@@ -241,8 +270,6 @@ class ScriptViewController: UIViewController {
     let model = scriptList[indexPath.row]
     model.isSelected = true
     cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
-    
-    NSUserDefaults.standardUserDefaults().setInteger(indexPath.row, forKey: "currentScript")
     selectScriptFile(scriptList[indexPath.row].name)
   }
   
@@ -491,8 +518,6 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
     let model = scriptList[indexPath.row]
     model.isSelected = true
     cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
-    
-    NSUserDefaults.standardUserDefaults().setInteger(indexPath.row, forKey: "currentScript")
     selectScriptFile(scriptList[indexPath.row].name)
   }
   

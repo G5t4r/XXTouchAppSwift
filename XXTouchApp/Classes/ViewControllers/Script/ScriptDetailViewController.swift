@@ -31,7 +31,7 @@ class ScriptDetailViewController: UIViewController {
   private func setupUI() {
     view.backgroundColor = UIColor.whiteColor()
     navigationItem.title = "脚本内容"
-    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "保存", style: .Plain, target: self, action: #selector(saveScript))
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "保存", style: .Plain, target: self, action: #selector(saveScript(_:)))
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
     
     
@@ -82,7 +82,7 @@ class ScriptDetailViewController: UIViewController {
     task.resume()
   }
   
-  private func fetchWriteScript() {
+  private func fetchWriteScript(button: UIBarButtonItem) {
     self.view.showHUD()
     let parameters = [
       "filename":self.fileName,
@@ -100,6 +100,7 @@ class ScriptDetailViewController: UIViewController {
           self.textView.userInteractionEnabled = false
           self.view.showHUD(.Message, text: Constants.Text.saveSuccessful, autoHide: true, autoHideDelay: 0.5, completionHandler: {
             self.navigationController?.popViewControllerAnimated(true)
+            button.enabled = true
           })
         default:
           self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
@@ -112,8 +113,9 @@ class ScriptDetailViewController: UIViewController {
     task.resume()
   }
   
-  @objc private func saveScript() {
-    fetchWriteScript()
+  @objc private func saveScript(button: UIBarButtonItem) {
+    button.enabled = false
+    fetchWriteScript(button)
   }
   
   @objc private func keyboardWillAppear(notification: NSNotification) {
