@@ -9,4 +9,5 @@ pod 'MBProgressHUD'
 pod 'SDWebImage'
 pod 'KVOController'
 pod 'iOS-blur'
+pod 'YYText'
 end

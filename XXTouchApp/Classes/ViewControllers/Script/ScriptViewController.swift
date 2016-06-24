@@ -13,12 +13,12 @@ class ScriptViewController: UIViewController {
   
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private var scriptList = [ScriptModel]()
-  private var oldNameTitle = ""
+  private var oldName = ""
   private let renameView = RenameView()
   private let blurView = JCRBlurView()
   private let animationDuration = 0.5
-  private var extensionName = ""
   private var oldExtensionName = ""
+  private var rightBarButton: UIBarButtonItem!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -33,7 +33,8 @@ class ScriptViewController: UIViewController {
     view.backgroundColor = UIColor.whiteColor()
     
     let rightImage = UIImage(named: "new")!.imageWithRenderingMode(.AlwaysOriginal)
-    navigationItem.rightBarButtonItem = UIBarButtonItem(image: rightImage, style: .Plain, target: self, action: #selector(addScript(_:)))
+    rightBarButton = UIBarButtonItem(image: rightImage, style: .Plain, target: self, action: #selector(addScript(_:)))
+    navigationItem.rightBarButtonItem = rightBarButton
     let leftImage = UIImage(named: "sweep")!.imageWithRenderingMode(.AlwaysOriginal)
     navigationItem.leftBarButtonItem = UIBarButtonItem(image: leftImage, style: .Plain, target: self, action: #selector(sweep(_:)))
     
@@ -74,8 +75,8 @@ class ScriptViewController: UIViewController {
     
     renameView.snp_makeConstraints{ (make) in
       make.center.equalTo(view)
-      make.leading.trailing.equalTo(view).inset(Sizer.valueForPhone(inch_3_5: 20, inch_4_0: 20, inch_4_7: 42, inch_5_5: 62))
-      make.height.equalTo(80)
+      make.leading.trailing.equalTo(view).inset(Sizer.valueForPhone(inch_3_5: 20, inch_4_0: 20, inch_4_7: 32, inch_5_5: 42))
+      make.height.equalTo(60)
     }
     
     blurView.snp_makeConstraints { (make) in
@@ -86,8 +87,6 @@ class ScriptViewController: UIViewController {
   private func setupAction() {
     renameView.submitButton.addTarget(self, action: #selector(submit), forControlEvents: .TouchUpInside)
     blurView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(blurTap)))
-    renameView.luaButton.addTarget(self, action: #selector(luaClick(_:)), forControlEvents: .TouchUpInside)
-    renameView.txtButton.addTarget(self, action: #selector(txtClick(_:)), forControlEvents: .TouchUpInside)
     renameView.newNameTextField.addTarget(self, action: #selector(editingChanged), forControlEvents: .EditingChanged)
   }
   
@@ -110,6 +109,7 @@ class ScriptViewController: UIViewController {
               cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
               let model = self.scriptList[indexPath!.row]
               model.isSelected = true
+              break
             }
           }
         default:
@@ -148,6 +148,7 @@ class ScriptViewController: UIViewController {
         self.getSelectedScriptFile()
       }
       if error != nil {
+        self.view.hideHUD()
         self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
       }
       self.tableView.mj_header.endRefreshing()
@@ -158,8 +159,8 @@ class ScriptViewController: UIViewController {
   /// 重命名
   private func renameFile() {
     let parameters = [
-      "filename": ServiceURL.scriptsPath + self.oldNameTitle + self.oldExtensionName,
-      "newfilename": ServiceURL.scriptsPath + renameView.newNameTextField.text! + self.extensionName
+      "filename": ServiceURL.scriptsPath + self.oldName,
+      "newfilename": ServiceURL.scriptsPath + renameView.newNameTextField.text!
     ]
     let request = Network.sharedManager.post(url: ServiceURL.Url.renameFile, timeout:Constants.Timeout.request, parameters: parameters)
     let session = Network.sharedManager.session()
@@ -192,7 +193,9 @@ class ScriptViewController: UIViewController {
   
   /// 扫一扫
   @objc private func sweep(button: UIBarButtonItem) {
+    self.tabBarController?.tabBar.userInteractionEnabled = false
     button.enabled = false
+    rightBarButton.enabled = false
     self.view.showHUD()
     let request = Network.sharedManager.post(url: ServiceURL.Url.bindQrcode, timeout:Constants.Timeout.request)
     let session = Network.sharedManager.session()
@@ -204,52 +207,51 @@ class ScriptViewController: UIViewController {
         case 0:
           dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(3 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
             self.view.hideHUD()
+            self.tabBarController?.tabBar.userInteractionEnabled = true
             button.enabled = true
+            self.rightBarButton.enabled = true
           })
         case 3:
           self.view.hideHUD()
+          self.tabBarController?.tabBar.userInteractionEnabled = true
           button.enabled = true
+          self.rightBarButton.enabled = true
           self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
         default:
+          self.tabBarController?.tabBar.userInteractionEnabled = true
+          button.enabled = true
+          self.rightBarButton.enabled = true
           self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
         }
       }
       if error != nil {
+        button.enabled = true
+        self.rightBarButton.enabled = true
+        self.tabBarController?.tabBar.userInteractionEnabled = true
         self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
       }
     }
     task.resume()
   }
   
-  @objc private func editingChanged() {
-    if (self.oldNameTitle + self.oldExtensionName) != (renameView.newNameTextField.text! + self.extensionName) && renameView.newNameTextField.text?.characters.count != 0{
-      renameView.submitButton.enabled = true
-      renameView.submitButton.backgroundColor = ThemeManager.Theme.tintColor
-    } else {
-      renameView.submitButton.enabled = false
-      renameView.submitButton.backgroundColor = ThemeManager.Theme.lightTextColor
-    }
-  }
-  
   @objc private func info(button: UIButton) {
     let indexPath = NSIndexPath(forRow: button.tag, inSection: 0)
-    let string = scriptList[indexPath.row].name as NSString
-    self.oldNameTitle = string.substringWithRange(NSMakeRange(0, string.length-4))
+    self.oldName = scriptList[indexPath.row].name
     self.oldExtensionName = Suffix.haveSuffix(scriptList[indexPath.row].name)
-    self.extensionName = self.oldExtensionName
-    updateButtonStatus(self.oldExtensionName)
+    editingChanged()
     /// ActionSheet
     let actionSheet = UIActionSheet()
-    actionSheet.title = self.oldNameTitle+self.oldExtensionName
+    actionSheet.title = self.oldName
     actionSheet.delegate = self
     if self.oldExtensionName != Suffix.Section.Txt.title {
       actionSheet.destructiveButtonIndex = 0
-      actionSheet.cancelButtonIndex = 3
+      actionSheet.cancelButtonIndex = 4
       actionSheet.addButtonWithTitle("运行")
       actionSheet.addButtonWithTitle("停止")
     } else {
-      actionSheet.cancelButtonIndex = 1
+      actionSheet.cancelButtonIndex = 2
     }
+    actionSheet.addButtonWithTitle("编辑")
     actionSheet.addButtonWithTitle("重命名")
     actionSheet.addButtonWithTitle(Constants.Text.cancel)
     actionSheet.showInView(view)
@@ -265,6 +267,7 @@ class ScriptViewController: UIViewController {
       model.isSelected = false
     }
     
+    self.tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
     let cell = tableView.cellForRowAtIndexPath(indexPath) as! ScriptCell
     cell.scriptSelectedHidden(false)
     let model = scriptList[indexPath.row]
@@ -286,30 +289,13 @@ class ScriptViewController: UIViewController {
     }
   }
   
-  @objc private func luaClick(button: UIButton) {
-    buttonCustomStatus(selectedButton: button, unselectedButton: renameView.txtButton)
-    extensionName = button.titleLabel!.text!
-    editingChanged()
-  }
-  
-  @objc private func txtClick(button: UIButton) {
-    buttonCustomStatus(selectedButton: button, unselectedButton: renameView.luaButton)
-    extensionName = button.titleLabel!.text!
-    editingChanged()
-  }
-  
-  private func buttonCustomStatus(selectedButton selectedButton: UIButton, unselectedButton: UIButton) {
-    selectedButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-    selectedButton.backgroundColor = ThemeManager.Theme.redBackgroundColor
-    unselectedButton.setTitleColor(ThemeManager.Theme.lightTextColor, forState: .Normal)
-    unselectedButton.backgroundColor = ThemeManager.Theme.separatorColor
-  }
-  
-  private func updateButtonStatus(extensionName: String) {
-    if extensionName == renameView.luaButton.titleLabel?.text {
-      buttonCustomStatus(selectedButton: renameView.luaButton, unselectedButton: renameView.txtButton)
-    } else if extensionName == renameView.txtButton.titleLabel?.text {
-      buttonCustomStatus(selectedButton: renameView.txtButton, unselectedButton: renameView.luaButton)
+  @objc private func editingChanged() {
+    if self.oldName != renameView.newNameTextField.text! && renameView.newNameTextField.text?.characters.count != 0{
+      renameView.submitButton.enabled = true
+      renameView.submitButton.backgroundColor = ThemeManager.Theme.tintColor
+    } else {
+      renameView.submitButton.enabled = false
+      renameView.submitButton.backgroundColor = ThemeManager.Theme.lightTextColor
     }
   }
   
@@ -329,7 +315,7 @@ class ScriptViewController: UIViewController {
   private func openRenameViewAnimator() {
     navigationController?.tabBarController?.tabBar.hidden = true
     navigationController?.setNavigationBarHidden(true, animated: true)
-    renameView.newNameTextField.text = self.oldNameTitle
+    renameView.newNameTextField.text = self.oldName
     renameView.hidden = false
     blurView.hidden = false
     renameView.alpha = 1
@@ -352,14 +338,25 @@ extension ScriptViewController: UIActionSheetDelegate {
       case 0: launchScriptFile()
       /// 停止
       case 1: isRunning()
+      /// 编辑
+      case 2:
+        if let indexPath = tableView.indexPathForSelectedRow {
+          edit(indexPath)
+        }
       /// 重命名
-      case 2: openRenameViewAnimator()
-      default:break
+      case 3: openRenameViewAnimator()
+      default: return
       }
     } else {
+      switch buttonIndex {
+      /// 编辑
+      case 0:
+        if let indexPath = tableView.indexPathForSelectedRow {
+          edit(indexPath)
+        }
       /// 重命名
-      if buttonIndex == 0 {
-        openRenameViewAnimator()
+      case 1: openRenameViewAnimator()
+      default: return
       }
     }
   }
@@ -535,20 +532,26 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension ScriptViewController: SWTableViewCellDelegate {
+  
+  private func edit(indexPath: NSIndexPath) {
+    let fileName = scriptList[indexPath.row].name
+    let suffix = Suffix.haveSuffix(fileName)
+    guard suffix != Suffix.Section.Xxt.title else {
+      self.view.showHUD(.Message, text: Constants.Text.notEnScript, autoHide: true, autoHideDelay: 0.7)
+      return
+    }
+    let scriptDetailViewController = ScriptDetailViewController(fileName: fileName)
+    self.navigationController?.pushViewController(scriptDetailViewController, animated: true)
+  }
+  
   func swipeableTableViewCell(cell: SWTableViewCell!, didTriggerLeftUtilityButtonWithIndex index: Int) {
     switch index {
+    /// 编辑
     case 0:
       if let indexPath = tableView.indexPathForCell(cell) {
-        let fileName = scriptList[indexPath.row].name
-        let suffix = Suffix.haveSuffix(fileName)
-        guard suffix != Suffix.Section.Xxt.title else {
-          self.view.showHUD(.Message, text: Constants.Text.notEnScript, autoHide: true, autoHideDelay: 0.7)
-          return
-        }
-        let scriptDetailViewController = ScriptDetailViewController(fileName: fileName)
-        self.navigationController?.pushViewController(scriptDetailViewController, animated: true)
+        edit(indexPath)
       }
-    default:break
+    default: return
     }
   }
   
@@ -569,7 +572,7 @@ extension ScriptViewController: SWTableViewCellDelegate {
               self.scriptList.removeAtIndex(indexPath.row)
               self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
               self.tableView.setEditing(false, animated: true)
-              self.view.showHUD(.Message, text: Constants.Text.removeSuccessful, autoHide: true, autoHideDelay: 0.5)
+            //              self.view.showHUD(.Message, text: Constants.Text.removeSuccessful, autoHide: true, autoHideDelay: 0.5)
             default:
               self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
             }

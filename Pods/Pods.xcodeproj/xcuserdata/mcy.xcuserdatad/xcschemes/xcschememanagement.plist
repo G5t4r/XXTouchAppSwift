@@ -39,6 +39,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>YYText.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>iOS-blur.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,7 +57,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1EB74E747582260E774BD37ACA2FC917</key>
+		<key>4E463C17EF5743219B247B217B2018DF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -67,17 +72,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7214B39C9C442C8F1211B4B842E047ED</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>736E57AD5AEFAAF68D47AE4E8FCB8F68</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FC56A0E720E9C62F6B4E70059914E5D3</key>
+		<key>95FBC6BBBDD830E63C33EB1708B9D9B8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E229E7CEE87FD598C045693A466AA30E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EF01B71EB6B0956A23114757F0CB61B1</key>
 		<dict>
 			<key>primary</key>
 			<true/>

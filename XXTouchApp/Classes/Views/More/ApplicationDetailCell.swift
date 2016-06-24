@@ -9,7 +9,8 @@
 import UIKit
 
 class ApplicationDetailCell: UITableViewCell {
-  let titleLabel = UILabel()
+  let titleButton = UIButton(type: .Custom)
+  let scrollView = UIScrollView()
   
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -24,20 +25,28 @@ class ApplicationDetailCell: UITableViewCell {
   private func setupUI() {
     self.selectionStyle = .None
     
-    titleLabel.textColor = UIColor(rgb: 0x3d85c6)
-    titleLabel.numberOfLines = 0
+    titleButton.setTitleColor(UIColor(rgb: 0x3d85c6), forState: .Normal)
+    titleButton.sizeToFit()
     
-    contentView.addSubview(titleLabel)
+    scrollView.alwaysBounceHorizontal = true
+    scrollView.showsHorizontalScrollIndicator = false
+    
+    scrollView.addSubview(titleButton)
+    contentView.addSubview(scrollView)
   }
   
   private func makeConstriants() {
-    titleLabel.snp_makeConstraints { (make) in
-      make.centerY.equalTo(contentView)
-      make.leading.trailing.equalTo(contentView).inset(20)
+    scrollView.snp_makeConstraints { (make) in
+      make.edges.equalTo(contentView)
+    }
+    
+    titleButton.snp_makeConstraints { (make) in
+      make.centerY.equalTo(scrollView)
+      make.leading.equalTo(scrollView).offset(20)
     }
   }
   
   func bind(title: String) {
-    titleLabel.text = title
+    titleButton.setTitle(title, forState: .Normal)
   }
 }

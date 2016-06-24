@@ -109,8 +109,7 @@ class MoreViewController: UIViewController {
     return titleList
   }()
   private var host = ""
-  private let remoteButton = UIButton(type: .Custom)
-  private let remoteButtonHeight: CGFloat = 40
+  private let moreRemoteServiceCell = MoreRemoteServiceCell()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -130,35 +129,19 @@ class MoreViewController: UIViewController {
     
     tableView.delegate = self
     tableView.dataSource = self
-    tableView.contentInset.bottom = remoteButtonHeight
-    tableView.scrollIndicatorInsets.bottom = tableView.contentInset.bottom
-    
-    remoteButton.setTitle("远程服务读取中..", forState: .Normal)
-    remoteButton.backgroundColor = ThemeManager.Theme.lightTextColor
-    remoteButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-    remoteButton.alpha = 0.95
-    remoteButton.userInteractionEnabled = false
     
     view.addSubview(tableView)
-    view.addSubview(remoteButton)
   }
   
   private func makeConstriants() {
     tableView.snp_makeConstraints { (make) in
       make.edges.equalTo(view)
     }
-    
-    remoteButton.snp_makeConstraints { (make) in
-      make.leading.trailing.equalTo(view)
-      make.bottom.equalTo(view).offset(-Constants.Size.tabBarHeight)
-      make.height.equalTo(remoteButtonHeight)
-    }
   }
   
   private func setupAction() {
-    remoteButton.addTarget(self, action: #selector(remoteClick(_:)), forControlEvents: .TouchUpInside)
+    moreRemoteServiceCell.switchs.addTarget(self, action: #selector(remoteClick(_:)), forControlEvents: .ValueChanged)
   }
-  
 }
 
 extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
@@ -168,7 +151,7 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     switch section {
-    case 0: return 1
+    case 0: return 2
     case 1: return 1
     case 2: return settingList.count
     case 3: return systemList.count
@@ -179,12 +162,25 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return 55
+    switch indexPath.section {
+    case 0:
+      if indexPath.row == 0 {
+        return 70
+      } else {
+        return 55
+      }
+    default: return 55
+    }
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     switch indexPath.section {
-    case 0: return MoreCustomCell(icon: iconServiceList[indexPath.row], title: serviceList[indexPath.row])
+    case 0:
+      if indexPath.row == 0 {
+        return moreRemoteServiceCell
+      } else {
+        return MoreCustomCell(icon: iconServiceList[0], title: serviceList[0])
+      }
     case 1: return MoreCustomCell(icon: iconAuthorizationList[indexPath.row], title: authorizationList[indexPath.row])
     case 2: return MoreCustomCell(icon: iconSettingList[indexPath.row], title: settingList[indexPath.row])
     case 3: return MoreCustomCell(icon: iconSystemList[indexPath.row], title: systemList[indexPath.row])
@@ -225,6 +221,28 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - 服务
 extension MoreViewController {
+  func titleLabelAnimation(switchs: Bool) {
+    if switchs {
+      self.moreRemoteServiceCell.bind("远程服务已打开", host: self.host)
+      if self.moreRemoteServiceCell.titleLabel.transform.ty == -9 {
+        self.moreRemoteServiceCell.hostLabelHidden(!switchs)
+        return
+      }
+      
+      UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 10, options: [], animations: {
+        self.moreRemoteServiceCell.titleLabel.transform = CGAffineTransformTranslate(self.moreRemoteServiceCell.titleLabel.transform, 0, -9)
+        }, completion: { (_) in
+          self.moreRemoteServiceCell.hostLabelHidden(!switchs)
+      })
+    } else {
+      self.moreRemoteServiceCell.bind("远程服务已关闭", host: "")
+      self.moreRemoteServiceCell.hostLabelHidden(!switchs)
+      UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 10, options: [], animations: {
+        self.moreRemoteServiceCell.titleLabel.transform = CGAffineTransformIdentity
+        }, completion: nil)
+    }
+  }
+  
   private func fetchRemoteAccessStatus() {
     let request = Network.sharedManager.post(url: ServiceURL.Url.isRemoteAccessOpened, timeout:Constants.Timeout.request)
     let session = Network.sharedManager.session()
@@ -234,13 +252,9 @@ extension MoreViewController {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
-          if json["data"]["opened"].boolValue {
-            self.remoteButton.selected = true
-            self.remoteButtonUpdate(self.host, backgroundColor: ThemeManager.Theme.greenBackgroundColor)
-          } else {
-            self.remoteButton.selected = false
-            self.remoteButtonUpdate("远程服务已关闭", backgroundColor: ThemeManager.Theme.lightTextColor)
-          }
+          let opened = json["data"]["opened"].boolValue
+          self.moreRemoteServiceCell.switchs.on = opened
+          self.titleLabelAnimation(opened)
         default:
           self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
         }
@@ -248,20 +262,16 @@ extension MoreViewController {
       if error != nil {
         self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
       }
-      self.remoteButton.userInteractionEnabled = true
     }
     task.resume()
   }
   
-  @objc private func remoteClick(button: UIButton) {
-    button.userInteractionEnabled = false
-    if !button.selected {
+  @objc private func remoteClick(switchState: UISwitch) {
+    if switchState.on {
       // 打开远程服务
-      button.selected = true
       openAndCloseRemoteAccess(ServiceURL.Url.openRemoteAccess)
     } else {
       // 关闭远程服务
-      button.selected = false
       openAndCloseRemoteAccess(ServiceURL.Url.closeRemoteAccess)
     }
   }
@@ -277,7 +287,7 @@ extension MoreViewController {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
-          self.fetchRemoteAccessStatus()
+          self.getDeviceinfo()
         default:
           self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
         }
@@ -289,15 +299,10 @@ extension MoreViewController {
     task.resume()
   }
   
-  private func remoteButtonUpdate(title: String, backgroundColor: UIColor) {
-    self.remoteButton.setTitle(title, forState: .Normal)
-    self.remoteButton.backgroundColor = backgroundColor
-  }
-  
   private func service(rowIndex: Int) {
     switch rowIndex {
     /// 重启服务
-    case 0:
+    case 1:
       self.alertOther(title: Constants.Text.prompt, message: "确定要重启XXTouch服务么？", delegate: self, cancelButtonTitle: Constants.Text.cancel, otherButtonTitles: Constants.Text.ok, tag: 0)
     default:break
     }
@@ -382,7 +387,11 @@ extension MoreViewController {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
-          self.host = "http://"+json["data"]["wifi_ip"].stringValue+":"+json["data"]["port"].stringValue
+          if json["data"]["wifi_ip"].stringValue == ServiceURL.localhost {
+            self.host = "请连接到可用Wi-Fi"
+          } else {
+            self.host = "http://"+json["data"]["wifi_ip"].stringValue+":"+json["data"]["port"].stringValue
+          }
           self.fetchRemoteAccessStatus()
         default:
           self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
@@ -434,22 +443,30 @@ extension MoreViewController: UIAlertViewDelegate {
   }
   
   private func restart() {
+    self.tabBarController?.tabBar.userInteractionEnabled = false
     self.view.showHUD()
     let request = Network.sharedManager.post(url: ServiceURL.Url.restart, timeout:Constants.Timeout.request)
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      self.view.hideHUD()
       if let data = data {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
-          self.view.showHUD(.Message, text: "重启成功", autoHide: true, autoHideDelay: 0.5)
+          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
+            self.tabBarController?.tabBar.userInteractionEnabled = true
+            self.view.hideHUD()
+            self.getDeviceinfo()
+            self.view.showHUD(.Message, text: "重启成功", autoHide: true, autoHideDelay: 0.5)
+          })
+          
         default:
+          self.tabBarController?.tabBar.userInteractionEnabled = true
           self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
         }
       }
       if error != nil {
+        self.tabBarController?.tabBar.userInteractionEnabled = true
         self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
       }
     }
@@ -535,8 +552,7 @@ extension MoreViewController: UIAlertViewDelegate {
       if let data = data {
         let json = JSON(data: data)
         switch json["code"].intValue {
-        case 0:
-          self.view.showHUD(.Message, text: "注销成功", autoHide: true, autoHideDelay: 0.5)
+        case 0: break
         default:
           self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
         }
@@ -558,8 +574,7 @@ extension MoreViewController: UIAlertViewDelegate {
       if let data = data {
         let json = JSON(data: data)
         switch json["code"].intValue {
-        case 0:
-          self.view.showHUD(.Message, text: "重启成功", autoHide: true, autoHideDelay: 0.5)
+        case 0: break
         default:
           self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
         }

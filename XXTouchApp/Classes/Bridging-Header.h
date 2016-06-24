@@ -17,4 +17,4 @@
 #import "SWTableViewCell/SWTableViewCell.h"
 #import "MJRefresh/MJRefresh.h"
 #import "iOS-blur/JCRBlurView.h"
-
+#import "YYText/YYText.h"
