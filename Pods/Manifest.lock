@@ -8,6 +8,7 @@ PODS:
     - SDWebImage/Core (= 3.8.1)
   - SDWebImage/Core (3.8.1)
   - SWTableViewCell (0.3.7)
+  - YYText (1.0.5)
 
 DEPENDENCIES:
   - DZNEmptyDataSet
@@ -17,6 +18,7 @@ DEPENDENCIES:
   - MJRefresh
   - SDWebImage
   - SWTableViewCell
+  - YYText
 
 SPEC CHECKSUMS:
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
@@ -26,7 +28,8 @@ SPEC CHECKSUMS:
   MJRefresh: f67f0750d57a4e4ae433da549359ca53b52cdc7d
   SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
   SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
+  YYText: ac09660c9ccd9b817f409a20caa6f5587444d2ae
 
-PODFILE CHECKSUM: 2432e29e646de31b6163232f182886c2f124753b
+PODFILE CHECKSUM: bcbbb9f35de41860d962e789c41694e4de74efe0
 
 COCOAPODS: 1.0.1

@@ -10,7 +10,7 @@ import UIKit
 
 class ScriptDetailViewController: UIViewController {
   private let fileName: String
-  private let textView = UITextView()
+  private let textView = YYTextView()
   
   override func viewDidLoad() {
     super.viewDidLoad()

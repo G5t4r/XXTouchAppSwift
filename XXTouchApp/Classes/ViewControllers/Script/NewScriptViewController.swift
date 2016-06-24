@@ -13,8 +13,7 @@ protocol NewScriptViewControllerDelegate: NSObjectProtocol {
 }
 
 class NewScriptViewController: UIViewController {
-  private let textView = UITextView()
-  private let placeHolderLabel = UILabel()
+  private let textView = YYTextView()
   weak var delegate: NewScriptViewControllerDelegate?
   private let newNameView = NewNameView()
   private let blurView = JCRBlurView()
@@ -42,13 +41,12 @@ class NewScriptViewController: UIViewController {
     
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
     
-    placeHolderLabel.text = "点我开始写代码.."
-    placeHolderLabel.textColor = UIColor.lightGrayColor()
-    
     textView.backgroundColor = UIColor(rgb: 0x434343)
     textView.textColor = UIColor.whiteColor()
+    textView.placeholderText = "点我开始写代码.."
+    textView.placeholderTextColor = UIColor.lightGrayColor()
     textView.delegate = self
-    textView.addSubview(placeHolderLabel)
+    
     
     newNameView.hidden = true
     blurView.hidden = true
@@ -70,14 +68,10 @@ class NewScriptViewController: UIViewController {
       make.edges.equalTo(view)
     }
     
-    placeHolderLabel.snp_makeConstraints { (make) in
-      make.top.leading.trailing.equalTo(textView).inset(10)
-    }
-    
     newNameView.snp_makeConstraints{ (make) in
       make.center.equalTo(view)
-      make.leading.trailing.equalTo(view).inset(Sizer.valueForPhone(inch_3_5: 20, inch_4_0: 20, inch_4_7: 42, inch_5_5: 62))
-      make.height.equalTo(80)
+      make.leading.trailing.equalTo(view).inset(Sizer.valueForPhone(inch_3_5: 20, inch_4_0: 20, inch_4_7: 32, inch_5_5: 42))
+      make.height.equalTo(100)
     }
     
     blurView.snp_makeConstraints { (make) in
@@ -218,10 +212,9 @@ class NewScriptViewController: UIViewController {
   }
 }
 
-extension NewScriptViewController: UITextViewDelegate {
-  func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+extension NewScriptViewController: YYTextViewDelegate {
+  func textViewShouldBeginEditing(textView: YYTextView) -> Bool {
     if self.textView.text.characters.count == 0 {
-      self.placeHolderLabel.hidden = true
       self.textView.text = Constants.Text.startScript
       return true
     }

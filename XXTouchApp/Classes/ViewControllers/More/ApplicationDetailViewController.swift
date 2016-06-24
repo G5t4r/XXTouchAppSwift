@@ -11,10 +11,30 @@ import UIKit
 class ApplicationDetailViewController: UIViewController {
   private let model: ApplicationListModel
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
-  private let appNameCell = ApplicationDetailCell()
-  private let appPackageNameCell = ApplicationDetailCell()
-  private let appDataPathCell = ApplicationDetailCell()
-  private let appBundlePathCell = ApplicationDetailCell()
+  
+  private lazy var appNameCell: ApplicationDetailCell = {
+    let appNameCell = ApplicationDetailCell()
+    appNameCell.titleButton.tag = 0
+    return appNameCell
+  }()
+  
+  private lazy var appPackageNameCell: ApplicationDetailCell = {
+    let appPackageNameCell = ApplicationDetailCell()
+    appPackageNameCell.titleButton.tag = 1
+    return appPackageNameCell
+  }()
+  
+  private lazy var appDataPathCell: ApplicationDetailCell = {
+    let appDataPathCell = ApplicationDetailCell()
+    appDataPathCell.titleButton.tag = 2
+    return appDataPathCell
+  }()
+  
+  private lazy var appBundlePathCell: ApplicationDetailCell = {
+    let appBundlePathCell = ApplicationDetailCell()
+    appBundlePathCell.titleButton.tag = 3
+    return appBundlePathCell
+  }()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -49,7 +69,21 @@ class ApplicationDetailViewController: UIViewController {
   }
   
   private func setupAction() {
-    
+    appNameCell.titleButton.addTarget(self, action: #selector(pasteboard(_:)), forControlEvents: .TouchUpInside)
+    appPackageNameCell.titleButton.addTarget(self, action: #selector(pasteboard(_:)), forControlEvents: .TouchUpInside)
+    appDataPathCell.titleButton.addTarget(self, action: #selector(pasteboard(_:)), forControlEvents: .TouchUpInside)
+    appBundlePathCell.titleButton.addTarget(self, action: #selector(pasteboard(_:)), forControlEvents: .TouchUpInside)
+  }
+  
+  @objc private func pasteboard(button: UIButton) {
+    switch button.tag {
+    case 0: UIPasteboard.generalPasteboard().string = model.name
+    case 1: UIPasteboard.generalPasteboard().string = model.packageName
+    case 2: UIPasteboard.generalPasteboard().string = model.bundlePath
+    case 3: UIPasteboard.generalPasteboard().string = model.dataPath
+    default: return
+    }
+    self.view.showHUD(.Message, text: Constants.Text.copy, autoHide: true, autoHideDelay: 0.7)
   }
 }
 
@@ -72,24 +106,26 @@ extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataS
       return appPackageNameCell
     case 2:
       appBundlePathCell.bind(model.bundlePath)
+      appBundlePathCell.scrollView.contentSize.width = appBundlePathCell.titleButton.titleLabel!.mj_textWith()+40
       return appBundlePathCell
     case 3:
       appDataPathCell.bind(model.dataPath)
+      appDataPathCell.scrollView.contentSize.width = appDataPathCell.titleButton.titleLabel!.mj_textWith()+40
       return appDataPathCell
     default: return UITableViewCell()
     }
   }
   
-  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    switch indexPath.section {
-    case 0: UIPasteboard.generalPasteboard().string = model.name
-    case 1: UIPasteboard.generalPasteboard().string = model.packageName
-    case 2: UIPasteboard.generalPasteboard().string = model.bundlePath
-    case 3: UIPasteboard.generalPasteboard().string = model.dataPath
-    default: break
-    }
-    self.view.showHUD(.Message, text: Constants.Text.copy, autoHide: true, autoHideDelay: 0.7)
-  }
+  //  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+  //    switch indexPath.section {
+  //    case 0: UIPasteboard.generalPasteboard().string = model.name
+  //    case 1: UIPasteboard.generalPasteboard().string = model.packageName
+  //    case 2: UIPasteboard.generalPasteboard().string = model.bundlePath
+  //    case 3: UIPasteboard.generalPasteboard().string = model.dataPath
+  //    default: break
+  //    }
+  //    self.view.showHUD(.Message, text: Constants.Text.copy, autoHide: true, autoHideDelay: 0.7)
+  //  }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     return 30
@@ -100,13 +136,7 @@ extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataS
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    switch indexPath.section {
-    case 2:
-      return 85
-    case 3:
-      return 85
-    default: return 45
-    }
+    return 45
   }
   
   func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

@@ -10,6 +10,7 @@ import UIKit
 
 class AuthorizationCell: UITableViewCell {
   private let titleLabel = UILabel()
+  private let icon = UIImageView(image: UIImage(named: "vip_01"))
   
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -24,20 +25,35 @@ class AuthorizationCell: UITableViewCell {
   private func setupUI() {
     self.selectionStyle = .None
     titleLabel.text = "正在获取设备授权信息.."
-    titleLabel.textAlignment = .Center
+//    titleLabel.textAlignment = .Center
     titleLabel.textColor = ThemeManager.Theme.tintColor
+    
+    contentView.addSubview(icon)
     contentView.addSubview(titleLabel)
   }
   
   private func makeConstriants() {
-    titleLabel.snp_makeConstraints { (make) in
+    icon.snp_makeConstraints { (make) in
       make.centerY.equalTo(contentView)
-      make.leading.trailing.equalTo(contentView).inset(15)
+      make.centerX.equalTo(contentView).offset(-75)
+    }
+    
+    titleLabel.snp_makeConstraints { (make) in
+      make.centerY.equalTo(icon)
+      make.leading.equalTo(icon.snp_trailing).offset(10)
     }
   }
   
   func bind(title: String) {
     titleLabel.text = title
+  }
+  
+  func iconVip() {
+    icon.image = UIImage(named: "vip_02")
+  }
+  
+  func iconNoVip() {
+    icon.image = UIImage(named: "vip_01")
   }
   
 }

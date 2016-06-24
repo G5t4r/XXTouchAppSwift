@@ -16,9 +16,16 @@ class Formatter {
    
    - returns: 时间字符串
    */
+  class func formatDateTime(unixTime: Int64) -> String {
+    let formatter = NSDateFormatter()
+    formatter.dateFormat = "yyy-MM-dd HH:mm"
+    let date = NSDate(timeIntervalSince1970: NSTimeInterval(unixTime))
+    return formatter.stringFromDate(date)
+  }
+  
   class func formatDate(unixTime: Int64) -> String {
     let formatter = NSDateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd"
+    formatter.dateFormat = "yyy-MM-dd"
     let date = NSDate(timeIntervalSince1970: NSTimeInterval(unixTime))
     return formatter.stringFromDate(date)
   }
