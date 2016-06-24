@@ -47,7 +47,6 @@ class NewScriptViewController: UIViewController {
     textView.placeholderTextColor = UIColor.lightGrayColor()
     textView.delegate = self
     
-    
     newNameView.hidden = true
     blurView.hidden = true
     blurView.alpha = 0
