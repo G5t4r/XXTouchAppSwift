@@ -19,6 +19,7 @@ class ScriptViewController: UIViewController {
   private let animationDuration = 0.5
   private var oldExtensionName = ""
   private var rightBarButton: UIBarButtonItem!
+  private var indexPath = NSIndexPath()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -236,6 +237,7 @@ class ScriptViewController: UIViewController {
   
   @objc private func info(button: UIButton) {
     let indexPath = NSIndexPath(forRow: button.tag, inSection: 0)
+    self.indexPath = indexPath
     self.oldName = scriptList[indexPath.row].name
     self.oldExtensionName = Suffix.haveSuffix(scriptList[indexPath.row].name)
     editingChanged()
@@ -339,10 +341,7 @@ extension ScriptViewController: UIActionSheetDelegate {
       /// 停止
       case 1: isRunning()
       /// 编辑
-      case 2:
-        if let indexPath = tableView.indexPathForSelectedRow {
-          edit(indexPath)
-        }
+      case 2: edit(self.indexPath)
       /// 重命名
       case 3: openRenameViewAnimator()
       default: return
@@ -350,10 +349,7 @@ extension ScriptViewController: UIActionSheetDelegate {
     } else {
       switch buttonIndex {
       /// 编辑
-      case 0:
-        if let indexPath = tableView.indexPathForSelectedRow {
-          edit(indexPath)
-        }
+      case 0: edit(self.indexPath)
       /// 重命名
       case 1: openRenameViewAnimator()
       default: return
@@ -533,7 +529,7 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ScriptViewController: SWTableViewCellDelegate {
   
-  private func edit(indexPath: NSIndexPath) {
+  private func intoEdit(indexPath: NSIndexPath) {
     let fileName = scriptList[indexPath.row].name
     let suffix = Suffix.haveSuffix(fileName)
     guard suffix != Suffix.Section.Xxt.title else {
@@ -542,6 +538,14 @@ extension ScriptViewController: SWTableViewCellDelegate {
     }
     let scriptDetailViewController = ScriptDetailViewController(fileName: fileName)
     self.navigationController?.pushViewController(scriptDetailViewController, animated: true)
+  }
+  
+  private func edit(indexPath: NSIndexPath) {
+    if scriptList[indexPath.row].size > 3*1024*1024 {
+      self.alertOther(title: Constants.Text.warning, message: "文件过大\n是否需要忍受可能卡死的风险继续编辑？", delegate: self, cancelButtonTitle: Constants.Text.cancel, otherButtonTitles: Constants.Text.ok, tag: 0)
+    } else {
+      intoEdit(indexPath)
+    }
   }
   
   func swipeableTableViewCell(cell: SWTableViewCell!, didTriggerLeftUtilityButtonWithIndex index: Int) {
@@ -572,6 +576,7 @@ extension ScriptViewController: SWTableViewCellDelegate {
               self.scriptList.removeAtIndex(indexPath.row)
               self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
               self.tableView.setEditing(false, animated: true)
+              self.tableView.reloadData()
             //              self.view.showHUD(.Message, text: Constants.Text.removeSuccessful, autoHide: true, autoHideDelay: 0.5)
             default:
               self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
@@ -589,6 +594,18 @@ extension ScriptViewController: SWTableViewCellDelegate {
   
   func swipeableTableViewCellShouldHideUtilityButtonsOnSwipe(cell: SWTableViewCell!) -> Bool {
     return true
+  }
+}
+
+extension ScriptViewController: UIAlertViewDelegate {
+  func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    switch alertView.tag {
+    case 0:
+      if buttonIndex == 0 {
+        intoEdit(self.indexPath)
+      }
+    default: return
+    }
   }
 }
 

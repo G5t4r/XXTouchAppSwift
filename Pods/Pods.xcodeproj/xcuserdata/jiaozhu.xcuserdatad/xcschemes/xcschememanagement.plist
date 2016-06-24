@@ -8,41 +8,62 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 		<key>KVOController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>3</integer>
 		</dict>
 		<key>MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>4</integer>
 		</dict>
 		<key>MJRefresh.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>5</integer>
 		</dict>
 		<key>Pods-XXTouchApp.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>6</integer>
 		</dict>
 		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>7</integer>
 		</dict>
 		<key>SWTableViewCell.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
+		<key>YYText.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
 		</dict>
 		<key>iOS-blur.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>2</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -53,6 +74,11 @@
 			<true/>
 		</dict>
 		<key>1EB74E747582260E774BD37ACA2FC917</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4E463C17EF5743219B247B217B2018DF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -73,6 +99,21 @@
 			<true/>
 		</dict>
 		<key>736E57AD5AEFAAF68D47AE4E8FCB8F68</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>95FBC6BBBDD830E63C33EB1708B9D9B8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E229E7CEE87FD598C045693A466AA30E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EF01B71EB6B0956A23114757F0CB61B1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
