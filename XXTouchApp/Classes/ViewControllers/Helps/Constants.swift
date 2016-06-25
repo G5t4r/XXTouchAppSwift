@@ -47,7 +47,7 @@ extension Constants {
 
 extension Constants {
   class Error {
-    static let failure = "与守护程序通讯失败，请稍等"
+    static let failure = "与守护程序通讯失败，请稍等..."
     static let invalidCode = "无效授权码，请检查输入"
     static let serverBusy = "服务器忙，请稍后再试"
     static let connectServerFail = "连接服务器失败，请检查网络"

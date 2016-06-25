@@ -20,6 +20,7 @@ class ScriptViewController: UIViewController {
   private var oldExtensionName = ""
   private var rightBarButton: UIBarButtonItem!
   private var indexPath = NSIndexPath()
+  private var failureAlert: UIAlertView!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -131,6 +132,9 @@ class ScriptViewController: UIViewController {
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
       if let data = data {
+        if self.failureAlert != nil {
+          self.failureAlert.dismissWithClickedButtonIndex(0, animated: true)
+        }
         self.scriptList.removeAll()
         let json = JSON(data: data)
         switch json["code"].intValue {
@@ -149,8 +153,12 @@ class ScriptViewController: UIViewController {
         self.getSelectedScriptFile()
       }
       if error != nil {
-        self.view.hideHUD()
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        if self.failureAlert == nil {
+          self.failureAlert = self.alertNothing(title: Constants.Text.prompt, message: Constants.Error.failure)
+        }
+        MixC.sharedManager.restart { (_) in
+          self.fetchScriptList()
+        }
       }
       self.tableView.mj_header.endRefreshing()
     }
