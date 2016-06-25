@@ -13,14 +13,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
   
-  
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    // 键盘管理
-    KeyboardManager.configure()
     
-    // 加载程序窗口
-    setupAndShowWindow()
-    
+    let isFile = FileManager.sharedManager.fileExistsAtPath()
+    if isFile {
+      self.alertOtherApp(title: Constants.Text.prompt, message: "XXTouch 安装需要注销一次设备方可使用，是否立即注销？", delegate: self, cancelButtonTitle: Constants.Text.cancel, otherButtonTitles: Constants.Text.ok)
+    } else {
+      // 键盘管理
+      KeyboardManager.configure()
+      
+      // 加载程序窗口
+      setupAndShowWindow()
+    }
     
     return true
   }
@@ -60,7 +64,6 @@ extension AppDelegate {
 extension AppDelegate {
   private func createRootViewController() -> UIViewController {
     let tabBarController = UITabBarController()
-//    tabBarController.delegate = self
     let scriptNavigationController = UINavigationController(rootViewController: ScriptViewController())
     scriptNavigationController.tabBarItem = UITabBarItem(title: "我的脚本",
                                                          image: UIImage(named: "scriptTab"),
@@ -79,13 +82,13 @@ extension AppDelegate {
   }
 }
 
-//extension AppDelegate: UITabBarControllerDelegate {
-//  func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
-//    switch tabBarController.selectedIndex {
-//    case 0: print("0")
-//    case 1: print("1")
-//    default:break
-//    }
-//  }
-//}
+extension AppDelegate: UIAlertViewDelegate {
+  func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    switch buttonIndex {
+    case 0: MixC.sharedManager.logout()
+    case 1: exit(0)
+    default: return
+    }
+  }
+}
 

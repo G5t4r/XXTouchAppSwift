@@ -9,7 +9,7 @@
 import UIKit
 
 class ScriptCell: SWTableViewCell {
-  private let scriptImage = UIImageView()
+  //  private let scriptImage = UIImageView()
   private let scriptSelectedImage = UIImageView(image: UIImage(named: "selected"))
   private let nameLabel = UILabel()
   private let scriptTime = UILabel()
@@ -34,9 +34,9 @@ class ScriptCell: SWTableViewCell {
     
     infoButton.setImage(UIImage(named: "infoIcon"), forState: .Normal)
     
-    scriptImage.contentMode = .ScaleAspectFit
+    //    scriptImage.contentMode = .ScaleAspectFit
     
-    contentView.addSubview(scriptImage)
+    //    contentView.addSubview(scriptImage)
     contentView.addSubview(nameLabel)
     contentView.addSubview(scriptTime)
     contentView.addSubview(infoButton)
@@ -44,16 +44,16 @@ class ScriptCell: SWTableViewCell {
   }
   
   private func makeConstriants() {
-    scriptImage.snp_makeConstraints { (make) in
-      make.leading.equalTo(contentView).inset(15)
-      make.height.width.equalTo(40)
-      make.centerY.equalTo(contentView)
-    }
+    //    scriptImage.snp_makeConstraints { (make) in
+    //      make.leading.equalTo(contentView).inset(15)
+    //      make.height.width.equalTo(40)
+    //      make.centerY.equalTo(contentView)
+    //    }
     
     nameLabel.snp_makeConstraints { (make) in
       make.top.equalTo(contentView).offset(10)
       make.trailing.equalTo(contentView).offset(-100)
-      make.leading.equalTo(contentView).offset(60)
+      make.leading.equalTo(contentView).offset(15)
     }
     
     scriptTime.snp_makeConstraints { (make) in
@@ -75,11 +75,11 @@ class ScriptCell: SWTableViewCell {
   }
   
   func bind(model: ScriptModel) {
-    if Suffix.haveSuffix(model.name) == Suffix.Section.Lua.title {
-      scriptImage.image = UIImage(named: "lua")
-    } else {
-      scriptImage.image = UIImage(named: "txt")
-    }
+//    if Suffix.haveSuffix(model.name) == Suffix.Section.Lua.title {
+//      scriptImage.image = UIImage(named: "lua")
+//    } else {
+//      scriptImage.image = UIImage(named: "txt")
+//    }
     
     nameLabel.text = model.name
     scriptTime.text = Formatter.formatDate(model.time)
