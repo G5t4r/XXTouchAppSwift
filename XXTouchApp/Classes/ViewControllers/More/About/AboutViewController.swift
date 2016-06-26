@@ -84,14 +84,16 @@ extension AboutViewController {
 // 请求
 extension AboutViewController {
   private func getDeviceinfo() {
-    self.view.showHUD()
+    if !KVNProgress.isVisible() {
+      KVNProgress.showWithStatus(Constants.Text.reloading)
+    }
     let request = Network.sharedManager.post(url: ServiceURL.Url.deviceinfo, timeout:Constants.Timeout.request)
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      self.view.hideHUD()
-      if let data = data {
+      if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
+        KVNProgress.dismiss()
         switch json["code"].intValue {
         case 0:
           self.zeVersionCell.bind(json["data"]["zeversion"].stringValue)
@@ -103,11 +105,15 @@ extension AboutViewController {
           self.deviceIdCell.bind(json["data"]["deviceid"].stringValue)
           self.deviceId = json["data"]["deviceid"].stringValue
         default:
-          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
         }
       }
       if error != nil {
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        KVNProgress.updateStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.getDeviceinfo()
+        }
       }
     }
     task.resume()
@@ -140,7 +146,7 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     case 1:
       if indexPath.row == 6 {
         UIPasteboard.generalPasteboard().string = deviceId
-        self.view.showHUD(.Message, text: Constants.Text.copy, autoHide: true, autoHideDelay: 0.7)
+        KVNProgress.showSuccessWithStatus(Constants.Text.copy)
       }
     default: break
     }

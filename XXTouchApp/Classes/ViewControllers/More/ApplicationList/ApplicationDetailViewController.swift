@@ -83,7 +83,7 @@ class ApplicationDetailViewController: UIViewController {
     case 3: UIPasteboard.generalPasteboard().string = model.dataPath
     default: return
     }
-    self.view.showHUD(.Message, text: Constants.Text.copy, autoHide: true, autoHideDelay: 0.7)
+    KVNProgress.showSuccessWithStatus(Constants.Text.copy)
   }
 }
 

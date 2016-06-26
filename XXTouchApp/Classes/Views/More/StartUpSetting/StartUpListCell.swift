@@ -25,7 +25,7 @@ class StartUpListCell: UITableViewCell {
   }
   
   private func setupUI() {
-    self.selectionStyle = .None
+    //    self.selectionStyle = .None
     scriptTime.textColor = ThemeManager.Theme.lightTextColor
     scriptTime.font = UIFont.systemFontOfSize(11)
     scriptSelectedImage.hidden = true
@@ -64,10 +64,10 @@ class StartUpListCell: UITableViewCell {
   }
   
   func bind(model: ScriptModel) {
-    if Suffix.haveSuffix(model.name) == Suffix.Section.Lua.title {
-      scriptImage.image = UIImage(named: "lua")
-    } else {
-      scriptImage.image = UIImage(named: "txt")
+    switch Suffix.haveSuffix(model.name) {
+    case Suffix.Section.Lua.title: scriptImage.image = UIImage(named: "lua")
+    case Suffix.Section.Xxt.title: scriptImage.image = UIImage(named: "xxt")
+    default: scriptImage.image = UIImage(named: "unknown")
     }
     
     nameLabel.text = model.name

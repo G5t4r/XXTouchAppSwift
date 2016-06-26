@@ -27,13 +27,15 @@ class Suffix {
   class func haveSuffix(string: String) -> String {
     let isLua = string.hasSuffix(Section.Lua.title)
     let isXxt = string.hasSuffix(Section.Xxt.title)
-    //    let isTxt = string.hasSuffix(".txt")
+    let isTxt = string.hasSuffix(Section.Txt.title)
     if isLua {
       return Section.Lua.title
     } else if isXxt {
       return Section.Xxt.title
-    } else {
+    } else if isTxt {
       return Section.Txt.title
+    } else {
+      return ""
     }
   }
 }

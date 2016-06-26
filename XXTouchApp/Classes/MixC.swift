@@ -31,10 +31,14 @@ extension MixC {
         closure()
       })
     }
-    
   }
   
-  //  注销服务
+  // 重启设备
+  func reboot() {
+    system("reboot")
+  }
+  
+  //  注销设备
   func logout() {
     system("killall -9 backboardd")
   }

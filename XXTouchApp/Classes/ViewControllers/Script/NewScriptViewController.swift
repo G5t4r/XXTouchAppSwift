@@ -68,7 +68,8 @@ class NewScriptViewController: UIViewController {
     }
     
     newNameView.snp_makeConstraints{ (make) in
-      make.center.equalTo(view)
+      make.centerX.equalTo(view)
+      make.centerY.equalTo(view).offset(-120)
       make.leading.trailing.equalTo(view).inset(Sizer.valueForPhone(inch_3_5: 20, inch_4_0: 20, inch_4_7: 32, inch_5_5: 42))
       make.height.equalTo(100)
     }
@@ -109,10 +110,6 @@ class NewScriptViewController: UIViewController {
   
   @objc private func submit() {
     newNameView.newNameTextField.resignFirstResponder()
-    //    guard newNameView.newNameTextField.text?.characters.count != 0 else {
-    //      alert(title: Constants.Text.prompt, message: "文件名不能为空", delegate: nil, cancelButtonTitle: Constants.Text.ok)
-    //      return
-    //    }
     addScript()
   }
   
@@ -148,7 +145,6 @@ class NewScriptViewController: UIViewController {
   }
   
   @objc private func next(button: UIBarButtonItem) {
-    button.enabled = false
     if textView.text.characters.count == 0 {
       self.data = Constants.Text.startScript
     } else {
@@ -165,7 +161,7 @@ class NewScriptViewController: UIViewController {
       self.newNameView.transform = CGAffineTransformIdentity
       self.blurView.alpha = 1
       }, completion: { (_) in
-        button.enabled = true
+        
     })
   }
   
@@ -180,7 +176,9 @@ class NewScriptViewController: UIViewController {
   
   /// 新建脚本
   private func addScript() {
-    self.view.showHUD()
+    if !KVNProgress.isVisible() {
+      KVNProgress.showWithStatus("正在保存")
+    }
     let parameters = [
       "filename": newNameView.newNameTextField.text!+self.extensionName,
       "data": self.data
@@ -189,22 +187,26 @@ class NewScriptViewController: UIViewController {
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      self.view.hideHUD()
-      if let data = data {
+      if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
+        KVNProgress.dismiss()
         switch json["code"].intValue {
         case 0:
-          self.view.showHUD(.Message, text: Constants.Text.createDone, autoHide: true, autoHideDelay: 0.5, completionHandler: {
+          KVNProgress.showSuccessWithStatus(Constants.Text.createDone, completion: { 
             self.closeNewNameViewAnimator()
-            self.onef_navigationBack(false)
+            self.onef_navigationBack(true)
             self.delegate?.reloadScriptList()
           })
         default:
-          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
         }
       }
       if error != nil {
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        KVNProgress.updateStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.addScript()
+        }
       }
     }
     task.resume()
