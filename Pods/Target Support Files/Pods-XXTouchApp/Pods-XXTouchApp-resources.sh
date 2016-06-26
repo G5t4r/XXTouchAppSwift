@@ -80,9 +80,13 @@ EOM
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "JCAlertView/JCAlertView/JCAlertView.bundle"
+  install_resource "KVNProgress/KVNProgress/Resources/KVNProgressView.xib"
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "JCAlertView/JCAlertView/JCAlertView.bundle"
+  install_resource "KVNProgress/KVNProgress/Resources/KVNProgressView.xib"
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
 fi
 

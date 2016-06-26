@@ -35,6 +35,7 @@ extension Constants {
     static let notSelected = "该文件格式无法被选中运行"
     static let notEnScript = "加密脚本无法编辑"
     static let notRuningScript = "当前无运行脚本"
+    static let reloading = "正在加载"
   }
 }
 
@@ -47,7 +48,7 @@ extension Constants {
 
 extension Constants {
   class Error {
-    static let failure = "与守护程序通讯失败，请稍等..."
+    static let failure = "与守护程序通讯失败\n请稍等..."
     static let invalidCode = "无效授权码，请检查输入"
     static let serverBusy = "服务器忙，请稍后再试"
     static let connectServerFail = "连接服务器失败，请检查网络"

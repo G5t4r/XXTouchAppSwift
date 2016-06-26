@@ -64,12 +64,14 @@ extension StartUpSettingViewController {
 /// 请求
 extension StartUpSettingViewController {
   private func getStartupConf() {
-    self.view.showHUD()
+    if !KVNProgress.isVisible() {
+      KVNProgress.showWithStatus(Constants.Text.reloading)
+    }
     let request = Network.sharedManager.post(url: ServiceURL.Url.getStartupConf, timeout:Constants.Timeout.request)
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      if let data = data {
+      if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
         switch json["code"].intValue { 
         case 0:
@@ -80,11 +82,16 @@ extension StartUpSettingViewController {
           self.currentSelectedScriptName = json["data"]["startup_script"].stringValue
           self.fetchScriptList()
         default:
-          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+          KVNProgress.dismiss()
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
         }
       }
       if error != nil {
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        KVNProgress.updateStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.getStartupConf()
+        }
       }
     }
     task.resume()
@@ -96,32 +103,34 @@ extension StartUpSettingViewController {
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      self.view.hideHUD()
-      if let data = data {
-        self.scriptList.removeAll()
+      if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
+        KVNProgress.dismiss()
+        self.scriptList.removeAll()
         switch json["code"].intValue {
         case 0:
           let list = json["data"]["list"]
           for item in list.dictionaryValue {
             if item.1["mode"].stringValue != "directory" {
-              let model = ScriptModel(item.1, name: item.0)
-              self.scriptList.append(model)
+              if Suffix.haveSuffix(item.0) == Suffix.Section.Lua.title || Suffix.haveSuffix(item.0) == Suffix.Section.Xxt.title {
+                let model = ScriptModel(item.1, name: item.0)
+                self.scriptList.append(model)
+              }
             }
           }
         default:break
         }
         self.scriptList.sortInPlace({ $0.time > $1.time })
         self.tableView.reloadData()
-        
         for cell in self.tableView.visibleCells {
           if cell is StartUpListCell {
             let cell = cell as! StartUpListCell
             if let indexPath = self.tableView.indexPathForCell(cell) {
               if self.currentSelectedScriptName == self.scriptList[indexPath.row].name {
                 self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .Bottom)
+                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
                 cell.scriptSelectedHidden(false)
-                cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
+                //                cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
                 let model = self.scriptList[indexPath.row]
                 model.isSelected = true
                 break
@@ -131,29 +140,38 @@ extension StartUpSettingViewController {
         }
       }
       if error != nil {
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        KVNProgress.updateStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.getStartupConf()
+        }
       }
     }
     task.resume()
   }
   
   private func setStartupRun(url: String) {
-    self.view.showHUD()
+    if !KVNProgress.isVisible() {
+      KVNProgress.showWithStatus(Constants.Text.reloading)
+    }
     let request = Network.sharedManager.post(url: url, timeout:Constants.Timeout.request)
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      self.view.hideHUD()
-      if let data = data {
+      if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
+        KVNProgress.dismiss()
         switch json["code"].intValue {
         case 0:break
         default:
-          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
         }
       }
       if error != nil {
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        KVNProgress.updateStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.setStartupRun(url)
+        }
       }
     }
     task.resume()
@@ -164,16 +182,21 @@ extension StartUpSettingViewController {
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      if let data = data {
+      if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
+        KVNProgress.dismiss()
         switch json["code"].intValue {
-        case 0:break
+        case 0: break
         default:
-          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
         }
       }
       if error != nil {
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        KVNProgress.showWithStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.selectStartupScriptFile(name)
+        }
       }
     }
     task.resume()
@@ -201,11 +224,11 @@ extension StartUpSettingViewController: UITableViewDelegate, UITableViewDataSour
       
       let isSelected = scriptList[indexPath.row].isSelected
       cell.scriptSelectedHidden(!isSelected)
-      if isSelected {
-        cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
-      } else {
-        cell.backgroundColor = UIColor.whiteColor()
-      }
+      //      if isSelected {
+      //        cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
+      //      } else {
+      //        cell.backgroundColor = UIColor.whiteColor()
+      //      }
       return cell
     default: return UITableViewCell()
     }
@@ -214,11 +237,12 @@ extension StartUpSettingViewController: UITableViewDelegate, UITableViewDataSour
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     switch indexPath.section {
     case 1:
+      tableView.deselectRowAtIndexPath(indexPath, animated: true)
       for cell in tableView.visibleCells {
         if cell is StartUpListCell {
           let cell = cell as! StartUpListCell
           cell.scriptSelectedHidden(true)
-          cell.backgroundColor = UIColor.whiteColor()
+          //          cell.backgroundColor = UIColor.whiteColor()
         }
       }
       for model in scriptList {
@@ -229,7 +253,7 @@ extension StartUpSettingViewController: UITableViewDelegate, UITableViewDataSour
       cell.scriptSelectedHidden(false)
       let model = scriptList[indexPath.row]
       model.isSelected = true
-      cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
+      //      cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
       selectStartupScriptFile(scriptList[indexPath.row].name)
       
     default:break

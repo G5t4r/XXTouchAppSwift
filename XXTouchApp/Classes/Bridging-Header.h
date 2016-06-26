@@ -10,11 +10,13 @@
 #import <CommonCrypto/CommonCrypto.h>
 
 // Thirdparty
-#import "KVOController/KVOController.h"
+//#import "KVOController/KVOController.h"
 #import "SDWebImage/UIImageView+WebCache.h"
-#import "MBProgressHUD/MBProgressHUD.h"
-#import "DZNEmptyDataSet/UIScrollView+EmptyDataSet.h"
+//#import "MBProgressHUD/MBProgressHUD.h"
+//#import "DZNEmptyDataSet/UIScrollView+EmptyDataSet.h"
 #import "SWTableViewCell/SWTableViewCell.h"
 #import "MJRefresh/MJRefresh.h"
 #import "iOS-blur/JCRBlurView.h"
 #import "YYText/YYText.h"
+#import "KVNProgress/KVNProgress.h"
+#import "JCAlertView/JCAlertView.h"

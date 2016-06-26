@@ -83,14 +83,16 @@ class KeyBoardSettingViewController: UIViewController {
 
 extension KeyBoardSettingViewController {
   private func getVolumeActionConf() {
-    self.view.showHUD()
+    if !KVNProgress.isVisible() {
+      KVNProgress.showWithStatus(Constants.Text.reloading)
+    }
     let request = Network.sharedManager.post(url: ServiceURL.Url.getVolumeActionConf, timeout:Constants.Timeout.request)
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      self.view.hideHUD()
-      if let data = data {
+      if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
+        KVNProgress.dismiss()
         switch json["code"].intValue {
         case 0:
           let holdVolumeUpIndex = json["data"]["hold_volume_up"].intValue
@@ -102,11 +104,15 @@ extension KeyBoardSettingViewController {
           let clickVolumeDownIndex = json["data"]["click_volume_down"].intValue
           self.clickVolumeDownCell.bind(self.volumeActionList[clickVolumeDownIndex], info: self.volumeInfoList[clickVolumeDownIndex])
         default:
-          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
         }
       }
       if error != nil {
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        KVNProgress.updateStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.getVolumeActionConf()
+        }
       }
     }
     task.resume()
@@ -193,16 +199,21 @@ extension KeyBoardSettingViewController: UIActionSheetDelegate {
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      if let data = data {
+      if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0: self.getVolumeActionConf()
         default:
-          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+          KVNProgress.dismiss()
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
         }
       }
       if error != nil {
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        KVNProgress.showWithStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.setVolumeAction(url, index: index)
+        }
       }
     }
     task.resume()

@@ -82,17 +82,17 @@ extension DevelopDocumentViewController: UIActionSheetDelegate {
 
 extension DevelopDocumentViewController: UIWebViewDelegate {
   func webViewDidStartLoad(webView: UIWebView) {
-    view.showHUD()
+    KVNProgress.show()
   }
   
   func webViewDidFinishLoad(webView: UIWebView) {
-    view.hideHUD()
+    KVNProgress.dismiss()
     // 固定显示缩放比例
     webView.stringByEvaluatingJavaScriptFromString("document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '80%'")
   }
   
   func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
-    self.alert(title: Constants.Text.prompt, message: "加载失败，请重新加载", delegate: nil, cancelButtonTitle: Constants.Text.ok)
+    JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: "加载失败，请重新加载", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
   }
 }
 

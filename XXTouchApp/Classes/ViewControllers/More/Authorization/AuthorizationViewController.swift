@@ -69,29 +69,44 @@ extension AuthorizationViewController {
   }
   
   private func bindCode(code: String) {
-    self.view.showHUD()
+    if !KVNProgress.isVisible() {
+      KVNProgress.showWithStatus("正在充值")
+    }
     let request = Network.sharedManager.post(url: ServiceURL.Url.bindCode, timeout:Constants.Timeout.request, value: code)
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      self.view.hideHUD()
-      if let data = data {
+      if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
+        KVNProgress.dismiss()
         switch json["code"].intValue {
         case 0:
-          self.alert(title: Constants.Text.prompt, message: Constants.Text.paySuccessful, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: Constants.Text.paySuccessful, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
           self.authorizationCell.iconVip()
           self.authorizationBindCell.codeTextField.text?.removeAll()
           self.getExpireDate()
-        case 1: self.alert(title: Constants.Text.prompt, message: Constants.Error.connectServerFail, delegate: nil, cancelButtonTitle: Constants.Text.ok)
-        case -1: self.alert(title: Constants.Text.prompt, message: Constants.Error.verificationFailure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
-        case -2: self.alert(title: Constants.Text.prompt, message: Constants.Error.invalidCode, delegate: nil, cancelButtonTitle: Constants.Text.ok)
-        case 112: self.alert(title: Constants.Text.prompt, message: Constants.Error.serverBusy, delegate: nil, cancelButtonTitle: Constants.Text.ok)
-        default: self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        case 1:
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: Constants.Error.connectServerFail, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
+        case -1:
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: Constants.Error.verificationFailure, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
+        case -2:
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: Constants.Error.invalidCode, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
+        case 112:
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: Constants.Error.serverBusy, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
+        default:
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
         }
       }
       if error != nil {
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        KVNProgress.updateStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.bindCode(code)
+        }
       }
     }
     task.resume()
@@ -101,14 +116,16 @@ extension AuthorizationViewController {
 // 请求
 extension AuthorizationViewController {
   private func getExpireDate() {
-    self.view.showHUD()
+    if !KVNProgress.isVisible() {
+      KVNProgress.showWithStatus(Constants.Text.reloading)
+    }
     let request = Network.sharedManager.post(url: ServiceURL.Url.expireDate, timeout:Constants.Timeout.request)
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      self.view.hideHUD()
-      if let data = data {
+      if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
+        KVNProgress.dismiss()
         switch json["code"].intValue {
         case 0:
           let time = json["data"]["expire_date"].doubleValue - NSDate().timeIntervalSince1970
@@ -121,11 +138,15 @@ extension AuthorizationViewController {
           }
           self.getDeviceAuthInfo()
         default:
-          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
         }
       }
       if error != nil {
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        KVNProgress.updateStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.getExpireDate()
+        }
       }
     }
     task.resume()
@@ -136,8 +157,9 @@ extension AuthorizationViewController {
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      if let data = data {
+      if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
+        KVNProgress.dismiss()
         switch json["code"].intValue {
         case 0:
           let time = json["data"]["expireDate"].doubleValue - json["data"]["nowDate"].doubleValue
@@ -149,11 +171,15 @@ extension AuthorizationViewController {
             self.authorizationCell.iconVip()
           }
         default:
-          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
         }
       }
       if error != nil {
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        KVNProgress.showWithStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.getDeviceAuthInfo()
+        }
       }
     }
     task.resume()

@@ -248,19 +248,24 @@ extension MoreViewController {
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      if let data = data {
+      if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
+        KVNProgress.dismiss()
         switch json["code"].intValue {
         case 0:
           let opened = json["data"]["opened"].boolValue
           self.moreRemoteServiceCell.switchs.on = opened
           self.titleLabelAnimation(opened)
         default:
-          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
         }
       }
       if error != nil {
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        KVNProgress.updateStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.getDeviceinfo()
+        }
       }
     }
     task.resume()
@@ -277,23 +282,25 @@ extension MoreViewController {
   }
   
   private func openAndCloseRemoteAccess(url: String) {
-    self.view.showHUD()
     let request = Network.sharedManager.post(url: url, timeout:Constants.Timeout.request)
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      self.view.hideHUD()
-      if let data = data {
+      if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
         switch json["code"].intValue {
-        case 0:
-          self.getDeviceinfo()
+        case 0: self.getDeviceinfo()
         default:
-          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+          KVNProgress.dismiss()
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
         }
       }
       if error != nil {
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        KVNProgress.showWithStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.openAndCloseRemoteAccess(url)
+        }
       }
     }
     task.resume()
@@ -303,7 +310,9 @@ extension MoreViewController {
     switch rowIndex {
     /// 重启服务
     case 1:
-      self.alertOther(title: Constants.Text.prompt, message: "确定要重启XXTouch服务么？", delegate: self, cancelButtonTitle: Constants.Text.cancel, otherButtonTitles: Constants.Text.ok, tag: 0)
+      JCAlertView.showTwoButtonsWithTitle(Constants.Text.prompt, message: "确定要重启XXTouch服务么？", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: {
+        self.restart()
+        }, buttonType: JCAlertViewButtonType.Cancel, buttonTitle: Constants.Text.cancel, click: nil)
     default:break
     }
   }
@@ -345,16 +354,30 @@ extension MoreViewController {
     /// 应用列表
     case 0: self.navigationController?.pushViewController(ApplicationListViewController(), animated: true)
     /// 清空GPS伪装信息
-    case 1: self.alertOther(title: Constants.Text.prompt, message: "确定要清空GPS伪装信息么？", delegate: self, cancelButtonTitle: Constants.Text.cancel, otherButtonTitles: Constants.Text.ok, tag: 1)
+    case 1:
+      JCAlertView.showTwoButtonsWithTitle(Constants.Text.prompt, message: "确定要清空GPS伪装信息么？", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: {
+        self.clearGps()
+        }, buttonType: JCAlertViewButtonType.Cancel, buttonTitle: Constants.Text.cancel, click: nil)
     /// 清理 UI 缓存
-    case 2: self.alertOther(title: Constants.Text.prompt, message: "确定要清理 UI 缓存么？\n（这个操作有可能引起注销或图标不见）", delegate: self, cancelButtonTitle: Constants.Text.cancel, otherButtonTitles: Constants.Text.ok, tag: 2)
+    case 2:
+      JCAlertView.showTwoButtonsWithTitle(Constants.Text.prompt, message: "确定要清理 UI 缓存么？\n(这个操作有可能引起注销或图标不见)", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: {
+        self.clearUIcache()
+        }, buttonType: JCAlertViewButtonType.Cancel, buttonTitle: Constants.Text.cancel, click: nil)
     /// 全清设备
     case 3:
-      self.alertOther(title: Constants.Text.prompt, message: "确定要全清设备么？\n（这个操作将会关闭所有应用并删除所有应用的资料及重置设备标识信息）", delegate: self, cancelButtonTitle: Constants.Text.cancel, otherButtonTitles: Constants.Text.ok, tag: 3)
+      JCAlertView.showTwoButtonsWithTitle(Constants.Text.prompt, message: "确定要全清设备么？\n(这个操作将会关闭所有应用并删除所有应用的资料及重置设备标识信息)", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: {
+        self.clearAll()
+        }, buttonType: JCAlertViewButtonType.Cancel, buttonTitle: Constants.Text.cancel, click: nil)
     /// 注销设备
-    case 4: self.alertOther(title: Constants.Text.prompt, message: "确定要注销设备么？", delegate: self, cancelButtonTitle: Constants.Text.cancel, otherButtonTitles: Constants.Text.ok, tag: 4)
+    case 4:
+      JCAlertView.showTwoButtonsWithTitle(Constants.Text.prompt, message: "确定要注销设备么？", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: {
+        MixC.sharedManager.logout()
+        }, buttonType: JCAlertViewButtonType.Cancel, buttonTitle: Constants.Text.cancel, click: nil)
     /// 重启设备
-    case 5: self.alertOther(title: Constants.Text.prompt, message: "确定要重启设备么？", delegate: self, cancelButtonTitle: Constants.Text.cancel, otherButtonTitles: Constants.Text.ok, tag: 5)
+    case 5:
+      JCAlertView.showTwoButtonsWithTitle(Constants.Text.prompt, message: "确定要重启设备么？", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: {
+        MixC.sharedManager.reboot()
+        }, buttonType: JCAlertViewButtonType.Cancel, buttonTitle: Constants.Text.cancel, click: nil)
     default: break
     }
   }
@@ -379,208 +402,154 @@ extension MoreViewController {
 // 获取设备信息
 extension MoreViewController {
   private func getDeviceinfo() {
+    if !KVNProgress.isVisible() {
+      KVNProgress.showWithStatus(Constants.Text.reloading)
+    }
     let request = Network.sharedManager.post(url: ServiceURL.Url.deviceinfo, timeout:Constants.Timeout.request)
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      if let data = data {
+      if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
-          if json["data"]["wifi_ip"].stringValue == ServiceURL.localhost {
+          if json["data"]["wifi_ip"].stringValue == ServiceURL.Local {
             self.host = "请连接到可用Wi-Fi"
           } else {
             self.host = "http://"+json["data"]["wifi_ip"].stringValue+":"+json["data"]["port"].stringValue
           }
           self.fetchRemoteAccessStatus()
         default:
-          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+          KVNProgress.dismiss()
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
         }
       }
       if error != nil {
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        KVNProgress.updateStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.getDeviceinfo()
+        }
       }
     }
     task.resume()
   }
 }
 
-extension MoreViewController: UIAlertViewDelegate {
-  func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-    switch alertView.tag {
-    /// 重启服务
-    case 0:
-      if buttonIndex == 0 {
-        restart()
-      }
-    /// 清空GPS伪装信息
-    case 1:
-      if buttonIndex == 0 {
-        clearGps()
-      }
-    /// 清理 UI 缓存
-    case 2:
-      if buttonIndex == 0 {
-        clearUIcache()
-      }
-    /// 全清设备
-    case 3:
-      if buttonIndex == 0 {
-        clearAll()
-      }
-    /// 注销设备
-    case 4:
-      if buttonIndex == 0 {
-        respring()
-      }
-    /// 重启设备
-    case 5:
-      if buttonIndex == 0 {
-        reboot2()
-      }
-    default: break
-    }
-  }
-  
+extension MoreViewController {
   private func restart() {
-    self.tabBarController?.tabBar.userInteractionEnabled = false
-    self.view.showHUD()
+    if !KVNProgress.isVisible() {
+      KVNProgress.showWithStatus("正在重启服务")
+    }
     let request = Network.sharedManager.post(url: ServiceURL.Url.restart, timeout:Constants.Timeout.request)
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      if let data = data {
+      if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
           dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
-            self.tabBarController?.tabBar.userInteractionEnabled = true
-            self.view.hideHUD()
-            self.getDeviceinfo()
-            self.view.showHUD(.Message, text: "重启成功", autoHide: true, autoHideDelay: 0.5)
+            KVNProgress.dismiss()
+            KVNProgress.showSuccessWithStatus("重启成功", completion: { 
+              self.getDeviceinfo()
+            })
           })
-          
         default:
-          self.tabBarController?.tabBar.userInteractionEnabled = true
-          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+          KVNProgress.dismiss()
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
         }
       }
       if error != nil {
-        self.tabBarController?.tabBar.userInteractionEnabled = true
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        KVNProgress.updateStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.restart()
+        }
       }
     }
     task.resume()
   }
   
   private func clearGps() {
-    self.view.showHUD()
+    if !KVNProgress.isVisible() {
+      KVNProgress.showWithStatus("正在清空")
+    }
     let request = Network.sharedManager.post(url: ServiceURL.Url.clearGps, timeout:Constants.Timeout.request)
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      self.view.hideHUD()
-      if let data = data {
+      if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
+        KVNProgress.dismiss()
         switch json["code"].intValue {
-        case 0:
-          self.view.showHUD(.Message, text: "清空成功", autoHide: true, autoHideDelay: 0.5)
+        case 0: KVNProgress.showSuccessWithStatus("清空成功")
         default:
-          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
         }
       }
       if error != nil {
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        KVNProgress.updateStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.clearGps()
+        }
       }
     }
     task.resume()
   }
   
   private func clearUIcache() {
-    self.view.showHUD()
+    if !KVNProgress.isVisible() {
+      KVNProgress.showWithStatus("正在清理")
+    }
     let request = Network.sharedManager.post(url: ServiceURL.Url.clearUIcache, timeout:Constants.Timeout.request)
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      self.view.hideHUD()
-      if let data = data {
+      if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
+        KVNProgress.dismiss()
         switch json["code"].intValue {
-        case 0:
-          self.view.showHUD(.Message, text: "清理成功", autoHide: true, autoHideDelay: 0.5)
+        case 0: KVNProgress.showSuccessWithStatus("清理成功")
         default:
-          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
         }
       }
       if error != nil {
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        KVNProgress.updateStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.clearUIcache()
+        }
       }
     }
     task.resume()
   }
   
   private func clearAll() {
-    self.view.showHUD()
+    if !KVNProgress.isVisible() {
+      KVNProgress.showWithStatus("正在全清")
+    }
     let request = Network.sharedManager.post(url: ServiceURL.Url.clearAll, timeout:Constants.Timeout.request)
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      self.view.hideHUD()
-      if let data = data {
+      if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
+        KVNProgress.dismiss()
         switch json["code"].intValue {
-        case 0:
-          self.view.showHUD(.Message, text: "全清成功", autoHide: true, autoHideDelay: 0.5)
+        case 0: KVNProgress.showSuccessWithStatus("全清成功")
         default:
-          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
         }
       }
       if error != nil {
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
-      }
-    }
-    task.resume()
-  }
-  
-  private func respring() {
-    self.view.showHUD()
-    let request = Network.sharedManager.post(url: ServiceURL.Url.respring, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
-      guard let `self` = self else { return }
-      self.view.hideHUD()
-      if let data = data {
-        let json = JSON(data: data)
-        switch json["code"].intValue {
-        case 0: break
-        default:
-          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        KVNProgress.updateStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.clearAll()
         }
-      }
-      if error != nil {
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
-      }
-    }
-    task.resume()
-  }
-  
-  private func reboot2() {
-    self.view.showHUD()
-    let request = Network.sharedManager.post(url: ServiceURL.Url.reboot2, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
-      guard let `self` = self else { return }
-      self.view.hideHUD()
-      if let data = data {
-        let json = JSON(data: data)
-        switch json["code"].intValue {
-        case 0: break
-        default:
-          self.alert(title: Constants.Text.prompt, message: json["message"].stringValue, delegate: nil, cancelButtonTitle: Constants.Text.ok)
-        }
-      }
-      if error != nil {
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
       }
     }
     task.resume()

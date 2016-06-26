@@ -12,21 +12,23 @@ class ServiceURL {
   enum Section: Int {
     case Localhost
     case Remotehost
+    case Local
     
     var title: String {
       switch self {
       case .Localhost: return "http://127.0.0.1:46952"
       case .Remotehost: return "http://soze.synology.me:46952"
+      case .Local: return "http://192.168.0.104:46952"
       }
     }
   }
   
   static var baseURLString: String {
-    return Section.Localhost.title
+    return Section.Remotehost.title
   }
   
   static let scriptsPath = "lua/scripts/"
-  static let localhost = "127.0.0.1"
+  static let Local = "127.0.0.1"
 }
 
 extension ServiceURL {

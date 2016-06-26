@@ -46,14 +46,16 @@ class ApplicationListViewController: UIViewController {
 // 请求
 extension ApplicationListViewController {
   private func fetchBundles() {
-    self.view.showHUD()
+    if !KVNProgress.isVisible() {
+      KVNProgress.showWithStatus(Constants.Text.reloading)
+    }
     let request = Network.sharedManager.post(url: ServiceURL.Url.bundles, timeout:Constants.Timeout.dataRequest)
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
       guard let `self` = self else { return }
-      self.view.hideHUD()
-      if let data = data {
+      if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
+        KVNProgress.dismiss()
         switch json["code"].intValue {
         case 0:
           let list = json["data"]
@@ -66,7 +68,10 @@ extension ApplicationListViewController {
         self.tableView.reloadData()
       }
       if error != nil {
-        self.alert(title: Constants.Text.prompt, message: Constants.Error.failure, delegate: nil, cancelButtonTitle: Constants.Text.ok)
+        KVNProgress.updateStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.fetchBundles()
+        }
       }
     }
     task.resume()
