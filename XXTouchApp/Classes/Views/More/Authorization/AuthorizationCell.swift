@@ -25,7 +25,7 @@ class AuthorizationCell: UITableViewCell {
   private func setupUI() {
     self.selectionStyle = .None
     titleLabel.text = "正在获取设备授权信息.."
-//    titleLabel.textAlignment = .Center
+    //    titleLabel.textAlignment = .Center
     titleLabel.textColor = ThemeManager.Theme.tintColor
     
     contentView.addSubview(icon)
@@ -34,13 +34,12 @@ class AuthorizationCell: UITableViewCell {
   
   private func makeConstriants() {
     icon.snp_makeConstraints { (make) in
-      make.centerY.equalTo(contentView)
-      make.centerX.equalTo(contentView).offset(-75)
+      make.centerY.equalTo(titleLabel)
+      make.trailing.equalTo(titleLabel.snp_leading).offset(-10)
     }
     
     titleLabel.snp_makeConstraints { (make) in
-      make.centerY.equalTo(icon)
-      make.leading.equalTo(icon.snp_trailing).offset(10)
+      make.center.equalTo(contentView)
     }
   }
   

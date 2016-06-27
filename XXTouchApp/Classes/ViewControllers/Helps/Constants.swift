@@ -30,7 +30,6 @@ extension Constants {
     static let removeSuccessful = "删除成功"
     static let cancel = "取消"
     static let createDone = "创建完成"
-    static let paySuccessful = "充值成功"
     static let copy = "已经复制到剪贴板"
     static let notSelected = "该文件格式无法被选中运行"
     static let notEnScript = "加密脚本无法编辑"

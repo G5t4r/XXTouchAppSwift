@@ -13,12 +13,12 @@ protocol NewScriptViewControllerDelegate: NSObjectProtocol {
 }
 
 class NewScriptViewController: UIViewController {
-  private let textView = YYTextView()
+  private let textView = CYRTextView()
   weak var delegate: NewScriptViewControllerDelegate?
   private let newNameView = NewNameView()
   private let blurView = JCRBlurView()
   private let animationDuration = 0.5
-  private var data = ""
+  //  private var data = ""
   private var extensionName = ""
   
   override func viewDidLoad() {
@@ -31,7 +31,7 @@ class NewScriptViewController: UIViewController {
   
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
-    //    newFileName.becomeFirstResponder()
+    //    textView.becomeFirstResponder()
   }
   
   private func setupUI() {
@@ -43,9 +43,9 @@ class NewScriptViewController: UIViewController {
     
     textView.backgroundColor = UIColor(rgb: 0x434343)
     textView.textColor = UIColor.whiteColor()
-    textView.placeholderText = "点我开始写代码.."
-    textView.placeholderTextColor = UIColor.lightGrayColor()
-    textView.delegate = self
+    textView.gutterLineColor = UIColor.blackColor()
+    textView.lineCursorEnabled = false
+    textView.font = UIFont.systemFontOfSize(13)
     
     newNameView.hidden = true
     blurView.hidden = true
@@ -145,11 +145,11 @@ class NewScriptViewController: UIViewController {
   }
   
   @objc private func next(button: UIBarButtonItem) {
-    if textView.text.characters.count == 0 {
-      self.data = Constants.Text.startScript
-    } else {
-      self.data = textView.text
-    }
+    //    if textView.text.characters.count == 0 {
+    //      self.data = Constants.Text.startScript
+    //    } else {
+    //      self.data = textView.text
+    //    }
     navigationController?.tabBarController?.tabBar.hidden = true
     navigationController?.setNavigationBarHidden(true, animated: true)
     newNameView.newNameTextField.text?.removeAll()
@@ -167,11 +167,15 @@ class NewScriptViewController: UIViewController {
   
   @objc private func keyboardWillAppear(notification: NSNotification) {
     // 获取键盘信息
-    let keyboardinfo = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]
-    let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
-    textView.contentInset.bottom = keyboardheight
-    
-    textView.scrollIndicatorInsets.bottom = textView.contentInset.bottom
+    let userinfo: NSDictionary = notification.userInfo!
+    let nsValue = userinfo.objectForKey(UIKeyboardFrameEndUserInfoKey)
+    let keyboardRec = nsValue?.CGRectValue()
+    let height = keyboardRec!.size.height
+    UIView.animateWithDuration(0.5, animations: {
+      self.textView.contentInset.top = height+Constants.Size.axtNavigationBarHeight
+      self.textView.scrollIndicatorInsets.top = self.textView.contentInset.top
+      self.view.frame.origin.y = -height
+      }, completion: nil)
   }
   
   /// 新建脚本
@@ -181,7 +185,7 @@ class NewScriptViewController: UIViewController {
     }
     let parameters = [
       "filename": newNameView.newNameTextField.text!+self.extensionName,
-      "data": self.data
+      "data": textView.text
     ]
     let request = Network.sharedManager.post(url: ServiceURL.Url.newScriptFile, timeout: Constants.Timeout.request, parameters: parameters)
     let session = Network.sharedManager.session()
@@ -213,12 +217,12 @@ class NewScriptViewController: UIViewController {
   }
 }
 
-extension NewScriptViewController: YYTextViewDelegate {
-  func textViewShouldBeginEditing(textView: YYTextView) -> Bool {
-    if self.textView.text.characters.count == 0 {
-      self.textView.text = Constants.Text.startScript
-      return true
-    }
-    return true
-  }
-}
+//extension NewScriptViewController: YYTextViewDelegate {
+//  func textViewShouldBeginEditing(textView: YYTextView) -> Bool {
+//    if self.textView.text.characters.count == 0 {
+//      self.textView.text = Constants.Text.startScript
+//      return true
+//    }
+//    return true
+//  }
+//}

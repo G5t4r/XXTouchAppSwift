@@ -204,6 +204,7 @@ class ScriptViewController: UIViewController {
   @objc private func addScript(button: UIBarButtonItem) {
     let newScriptViewController = NewScriptViewController()
     newScriptViewController.delegate = self
+    newScriptViewController.hidesBottomBarWhenPushed = true
     self.navigationController?.pushViewController(newScriptViewController, animated: true)
   }
   
@@ -244,6 +245,7 @@ class ScriptViewController: UIViewController {
     self.oldName = scriptList[indexPath.row].name
     self.oldExtensionName = Suffix.haveSuffix(scriptList[indexPath.row].name)
     editingChanged()
+    
     /// ActionSheet
     let actionSheet = UIActionSheet()
     actionSheet.title = self.oldName
@@ -594,6 +596,7 @@ extension ScriptViewController: SWTableViewCellDelegate {
       return
     }
     let scriptDetailViewController = ScriptDetailViewController(fileName: fileName)
+    scriptDetailViewController.hidesBottomBarWhenPushed = true
     self.navigationController?.pushViewController(scriptDetailViewController, animated: true)
   }
   

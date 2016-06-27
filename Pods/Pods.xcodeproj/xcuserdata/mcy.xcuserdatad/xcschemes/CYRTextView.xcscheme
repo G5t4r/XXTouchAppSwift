@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '9C55C06EA4544D5BC8264488D4ECA531'
-               BlueprintName = 'SDWebImage'
+               BlueprintIdentifier = '20E727714AEB3D8F1B854CA943803339'
+               BlueprintName = 'CYRTextView'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libSDWebImage.a'>
+               BuildableName = 'libCYRTextView.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

@@ -8,7 +8,7 @@ pod 'SWTableViewCell'
 pod 'SDWebImage'
 #pod 'KVOController'
 pod 'iOS-blur'
-pod 'YYText'
 pod 'KVNProgress'
 pod 'JCAlertView'
+pod 'CYRTextView'
 end
