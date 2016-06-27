@@ -21,6 +21,8 @@ extension Constants {
     static let prompt = "提示"
     static let warning = "警告"
     static let ok = "确定"
+    static let yes = "是"
+    static let no = "否"
     static let saveSuccessful = "保存成功"
     static let editSuccessful = "修改成功"
     static let back = "返回"

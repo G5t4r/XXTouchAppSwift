@@ -82,7 +82,7 @@ extension DevelopDocumentViewController: UIActionSheetDelegate {
 
 extension DevelopDocumentViewController: UIWebViewDelegate {
   func webViewDidStartLoad(webView: UIWebView) {
-    KVNProgress.show()
+    KVNProgress.showWithStatus(Constants.Text.reloading)
   }
   
   func webViewDidFinishLoad(webView: UIWebView) {

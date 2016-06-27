@@ -291,8 +291,8 @@ extension MoreViewController {
         switch json["code"].intValue {
         case 0: self.getDeviceinfo()
         default:
-          KVNProgress.dismiss()
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          KVNProgress.dismiss()
           return
         }
       }
@@ -420,8 +420,8 @@ extension MoreViewController {
           }
           self.fetchRemoteAccessStatus()
         default:
-          KVNProgress.dismiss()
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          KVNProgress.dismiss()
           return
         }
       }
@@ -450,14 +450,13 @@ extension MoreViewController {
         switch json["code"].intValue {
         case 0:
           dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
-            KVNProgress.dismiss()
             KVNProgress.showSuccessWithStatus("重启成功", completion: { 
               self.getDeviceinfo()
             })
           })
         default:
-          KVNProgress.dismiss()
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          KVNProgress.dismiss()
           return
         }
       }
@@ -481,11 +480,11 @@ extension MoreViewController {
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
-        KVNProgress.dismiss()
         switch json["code"].intValue {
         case 0: KVNProgress.showSuccessWithStatus("清空成功")
         default:
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          KVNProgress.dismiss()
           return
         }
       }
@@ -509,11 +508,11 @@ extension MoreViewController {
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
-        KVNProgress.dismiss()
         switch json["code"].intValue {
         case 0: KVNProgress.showSuccessWithStatus("清理成功")
         default:
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          KVNProgress.dismiss()
           return
         }
       }
@@ -537,11 +536,11 @@ extension MoreViewController {
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
-        KVNProgress.dismiss()
         switch json["code"].intValue {
         case 0: KVNProgress.showSuccessWithStatus("全清成功")
         default:
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          KVNProgress.dismiss()
           return
         }
       }

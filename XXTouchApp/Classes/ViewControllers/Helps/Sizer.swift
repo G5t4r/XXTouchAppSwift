@@ -50,21 +50,18 @@ struct Sizer {
    
    - returns: 当前设备对应值
    */
-  //  static func valueForDevice<T>(phone phone: T, pad: T, traitCollection: UITraitCollection? = nil) -> T {
-  //    var idom = UI_USER_INTERFACE_IDIOM()
-  //    if let traitCollection = traitCollection {
-  //      idom = traitCollection.userInterfaceIdiom
-  //    }
-  //    
-  //    switch idom {
-  //    case .Pad:
-  //      return pad
-  //    case .Phone:
-  //      return phone
-  //    default:
-  //      return phone
-  //    }
-  //  }
+  static func valueForDevice<T>(phone phone: T, pad: T) -> T {
+    let idom = UI_USER_INTERFACE_IDIOM()
+    
+    switch idom {
+    case .Pad:
+      return pad
+    case .Phone:
+      return phone
+    default:
+      return phone
+    }
+  }
   
   /**
    不同的 size class 对应的值

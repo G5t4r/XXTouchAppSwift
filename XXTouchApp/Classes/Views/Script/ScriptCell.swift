@@ -13,7 +13,7 @@ class ScriptCell: SWTableViewCell {
   private let scriptSelectedImage = UIImageView(image: UIImage(named: "selected"))
   private let nameLabel = UILabel()
   private let scriptTime = UILabel()
-  let infoButton = UIButton(type: .Custom)
+  let infoButton = Button(type: .Custom)
   
   
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -27,9 +27,9 @@ class ScriptCell: SWTableViewCell {
   }
   
   private func setupUI() {
-    //    self.selectionStyle = .None
+    nameLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
     scriptTime.textColor = ThemeManager.Theme.lightTextColor
-    scriptTime.font = UIFont.systemFontOfSize(11)
+    scriptTime.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 11, pad: 14))
     scriptSelectedImage.hidden = true
     
     infoButton.setImage(UIImage(named: "infoIcon"), forState: .Normal)
@@ -46,14 +46,14 @@ class ScriptCell: SWTableViewCell {
   private func makeConstriants() {
     scriptImage.snp_makeConstraints { (make) in
       make.leading.equalTo(contentView).inset(15)
-      make.height.width.equalTo(40)
+      make.height.width.equalTo(Sizer.valueForDevice(phone: 40, pad: 60))
       make.centerY.equalTo(contentView)
     }
     
     nameLabel.snp_makeConstraints { (make) in
-      make.top.equalTo(contentView).offset(10)
-      make.trailing.equalTo(contentView).offset(-100)
-      make.leading.equalTo(contentView).offset(70)
+      make.top.equalTo(contentView).offset(Sizer.valueForDevice(phone: 10, pad: 15))
+      make.trailing.equalTo(contentView).offset(Sizer.valueForDevice(phone: -100, pad: -120))
+      make.leading.equalTo(contentView).offset(Sizer.valueForDevice(phone: 70, pad: 85))
     }
     
     scriptTime.snp_makeConstraints { (make) in
@@ -64,13 +64,13 @@ class ScriptCell: SWTableViewCell {
     infoButton.snp_makeConstraints { (make) in
       make.trailing.equalTo(contentView).offset(-20)
       make.centerY.equalTo(contentView)
-      make.width.height.equalTo(22)
+      make.width.height.equalTo(Sizer.valueForDevice(phone: 22, pad: 32))
     }
     
     scriptSelectedImage.snp_makeConstraints { (make) in
       make.trailing.equalTo(infoButton.snp_leading).offset(-20)
       make.centerY.equalTo(contentView)
-      make.width.height.equalTo(22)
+      make.width.height.equalTo(Sizer.valueForDevice(phone: 22, pad: 32))
     }
   }
   

@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '3EEBE514698151F34ED54F0F08D0D634'
-               BlueprintName = 'YYText'
+               BlueprintIdentifier = '20E727714AEB3D8F1B854CA943803339'
+               BlueprintName = 'CYRTextView'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libYYText.a'>
+               BuildableName = 'libCYRTextView.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

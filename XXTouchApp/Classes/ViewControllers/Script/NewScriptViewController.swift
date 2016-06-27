@@ -29,15 +29,12 @@ class NewScriptViewController: UIViewController {
     bind()
   }
   
-  override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
-    //    textView.becomeFirstResponder()
-  }
-  
   private func setupUI() {
     view.backgroundColor = UIColor.whiteColor()
     navigationItem.title = "新建文件"
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "下一步", style: .Plain, target: self, action: #selector(next(_:)))
+    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "返回", style: .Plain, target: self, action: #selector(back))
+    
     
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
     
@@ -45,7 +42,7 @@ class NewScriptViewController: UIViewController {
     textView.textColor = UIColor.whiteColor()
     textView.gutterLineColor = UIColor.blackColor()
     textView.lineCursorEnabled = false
-    textView.font = UIFont.systemFontOfSize(13)
+    textView.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 13, pad: 17))
     
     newNameView.hidden = true
     blurView.hidden = true
@@ -165,6 +162,16 @@ class NewScriptViewController: UIViewController {
     })
   }
   
+  @objc private func back() {
+    guard self.textView.text.characters.count != 0 else {
+      self.navigationController?.popViewControllerAnimated(true)
+      return
+    }
+    JCAlertView.showTwoButtonsWithTitle(Constants.Text.prompt, message: "是否丢弃当前更改？", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.yes, click: {
+      self.navigationController?.popViewControllerAnimated(true)
+      }, buttonType: JCAlertViewButtonType.Cancel, buttonTitle: Constants.Text.no, click: nil)
+  }
+  
   @objc private func keyboardWillAppear(notification: NSNotification) {
     // 获取键盘信息
     let userinfo: NSDictionary = notification.userInfo!
@@ -193,7 +200,6 @@ class NewScriptViewController: UIViewController {
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
-        KVNProgress.dismiss()
         switch json["code"].intValue {
         case 0:
           KVNProgress.showSuccessWithStatus(Constants.Text.createDone, completion: { 
@@ -201,8 +207,10 @@ class NewScriptViewController: UIViewController {
             self.onef_navigationBack(true)
             self.delegate?.reloadScriptList()
           })
+          
         default:
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          KVNProgress.dismiss()
           return
         }
       }

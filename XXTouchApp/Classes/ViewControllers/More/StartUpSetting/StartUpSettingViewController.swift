@@ -82,8 +82,8 @@ extension StartUpSettingViewController {
           self.currentSelectedScriptName = json["data"]["startup_script"].stringValue
           self.fetchScriptList()
         default:
-          KVNProgress.dismiss()
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          KVNProgress.dismiss()
           return
         }
       }

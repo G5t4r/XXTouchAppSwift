@@ -78,7 +78,6 @@ extension AuthorizationViewController {
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
-        KVNProgress.dismiss()
         switch json["code"].intValue {
         case 0:
           let time = json["data"]["expireDate"].int64Value - json["data"]["nowDate"].int64Value
@@ -89,24 +88,30 @@ extension AuthorizationViewController {
             message = "充值成功\n本次充值时间：\(Formatter.formatDayTime(time))"
           }
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: message, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          KVNProgress.dismiss()
           self.authorizationCell.iconVip()
           self.authorizationBindCell.codeTextField.text?.removeAll()
           self.submitUpdate(titleColor: ThemeManager.Theme.lightTextColor, backgroundColor: ThemeManager.Theme.separatorColor, enabled: false)
           self.getExpireDate()
         case 1:
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: Constants.Error.connectServerFail, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          KVNProgress.dismiss()
           return
         case -1:
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: Constants.Error.verificationFailure, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          KVNProgress.dismiss()
           return
         case -2:
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: Constants.Error.invalidCode, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          KVNProgress.dismiss()
           return
         case 112:
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: Constants.Error.serverBusy, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          KVNProgress.dismiss()
           return
         default:
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          KVNProgress.dismiss()
           return
         }
       }

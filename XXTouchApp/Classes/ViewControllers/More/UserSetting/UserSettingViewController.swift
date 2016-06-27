@@ -224,8 +224,8 @@ extension UserSettingViewController: UIActionSheetDelegate {
         switch json["code"].intValue {
         case 0: self.getUserConf()
         default:
-          KVNProgress.dismiss()
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          KVNProgress.dismiss()
           return
         }
       }

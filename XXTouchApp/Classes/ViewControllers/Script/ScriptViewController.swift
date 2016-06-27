@@ -179,7 +179,6 @@ class ScriptViewController: UIViewController {
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
-        KVNProgress.dismiss()
         switch json["code"].intValue {
         case 0:
           KVNProgress.showSuccessWithStatus(Constants.Text.editSuccessful, completion: { 
@@ -188,6 +187,7 @@ class ScriptViewController: UIViewController {
           })
         default:
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          KVNProgress.dismiss()
           return
         }
       }
@@ -250,25 +250,16 @@ class ScriptViewController: UIViewController {
     let actionSheet = UIActionSheet()
     actionSheet.title = self.oldName
     actionSheet.delegate = self
-    if self.oldExtensionName == Suffix.Section.Lua.title {
+    if self.oldExtensionName == Suffix.Section.Lua.title || self.oldExtensionName == Suffix.Section.Xxt.title {
       actionSheet.destructiveButtonIndex = 0
       actionSheet.cancelButtonIndex = 4
       actionSheet.addButtonWithTitle("运行")
       actionSheet.addButtonWithTitle("停止")
       actionSheet.addButtonWithTitle("编辑")
       actionSheet.addButtonWithTitle("重命名")
-    } else if self.oldExtensionName == Suffix.Section.Xxt.title {
-      actionSheet.destructiveButtonIndex = 0
-      actionSheet.cancelButtonIndex = 3
-      actionSheet.addButtonWithTitle("运行")
-      actionSheet.addButtonWithTitle("停止")
-      actionSheet.addButtonWithTitle("重命名")
-    } else if self.oldExtensionName == Suffix.Section.Txt.title {
+    } else {
       actionSheet.cancelButtonIndex = 2
       actionSheet.addButtonWithTitle("编辑")
-      actionSheet.addButtonWithTitle("重命名")
-    } else {
-      actionSheet.cancelButtonIndex = 1
       actionSheet.addButtonWithTitle("重命名")
     }
     actionSheet.addButtonWithTitle(Constants.Text.cancel)
@@ -351,7 +342,7 @@ class ScriptViewController: UIViewController {
 extension ScriptViewController: UIActionSheetDelegate {
   func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
     guard buttonIndex != actionSheet.cancelButtonIndex else { return }
-    if self.oldExtensionName == Suffix.Section.Lua.title {
+    if self.oldExtensionName == Suffix.Section.Lua.title || self.oldExtensionName == Suffix.Section.Xxt.title {
       switch buttonIndex {
       /// 运行
       case 0: launchScriptFile()
@@ -363,28 +354,12 @@ extension ScriptViewController: UIActionSheetDelegate {
       case 3: openRenameViewAnimator()
       default: return
       }
-    } else if self.oldExtensionName == Suffix.Section.Xxt.title {
-      switch buttonIndex {
-      /// 运行
-      case 0: launchScriptFile()
-      /// 停止
-      case 1: isRunning()
-      /// 重命名
-      case 2: openRenameViewAnimator()
-      default: return
-      }
-    } else if self.oldExtensionName == Suffix.Section.Txt.title {
+    } else {
       switch buttonIndex {
       /// 编辑
       case 0: edit(self.indexPath)
       /// 重命名
       case 1: openRenameViewAnimator()
-      default: return
-      }
-    } else {
-      switch buttonIndex {
-      /// 重命名
-      case 0: openRenameViewAnimator()
       default: return
       }
     }
@@ -400,15 +375,16 @@ extension ScriptViewController: UIActionSheetDelegate {
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
-        KVNProgress.dismiss()
         switch json["code"].intValue {
         case 0: KVNProgress.showSuccessWithStatus(json["message"].stringValue)
         case 2:
           let messgae = json["message"].stringValue + "\n" + json["detail"].stringValue
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: messgae, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          KVNProgress.dismiss()
           return
         default:
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          KVNProgress.dismiss()
           return
         }
       }
@@ -433,9 +409,7 @@ extension ScriptViewController: UIActionSheetDelegate {
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
         switch json["code"].intValue {
-        case 0:
-          KVNProgress.dismiss()
-          KVNProgress.showSuccessWithStatus(Constants.Text.notRuningScript)
+        case 0: KVNProgress.showErrorWithStatus(Constants.Text.notRuningScript)
         default: self.stopScriptFile()
         }
       }
@@ -456,11 +430,11 @@ extension ScriptViewController: UIActionSheetDelegate {
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
-        KVNProgress.dismiss()
         switch json["code"].intValue {
         case 0: KVNProgress.showSuccessWithStatus(json["message"].stringValue)
         default:
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          KVNProgress.dismiss()
           return
         }
       }
@@ -527,12 +501,7 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier(NSStringFromClass(ScriptCell), forIndexPath: indexPath) as! ScriptCell
     cell.bind(scriptList[indexPath.row])
-    let extensionName = Suffix.haveSuffix(scriptList[indexPath.row].name)
-    if extensionName == Suffix.Section.Lua.title || extensionName == Suffix.Section.Txt.title {
-      cell.leftUtilityButtons = leftButtons()
-    } else {
-      cell.leftUtilityButtons = nil
-    }
+    cell.leftUtilityButtons = leftButtons()
     cell.rightUtilityButtons = rightButtons()
     cell.delegate = self
     cell.infoButton.addTarget(self, action: #selector(info(_:)), forControlEvents: .TouchUpInside)
@@ -574,7 +543,7 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return 60
+    return Sizer.valueForDevice(phone: 60, pad: 80)
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

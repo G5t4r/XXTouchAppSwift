@@ -27,7 +27,6 @@ class AuthorizationCell: UITableViewCell {
     titleLabel.text = "正在获取设备授权信息.."
     //    titleLabel.textAlignment = .Center
     titleLabel.textColor = ThemeManager.Theme.tintColor
-    
     contentView.addSubview(icon)
     contentView.addSubview(titleLabel)
   }
