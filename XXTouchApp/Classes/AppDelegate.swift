@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       })
     } else {
       // 键盘管理
-      KeyboardManager.configure()
+//      KeyboardManager.configure()
       
       // 读取转菊花配置
       ProgressHUDManager.sharedManager.startConfig()

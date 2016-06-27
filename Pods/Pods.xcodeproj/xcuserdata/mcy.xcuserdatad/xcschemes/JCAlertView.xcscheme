@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '9C55C06EA4544D5BC8264488D4ECA531'
-               BlueprintName = 'SDWebImage'
+               BlueprintIdentifier = '8E16F23C3941DDC72C45FC1B5C8EE8CD'
+               BlueprintName = 'JCAlertView'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libSDWebImage.a'>
+               BuildableName = 'libJCAlertView.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

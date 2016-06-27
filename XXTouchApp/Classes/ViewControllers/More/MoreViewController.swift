@@ -376,7 +376,7 @@ extension MoreViewController {
     /// 重启设备
     case 5:
       JCAlertView.showTwoButtonsWithTitle(Constants.Text.prompt, message: "确定要重启设备么？", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: {
-        MixC.sharedManager.reboot()
+        self.reboot()
         }, buttonType: JCAlertViewButtonType.Cancel, buttonTitle: Constants.Text.cancel, click: nil)
     default: break
     }
@@ -402,9 +402,9 @@ extension MoreViewController {
 // 获取设备信息
 extension MoreViewController {
   private func getDeviceinfo() {
-    if !KVNProgress.isVisible() {
-      KVNProgress.showWithStatus(Constants.Text.reloading)
-    }
+    //    if !KVNProgress.isVisible() {
+    //      KVNProgress.showWithStatus(Constants.Text.reloading)
+    //    }
     let request = Network.sharedManager.post(url: ServiceURL.Url.deviceinfo, timeout:Constants.Timeout.request)
     let session = Network.sharedManager.session()
     let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
@@ -426,7 +426,7 @@ extension MoreViewController {
         }
       }
       if error != nil {
-        KVNProgress.updateStatus(Constants.Error.failure)
+        KVNProgress.showWithStatus(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.getDeviceinfo()
         }
@@ -549,6 +549,34 @@ extension MoreViewController {
         KVNProgress.updateStatus(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.clearAll()
+        }
+      }
+    }
+    task.resume()
+  }
+  
+  private func reboot() {
+    if !KVNProgress.isVisible() {
+      KVNProgress.showWithStatus("正在重启设备")
+    }
+    let request = Network.sharedManager.post(url: ServiceURL.Url.reboot2, timeout:Constants.Timeout.request)
+    let session = Network.sharedManager.session()
+    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+      guard let `self` = self else { return }
+      if let data = data where JSON(data: data) != nil {
+        let json = JSON(data: data)
+        KVNProgress.dismiss()
+        switch json["code"].intValue {
+        case 0: break
+        default:
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
+        }
+      }
+      if error != nil {
+        KVNProgress.updateStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.reboot()
         }
       }
     }

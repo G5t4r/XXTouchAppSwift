@@ -10,7 +10,7 @@ import UIKit
 
 class ScriptDetailViewController: UIViewController {
   private let fileName: String
-  private let textView = YYTextView()
+  private let textView = CYRTextView()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -32,25 +32,34 @@ class ScriptDetailViewController: UIViewController {
     view.backgroundColor = UIColor.whiteColor()
     navigationItem.title = "脚本内容"
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "保存", style: .Plain, target: self, action: #selector(saveScript))
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+    
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+    //    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     
     
     textView.backgroundColor = UIColor(rgb: 0x434343)
     textView.textColor = UIColor.whiteColor()
-    
+    textView.gutterLineColor = UIColor.blackColor()
+    textView.lineCursorEnabled = false
+    textView.font = UIFont.systemFontOfSize(13)
+    //    textView.tokens = tokens() as [AnyObject]
     
     view.addSubview(textView)
   }
+  
+  //  private func tokens() -> NSArray {
+  //    let array = [
+  //      CYRToken.init(name: "one", expression: "for", attributes: [NSForegroundColorAttributeName: UIColor(rgb:0x9900ff)])
+  //      
+  //      
+  //    ]
+  //    return array
+  //  }
   
   private func makeConstriants() {
     textView.snp_makeConstraints { (make) in
       make.edges.equalTo(view)
     }
-  }
-  
-  override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
-    //    textView.becomeFirstResponder()
   }
   
   override func viewWillDisappear(animated: Bool) {
@@ -127,11 +136,20 @@ class ScriptDetailViewController: UIViewController {
     fetchWriteScript()
   }
   
-  @objc private func keyboardWillAppear(notification: NSNotification) {
+  @objc private func keyboardWillShow(notification: NSNotification) {
     // 获取键盘信息
-    let keyboardinfo = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]
-    let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
-    textView.contentInset.bottom = keyboardheight
-    textView.scrollIndicatorInsets.bottom = textView.contentInset.bottom
+    let userinfo: NSDictionary = notification.userInfo!
+    let nsValue = userinfo.objectForKey(UIKeyboardFrameEndUserInfoKey)
+    let keyboardRec = nsValue?.CGRectValue()
+    let height = keyboardRec!.size.height
+    UIView.animateWithDuration(0.5, animations: {
+      self.textView.contentInset.top = height+Constants.Size.axtNavigationBarHeight
+      self.textView.scrollIndicatorInsets.top = self.textView.contentInset.top
+      self.view.frame.origin.y = -height
+      }, completion: nil)
   }
+  
+  //  @objc private func keyboardWillHide(notification: NSNotification) {
+  //    
+  //  }
 }

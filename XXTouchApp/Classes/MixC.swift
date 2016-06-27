@@ -33,10 +33,10 @@ extension MixC {
     }
   }
   
-  // 重启设备
-  func reboot() {
-    system("reboot")
-  }
+  //  // 重启设备
+  //  func reboot() {
+  //    system("reboot")
+  //  }
   
   //  注销设备
   func logout() {

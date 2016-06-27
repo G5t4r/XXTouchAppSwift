@@ -1,4 +1,5 @@
 PODS:
+  - CYRTextView (0.4.0)
   - iOS-blur (0.0.5)
   - JCAlertView (1.1.5)
   - KVNProgress (2.2.4)
@@ -7,26 +8,25 @@ PODS:
     - SDWebImage/Core (= 3.8.1)
   - SDWebImage/Core (3.8.1)
   - SWTableViewCell (0.3.7)
-  - YYText (1.0.5)
 
 DEPENDENCIES:
+  - CYRTextView
   - iOS-blur
   - JCAlertView
   - KVNProgress
   - MJRefresh
   - SDWebImage
   - SWTableViewCell
-  - YYText
 
 SPEC CHECKSUMS:
+  CYRTextView: 1c1a4d708eee54ecad66b8ad42dbfe73083bdfce
   iOS-blur: 8e4a4a2202b881e940869eca0c957808cbdf0a19
   JCAlertView: c65a7b298b8b497b3db783d82f719b88f4914869
   KVNProgress: 541edcea5a1fef592aceac8d791a410d38cb499d
   MJRefresh: f67f0750d57a4e4ae433da549359ca53b52cdc7d
   SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
   SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
-  YYText: ac09660c9ccd9b817f409a20caa6f5587444d2ae
 
-PODFILE CHECKSUM: 6306159531f36b435956a837bd6b26548d0bb395
+PODFILE CHECKSUM: 5c2fff35c8eccc85f8cf3ed4ad750748c18d5c65
 
 COCOAPODS: 1.0.1

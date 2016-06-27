@@ -17,6 +17,6 @@
 #import "SWTableViewCell/SWTableViewCell.h"
 #import "MJRefresh/MJRefresh.h"
 #import "iOS-blur/JCRBlurView.h"
-#import "YYText/YYText.h"
 #import "KVNProgress/KVNProgress.h"
 #import "JCAlertView/JCAlertView.h"
+#import "CYRTextView/CYRTextView.h"

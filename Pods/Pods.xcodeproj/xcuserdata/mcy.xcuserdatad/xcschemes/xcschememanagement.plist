@@ -4,17 +4,17 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>DZNEmptyDataSet.xcscheme</key>
+		<key>CYRTextView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>KVOController.xcscheme</key>
+		<key>JCAlertView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>MBProgressHUD.xcscheme</key>
+		<key>KVNProgress.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -39,11 +39,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>YYText.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>iOS-blur.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,17 +47,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>00D38102311C50C2BA6E82ECD5757D92</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>06B2232CE73059846F04E5C3DFEE0D38</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>0FEFCED0DFD9044B714F80F336070127</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4E463C17EF5743219B247B217B2018DF</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>65E86FC8F874CD855F1291330BDE16D1</key>
+		<key>20E727714AEB3D8F1B854CA943803339</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -72,27 +72,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>736E57AD5AEFAAF68D47AE4E8FCB8F68</key>
+		<key>8E16F23C3941DDC72C45FC1B5C8EE8CD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>95FBC6BBBDD830E63C33EB1708B9D9B8</key>
+		<key>9C55C06EA4544D5BC8264488D4ECA531</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E229E7CEE87FD598C045693A466AA30E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>EF01B71EB6B0956A23114757F0CB61B1</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FE2F1D7B9D9FCEA148517E4657B243F4</key>
+		<key>F512E3E3AB5C67EF7A2FBA797BF176EA</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -81,9 +81,17 @@ extension AuthorizationViewController {
         KVNProgress.dismiss()
         switch json["code"].intValue {
         case 0:
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: Constants.Text.paySuccessful, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          let time = json["data"]["expireDate"].int64Value - json["data"]["nowDate"].int64Value
+          var message: String
+          if time == 0 {
+            message = "测试充值成功\n本次为测试授权，不会增加授权时间"
+          } else {
+            message = "充值成功\n本次充值时间：\(Formatter.formatDayTime(time))"
+          }
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: message, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
           self.authorizationCell.iconVip()
           self.authorizationBindCell.codeTextField.text?.removeAll()
+          self.submitUpdate(titleColor: ThemeManager.Theme.lightTextColor, backgroundColor: ThemeManager.Theme.separatorColor, enabled: false)
           self.getExpireDate()
         case 1:
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: Constants.Error.connectServerFail, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
