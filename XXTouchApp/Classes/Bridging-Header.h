@@ -20,3 +20,5 @@
 #import "KVNProgress/KVNProgress.h"
 #import "JCAlertView/JCAlertView.h"
 #import "CYRTextView/CYRTextView.h"
+#import "NJKWebViewProgress/NJKWebViewProgress.h"
+#import "NJKWebViewProgress/NJKWebViewProgressView.h"

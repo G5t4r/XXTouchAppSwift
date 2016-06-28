@@ -15,7 +15,6 @@ class ScriptCell: SWTableViewCell {
   private let scriptTime = UILabel()
   let infoButton = Button(type: .Custom)
   
-  
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     setupUI()

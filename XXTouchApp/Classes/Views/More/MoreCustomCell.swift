@@ -27,7 +27,7 @@ class MoreCustomCell: UITableViewCell {
   
   private func setupUI() {
     self.accessoryType = .DisclosureIndicator
-    self.selectionStyle = .None
+//    self.selectionStyle = .None
     
     contentView.addSubview(icon)
     contentView.addSubview(titleLabel)

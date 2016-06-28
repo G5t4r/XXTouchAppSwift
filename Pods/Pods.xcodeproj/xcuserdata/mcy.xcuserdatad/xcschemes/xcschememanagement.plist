@@ -24,6 +24,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>NJKWebViewProgress.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-XXTouchApp.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,11 +52,6 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>00D38102311C50C2BA6E82ECD5757D92</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>06B2232CE73059846F04E5C3DFEE0D38</key>
 		<dict>
 			<key>primary</key>
@@ -77,12 +77,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9C55C06EA4544D5BC8264488D4ECA531</key>
+		<key>B4A3E08D49931371F7247521A50EAF79</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F512E3E3AB5C67EF7A2FBA797BF176EA</key>
+		<key>BA65B8764D1995C2E39767B03BD8B24F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BD297F4E6FAF6B30683D4635725110CE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BFA838075D8D020E6D33A49E352DA755</key>
 		<dict>
 			<key>primary</key>
 			<true/>

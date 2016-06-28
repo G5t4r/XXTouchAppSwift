@@ -16,6 +16,8 @@ class DevelopDocumentViewController: UIViewController {
     button.hidden = true
     return button
   }()
+  private let progressProxy = NJKWebViewProgress()
+  private let progressView = NJKWebViewProgressView()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -32,11 +34,15 @@ class DevelopDocumentViewController: UIViewController {
     navigationItem.rightBarButtonItem = UIBarButtonItem(image: rightImage, style: .Plain, target: self, action: #selector(skip))
     
     webView.loadRequest(NSURLRequest(URL: NSURL(string: ServiceURL.Url.developDocument)!))
-    webView.delegate = self
+    webView.delegate = progressProxy
+    progressProxy.progressDelegate = self
+    progressProxy.webViewProxyDelegate = self
     webView.scrollView.delegate = self
-    webView
+    progressView.hidden = true
+    
     view.addSubview(webView)
     view.addSubview(scrollToTopButton)
+    view.addSubview(progressView)
   }
   
   private func makeConstriants() {
@@ -48,6 +54,12 @@ class DevelopDocumentViewController: UIViewController {
       make.width.height.equalTo(40)
       make.trailing.equalTo(view).inset(20)
       make.bottom.equalTo(view).inset(20)
+    }
+    
+    progressView.snp_makeConstraints { (make) in
+      make.top.equalTo(snp_topLayoutGuideBottom)
+      make.leading.trailing.equalTo(view)
+      make.height.equalTo(2)
     }
   }
   
@@ -80,7 +92,13 @@ extension DevelopDocumentViewController: UIActionSheetDelegate {
   }
 }
 
-extension DevelopDocumentViewController: UIWebViewDelegate {
+extension DevelopDocumentViewController: UIWebViewDelegate, NJKWebViewProgressDelegate {
+  
+  func webViewProgress(webViewProgress: NJKWebViewProgress!, updateProgress progress: Float) {
+    progressView.hidden = false 
+    progressView.setProgress(progress, animated: true)
+  }
+  
   func webViewDidStartLoad(webView: UIWebView) {
     KVNProgress.showWithStatus(Constants.Text.reloading)
   }
@@ -89,6 +107,7 @@ extension DevelopDocumentViewController: UIWebViewDelegate {
     KVNProgress.dismiss()
     // 固定显示缩放比例
     webView.stringByEvaluatingJavaScriptFromString("document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '80%'")
+    //    navigationItem.title = webView.stringByEvaluatingJavaScriptFromString("document.title")
   }
   
   func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {

@@ -4,6 +4,11 @@ PODS:
   - JCAlertView (1.1.5)
   - KVNProgress (2.2.4)
   - MJRefresh (3.1.7)
+  - NJKWebViewProgress (0.2.3):
+    - NJKWebViewProgress/Core (= 0.2.3)
+    - NJKWebViewProgress/ProgressView (= 0.2.3)
+  - NJKWebViewProgress/Core (0.2.3)
+  - NJKWebViewProgress/ProgressView (0.2.3)
   - SDWebImage (3.8.1):
     - SDWebImage/Core (= 3.8.1)
   - SDWebImage/Core (3.8.1)
@@ -15,6 +20,7 @@ DEPENDENCIES:
   - JCAlertView
   - KVNProgress
   - MJRefresh
+  - NJKWebViewProgress
   - SDWebImage
   - SWTableViewCell
 
@@ -24,9 +30,10 @@ SPEC CHECKSUMS:
   JCAlertView: c65a7b298b8b497b3db783d82f719b88f4914869
   KVNProgress: 541edcea5a1fef592aceac8d791a410d38cb499d
   MJRefresh: f67f0750d57a4e4ae433da549359ca53b52cdc7d
+  NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
   SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
   SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
 
-PODFILE CHECKSUM: 5c2fff35c8eccc85f8cf3ed4ad750748c18d5c65
+PODFILE CHECKSUM: 79988c8559fa792eeffc86ad4ff975c15fe03814
 
 COCOAPODS: 1.0.1

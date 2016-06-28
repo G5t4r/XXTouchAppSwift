@@ -187,7 +187,7 @@
 		2CF749C91CFDA16F007A273B /* ScriptCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptCell.swift; sourceTree = "<group>"; };
 		2CF749CC1D0536CB007A273B /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		2CF749D01D053A41007A273B /* ScriptModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptModel.swift; sourceTree = "<group>"; };
-		2CF749D21D0562BE007A273B /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		2CF749D21D0562BE007A273B /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ThemeManager.swift; path = ../ViewControllers/Helps/ThemeManager.swift; sourceTree = "<group>"; };
 		2CF749D71D0577C4007A273B /* MoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		371DCC2DEDA3C1059AE8CE25 /* Pods-XXTouchApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTouchApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-XXTouchApp/Pods-XXTouchApp.release.xcconfig"; sourceTree = "<group>"; };
 		8A6F1DF544CDD739F1B52DAA /* Pods-XXTouchApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTouchApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XXTouchApp/Pods-XXTouchApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -222,6 +222,7 @@
 		2C20D81D1D0FCB81009A4990 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				2CF749D21D0562BE007A273B /* ThemeManager.swift */,
 				2C20D81E1D0FCB8E009A4990 /* KeyboardManager.swift */,
 				955DB23E1D1E3A4E00B598C4 /* FileManager.swift */,
 				95D5042C1D1FEE11008CFA7F /* ProgressHUDManager.swift */,
@@ -311,7 +312,6 @@
 			isa = PBXGroup;
 			children = (
 				B96DB0EBF161BCE984E4E716 /* Frameworks */,
-				B9B464BF9774DF388D036CFF /* Pods */,
 				2C67AB371CFD218E008D53E8 /* Products */,
 				2C67AB381CFD218E008D53E8 /* XXTouchApp */,
 				2C67AB4D1CFD218E008D53E8 /* XXTouchAppTests */,
@@ -631,7 +631,6 @@
 				2CF749CC1D0536CB007A273B /* Formatter.swift */,
 				2CD2F5661D13A1C0001C873F /* Sizer.swift */,
 				2CC84BFF1D178E2600D4230D /* Suffix.swift */,
-				2CF749D21D0562BE007A273B /* ThemeManager.swift */,
 			);
 			path = Helps;
 			sourceTree = "<group>";
@@ -680,6 +679,7 @@
 		B96DB0EBF161BCE984E4E716 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B9B464BF9774DF388D036CFF /* Pods */,
 				ACF28B837117B6CAD47A3345 /* libPods-XXTouchApp.a */,
 			);
 			name = Frameworks;

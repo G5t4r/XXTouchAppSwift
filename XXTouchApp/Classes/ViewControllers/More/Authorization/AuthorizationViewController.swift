@@ -40,6 +40,7 @@ class AuthorizationViewController: UIViewController {
   private func setupAction() {
     authorizationBindCell.codeTextField.addTarget(self, action: #selector(editingChanged(_:)), forControlEvents: .EditingChanged)
     authorizationBindCell.sumbitButton.addTarget(self, action: #selector(sumbit), forControlEvents: .TouchUpInside)
+    tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(touch)))
   }
 }
 
@@ -240,5 +241,11 @@ extension AuthorizationViewController: UITableViewDelegate, UITableViewDataSourc
     case 0: return "到期时间"
     default: return nil
     }
+  }
+}
+
+extension AuthorizationViewController {
+  @objc private func touch() {
+    authorizationBindCell.codeTextField.resignFirstResponder()
   }
 }

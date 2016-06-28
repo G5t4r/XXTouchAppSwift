@@ -11,8 +11,8 @@ class ProgressHUDManager {
   
   func startConfig() {
     let config = KVNProgressConfiguration.defaultConfiguration()
-    config.minimumSuccessDisplayTime = 1.0
-    config.minimumErrorDisplayTime = 1.0
+    config.minimumSuccessDisplayTime = 0.8
+    config.minimumErrorDisplayTime = 0.8
     KVNProgress.setConfiguration(config)
   }
 }

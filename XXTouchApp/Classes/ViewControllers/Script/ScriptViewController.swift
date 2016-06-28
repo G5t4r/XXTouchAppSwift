@@ -16,7 +16,7 @@ class ScriptViewController: UIViewController {
   private var oldName = ""
   private let renameView = RenameView()
   private let blurView = JCRBlurView()
-  private let animationDuration = 0.5
+  private let animationDuration = 0.3
   private var oldExtensionName = ""
   private var indexPath = NSIndexPath()
   
@@ -501,6 +501,7 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier(NSStringFromClass(ScriptCell), forIndexPath: indexPath) as! ScriptCell
     cell.bind(scriptList[indexPath.row])
+    //    cell.long.addTarget(self, action: #selector(longAction(_:)))
     cell.leftUtilityButtons = leftButtons()
     cell.rightUtilityButtons = rightButtons()
     cell.delegate = self

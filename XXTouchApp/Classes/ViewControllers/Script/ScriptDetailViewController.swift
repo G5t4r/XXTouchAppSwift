@@ -31,19 +31,20 @@ class ScriptDetailViewController: UIViewController {
   
   private func setupUI() {
     view.backgroundColor = UIColor.whiteColor()
-    navigationItem.title = "脚本内容"
+    navigationController?.interactivePopGestureRecognizer?.delegate = self
+    navigationItem.title = self.fileName
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "保存", style: .Plain, target: self, action: #selector(saveScript))
     navigationItem.leftBarButtonItem = UIBarButtonItem(title: "返回", style: .Plain, target: self, action: #selector(back))
     
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
     //    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     
-    
     textView.backgroundColor = UIColor(rgb: 0x434343)
     textView.textColor = UIColor.whiteColor()
     textView.gutterLineColor = UIColor.blackColor()
     textView.lineCursorEnabled = false
     textView.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 13, pad: 17))
+    textView.autocorrectionType = .No // 关闭自动更正
     //    textView.tokens = tokens() as [AnyObject]
     
     view.addSubview(textView)
@@ -170,4 +171,7 @@ class ScriptDetailViewController: UIViewController {
   //  @objc private func keyboardWillHide(notification: NSNotification) {
   //    
   //  }
+}
+
+extension ScriptDetailViewController: UIGestureRecognizerDelegate {
 }

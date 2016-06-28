@@ -11,4 +11,5 @@ pod 'iOS-blur'
 pod 'KVNProgress'
 pod 'JCAlertView'
 pod 'CYRTextView'
+pod 'NJKWebViewProgress'
 end
