@@ -16,7 +16,7 @@ class ScriptViewController: UIViewController {
   private var oldName = ""
   private let renameView = RenameView()
   private let blurView = JCRBlurView()
-  private let animationDuration = 0.3
+  private let animationDuration = 0.5
   private var oldExtensionName = ""
   private var indexPath = NSIndexPath()
   

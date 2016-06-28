@@ -17,7 +17,7 @@ class NewScriptViewController: UIViewController {
   weak var delegate: NewScriptViewControllerDelegate?
   private let newNameView = NewNameView()
   private let blurView = JCRBlurView()
-  private let animationDuration = 0.3
+  private let animationDuration = 0.5
   private var extensionName = ""
   private var tap: UITapGestureRecognizer!
   private var nextbarButton: UIBarButtonItem!
