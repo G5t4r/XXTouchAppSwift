@@ -25,6 +25,7 @@ class AuthorizationCell: UITableViewCell {
   private func setupUI() {
     self.selectionStyle = .None
     titleLabel.text = "正在获取设备授权信息.."
+    titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
     //    titleLabel.textAlignment = .Center
     titleLabel.textColor = ThemeManager.Theme.tintColor
     contentView.addSubview(icon)

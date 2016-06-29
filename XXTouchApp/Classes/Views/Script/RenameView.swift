@@ -28,6 +28,7 @@ class RenameView: UIView {
     newNameTextField.placeholder = "请输入文件名"
     newNameTextField.clearButtonMode = .WhileEditing
     newNameTextField.borderStyle = .RoundedRect
+    newNameTextField.autocorrectionType = .No
     
     submitButton.setTitle("提交", forState: .Normal)
     submitButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)

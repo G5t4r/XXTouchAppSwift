@@ -106,7 +106,14 @@ extension DevelopDocumentViewController: UIWebViewDelegate, NJKWebViewProgressDe
   func webViewDidFinishLoad(webView: UIWebView) {
     KVNProgress.dismiss()
     // 固定显示缩放比例
-    webView.stringByEvaluatingJavaScriptFromString("document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '80%'")
+    if UIDevice.isPhone {
+      webView.stringByEvaluatingJavaScriptFromString("document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '80%'")
+    } else {
+      webView.stringByEvaluatingJavaScriptFromString("document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '100%'")
+    }
+    
+//    webView.stringByEvaluatingJavaScriptFromString("document.getElementsByTagName('body')[0].style.textAlign = 'center';")
+    
     //    navigationItem.title = webView.stringByEvaluatingJavaScriptFromString("document.title")
   }
   

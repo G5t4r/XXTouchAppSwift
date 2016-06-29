@@ -28,7 +28,8 @@ class StartUpCell: UITableViewCell {
   private func setupUI() {
     self.selectionStyle = .None
     titleLabel.textColor = UIColor.blackColor()
-    infoLabel.font = UIFont.systemFontOfSize(12.5)
+    titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
+    infoLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 12.5, pad: 17.5))
     infoLabel.textColor = ThemeManager.Theme.lightTextColor
     infoLabel.numberOfLines = 0
     
@@ -39,7 +40,7 @@ class StartUpCell: UITableViewCell {
   
   private func makeConstriants() {
     titleLabel.snp_makeConstraints { (make) in
-      make.top.equalTo(contentView).offset(10)
+      make.top.equalTo(contentView).offset(15)
       make.leading.trailing.equalTo(contentView).inset(20)
     }
     

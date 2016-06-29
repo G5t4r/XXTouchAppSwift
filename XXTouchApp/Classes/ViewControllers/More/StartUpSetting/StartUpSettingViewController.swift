@@ -262,14 +262,14 @@ extension StartUpSettingViewController: UITableViewDelegate, UITableViewDataSour
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     switch indexPath.section {
-    case 0: return 120
-    default: return 60
+    case 0: return Sizer.valueForDevice(phone: 130, pad: 140)
+    default: return Sizer.valueForDevice(phone: 60, pad: 80)
     }
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     switch section {
-    case 1: return 30
+    case 1: return Sizer.valueForDevice(phone: 30, pad: 50)
     default: return 0.01
     }
   }
@@ -279,10 +279,25 @@ extension StartUpSettingViewController: UITableViewDelegate, UITableViewDataSour
   }
   
   func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    switch section {
-    case 1: return "选择需要开机启动的脚本"
-    default: return nil
+    if UIDevice.isPad {
+      return nil
+    } else {
+      switch section {
+      case 1: return "选择需要开机启动的脚本"
+      default: return nil
+      }
     }
-    
+  }
+  
+  func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    if UIDevice.isPad {
+      switch section {
+      case 1:
+        return CustomHeaderOrFooter(title: "选择需要开机启动的脚本", textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(18), alignment: .Left)
+      default: return nil
+      }
+    } else {
+      return nil
+    }
   }
 }

@@ -154,9 +154,9 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     switch indexPath.section {
-    case 0: return 190
-    case 1: return 55
-    case 2: return 40
+    case 0: return Sizer.valueForDevice(phone: 190, pad: 200)
+    case 1: return Sizer.valueForDevice(phone: 55, pad: 75)
+    case 2: return Sizer.valueForDevice(phone: 40, pad: 60)
     default: return 0
     }
   }

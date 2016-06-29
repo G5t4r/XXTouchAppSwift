@@ -189,6 +189,7 @@
 		2CF749D01D053A41007A273B /* ScriptModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptModel.swift; sourceTree = "<group>"; };
 		2CF749D21D0562BE007A273B /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ThemeManager.swift; path = ../ViewControllers/Helps/ThemeManager.swift; sourceTree = "<group>"; };
 		2CF749D71D0577C4007A273B /* MoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
+		2E2324044BE56C4D4853289B /* Pods-XXTouchApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTouchApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-XXTouchApp/Pods-XXTouchApp.release.xcconfig"; sourceTree = "<group>"; };
 		371DCC2DEDA3C1059AE8CE25 /* Pods-XXTouchApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTouchApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-XXTouchApp/Pods-XXTouchApp.release.xcconfig"; sourceTree = "<group>"; };
 		8A6F1DF544CDD739F1B52DAA /* Pods-XXTouchApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTouchApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XXTouchApp/Pods-XXTouchApp.debug.xcconfig"; sourceTree = "<group>"; };
 		950FC3601D1988660091DBA4 /* Base64.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64.swift; sourceTree = "<group>"; };
@@ -198,6 +199,7 @@
 		95D5042C1D1FEE11008CFA7F /* ProgressHUDManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressHUDManager.swift; sourceTree = "<group>"; };
 		95F94B811D1832C300532016 /* StartUpCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartUpCell.swift; sourceTree = "<group>"; };
 		ACF28B837117B6CAD47A3345 /* libPods-XXTouchApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTouchApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAF7FD6C2555EECC81802827 /* Pods-XXTouchApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTouchApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XXTouchApp/Pods-XXTouchApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -315,6 +317,7 @@
 				2C67AB371CFD218E008D53E8 /* Products */,
 				2C67AB381CFD218E008D53E8 /* XXTouchApp */,
 				2C67AB4D1CFD218E008D53E8 /* XXTouchAppTests */,
+				512DFAB1073B44ADD59CEF40 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -666,6 +669,15 @@
 				2CF749D71D0577C4007A273B /* MoreViewController.swift */,
 			);
 			path = More;
+			sourceTree = "<group>";
+		};
+		512DFAB1073B44ADD59CEF40 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FAF7FD6C2555EECC81802827 /* Pods-XXTouchApp.debug.xcconfig */,
+				2E2324044BE56C4D4853289B /* Pods-XXTouchApp.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		955DB23B1D1E36C000B598C4 /* Mix */ = {

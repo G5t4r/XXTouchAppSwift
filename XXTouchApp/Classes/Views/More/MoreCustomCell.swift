@@ -27,7 +27,8 @@ class MoreCustomCell: UITableViewCell {
   
   private func setupUI() {
     self.accessoryType = .DisclosureIndicator
-//    self.selectionStyle = .None
+    //    self.selectionStyle = .None
+    titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
     
     contentView.addSubview(icon)
     contentView.addSubview(titleLabel)
@@ -37,7 +38,7 @@ class MoreCustomCell: UITableViewCell {
     icon.snp_makeConstraints { (make) in
       make.leading.equalTo(contentView).offset(20)
       make.centerY.equalTo(contentView)
-      make.height.width.equalTo(36)
+      make.height.width.equalTo(Sizer.valueForDevice(phone: 36, pad: 56))
     }
     
     titleLabel.snp_makeConstraints { (make) in

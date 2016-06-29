@@ -27,6 +27,7 @@ class ApplicationListCell: UITableViewCell {
     self.selectionStyle = .None
     packageNameLabel.textAlignment = .Center
     packageNameLabel.textColor = UIColor(rgb: 0x3d85c6)
+    packageNameLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
     
     contentView.addSubview(iconImageView)
     contentView.addSubview(packageNameLabel)
@@ -36,7 +37,7 @@ class ApplicationListCell: UITableViewCell {
     iconImageView.snp_makeConstraints { (make) in
       make.leading.equalTo(contentView).offset(20)
       make.centerY.equalTo(contentView)
-      make.width.height.equalTo(36)
+      make.width.height.equalTo(Sizer.valueForDevice(phone: 36, pad: 56))
     }
     
     packageNameLabel.snp_makeConstraints { (make) in

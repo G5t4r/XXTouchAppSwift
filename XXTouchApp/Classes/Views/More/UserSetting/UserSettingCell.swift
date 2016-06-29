@@ -25,6 +25,7 @@ class UserSettingCell: UITableViewCell {
     self.accessoryType = .DisclosureIndicator
     self.selectionStyle = .None
     titleLabel.textColor = UIColor.blackColor()
+    titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
     
     contentView.addSubview(titleLabel)
   }

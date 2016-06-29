@@ -24,7 +24,7 @@ class ServiceURL {
   }
   
   static var baseURLString: String {
-    return Section.Localhost.title
+    return Section.Remotehost.title
   }
   
   static let scriptsPath = "lua/scripts/"

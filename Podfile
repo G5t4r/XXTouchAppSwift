@@ -5,7 +5,7 @@ target :XXTouchApp do
 pod 'MJRefresh'
 pod 'SWTableViewCell'
 #pod 'DZNEmptyDataSet'
-pod 'SDWebImage'
+#pod 'SDWebImage'
 #pod 'KVOController'
 pod 'iOS-blur'
 pod 'KVNProgress'

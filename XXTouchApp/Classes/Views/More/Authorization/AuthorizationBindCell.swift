@@ -27,8 +27,12 @@ class AuthorizationBindCell: UITableViewCell {
     codeTextField.clearButtonMode = .WhileEditing
     codeTextField.placeholder = "在这里填入授权码"
     codeTextField.borderStyle = .RoundedRect
+    codeTextField.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
+    codeTextField.keyboardType = .ASCIICapable
+    codeTextField.autocorrectionType = .No
     
     sumbitButton.setTitle("充值", forState: .Normal)
+    sumbitButton.titleLabel?.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
     sumbitButton.setTitleColor(ThemeManager.Theme.lightTextColor, forState: .Normal)
     sumbitButton.backgroundColor = ThemeManager.Theme.separatorColor
     sumbitButton.layer.cornerRadius = 5
@@ -40,13 +44,13 @@ class AuthorizationBindCell: UITableViewCell {
   
   private func makeConstriants() {
     codeTextField.snp_makeConstraints { (make) in
-      make.top.equalTo(contentView).offset(15)
-      make.leading.trailing.equalTo(contentView).inset(20)
-      make.height.equalTo(40)
+      make.top.equalTo(contentView).offset(Sizer.valueForDevice(phone: 15, pad: 20))
+      make.leading.trailing.equalTo(contentView).inset(Sizer.valueForDevice(phone: 20, pad: 30))
+      make.height.equalTo(Sizer.valueForDevice(phone: 40, pad: 60))
     }
     
     sumbitButton.snp_makeConstraints { (make) in
-      make.top.equalTo(codeTextField.snp_bottom).offset(15)
+      make.top.equalTo(codeTextField.snp_bottom).offset(Sizer.valueForDevice(phone: 15, pad: 20))
       make.leading.trailing.equalTo(codeTextField)
       make.height.equalTo(codeTextField)
     }

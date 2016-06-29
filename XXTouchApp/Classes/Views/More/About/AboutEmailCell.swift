@@ -23,6 +23,7 @@ class AboutEmailCell: UITableViewCell {
   
   private func setupUI() {
     emailButton.setTitle("联系我们", forState: .Normal)
+    emailButton.titleLabel?.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
     emailButton.backgroundColor = UIColor(rgb: 0x3d85c6)
     emailButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
     

@@ -25,6 +25,7 @@ class ApplicationDetailCell: UITableViewCell {
   private func setupUI() {
     self.selectionStyle = .None
     
+    titleButton.titleLabel?.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
     titleButton.setTitleColor(UIColor(rgb: 0x3d85c6), forState: .Normal)
     titleButton.sizeToFit()
     

@@ -167,15 +167,27 @@ extension UserSettingViewController: UITableViewDelegate, UITableViewDataSource 
   }
   
   func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return userSettingList[section]
+    if UIDevice.isPad {
+      return nil
+    } else {
+      return userSettingList[section]
+    }
+  }
+  
+  func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    if UIDevice.isPad {
+      return CustomHeaderOrFooter(title: userSettingList[section], textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(18), alignment: .Left)
+    } else {
+      return nil
+    }
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return 45
+    return Sizer.valueForDevice(phone: 45, pad: 65)
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return 30
+    return Sizer.valueForDevice(phone: 30, pad: 50)
   }
   
   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

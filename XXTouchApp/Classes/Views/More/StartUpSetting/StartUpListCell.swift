@@ -25,9 +25,9 @@ class StartUpListCell: UITableViewCell {
   }
   
   private func setupUI() {
-    //    self.selectionStyle = .None
     scriptTime.textColor = ThemeManager.Theme.lightTextColor
-    scriptTime.font = UIFont.systemFontOfSize(11)
+    scriptTime.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 11, pad: 14))
+    nameLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
     scriptSelectedImage.hidden = true
     
     scriptImage.contentMode = .ScaleAspectFit
@@ -41,14 +41,14 @@ class StartUpListCell: UITableViewCell {
   private func makeConstriants() {
     scriptImage.snp_makeConstraints { (make) in
       make.leading.equalTo(contentView).inset(15)
-      make.height.width.equalTo(40)
+      make.height.width.equalTo(Sizer.valueForDevice(phone: 40, pad: 60))
       make.centerY.equalTo(contentView)
     }
     
     nameLabel.snp_makeConstraints { (make) in
-      make.top.equalTo(contentView).offset(10)
-      make.trailing.equalTo(contentView).offset(-100)
-      make.leading.equalTo(contentView).offset(60)
+      make.top.equalTo(contentView).offset(Sizer.valueForDevice(phone: 10, pad: 15))
+      make.trailing.equalTo(contentView).offset(Sizer.valueForDevice(phone: -100, pad: -120))
+      make.leading.equalTo(contentView).offset(Sizer.valueForDevice(phone: 70, pad: 85))
     }
     
     scriptTime.snp_makeConstraints { (make) in
@@ -59,7 +59,7 @@ class StartUpListCell: UITableViewCell {
     scriptSelectedImage.snp_makeConstraints { (make) in
       make.trailing.equalTo(contentView).offset(-20)
       make.centerY.equalTo(contentView)
-      make.width.height.equalTo(22)
+      make.width.height.equalTo(Sizer.valueForDevice(phone: 22, pad: 32))
     }
   }
   

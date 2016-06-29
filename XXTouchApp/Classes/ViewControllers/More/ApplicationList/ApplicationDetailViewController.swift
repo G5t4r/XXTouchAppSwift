@@ -116,17 +116,6 @@ extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataS
     }
   }
   
-  //  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-  //    switch indexPath.section {
-  //    case 0: UIPasteboard.generalPasteboard().string = model.name
-  //    case 1: UIPasteboard.generalPasteboard().string = model.packageName
-  //    case 2: UIPasteboard.generalPasteboard().string = model.bundlePath
-  //    case 3: UIPasteboard.generalPasteboard().string = model.dataPath
-  //    default: break
-  //    }
-  //    self.view.showHUD(.Message, text: Constants.Text.copy, autoHide: true, autoHideDelay: 0.7)
-  //  }
-  
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     return 30
   }
@@ -136,7 +125,7 @@ extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataS
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return 45
+    return Sizer.valueForDevice(phone: 45, pad: 65)
   }
   
   func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

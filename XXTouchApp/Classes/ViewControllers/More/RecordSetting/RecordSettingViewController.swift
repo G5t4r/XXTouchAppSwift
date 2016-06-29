@@ -156,7 +156,7 @@ extension RecordSettingViewController: UITableViewDelegate, UITableViewDataSourc
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return 50
+    return Sizer.valueForDevice(phone: 50, pad: 70)
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -165,7 +165,7 @@ extension RecordSettingViewController: UITableViewDelegate, UITableViewDataSourc
   
   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
     switch section {
-    case 0: return 10
+    case 0: return Sizer.valueForDevice(phone: 10, pad: 15)
     default: return 0.01
     }
   }

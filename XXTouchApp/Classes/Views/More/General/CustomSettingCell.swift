@@ -26,6 +26,7 @@ class CustomSettingCell: UITableViewCell {
   
   private func setupUI() {
     self.selectionStyle = .None
+    titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
     
     contentView.addSubview(titleLabel)
     contentView.addSubview(switches)

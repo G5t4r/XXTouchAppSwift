@@ -168,11 +168,11 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
     switch indexPath.section {
     case 0:
       if indexPath.row == 0 {
-        return 70
+        return Sizer.valueForDevice(phone: 70, pad: 95)
       } else {
-        return 55
+        return Sizer.valueForDevice(phone: 55, pad: 80)
       }
-    default: return 55
+    default: return Sizer.valueForDevice(phone: 55, pad: 80)
     }
   }
   
@@ -210,11 +210,23 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return titleList[section]
+    if UIDevice.isPad {
+      return nil
+    } else {
+      return titleList[section]
+    }
+  }
+  
+  func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    if UIDevice.isPad {
+      return CustomHeaderOrFooter(title: titleList[section], textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(18), alignment: .Left)
+    } else {
+      return nil
+    }
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return 30
+    return Sizer.valueForDevice(phone: 30, pad: 50)
   }
   
   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -227,13 +239,13 @@ extension MoreViewController {
   func titleLabelAnimation(switchs: Bool) {
     if switchs {
       self.moreRemoteServiceCell.bind("远程服务已打开", host: self.host)
-      if self.moreRemoteServiceCell.titleLabel.transform.ty == -9 {
+      if self.moreRemoteServiceCell.titleLabel.transform.ty == Sizer.valueForDevice(phone: -9, pad: -12) {
         self.moreRemoteServiceCell.hostLabelHidden(!switchs)
         return
       }
       
       UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 10, options: [], animations: {
-        self.moreRemoteServiceCell.titleLabel.transform = CGAffineTransformTranslate(self.moreRemoteServiceCell.titleLabel.transform, 0, -9)
+        self.moreRemoteServiceCell.titleLabel.transform = CGAffineTransformTranslate(self.moreRemoteServiceCell.titleLabel.transform, 0, Sizer.valueForDevice(phone: -9, pad: -12))
         }, completion: { (_) in
           self.moreRemoteServiceCell.hostLabelHidden(!switchs)
       })

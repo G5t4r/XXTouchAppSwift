@@ -162,27 +162,39 @@ extension KeyBoardSettingViewController: UITableViewDelegate, UITableViewDataSou
   }
   
   func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return volumePromptList[section]
+    if UIDevice.isPad {
+      return nil
+    } else {
+      return volumePromptList[section]
+    }
+  }
+  
+  func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    if UIDevice.isPad {
+      return CustomHeaderOrFooter(title: volumePromptList[section], textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(18), alignment: .Left)
+    } else {
+      return nil
+    }
   }
   
   func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
     switch section {
-    case 3: return CustomHeaderOrFooter(title: "*设置 [无动作] 表示不拦截音量键事件\n*如安装了Activator则这里设置不生效", textColor: UIColor.redColor(), font: UIFont.systemFontOfSize(15))
+    case 3: return CustomHeaderOrFooter(title: "*设置 [无动作] 表示不拦截音量键事件\n*如安装了Activator则这里设置不生效", textColor: UIColor.redColor(), font: UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 15, pad: 20)))
     default: return nil
     }
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return 60
+    return Sizer.valueForDevice(phone: 60, pad: 80)
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return 30
+    return Sizer.valueForDevice(phone: 30, pad: 50)
   }
   
   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
     if section == 3 {
-      return 65
+      return Sizer.valueForDevice(phone: 65, pad: 85)
     }
     return 0.01
   }
@@ -230,10 +242,11 @@ class CustomHeaderOrFooter: UITableViewHeaderFooterView {
   let titleLabel = UILabel()
   var top: Int
   
-  init(title: String, textColor: UIColor, font: UIFont, top: Int = 15) {
+  init(title: String, textColor: UIColor, font: UIFont, top: Int = 15, alignment: NSTextAlignment = .Center) {
     titleLabel.text = title
     titleLabel.font = font
     titleLabel.textColor = textColor
+    titleLabel.textAlignment = alignment
     self.top = top
     super.init(reuseIdentifier: nil)
     setupUI()
@@ -242,13 +255,12 @@ class CustomHeaderOrFooter: UITableViewHeaderFooterView {
   
   private func setupUI() {
     titleLabel.numberOfLines = 0
-    titleLabel.textAlignment = .Center
     self.addSubview(titleLabel)
   }
   
   private func makeConstraints() {
     titleLabel.snp_makeConstraints { (make) in
-      make.leading.trailing.equalTo(self).inset(15)
+      make.leading.trailing.equalTo(self).inset(20)
       make.top.equalTo(self).offset(self.top)
     }
   }
