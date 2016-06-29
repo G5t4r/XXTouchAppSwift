@@ -14,27 +14,42 @@ class ApplicationDetailViewController: UIViewController {
   
   private lazy var appNameCell: ApplicationDetailCell = {
     let appNameCell = ApplicationDetailCell()
-    appNameCell.titleButton.tag = 0
+    appNameCell.contentView.tag = 0
     return appNameCell
   }()
   
   private lazy var appPackageNameCell: ApplicationDetailCell = {
     let appPackageNameCell = ApplicationDetailCell()
-    appPackageNameCell.titleButton.tag = 1
+    appPackageNameCell.contentView.tag = 1
     return appPackageNameCell
-  }()
-  
-  private lazy var appDataPathCell: ApplicationDetailCell = {
-    let appDataPathCell = ApplicationDetailCell()
-    appDataPathCell.titleButton.tag = 2
-    return appDataPathCell
   }()
   
   private lazy var appBundlePathCell: ApplicationDetailCell = {
     let appBundlePathCell = ApplicationDetailCell()
-    appBundlePathCell.titleButton.tag = 3
+    appBundlePathCell.contentView.tag = 2
     return appBundlePathCell
   }()
+  
+  private lazy var appDataPathCell: ApplicationDetailCell = {
+    let appDataPathCell = ApplicationDetailCell()
+    appDataPathCell.contentView.tag = 3
+    return appDataPathCell
+  }()
+  
+  private lazy var headerTitleList: [String] = {
+    let headerTitleList = [
+      "应用名称",
+      "应用包名",
+      "应用包路径",
+      "应用数据路径"
+    ]
+    return headerTitleList
+  }()
+  
+  override func viewDidLayoutSubviews() {
+    appBundlePathCell.scrollView.contentSize.width = appBundlePathCell.titleLabel.mj_textWith()+40
+    appDataPathCell.scrollView.contentSize.width = appDataPathCell.titleLabel.mj_textWith()+40
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -69,21 +84,25 @@ class ApplicationDetailViewController: UIViewController {
   }
   
   private func setupAction() {
-    appNameCell.titleButton.addTarget(self, action: #selector(pasteboard(_:)), forControlEvents: .TouchUpInside)
-    appPackageNameCell.titleButton.addTarget(self, action: #selector(pasteboard(_:)), forControlEvents: .TouchUpInside)
-    appDataPathCell.titleButton.addTarget(self, action: #selector(pasteboard(_:)), forControlEvents: .TouchUpInside)
-    appBundlePathCell.titleButton.addTarget(self, action: #selector(pasteboard(_:)), forControlEvents: .TouchUpInside)
+    appNameCell.tap.addTarget(self, action: #selector(pasteboard(_:)))
+    appPackageNameCell.tap.addTarget(self, action: #selector(pasteboard(_:)))
+    appDataPathCell.tap.addTarget(self, action: #selector(pasteboard(_:)))
+    appBundlePathCell.tap.addTarget(self, action: #selector(pasteboard(_:)))
   }
   
-  @objc private func pasteboard(button: UIButton) {
-    switch button.tag {
+  @objc private func pasteboard(tap: UITapGestureRecognizer) {
+    let indexPath = NSIndexPath(forRow: 0, inSection: tap.view!.tag)
+    tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
+    switch indexPath.section {
     case 0: UIPasteboard.generalPasteboard().string = model.name
     case 1: UIPasteboard.generalPasteboard().string = model.packageName
     case 2: UIPasteboard.generalPasteboard().string = model.bundlePath
     case 3: UIPasteboard.generalPasteboard().string = model.dataPath
     default: return
     }
-    KVNProgress.showSuccessWithStatus(Constants.Text.copy)
+    KVNProgress.showSuccessWithStatus(Constants.Text.copy) { 
+      self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
   }
 }
 
@@ -106,18 +125,20 @@ extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataS
       return appPackageNameCell
     case 2:
       appBundlePathCell.bind(model.bundlePath)
-      appBundlePathCell.scrollView.contentSize.width = appBundlePathCell.titleButton.titleLabel!.mj_textWith()+40
       return appBundlePathCell
     case 3:
       appDataPathCell.bind(model.dataPath)
-      appDataPathCell.scrollView.contentSize.width = appDataPathCell.titleButton.titleLabel!.mj_textWith()+40
       return appDataPathCell
     default: return UITableViewCell()
     }
   }
   
+  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    print("1232")
+  }
+  
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return 30
+    return Sizer.valueForDevice(phone: 30, pad: 50)
   }
   
   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -129,12 +150,18 @@ extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataS
   }
   
   func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    switch section {
-    case 0: return "应用名称"
-    case 1: return "应用包名"
-    case 2: return "应用包路径"
-    case 3: return "应用数据路径"
-    default: return nil
+    if UIDevice.isPad {
+      return nil
+    } else {
+      return headerTitleList[section]
+    }
+  }
+  
+  func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    if UIDevice.isPad {
+      return CustomHeaderOrFooter(title: headerTitleList[section], textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(18), alignment: .Left)
+    } else {
+      return nil
     }
   }
 }

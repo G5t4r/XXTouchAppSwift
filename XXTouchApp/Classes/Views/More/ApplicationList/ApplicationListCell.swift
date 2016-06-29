@@ -24,7 +24,6 @@ class ApplicationListCell: UITableViewCell {
   
   private func setupUI() {
     self.accessoryType = .DisclosureIndicator
-    self.selectionStyle = .None
     packageNameLabel.textAlignment = .Center
     packageNameLabel.textColor = UIColor(rgb: 0x3d85c6)
     packageNameLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))

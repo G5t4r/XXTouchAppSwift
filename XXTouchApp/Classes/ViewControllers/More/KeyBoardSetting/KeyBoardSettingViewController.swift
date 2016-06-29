@@ -185,7 +185,7 @@ extension KeyBoardSettingViewController: UITableViewDelegate, UITableViewDataSou
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return Sizer.valueForDevice(phone: 60, pad: 80)
+    return Sizer.valueForDevice(phone: 60, pad: 85)
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

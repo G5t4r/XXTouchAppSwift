@@ -12,6 +12,13 @@ class ApplicationListViewController: UIViewController {
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private var appList = [ApplicationListModel]()
   
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    if let indexPath = tableView.indexPathForSelectedRow {
+      tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()

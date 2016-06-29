@@ -9,8 +9,11 @@
 import UIKit
 
 class ApplicationDetailCell: UITableViewCell {
-  let titleButton = UIButton(type: .Custom)
+  //  let titleButton = UIButton(type: .Custom)
   let scrollView = UIScrollView()
+  let tap = UITapGestureRecognizer()
+  let titleLabel = UILabel()
+  
   
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,17 +26,16 @@ class ApplicationDetailCell: UITableViewCell {
   }
   
   private func setupUI() {
-    self.selectionStyle = .None
-    
-    titleButton.titleLabel?.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
-    titleButton.setTitleColor(UIColor(rgb: 0x3d85c6), forState: .Normal)
-    titleButton.sizeToFit()
+    titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
+    titleLabel.textColor = UIColor(rgb: 0x3d85c6)
+    titleLabel.sizeToFit()
     
     scrollView.alwaysBounceHorizontal = true
     scrollView.showsHorizontalScrollIndicator = false
     
-    scrollView.addSubview(titleButton)
+    scrollView.addSubview(titleLabel)
     contentView.addSubview(scrollView)
+    contentView.addGestureRecognizer(tap)
   }
   
   private func makeConstriants() {
@@ -41,13 +43,13 @@ class ApplicationDetailCell: UITableViewCell {
       make.edges.equalTo(contentView)
     }
     
-    titleButton.snp_makeConstraints { (make) in
+    titleLabel.snp_makeConstraints { (make) in
       make.centerY.equalTo(scrollView)
       make.leading.equalTo(scrollView).offset(20)
     }
   }
   
   func bind(title: String) {
-    titleButton.setTitle(title, forState: .Normal)
+    titleLabel.text = title
   }
 }
