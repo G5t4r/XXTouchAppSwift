@@ -34,7 +34,7 @@ extension MixC {
   }
   
   //  // 重启设备
-  //  func reboot() {
+  //    func reboot() {
   //    system("reboot")
   //  }
   

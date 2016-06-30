@@ -239,22 +239,22 @@ extension MoreViewController {
   func titleLabelAnimation(switchs: Bool) {
     if switchs {
       self.moreRemoteServiceCell.bind("远程服务已打开", host: self.host)
-      if self.moreRemoteServiceCell.titleLabel.transform.ty == Sizer.valueForDevice(phone: -9, pad: -20) {
+      if self.moreRemoteServiceCell.titleLabel.transform.ty == Sizer.valueForDevice(phone: -14, pad: -20) {
         self.moreRemoteServiceCell.hostLabelHidden(!switchs)
         return
       }
       
-      UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 10, options: [], animations: {
-        self.moreRemoteServiceCell.titleLabel.transform = CGAffineTransformTranslate(self.moreRemoteServiceCell.titleLabel.transform, 0, Sizer.valueForDevice(phone: -9, pad: -20))
-        }, completion: { (_) in
-          self.moreRemoteServiceCell.hostLabelHidden(!switchs)
-      })
+      //      UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 5, options: [], animations: {
+      self.moreRemoteServiceCell.titleLabel.transform = CGAffineTransformTranslate(self.moreRemoteServiceCell.titleLabel.transform, 0, Sizer.valueForDevice(phone: -14, pad: -20))
+      //        }, completion: { (_) in
+      self.moreRemoteServiceCell.hostLabelHidden(!switchs)
+      //      })
     } else {
       self.moreRemoteServiceCell.bind("远程服务已关闭", host: "")
       self.moreRemoteServiceCell.hostLabelHidden(!switchs)
-      UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 10, options: [], animations: {
-        self.moreRemoteServiceCell.titleLabel.transform = CGAffineTransformIdentity
-        }, completion: nil)
+      //      UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 5, options: [], animations: {
+      self.moreRemoteServiceCell.titleLabel.transform = CGAffineTransformIdentity
+      //        }, completion: nil)
     }
   }
   

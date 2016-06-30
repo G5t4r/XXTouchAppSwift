@@ -18,7 +18,7 @@ class ServiceURL {
       switch self {
       case .Localhost: return "http://127.0.0.1:46952"
       case .Remotehost: return "http://soze.synology.me:46952"
-      case .Local: return "http://192.168.0.104:46952"
+      case .Local: return "http://192.168.0.103:46952"
       }
     }
   }

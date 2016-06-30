@@ -10,30 +10,45 @@ import UIKit
 
 class Suffix {
   enum Section: Int {
-    case Lua
-    case Txt
-    case Xxt
+    case LUA
+    case TXT
+    case XXT
+    case JPG
+    case BMP
+    case PNG
     
     var title: String {
       switch self {
-      case .Lua: return ".lua"
-      case .Txt: return ".txt"
-      case .Xxt: return ".xxt"
+      case .LUA: return ".lua"
+      case .TXT: return ".txt"
+      case .XXT: return ".xxt"
+      case .JPG: return ".jpg"
+      case .BMP: return ".bmp"
+      case .PNG: return ".png"
       }
     }
   }
   
   /// 末尾是否包含.lua 或 .txt
   class func haveSuffix(string: String) -> String {
-    let isLua = string.hasSuffix(Section.Lua.title)
-    let isXxt = string.hasSuffix(Section.Xxt.title)
-    let isTxt = string.hasSuffix(Section.Txt.title)
-    if isLua {
-      return Section.Lua.title
-    } else if isXxt {
-      return Section.Xxt.title
-    } else if isTxt {
-      return Section.Txt.title
+    let isLUA = string.hasSuffix(Section.LUA.title)
+    let isXXT = string.hasSuffix(Section.XXT.title)
+    let isTXT = string.hasSuffix(Section.TXT.title)
+    let isJPG = string.hasSuffix(Section.JPG.title)
+    let isBMP = string.hasSuffix(Section.BMP.title)
+    let isPNG = string.hasSuffix(Section.PNG.title)
+    if isLUA {
+      return Section.LUA.title
+    } else if isXXT {
+      return Section.XXT.title
+    } else if isTXT {
+      return Section.TXT.title
+    } else if isJPG {
+      return Section.JPG.title
+    } else if isBMP {
+      return Section.BMP.title
+    } else if isPNG {
+      return Section.PNG.title
     } else {
       return ""
     }

@@ -85,6 +85,7 @@
 		2CF749D11D053A41007A273B /* ScriptModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF749D01D053A41007A273B /* ScriptModel.swift */; };
 		2CF749D31D0562BE007A273B /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF749D21D0562BE007A273B /* ThemeManager.swift */; };
 		2CF749D81D0577C4007A273B /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF749D71D0577C4007A273B /* MoreViewController.swift */; };
+		9509B7811D25777A0074010B /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509B7801D25777A0074010B /* CatalogViewController.swift */; };
 		950FC3611D1988660091DBA4 /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950FC3601D1988660091DBA4 /* Base64.swift */; };
 		955DB23D1D1E370200B598C4 /* MixC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955DB23C1D1E370200B598C4 /* MixC.swift */; };
 		955DB23F1D1E3A4E00B598C4 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955DB23E1D1E3A4E00B598C4 /* FileManager.swift */; };
@@ -192,6 +193,7 @@
 		2E2324044BE56C4D4853289B /* Pods-XXTouchApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTouchApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-XXTouchApp/Pods-XXTouchApp.release.xcconfig"; sourceTree = "<group>"; };
 		371DCC2DEDA3C1059AE8CE25 /* Pods-XXTouchApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTouchApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-XXTouchApp/Pods-XXTouchApp.release.xcconfig"; sourceTree = "<group>"; };
 		8A6F1DF544CDD739F1B52DAA /* Pods-XXTouchApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTouchApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XXTouchApp/Pods-XXTouchApp.debug.xcconfig"; sourceTree = "<group>"; };
+		9509B7801D25777A0074010B /* CatalogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		950FC3601D1988660091DBA4 /* Base64.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64.swift; sourceTree = "<group>"; };
 		955DB23C1D1E370200B598C4 /* MixC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MixC.swift; sourceTree = "<group>"; };
 		955DB23E1D1E3A4E00B598C4 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 		2C67AB7D1CFD2AAA008D53E8 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				9509B77F1D2577250074010B /* Catalog */,
 				2C67AB831CFD2BDC008D53E8 /* Extensions */,
 				2C54F0E01D17F483005F35AD /* General */,
 				2CF749CB1D0536BD007A273B /* Helps */,
@@ -680,6 +683,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		9509B77F1D2577250074010B /* Catalog */ = {
+			isa = PBXGroup;
+			children = (
+				9509B7801D25777A0074010B /* CatalogViewController.swift */,
+			);
+			name = Catalog;
+			sourceTree = "<group>";
+		};
 		955DB23B1D1E36C000B598C4 /* Mix */ = {
 			isa = PBXGroup;
 			children = (
@@ -759,6 +770,7 @@
 				TargetAttributes = {
 					2C67AB351CFD218E008D53E8 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 86JSF9YUX9;
 					};
 					2C67AB491CFD218E008D53E8 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -900,6 +912,7 @@
 				2CD2F5731D13E7F3001C873F /* RecordSettingViewController.swift in Sources */,
 				2CF18BFF1D1A5E31007535CD /* DevelopDocumentViewController.swift in Sources */,
 				2CD2F5701D13C00D001C873F /* KeyBoardSettingCell.swift in Sources */,
+				9509B7811D25777A0074010B /* CatalogViewController.swift in Sources */,
 				2CF749D31D0562BE007A273B /* ThemeManager.swift in Sources */,
 				2CF18C021D1A728B007535CD /* AboutTitleCell.swift in Sources */,
 				2C7340BE1D11008100CED0F3 /* IQNSArray+Sort.swift in Sources */,

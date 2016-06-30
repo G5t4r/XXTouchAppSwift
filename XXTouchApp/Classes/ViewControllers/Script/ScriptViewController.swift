@@ -250,7 +250,7 @@ class ScriptViewController: UIViewController {
     let actionSheet = UIActionSheet()
     actionSheet.title = self.oldName
     actionSheet.delegate = self
-    if self.oldExtensionName == Suffix.Section.Lua.title || self.oldExtensionName == Suffix.Section.Xxt.title {
+    if self.oldExtensionName == Suffix.Section.LUA.title || self.oldExtensionName == Suffix.Section.XXT.title {
       actionSheet.destructiveButtonIndex = 0
       actionSheet.cancelButtonIndex = 4
       actionSheet.addButtonWithTitle("运行")
@@ -265,7 +265,7 @@ class ScriptViewController: UIViewController {
     actionSheet.addButtonWithTitle(Constants.Text.cancel)
     actionSheet.showInView(view)
     
-    if self.oldExtensionName == Suffix.Section.Lua.title || self.oldExtensionName == Suffix.Section.Xxt.title {
+    if self.oldExtensionName == Suffix.Section.LUA.title || self.oldExtensionName == Suffix.Section.XXT.title {
       for cell in tableView.visibleCells {
         let cell = cell as! ScriptCell
         cell.scriptSelectedHidden(true)
@@ -342,7 +342,7 @@ class ScriptViewController: UIViewController {
 extension ScriptViewController: UIActionSheetDelegate {
   func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
     guard buttonIndex != actionSheet.cancelButtonIndex else { return }
-    if self.oldExtensionName == Suffix.Section.Lua.title || self.oldExtensionName == Suffix.Section.Xxt.title {
+    if self.oldExtensionName == Suffix.Section.LUA.title || self.oldExtensionName == Suffix.Section.XXT.title {
       switch buttonIndex {
       /// 运行
       case 0: launchScriptFile()
@@ -501,7 +501,6 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier(NSStringFromClass(ScriptCell), forIndexPath: indexPath) as! ScriptCell
     cell.bind(scriptList[indexPath.row])
-    //    cell.long.addTarget(self, action: #selector(longAction(_:)))
     cell.leftUtilityButtons = leftButtons()
     cell.rightUtilityButtons = rightButtons()
     cell.delegate = self
@@ -510,11 +509,6 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
     
     let isSelected = scriptList[indexPath.row].isSelected
     cell.scriptSelectedHidden(!isSelected)
-    //    if isSelected {
-    //      cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
-    //    } else {
-    //      cell.backgroundColor = UIColor.whiteColor()
-    //    }
     
     return cell
   }
@@ -522,11 +516,10 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
     let suffix = Suffix.haveSuffix(scriptList[indexPath.row].name)
-    if suffix == Suffix.Section.Lua.title || suffix == Suffix.Section.Xxt.title {
+    if suffix == Suffix.Section.LUA.title || suffix == Suffix.Section.XXT.title {
       for cell in tableView.visibleCells {
         let cell = cell as! ScriptCell
         cell.scriptSelectedHidden(true)
-        //      cell.backgroundColor = UIColor.whiteColor()
       }
       for model in scriptList {
         model.isSelected = false
@@ -536,8 +529,10 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
       cell.scriptSelectedHidden(false)
       let model = scriptList[indexPath.row]
       model.isSelected = true
-      //    cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
       selectScriptFile(scriptList[indexPath.row].name)
+    } else if suffix == Suffix.Section.JPG.title || suffix == Suffix.Section.BMP.title || suffix == Suffix.Section.PNG.title {
+      // 点击进图图片查看
+      
     } else {
       KVNProgress.showErrorWithStatus(Constants.Text.notSelected)
     }
@@ -561,7 +556,7 @@ extension ScriptViewController: SWTableViewCellDelegate {
   private func intoEdit(indexPath: NSIndexPath) {
     let fileName = scriptList[indexPath.row].name
     let suffix = Suffix.haveSuffix(fileName)
-    guard suffix != Suffix.Section.Xxt.title else {
+    guard suffix != Suffix.Section.XXT.title else {
       KVNProgress.showErrorWithStatus(Constants.Text.notEnScript)
       return
     }

@@ -112,7 +112,7 @@ extension StartUpSettingViewController {
           let list = json["data"]["list"]
           for item in list.dictionaryValue {
             if item.1["mode"].stringValue != "directory" {
-              if Suffix.haveSuffix(item.0) == Suffix.Section.Lua.title || Suffix.haveSuffix(item.0) == Suffix.Section.Xxt.title {
+              if Suffix.haveSuffix(item.0) == Suffix.Section.LUA.title || Suffix.haveSuffix(item.0) == Suffix.Section.XXT.title {
                 let model = ScriptModel(item.1, name: item.0)
                 self.scriptList.append(model)
               }

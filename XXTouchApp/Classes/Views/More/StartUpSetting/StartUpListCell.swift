@@ -65,8 +65,8 @@ class StartUpListCell: UITableViewCell {
   
   func bind(model: ScriptModel) {
     switch Suffix.haveSuffix(model.name) {
-    case Suffix.Section.Lua.title: scriptImage.image = UIImage(named: "lua")
-    case Suffix.Section.Xxt.title: scriptImage.image = UIImage(named: "xxt")
+    case Suffix.Section.LUA.title: scriptImage.image = UIImage(named: "lua")
+    case Suffix.Section.XXT.title: scriptImage.image = UIImage(named: "xxt")
     default: scriptImage.image = UIImage(named: "unknown")
     }
     

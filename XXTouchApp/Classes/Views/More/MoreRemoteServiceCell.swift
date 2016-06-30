@@ -10,7 +10,7 @@ import UIKit
 
 class MoreRemoteServiceCell: UITableViewCell {
   let titleLabel = UILabel()
-  private let hostLabel = UILabel()
+  let hostLabel = UILabel()
   private let icon = UIImageView(image: UIImage(named: "remote"))
   let switchs = Switches()
   
@@ -29,7 +29,7 @@ class MoreRemoteServiceCell: UITableViewCell {
     titleLabel.text = "正在读取远程服务.."
     titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
     hostLabel.textColor = ThemeManager.Theme.tintColor
-    hostLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 14, pad: 17))
+    hostLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 13, pad: 17))
     hostLabel.hidden = true
     
     contentView.addSubview(icon)
@@ -51,7 +51,7 @@ class MoreRemoteServiceCell: UITableViewCell {
     }
     
     hostLabel.snp_makeConstraints { (make) in
-      make.bottom.equalTo(contentView).offset(Sizer.valueForDevice(phone: -15, pad: -22))
+      make.bottom.equalTo(contentView).offset(Sizer.valueForDevice(phone: -16, pad: -22))
       make.leading.equalTo(icon.snp_trailing).offset(15)
     }
     

@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       })
     } else {
       // 键盘管理
-//      KeyboardManager.configure()
+      //      KeyboardManager.configure()
       
       // 读取转菊花配置
       ProgressHUDManager.sharedManager.startConfig()
@@ -72,13 +72,13 @@ extension AppDelegate {
   private func createRootViewController() -> UIViewController {
     let tabBarController = UITabBarController()
     let scriptNavigationController = UINavigationController(rootViewController: ScriptViewController())
-    scriptNavigationController.tabBarItem = UITabBarItem(title: "我的脚本",
-                                                         image: UIImage(named: "scriptTab"),
-                                                         selectedImage: nil)
+    scriptNavigationController.tabBarItem = UITabBarItem(title: "我的脚本", image: UIImage(named: "scriptTab"), selectedImage: nil)
+    
+    let catalogNavigationController = UINavigationController(rootViewController: CatalogViewController())
+    catalogNavigationController.tabBarItem = UITabBarItem(title: "目录", image: UIImage(named: "scriptTab"), selectedImage: nil)
+    
     let moreNavigationController = UINavigationController(rootViewController: MoreViewController())
-    moreNavigationController.tabBarItem = UITabBarItem(title: "更多",
-                                                       image: UIImage(named: "moreTab"),
-                                                       selectedImage: nil)
+    moreNavigationController.tabBarItem = UITabBarItem(title: "更多", image: UIImage(named: "moreTab"), selectedImage: nil)
     
     let viewControllers: [UIViewController] = [
       scriptNavigationController,

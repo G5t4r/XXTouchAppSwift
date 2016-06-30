@@ -75,9 +75,9 @@ class ScriptCell: SWTableViewCell {
   
   func bind(model: ScriptModel) {
     switch Suffix.haveSuffix(model.name) {
-    case Suffix.Section.Lua.title: scriptImage.image = UIImage(named: "lua")
-    case Suffix.Section.Xxt.title: scriptImage.image = UIImage(named: "xxt")
-    case Suffix.Section.Txt.title: scriptImage.image = UIImage(named: "txt")
+    case Suffix.Section.LUA.title: scriptImage.image = UIImage(named: "lua")
+    case Suffix.Section.XXT.title: scriptImage.image = UIImage(named: "xxt")
+    case Suffix.Section.TXT.title: scriptImage.image = UIImage(named: "txt")
     default: scriptImage.image = UIImage(named: "unknown")
     }
     nameLabel.text = model.name
