@@ -6,11 +6,11 @@
 //  Copyright © 2016年 mcy. All rights reserved.
 //
 
-class KeyboardManager {
-  class func configure() {
-    let manager = IQKeyboardManager.sharedManager()
-    manager.enable = true
-    manager.shouldResignOnTouchOutside = true
-    manager.enableAutoToolbar = false
-  }
-}
+//class KeyboardManager {
+//  class func configure() {
+//    let manager = IQKeyboardManager.sharedManager()
+//    manager.enable = true
+//    manager.shouldResignOnTouchOutside = true
+//    manager.enableAutoToolbar = false
+//  }
+//}

@@ -10,6 +10,7 @@ import UIKit
 
 class ScriptDetailViewController: UIViewController {
   private let fileName: String
+  private let fileText: String
   private let textView = CYRTextView()
   private var oldText = ""
   
@@ -17,11 +18,13 @@ class ScriptDetailViewController: UIViewController {
     super.viewDidLoad()
     setupUI()
     makeConstriants()
-    fetchReadScript()
+    bind()
   }
   
-  init(fileName: String) {
+  init(fileName: String, fileText: String) {
     self.fileName = fileName
+    self.fileText = fileText
+    self.oldText = fileText
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -37,7 +40,6 @@ class ScriptDetailViewController: UIViewController {
     navigationItem.leftBarButtonItem = UIBarButtonItem(title: "返回", style: .Plain, target: self, action: #selector(back))
     
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-    //    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     
     textView.backgroundColor = UIColor(rgb: 0x434343)
     textView.textColor = UIColor.whiteColor()
@@ -65,45 +67,13 @@ class ScriptDetailViewController: UIViewController {
     }
   }
   
+  private func bind() {
+    textView.text = self.fileText
+  }
+  
   override func viewWillDisappear(animated: Bool) {
     super.viewWillDisappear(animated)
     NSNotificationCenter.defaultCenter().removeObserver(self)
-  }
-  
-  private func fetchReadScript() {
-    if !KVNProgress.isVisible() {
-      KVNProgress.showWithStatus(Constants.Text.reloading)
-    }
-    let parameters = ["filename":self.fileName]
-    let request = Network.sharedManager.post(url: ServiceURL.Url.readScriptFile, timeout:Constants.Timeout.dataRequest, parameters: parameters)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
-      guard let `self` = self else { return }
-      guard JSON(data: data!) != nil else {
-        JCAlertView.showOneButtonWithTitle(Constants.Text.warning, message: "不支持编辑该种编码的文件", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
-        KVNProgress.dismiss()
-        return
-      }
-      if let data = data where JSON(data: data) != nil {
-        let json = JSON(data: data)
-        KVNProgress.dismiss()
-        switch json["code"].intValue {
-        case 0:
-          self.textView.text = json["data"].stringValue
-          self.oldText = json["data"].stringValue
-        default:
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
-          return
-        }
-      }
-      if error != nil {
-        KVNProgress.updateStatus(Constants.Error.failure)
-        MixC.sharedManager.restart { (_) in
-          self.fetchReadScript()
-        }
-      }
-    }
-    task.resume()
   }
   
   private func fetchWriteScript() {
@@ -167,10 +137,6 @@ class ScriptDetailViewController: UIViewController {
       self.view.frame.origin.y = -height
       }, completion: nil)
   }
-  
-  //  @objc private func keyboardWillHide(notification: NSNotification) {
-  //    
-  //  }
 }
 
 extension ScriptDetailViewController: UIGestureRecognizerDelegate {

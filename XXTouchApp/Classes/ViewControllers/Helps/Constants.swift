@@ -34,9 +34,11 @@ extension Constants {
     static let createDone = "创建完成"
     static let copy = "已经复制到剪贴板"
     static let notSelected = "该文件格式无法被选中运行"
+    static let notReload = "不支持查看该种编码的图片"
     static let notEnScript = "加密脚本无法编辑"
     static let notRuningScript = "当前无运行脚本"
     static let reloading = "正在加载"
+    static let notFile = "不支持编辑该种编码的文件"
   }
 }
 

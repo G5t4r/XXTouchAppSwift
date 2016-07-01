@@ -531,8 +531,13 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
       model.isSelected = true
       selectScriptFile(scriptList[indexPath.row].name)
     } else if suffix == Suffix.Section.JPG.title || suffix == Suffix.Section.BMP.title || suffix == Suffix.Section.PNG.title {
-      // 点击进图图片查看
+      readFile(scriptList[indexPath.row].name)
       
+      
+      
+      
+      //      let photoViewController = PhotoViewController(image: scriptList[indexPath.row].name)
+      //      self.navigationController?.pushViewController(photoViewController, animated: true)
     } else {
       KVNProgress.showErrorWithStatus(Constants.Text.notSelected)
     }
@@ -551,7 +556,84 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
   }
 }
 
+/// 读取文件
+extension ScriptViewController {
+  private func readFile(name: String) {
+    //    if !KVNProgress.isVisible() {
+    //      KVNProgress.showWithStatus(Constants.Text.reloading)
+    //    }
+    let parameters = [
+      "filename": ServiceURL.scriptsPath + name
+    ]
+    let request = Network.sharedManager.post(url: ServiceURL.Url.readFile, timeout:Constants.Timeout.request, parameters: parameters)
+    let session = Network.sharedManager.session()
+    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+      guard let `self` = self else { return }
+      if let data = data where JSON(data: data) != nil {
+        let json = JSON(data: data)
+        switch json["code"].intValue {
+        case 0:
+          if let image = Base64.base64StringToUIImage(json["data"].stringValue) {
+            KVNProgress.dismiss()
+            let photoViewController = PhotoViewController(image: image)
+            photoViewController.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(photoViewController, animated: true)
+          } else {
+            KVNProgress.showErrorWithStatus(Constants.Text.notReload)
+          }
+        default:
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          KVNProgress.dismiss()
+          return
+        }
+      }
+      if error != nil {
+        KVNProgress.updateStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.readFile(name)
+        }
+      }
+    }
+    task.resume()
+  }
+}
+
 extension ScriptViewController: SWTableViewCellDelegate {
+  private func fetchReadScript(fileName: String) {
+    //    if !KVNProgress.isVisible() {
+    //      KVNProgress.showWithStatus(Constants.Text.reloading)
+    //    }
+    let parameters = ["filename":fileName]
+    let request = Network.sharedManager.post(url: ServiceURL.Url.readScriptFile, timeout:Constants.Timeout.dataRequest, parameters: parameters)
+    let session = Network.sharedManager.session()
+    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+      guard let `self` = self else { return }
+      guard JSON(data: data!) != nil else {
+        KVNProgress.showErrorWithStatus(Constants.Text.notFile)
+        return
+      }
+      if let data = data where JSON(data: data) != nil {
+        let json = JSON(data: data)
+        KVNProgress.dismiss()
+        switch json["code"].intValue {
+        case 0:
+          let scriptDetailViewController = ScriptDetailViewController(fileName: fileName, fileText: json["data"].stringValue)
+          scriptDetailViewController.hidesBottomBarWhenPushed = true
+          self.navigationController?.pushViewController(scriptDetailViewController, animated: true)
+        default:
+          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          return
+        }
+      }
+      if error != nil {
+        KVNProgress.updateStatus(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.fetchReadScript(fileName)
+        }
+      }
+    }
+    task.resume()
+  }
   
   private func intoEdit(indexPath: NSIndexPath) {
     let fileName = scriptList[indexPath.row].name
@@ -560,9 +642,7 @@ extension ScriptViewController: SWTableViewCellDelegate {
       KVNProgress.showErrorWithStatus(Constants.Text.notEnScript)
       return
     }
-    let scriptDetailViewController = ScriptDetailViewController(fileName: fileName)
-    scriptDetailViewController.hidesBottomBarWhenPushed = true
-    self.navigationController?.pushViewController(scriptDetailViewController, animated: true)
+    fetchReadScript(fileName)
   }
   
   private func edit(indexPath: NSIndexPath) {

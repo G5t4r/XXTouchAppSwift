@@ -24,7 +24,7 @@ class ServiceURL {
   }
   
   static var baseURLString: String {
-    return Section.Remotehost.title
+    return Section.Localhost.title
   }
   
   static let scriptsPath = "lua/scripts/"
@@ -41,6 +41,8 @@ extension ServiceURL {
     static let getFileList = baseURLString + "/get_file_list"
     /// 读取脚本文件
     static let readScriptFile = baseURLString + "/read_script_file"
+    /// 读取文件
+    static let readFile = baseURLString + "/read_file"
     /// 写入内容到脚本文件
     static let writeScriptFile = baseURLString + "/write_script_file"
     /// 新建一个脚本文件
