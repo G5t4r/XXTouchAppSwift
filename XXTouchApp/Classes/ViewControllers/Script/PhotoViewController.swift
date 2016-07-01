@@ -12,14 +12,16 @@ class PhotoViewController: UIViewController {
   private let scrollView = UIScrollView()
   private let imageView = UIImageView()
   private let image: UIImage
+  private let name: String
   private var currentScale: CGFloat = 0
   private var maxScale: CGFloat = 4.0
   private var minScale: CGFloat = 0.15
   private let photoEditView = PhotoEditView()
   private var isOpen = false
   
-  init(image: UIImage) {
+  init(image: UIImage, name: String) {
     self.image = image
+    self.name = name
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -37,9 +39,8 @@ class PhotoViewController: UIViewController {
   
   private func setupUI() {
     view.backgroundColor = UIColor.whiteColor()
-    navigationItem.title = "图片查看"
     
-//    self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "编辑", style: .Plain, target: self, action: #selector(edit(_:)))
+    //    self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "编辑", style: .Plain, target: self, action: #selector(edit(_:)))
     
     imageView.userInteractionEnabled = true
     imageView.contentMode = .ScaleAspectFit
@@ -54,18 +55,18 @@ class PhotoViewController: UIViewController {
     scrollView.showsHorizontalScrollIndicator = false
     scrollView.backgroundColor = UIColor.lightGrayColor()
     
-//    photoEditView.hidden = true
+    //    photoEditView.hidden = true
     
     scrollView.addSubview(imageView)
     view.addSubview(scrollView)
-//    view.addSubview(photoEditView)
+    //    view.addSubview(photoEditView)
   }
   
   private func makeConstriants() {
-//    photoEditView.snp_makeConstraints { (make) in
-//      make.bottom.leading.trailing.equalTo(view)
-//      make.height.equalTo(80)
-//    }
+    //    photoEditView.snp_makeConstraints { (make) in
+    //      make.bottom.leading.trailing.equalTo(view)
+    //      make.height.equalTo(80)
+    //    }
   }
   
   private func setupAction() {
@@ -75,6 +76,7 @@ class PhotoViewController: UIViewController {
   }
   
   private func bind() {
+    navigationItem.title = self.name
     imageView.image = self.image
     imageView.sizeToFit()
     scrollView.contentSize = self.image.size

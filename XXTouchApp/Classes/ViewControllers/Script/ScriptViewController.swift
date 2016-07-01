@@ -532,12 +532,6 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
       selectScriptFile(scriptList[indexPath.row].name)
     } else if suffix == Suffix.Section.JPG.title || suffix == Suffix.Section.BMP.title || suffix == Suffix.Section.PNG.title {
       readFile(scriptList[indexPath.row].name)
-      
-      
-      
-      
-      //      let photoViewController = PhotoViewController(image: scriptList[indexPath.row].name)
-      //      self.navigationController?.pushViewController(photoViewController, animated: true)
     } else {
       KVNProgress.showErrorWithStatus(Constants.Text.notSelected)
     }
@@ -575,7 +569,7 @@ extension ScriptViewController {
         case 0:
           if let image = Base64.base64StringToUIImage(json["data"].stringValue) {
             KVNProgress.dismiss()
-            let photoViewController = PhotoViewController(image: image)
+            let photoViewController = PhotoViewController(image: image, name: name)
             photoViewController.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(photoViewController, animated: true)
           } else {
