@@ -42,7 +42,7 @@ class Service {
   }
   
   static var baseURLString: String {
-    return Host.Local.rawValue
+    return Host.Localhost.rawValue
   }
   
   class func requestTimeout() -> NSTimeInterval {

@@ -89,3 +89,9 @@ extension AppDelegate {
   }
 }
 
+extension AppDelegate {
+  func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
+    return UIInterfaceOrientationMask.Portrait
+  }
+}
+
