@@ -41,7 +41,6 @@
 		2C7342E61D1140AE00CED0F3 /* SnapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7342D91D1140AE00CED0F3 /* SnapKit.swift */; };
 		2C7342E71D1140AE00CED0F3 /* View+SnapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7342DA1D1140AE00CED0F3 /* View+SnapKit.swift */; };
 		2C7342E81D1140AE00CED0F3 /* ViewController+SnapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7342DB1D1140AE00CED0F3 /* ViewController+SnapKit.swift */; };
-		2C7342EB1D1144C000CED0F3 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7342EA1D1144C000CED0F3 /* Network.swift */; };
 		2C7342ED1D123E9C00CED0F3 /* RenameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7342EC1D123E9C00CED0F3 /* RenameView.swift */; };
 		2C7342F31D1260D800CED0F3 /* NewNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7342F21D1260D800CED0F3 /* NewNameView.swift */; };
 		2CC5F5881D1CFD040028467F /* MoreRemoteServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC5F5871D1CFD040028467F /* MoreRemoteServiceCell.swift */; };
@@ -61,7 +60,6 @@
 		2CF18C041D1A741B007535CD /* DeviceInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF18C031D1A741B007535CD /* DeviceInfoModel.swift */; };
 		2CF18C061D1A80BC007535CD /* AboutInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF18C051D1A80BC007535CD /* AboutInfoCell.swift */; };
 		2CF18C081D1A96FC007535CD /* AboutEmailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF18C071D1A96FC007535CD /* AboutEmailCell.swift */; };
-		2CF749B91CFD72C2007A273B /* ServiceURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF749B81CFD72C2007A273B /* ServiceURL.swift */; };
 		2CF749BB1CFD80A0007A273B /* ScriptDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF749BA1CFD80A0007A273B /* ScriptDetailViewController.swift */; };
 		2CF749BF1CFD8552007A273B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF749BE1CFD8552007A273B /* Constants.swift */; };
 		2CF749C51CFD8BA6007A273B /* NewScriptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF749C41CFD8BA6007A273B /* NewScriptViewController.swift */; };
@@ -73,6 +71,7 @@
 		2CF749D81D0577C4007A273B /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF749D71D0577C4007A273B /* MoreViewController.swift */; };
 		9509B7811D25777A0074010B /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509B7801D25777A0074010B /* CatalogViewController.swift */; };
 		950FC3611D1988660091DBA4 /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950FC3601D1988660091DBA4 /* Base64.swift */; };
+		953949D61D28FC8D00BE75AA /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953949D51D28FC8D00BE75AA /* Service.swift */; };
 		955DB23D1D1E370200B598C4 /* MixC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955DB23C1D1E370200B598C4 /* MixC.swift */; };
 		955DB23F1D1E3A4E00B598C4 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955DB23E1D1E3A4E00B598C4 /* FileManager.swift */; };
 		95AB90CD1D21717200FA4C52 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AB90CC1D21717200FA4C52 /* Button.swift */; };
@@ -132,7 +131,6 @@
 		2C7342D91D1140AE00CED0F3 /* SnapKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapKit.swift; sourceTree = "<group>"; };
 		2C7342DA1D1140AE00CED0F3 /* View+SnapKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+SnapKit.swift"; sourceTree = "<group>"; };
 		2C7342DB1D1140AE00CED0F3 /* ViewController+SnapKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+SnapKit.swift"; sourceTree = "<group>"; };
-		2C7342EA1D1144C000CED0F3 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		2C7342EC1D123E9C00CED0F3 /* RenameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenameView.swift; sourceTree = "<group>"; };
 		2C7342F21D1260D800CED0F3 /* NewNameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewNameView.swift; sourceTree = "<group>"; };
 		2CC5F5871D1CFD040028467F /* MoreRemoteServiceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreRemoteServiceCell.swift; sourceTree = "<group>"; };
@@ -152,7 +150,6 @@
 		2CF18C031D1A741B007535CD /* DeviceInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceInfoModel.swift; sourceTree = "<group>"; };
 		2CF18C051D1A80BC007535CD /* AboutInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutInfoCell.swift; sourceTree = "<group>"; };
 		2CF18C071D1A96FC007535CD /* AboutEmailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutEmailCell.swift; sourceTree = "<group>"; };
-		2CF749B81CFD72C2007A273B /* ServiceURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceURL.swift; sourceTree = "<group>"; };
 		2CF749BA1CFD80A0007A273B /* ScriptDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptDetailViewController.swift; sourceTree = "<group>"; };
 		2CF749BE1CFD8552007A273B /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2CF749C41CFD8BA6007A273B /* NewScriptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewScriptViewController.swift; sourceTree = "<group>"; };
@@ -167,6 +164,7 @@
 		8A6F1DF544CDD739F1B52DAA /* Pods-XXTouchApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTouchApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XXTouchApp/Pods-XXTouchApp.debug.xcconfig"; sourceTree = "<group>"; };
 		9509B7801D25777A0074010B /* CatalogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		950FC3601D1988660091DBA4 /* Base64.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64.swift; sourceTree = "<group>"; };
+		953949D51D28FC8D00BE75AA /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		955DB23C1D1E370200B598C4 /* MixC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MixC.swift; sourceTree = "<group>"; };
 		955DB23E1D1E3A4E00B598C4 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		95AB90CC1D21717200FA4C52 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
@@ -259,7 +257,6 @@
 		2C54F0E61D18EA76005F35AD /* ApplicationList */ = {
 			isa = PBXGroup;
 			children = (
-				2C54F0E91D1907B2005F35AD /* Authorization */,
 				2C54F0F81D193559005F35AD /* ApplicationDetailViewController.swift */,
 				2C54F0E71D18EA99005F35AD /* ApplicationListViewController.swift */,
 			);
@@ -271,8 +268,7 @@
 			children = (
 				2C54F0EA1D1907BC005F35AD /* AuthorizationViewController.swift */,
 			);
-			name = Authorization;
-			path = ../Authorization;
+			path = Authorization;
 			sourceTree = "<group>";
 		};
 		2C54F0EC1D190BD1005F35AD /* Authorization */ = {
@@ -458,8 +454,7 @@
 		2C7342E91D11448B00CED0F3 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				2C7342EA1D1144C000CED0F3 /* Network.swift */,
-				2CF749B81CFD72C2007A273B /* ServiceURL.swift */,
+				953949D51D28FC8D00BE75AA /* Service.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -590,6 +585,7 @@
 			isa = PBXGroup;
 			children = (
 				2CF18BF81D1A43F9007535CD /* About */,
+				2C54F0E91D1907B2005F35AD /* Authorization */,
 				2C54F0E61D18EA76005F35AD /* ApplicationList */,
 				2CF18BFD1D1A5CFE007535CD /* DevelopDocument */,
 				2CD2F56A1D13B0B1001C873F /* KeyBoardSetting */,
@@ -814,7 +810,6 @@
 				2CF18C081D1A96FC007535CD /* AboutEmailCell.swift in Sources */,
 				2C54F0E51D18D1DA005F35AD /* UserSettingCell.swift in Sources */,
 				2CC5F5881D1CFD040028467F /* MoreRemoteServiceCell.swift in Sources */,
-				2C7342EB1D1144C000CED0F3 /* Network.swift in Sources */,
 				2C20D81C1D0FC74A009A4990 /* UIViewController+Transition.swift in Sources */,
 				95F94B821D1832C300532016 /* StartUpCell.swift in Sources */,
 				2C4FFA3C1D2600B100DBEEDB /* PhotoViewController.swift in Sources */,
@@ -843,6 +838,7 @@
 				2C7342ED1D123E9C00CED0F3 /* RenameView.swift in Sources */,
 				2C7342DC1D1140AE00CED0F3 /* Constraint.swift in Sources */,
 				2C20D81F1D0FCB8E009A4990 /* KeyboardManager.swift in Sources */,
+				953949D61D28FC8D00BE75AA /* Service.swift in Sources */,
 				2CD2F5671D13A1C0001C873F /* Sizer.swift in Sources */,
 				2C7342F31D1260D800CED0F3 /* NewNameView.swift in Sources */,
 				2C54F0E81D18EA99005F35AD /* ApplicationListViewController.swift in Sources */,
@@ -856,7 +852,6 @@
 				2C67AB821CFD2AAA008D53E8 /* ScriptViewController.swift in Sources */,
 				2C73413D1D110FB100CED0F3 /* UIViewController+Alert.swift in Sources */,
 				2C7342E61D1140AE00CED0F3 /* SnapKit.swift in Sources */,
-				2CF749B91CFD72C2007A273B /* ServiceURL.swift in Sources */,
 				2C7342E71D1140AE00CED0F3 /* View+SnapKit.swift in Sources */,
 				95D5042D1D1FEE11008CFA7F /* ProgressHUDManager.swift in Sources */,
 				2CF749C51CFD8BA6007A273B /* NewScriptViewController.swift in Sources */,

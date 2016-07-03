@@ -33,7 +33,7 @@ class DevelopDocumentViewController: UIViewController {
     let rightImage = UIImage(named: "skip")!.imageWithRenderingMode(.AlwaysOriginal)
     navigationItem.rightBarButtonItem = UIBarButtonItem(image: rightImage, style: .Plain, target: self, action: #selector(skip))
     
-    webView.loadRequest(NSURLRequest(URL: NSURL(string: ServiceURL.Url.developDocument)!))
+    webView.loadRequest(NSURLRequest(URL: NSURL(string: Service.developDocument())!))
     webView.delegate = progressProxy
     progressProxy.progressDelegate = self
     progressProxy.webViewProxyDelegate = self
@@ -88,7 +88,7 @@ extension DevelopDocumentViewController {
 extension DevelopDocumentViewController: UIActionSheetDelegate {
   func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
     guard buttonIndex != actionSheet.cancelButtonIndex else { return }
-    UIApplication.sharedApplication().openURL(NSURL(string: ServiceURL.Url.developDocument)!)
+    UIApplication.sharedApplication().openURL(NSURL(string: Service.developDocument())!)
   }
 }
 
@@ -112,7 +112,7 @@ extension DevelopDocumentViewController: UIWebViewDelegate, NJKWebViewProgressDe
       webView.stringByEvaluatingJavaScriptFromString("document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '100%'")
     }
     
-//    webView.stringByEvaluatingJavaScriptFromString("document.getElementsByTagName('body')[0].style.textAlign = 'center';")
+    //    webView.stringByEvaluatingJavaScriptFromString("document.getElementsByTagName('body')[0].style.textAlign = 'center';")
     
     //    navigationItem.title = webView.stringByEvaluatingJavaScriptFromString("document.title")
   }

@@ -58,9 +58,7 @@ extension RecordSettingViewController {
     if !KVNProgress.isVisible() {
       KVNProgress.showWithStatus(Constants.Text.reloading)
     }
-    let request = Network.sharedManager.post(url: ServiceURL.Url.getRecordConf, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.getRecordConf { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -81,7 +79,6 @@ extension RecordSettingViewController {
         }
       }
     }
-    task.resume()
   }
 }
 
@@ -90,27 +87,25 @@ extension RecordSettingViewController {
     switch switchState.tag {
     case 0:
       if switchState.on {
-        setRecordVolume(ServiceURL.Url.setRecordVolumeUpOn)
+        setRecordVolume("setRecordVolumeUpOn")
       } else {
-        setRecordVolume(ServiceURL.Url.setRecordVolumeUpOff)
+        setRecordVolume("setRecordVolumeUpOff")
       }
     case 1:
       if switchState.on {
-        setRecordVolume(ServiceURL.Url.setRecordVolumeDownOn)
+        setRecordVolume("setRecordVolumeDownOn")
       } else {
-        setRecordVolume(ServiceURL.Url.setRecordVolumeDownOff)
+        setRecordVolume("setRecordVolumeDownOff")
       }
     default:break
     }
   }
   
-  private func setRecordVolume(url: String) {
+  private func setRecordVolume(type: String) {
     if !KVNProgress.isVisible() {
       KVNProgress.showWithStatus(Constants.Text.reloading)
     }
-    let request = Network.sharedManager.post(url: url, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.setRecordConf(type: type) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -126,11 +121,10 @@ extension RecordSettingViewController {
       if error != nil {
         KVNProgress.updateStatus(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
-          self.setRecordVolume(url)
+          self.setRecordVolume(type)
         }
       }
     }
-    task.resume()
   }
 }
 

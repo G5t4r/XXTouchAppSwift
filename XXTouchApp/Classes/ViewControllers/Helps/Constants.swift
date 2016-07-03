@@ -43,13 +43,6 @@ extension Constants {
 }
 
 extension Constants {
-  class Timeout {
-    static let dataRequest: NSTimeInterval = 5.0
-    static let request: NSTimeInterval = 5.0
-  }
-}
-
-extension Constants {
   class Error {
     static let failure = "与守护程序通讯失败\n请稍等..."
     static let invalidCode = "无效授权码，请检查输入"

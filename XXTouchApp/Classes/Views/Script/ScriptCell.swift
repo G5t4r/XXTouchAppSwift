@@ -78,6 +78,9 @@ class ScriptCell: SWTableViewCell {
     case Suffix.Section.LUA.title: scriptImage.image = UIImage(named: "lua")
     case Suffix.Section.XXT.title: scriptImage.image = UIImage(named: "xxt")
     case Suffix.Section.TXT.title: scriptImage.image = UIImage(named: "txt")
+    case Suffix.Section.BMP.title: scriptImage.image = UIImage(named: "photo")
+    case Suffix.Section.JPG.title: scriptImage.image = UIImage(named: "photo")
+    case Suffix.Section.PNG.title: scriptImage.image = UIImage(named: "photo")
     default: scriptImage.image = UIImage(named: "unknown")
     }
     nameLabel.text = model.name

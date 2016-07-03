@@ -88,9 +88,7 @@ extension KeyBoardSettingViewController {
     if !KVNProgress.isVisible() {
       KVNProgress.showWithStatus(Constants.Text.reloading)
     }
-    let request = Network.sharedManager.post(url: ServiceURL.Url.getVolumeActionConf, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.getVolumeActionConf { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -117,7 +115,6 @@ extension KeyBoardSettingViewController {
         }
       }
     }
-    task.resume()
   }
 }
 
@@ -204,17 +201,15 @@ extension KeyBoardSettingViewController: UIActionSheetDelegate {
   func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
     guard buttonIndex != actionSheet.cancelButtonIndex else { return }
     switch volumePrompt {
-    case .LongUpVolume: setVolumeAction(ServiceURL.Url.setHoldVolumeUpAction, index: buttonIndex)
-    case .LongDownVolume: setVolumeAction(ServiceURL.Url.setHoldVolumeDownAction, index: buttonIndex)
-    case .ClickUpVolume: setVolumeAction(ServiceURL.Url.setClickVolumeUpAction, index: buttonIndex)
-    case .ClickDownVolume: setVolumeAction(ServiceURL.Url.setClickVolumeDownAction, index: buttonIndex)
+    case .LongUpVolume: setVolumeAction(String(buttonIndex),type: "setHoldVolumeUpAction")
+    case .LongDownVolume: setVolumeAction(String(buttonIndex),type: "setHoldVolumeDownAction")
+    case .ClickUpVolume: setVolumeAction(String(buttonIndex),type: "setClickVolumeUpAction")
+    case .ClickDownVolume: setVolumeAction(String(buttonIndex),type: "setClickVolumeDownAction")
     }
   }
   
-  func setVolumeAction(url: String, index: Int) {
-    let request = Network.sharedManager.post(url: url, timeout:Constants.Timeout.request, value: String(index))
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+  func setVolumeAction(value: String, type: String) {
+    Service.setVolumeActionConf(value: value, type: type) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -229,11 +224,10 @@ extension KeyBoardSettingViewController: UIActionSheetDelegate {
       if error != nil {
         KVNProgress.showWithStatus(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
-          self.setVolumeAction(url, index: index)
+          self.setVolumeAction(value, type: type)
         }
       }
     }
-    task.resume()
   }
 }
 

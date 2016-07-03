@@ -259,9 +259,7 @@ extension MoreViewController {
   }
   
   private func fetchRemoteAccessStatus() {
-    let request = Network.sharedManager.post(url: ServiceURL.Url.isRemoteAccessOpened, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.isRemoteAccessOpened { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -283,23 +281,20 @@ extension MoreViewController {
         }
       }
     }
-    task.resume()
   }
   
   @objc private func remoteClick(switchState: UISwitch) {
     if switchState.on {
       // 打开远程服务
-      openAndCloseRemoteAccess(ServiceURL.Url.openRemoteAccess)
+      openAndCloseRemoteAccess("openRemoteAccess")
     } else {
       // 关闭远程服务
-      openAndCloseRemoteAccess(ServiceURL.Url.closeRemoteAccess)
+      openAndCloseRemoteAccess("closeRemoteAccess")
     }
   }
   
-  private func openAndCloseRemoteAccess(url: String) {
-    let request = Network.sharedManager.post(url: url, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+  private func openAndCloseRemoteAccess(type: String) {
+    Service.openOrCloseRemoteAccess(type: type) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -314,11 +309,10 @@ extension MoreViewController {
       if error != nil {
         KVNProgress.showWithStatus(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
-          self.openAndCloseRemoteAccess(url)
+          self.openAndCloseRemoteAccess(type)
         }
       }
     }
-    task.resume()
   }
   
   private func service(rowIndex: Int) {
@@ -420,15 +414,13 @@ extension MoreViewController {
     //    if !KVNProgress.isVisible() {
     //      KVNProgress.showWithStatus(Constants.Text.reloading)
     //    }
-    let request = Network.sharedManager.post(url: ServiceURL.Url.deviceinfo, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.getDeviceinfo { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
-          if json["data"]["wifi_ip"].stringValue == ServiceURL.Local {
+          if json["data"]["wifi_ip"].stringValue == Service.Local {
             self.host = "请连接到可用Wi-Fi"
           } else {
             self.host = "http://"+json["data"]["wifi_ip"].stringValue+":"+json["data"]["port"].stringValue
@@ -447,7 +439,6 @@ extension MoreViewController {
         }
       }
     }
-    task.resume()
   }
 }
 
@@ -456,16 +447,14 @@ extension MoreViewController {
     if !KVNProgress.isVisible() {
       KVNProgress.showWithStatus("正在重启服务")
     }
-    let request = Network.sharedManager.post(url: ServiceURL.Url.restart, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.restartService { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
           dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
-            KVNProgress.showSuccessWithStatus("重启成功", completion: { 
+            KVNProgress.showSuccessWithStatus("重启成功", completion: {
               self.getDeviceinfo()
             })
           })
@@ -482,16 +471,13 @@ extension MoreViewController {
         }
       }
     }
-    task.resume()
   }
   
   private func clearGps() {
     if !KVNProgress.isVisible() {
       KVNProgress.showWithStatus("正在清空")
     }
-    let request = Network.sharedManager.post(url: ServiceURL.Url.clearGps, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.clearGPS { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -510,16 +496,13 @@ extension MoreViewController {
         }
       }
     }
-    task.resume()
   }
   
   private func clearUIcache() {
     if !KVNProgress.isVisible() {
       KVNProgress.showWithStatus("正在清理")
     }
-    let request = Network.sharedManager.post(url: ServiceURL.Url.clearUIcache, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.clearUICache { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -538,16 +521,13 @@ extension MoreViewController {
         }
       }
     }
-    task.resume()
   }
   
   private func clearAll() {
     if !KVNProgress.isVisible() {
       KVNProgress.showWithStatus("正在全清")
     }
-    let request = Network.sharedManager.post(url: ServiceURL.Url.clearAll, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.clearAll { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -566,16 +546,14 @@ extension MoreViewController {
         }
       }
     }
-    task.resume()
   }
   
   private func reboot() {
     if !KVNProgress.isVisible() {
       KVNProgress.showWithStatus("正在重启设备")
     }
-    let request = Network.sharedManager.post(url: ServiceURL.Url.reboot2, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    
+    Service.reboot { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -594,6 +572,5 @@ extension MoreViewController {
         }
       }
     }
-    task.resume()
   }
 }

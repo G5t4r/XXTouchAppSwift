@@ -85,9 +85,7 @@ extension UserSettingViewController {
     if !KVNProgress.isVisible() {
       KVNProgress.showWithStatus(Constants.Text.reloading)
     }
-    let request = Network.sharedManager.post(url: ServiceURL.Url.getUserConf, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.getUserConf { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -117,7 +115,6 @@ extension UserSettingViewController {
         }
       }
     }
-    task.resume()
   }
 }
 
@@ -201,35 +198,33 @@ extension UserSettingViewController: UIActionSheetDelegate {
     switch userPrompt {
     case .NoSimAlert:
       switch buttonIndex {
-      case 0: setUserConf(ServiceURL.Url.setNosimAlertOff)
-      case 1: setUserConf(ServiceURL.Url.setNosimAlertOn)
+      case 0: setUserConf("setNosimAlertOff")
+      case 1: setUserConf("setNosimAlertOn")
       default: break
       }
     case .NoSimStatusbar:
       switch buttonIndex {
-      case 0: setUserConf(ServiceURL.Url.setNosimStatusbarOff)
-      case 1: setUserConf(ServiceURL.Url.setNosimStatusbarOn)
+      case 0: setUserConf("setNosimStatusbarOff")
+      case 1: setUserConf("setNosimStatusbarOn")
       default: break
       }
     case .NoLowPowerAlert:
       switch buttonIndex {
-      case 0: setUserConf(ServiceURL.Url.setNoLowPowerAlertOff)
-      case 1: setUserConf(ServiceURL.Url.setNoLowPowerAlertOn)
+      case 0: setUserConf("setNoLowPowerAlertOff")
+      case 1: setUserConf("setNoLowPowerAlertOn")
       default: break
       }
     case .NoNeedPushidAlert:
       switch buttonIndex {
-      case 0: setUserConf(ServiceURL.Url.setNoNeedPushidAlertOff)
-      case 1: setUserConf(ServiceURL.Url.setNoNeedPushidAlertOn)
+      case 0: setUserConf("setNoNeedPushidAlertOff")
+      case 1: setUserConf("setNoNeedPushidAlertOn")
       default: break
       }
     }
   }
   
-  private func setUserConf(url: String) {
-    let request = Network.sharedManager.post(url: url, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+  private func setUserConf(type: String) {
+    Service.setUserConf(type: type) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -244,10 +239,9 @@ extension UserSettingViewController: UIActionSheetDelegate {
       if error != nil {
         KVNProgress.showWithStatus(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
-          self.setUserConf(url)
+          self.setUserConf(type)
         }
       }
     }
-    task.resume()
   }
 }

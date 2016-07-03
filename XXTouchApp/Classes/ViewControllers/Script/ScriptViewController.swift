@@ -90,9 +90,7 @@ class ScriptViewController: UIViewController {
   }
   
   private func getSelectedScriptFile() {
-    let request = Network.sharedManager.post(url: ServiceURL.Url.getSelectedScriptFile, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.getSelectedScriptFile { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -106,7 +104,6 @@ class ScriptViewController: UIViewController {
               self.tableView.deselectRowAtIndexPath(indexPath!, animated: true)
               let cell = self.tableView.cellForRowAtIndexPath(indexPath!) as! ScriptCell
               cell.scriptSelectedHidden(false)
-              //              cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
               let model = self.scriptList[indexPath!.row]
               model.isSelected = true
               break
@@ -124,16 +121,13 @@ class ScriptViewController: UIViewController {
         }
       }
     }
-    task.resume()
   }
   
   private func fetchScriptList() {
     if !KVNProgress.isVisible() {
       KVNProgress.showWithStatus("正在加载")
     }
-    let request = Network.sharedManager.post(url: ServiceURL.Url.getFileList, timeout:Constants.Timeout.dataRequest, parameters: ["directory":"lua/scripts/"])
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.fetchScriptList { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -161,7 +155,6 @@ class ScriptViewController: UIViewController {
       }
       self.tableView.mj_header.endRefreshing()
     }
-    task.resume()
   }
   
   /// 重命名
@@ -169,19 +162,13 @@ class ScriptViewController: UIViewController {
     if !KVNProgress.isVisible() {
       KVNProgress.showWithStatus("正在保存")
     }
-    let parameters = [
-      "filename": ServiceURL.scriptsPath + self.oldName,
-      "newfilename": ServiceURL.scriptsPath + renameView.newNameTextField.text!
-    ]
-    let request = Network.sharedManager.post(url: ServiceURL.Url.renameFile, timeout:Constants.Timeout.request, parameters: parameters)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.renameFile(fileName: self.oldName, newFileName: renameView.newNameTextField.text!) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
-          KVNProgress.showSuccessWithStatus(Constants.Text.editSuccessful, completion: { 
+          KVNProgress.showSuccessWithStatus(Constants.Text.editSuccessful, completion: {
             self.closeRenameViewAnimator()
             self.fetchScriptList()
           })
@@ -198,7 +185,6 @@ class ScriptViewController: UIViewController {
         }
       }
     }
-    task.resume()
   }
   
   @objc private func addScript(button: UIBarButtonItem) {
@@ -213,9 +199,8 @@ class ScriptViewController: UIViewController {
     if !KVNProgress.isVisible() {
       KVNProgress.showWithStatus("正在加载")
     }
-    let request = Network.sharedManager.post(url: ServiceURL.Url.bindQrcode, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    
+    Service.sweep { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -236,7 +221,6 @@ class ScriptViewController: UIViewController {
         }
       }
     }
-    task.resume()
   }
   
   @objc private func info(button: UIButton) {
@@ -369,9 +353,7 @@ extension ScriptViewController: UIActionSheetDelegate {
     if !KVNProgress.isVisible() {
       KVNProgress.showWithStatus("正在启动")
     }
-    let request = Network.sharedManager.post(url: ServiceURL.Url.launchScriptFile, timeout: Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.launchScriptFile { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -395,16 +377,14 @@ extension ScriptViewController: UIActionSheetDelegate {
         }
       }
     }
-    task.resume()
   }
   
   private func isRunning() {
     if !KVNProgress.isVisible() {
       KVNProgress.showWithStatus("正在关闭")
     }
-    let request = Network.sharedManager.post(url: ServiceURL.Url.isRunning, timeout: Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    
+    Service.isRunning { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -420,13 +400,11 @@ extension ScriptViewController: UIActionSheetDelegate {
         }
       }
     }
-    task.resume()
   }
   
   private func stopScriptFile() {
-    let request = Network.sharedManager.post(url: ServiceURL.Url.recycle, timeout: Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    
+    Service.stopScriptFile { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -445,13 +423,10 @@ extension ScriptViewController: UIActionSheetDelegate {
         }
       }
     }
-    task.resume()
   }
   
   private func selectScriptFile(name: String) {
-    let request = Network.sharedManager.post(url: ServiceURL.Url.selectScriptFile, timeout: Constants.Timeout.request, parameters: ["filename" : name])
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.selectScriptFile(filename: name) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -470,7 +445,6 @@ extension ScriptViewController: UIActionSheetDelegate {
         }
       }
     }
-    task.resume()
   }
 }
 
@@ -556,12 +530,7 @@ extension ScriptViewController {
     //    if !KVNProgress.isVisible() {
     //      KVNProgress.showWithStatus(Constants.Text.reloading)
     //    }
-    let parameters = [
-      "filename": ServiceURL.scriptsPath + name
-    ]
-    let request = Network.sharedManager.post(url: ServiceURL.Url.readFile, timeout:Constants.Timeout.request, parameters: parameters)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.readFile(filename: name) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -588,7 +557,6 @@ extension ScriptViewController {
         }
       }
     }
-    task.resume()
   }
 }
 
@@ -597,10 +565,7 @@ extension ScriptViewController: SWTableViewCellDelegate {
     //    if !KVNProgress.isVisible() {
     //      KVNProgress.showWithStatus(Constants.Text.reloading)
     //    }
-    let parameters = ["filename":fileName]
-    let request = Network.sharedManager.post(url: ServiceURL.Url.readScriptFile, timeout:Constants.Timeout.dataRequest, parameters: parameters)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.readScriptFile(filename: fileName) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       guard JSON(data: data!) != nil else {
         KVNProgress.showErrorWithStatus(Constants.Text.notFile)
@@ -626,7 +591,6 @@ extension ScriptViewController: SWTableViewCellDelegate {
         }
       }
     }
-    task.resume()
   }
   
   private func intoEdit(indexPath: NSIndexPath) {
@@ -669,10 +633,7 @@ extension ScriptViewController: SWTableViewCellDelegate {
         if !KVNProgress.isVisible() {
           KVNProgress.showWithStatus("正在删除")
         }
-        let parameters = ["filename" : scriptList[indexPath.row].name]
-        let request = Network.sharedManager.post(url: ServiceURL.Url.removeFile, timeout:Constants.Timeout.request, parameters: parameters)
-        let session = Network.sharedManager.session()
-        let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+        Service.removeFile(filename: scriptList[indexPath.row].name) { [weak self] (data, _, error) in
           guard let `self` = self else { return }
           if let data = data where JSON(data: data) != nil {
             let json = JSON(data: data)
@@ -695,7 +656,6 @@ extension ScriptViewController: SWTableViewCellDelegate {
             }
           }
         }
-        task.resume()
       }
     default:break
     }

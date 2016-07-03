@@ -230,19 +230,14 @@ class NewScriptViewController: UIViewController {
     if !KVNProgress.isVisible() {
       KVNProgress.showWithStatus("正在保存")
     }
-    let parameters = [
-      "filename": newNameView.newNameTextField.text!+self.extensionName,
-      "data": textView.text
-    ]
-    let request = Network.sharedManager.post(url: ServiceURL.Url.newScriptFile, timeout: Constants.Timeout.request, parameters: parameters)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    let fileName = newNameView.newNameTextField.text!+self.extensionName
+    Service.newScriptFile(filename: fileName, data: textView.text) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
-          KVNProgress.showSuccessWithStatus(Constants.Text.createDone, completion: { 
+          KVNProgress.showSuccessWithStatus(Constants.Text.createDone, completion: {
             self.closeNewNameViewAnimator()
             self.onef_navigationBack(true)
             self.delegate?.reloadScriptList()
@@ -261,7 +256,6 @@ class NewScriptViewController: UIViewController {
         }
       }
     }
-    task.resume()
   }
 }
 

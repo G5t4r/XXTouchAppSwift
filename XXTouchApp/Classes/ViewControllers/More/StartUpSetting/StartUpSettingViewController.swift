@@ -52,10 +52,10 @@ class StartUpSettingViewController: UIViewController {
 extension StartUpSettingViewController {
   @objc private func startUpValueChanged(switchState: UISwitch) {
     if switchState.on {
-      setStartupRun(ServiceURL.Url.setStartupRunOn)
+      setStartupRun("setStartupRunOn")
       startUpCell.updataInfoColor(UIColor.redColor())
     } else {
-      setStartupRun(ServiceURL.Url.setStartupRunOff)
+      setStartupRun("setStartupRunOff")
       startUpCell.updataInfoColor(ThemeManager.Theme.lightTextColor)
     }
   }
@@ -67,13 +67,11 @@ extension StartUpSettingViewController {
     if !KVNProgress.isVisible() {
       KVNProgress.showWithStatus(Constants.Text.reloading)
     }
-    let request = Network.sharedManager.post(url: ServiceURL.Url.getStartupConf, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.getStartupConf { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
-        switch json["code"].intValue { 
+        switch json["code"].intValue {
         case 0:
           self.startUpCell.switches.on = json["data"]["startup_run"].boolValue
           if self.startUpCell.switches.on {
@@ -94,14 +92,11 @@ extension StartUpSettingViewController {
         }
       }
     }
-    task.resume()
   }
   
   
   private func fetchScriptList() {
-    let request = Network.sharedManager.post(url: ServiceURL.Url.getFileList, timeout:Constants.Timeout.dataRequest, parameters: ["directory":"lua/scripts/"])
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.fetchScriptList { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -146,16 +141,13 @@ extension StartUpSettingViewController {
         }
       }
     }
-    task.resume()
   }
   
-  private func setStartupRun(url: String) {
+  private func setStartupRun(type: String) {
     if !KVNProgress.isVisible() {
       KVNProgress.showWithStatus(Constants.Text.reloading)
     }
-    let request = Network.sharedManager.post(url: url, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.setStartupRunOnOrOff(type: type) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -170,17 +162,14 @@ extension StartUpSettingViewController {
       if error != nil {
         KVNProgress.updateStatus(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
-          self.setStartupRun(url)
+          self.setStartupRun(type)
         }
       }
     }
-    task.resume()
   }
   
   private func selectStartupScriptFile(name: String) {
-    let request = Network.sharedManager.post(url: ServiceURL.Url.selectStartupScriptFile, timeout:Constants.Timeout.request, parameters: ["filename":name])
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.selectStartupScriptFile(fileName: name) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -199,7 +188,6 @@ extension StartUpSettingViewController {
         }
       }
     }
-    task.resume()
   }
 }
 

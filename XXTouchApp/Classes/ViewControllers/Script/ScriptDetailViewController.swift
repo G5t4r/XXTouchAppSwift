@@ -80,13 +80,7 @@ class ScriptDetailViewController: UIViewController {
     if !KVNProgress.isVisible() {
       KVNProgress.showWithStatus("正在保存")
     }
-    let parameters = [
-      "filename":self.fileName,
-      "data":self.textView.text
-    ]
-    let request = Network.sharedManager.post(url: ServiceURL.Url.writeScriptFile, timeout:Constants.Timeout.dataRequest, parameters: parameters)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.writeScriptFile(filename: self.fileName, data: self.textView.text) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -108,7 +102,6 @@ class ScriptDetailViewController: UIViewController {
         }
       }
     }
-    task.resume()
   }
   
   @objc private func saveScript() {

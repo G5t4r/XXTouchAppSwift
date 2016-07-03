@@ -65,6 +65,7 @@ extension AuthorizationViewController {
   
   @objc private func sumbit() {
     if let code = authorizationBindCell.codeTextField.text {
+      authorizationBindCell.codeTextField.resignFirstResponder()
       bindCode(code)
     }
   }
@@ -73,9 +74,7 @@ extension AuthorizationViewController {
     if !KVNProgress.isVisible() {
       KVNProgress.showWithStatus("正在充值")
     }
-    let request = Network.sharedManager.post(url: ServiceURL.Url.bindCode, timeout:Constants.Timeout.request, value: code)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.bindCode(code: code) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -123,7 +122,6 @@ extension AuthorizationViewController {
         }
       }
     }
-    task.resume()
   }
 }
 
@@ -133,9 +131,7 @@ extension AuthorizationViewController {
     if !KVNProgress.isVisible() {
       KVNProgress.showWithStatus(Constants.Text.reloading)
     }
-    let request = Network.sharedManager.post(url: ServiceURL.Url.expireDate, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.getExpireDate { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -163,13 +159,10 @@ extension AuthorizationViewController {
         }
       }
     }
-    task.resume()
   }
   
   private func getDeviceAuthInfo() {
-    let request = Network.sharedManager.post(url: ServiceURL.Url.deviceAuthInfo, timeout:Constants.Timeout.request)
-    let session = Network.sharedManager.session()
-    let task = session.dataTaskWithRequest(request) { [weak self] data, _, error in
+    Service.getDeviceAuthInfo { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -196,7 +189,6 @@ extension AuthorizationViewController {
         }
       }
     }
-    task.resume()
   }
 }
 
