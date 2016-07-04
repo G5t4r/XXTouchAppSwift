@@ -8,14 +8,14 @@
 
 import UIKit
 
-@UIApplicationMain
+//@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     
-    let isFile = FileManager.sharedManager.fileExistsAtPath()
+    let isFile = FileManager.sharedManager.respringFileExistsAtPath()
     if isFile {
       JCAlertView.showTwoButtonsWithTitle(Constants.Text.prompt, message: "XXTouch 安装后需要注销以完成服务完全更新，是否立即注销设备？", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: { 
         MixC.sharedManager.logout()

@@ -14,7 +14,7 @@ class FileManager {
 
 extension FileManager {
   
-  func fileExistsAtPath() -> Bool {
+  func respringFileExistsAtPath() -> Bool {
     let isExist = fileManager.fileExistsAtPath(respringPath)
     return isExist
   }

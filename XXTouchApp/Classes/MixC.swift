@@ -6,8 +6,6 @@
 //  Copyright © 2016年 mcy. All rights reserved.
 //
 
-import Darwin
-
 class MixC {
   static let sharedManager = MixC()
   typealias reload = (Void) -> ()
@@ -32,11 +30,6 @@ extension MixC {
       })
     }
   }
-  
-  //  // 重启设备
-  //    func reboot() {
-  //    system("reboot")
-  //  }
   
   //  注销设备
   func logout() {

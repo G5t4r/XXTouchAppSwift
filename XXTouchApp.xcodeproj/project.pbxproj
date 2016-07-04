@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2C20D81C1D0FC74A009A4990 /* UIViewController+Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20D81B1D0FC74A009A4990 /* UIViewController+Transition.swift */; };
-		2C20D81F1D0FCB8E009A4990 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20D81E1D0FCB8E009A4990 /* KeyboardManager.swift */; };
 		2C4FFA3C1D2600B100DBEEDB /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4FFA3B1D2600B100DBEEDB /* PhotoViewController.swift */; };
 		2C4FFA3F1D264D3800DBEEDB /* PhotoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4FFA3E1D264D3800DBEEDB /* PhotoEditView.swift */; };
+		2C4FFA431D2A173F00DBEEDB /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4FFA421D2A173F00DBEEDB /* main.swift */; };
 		2C54F0DA1D17E436005F35AD /* StartUpListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C54F0D91D17E436005F35AD /* StartUpListCell.swift */; };
 		2C54F0DD1D17ED5D005F35AD /* UserSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C54F0DC1D17ED5D005F35AD /* UserSettingViewController.swift */; };
 		2C54F0E21D17F492005F35AD /* Switches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C54F0E11D17F492005F35AD /* Switches.swift */; };
@@ -92,9 +92,9 @@
 
 /* Begin PBXFileReference section */
 		2C20D81B1D0FC74A009A4990 /* UIViewController+Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Transition.swift"; sourceTree = "<group>"; };
-		2C20D81E1D0FCB8E009A4990 /* KeyboardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		2C4FFA3B1D2600B100DBEEDB /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		2C4FFA3E1D264D3800DBEEDB /* PhotoEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoEditView.swift; sourceTree = "<group>"; };
+		2C4FFA421D2A173F00DBEEDB /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		2C54F0D91D17E436005F35AD /* StartUpListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartUpListCell.swift; sourceTree = "<group>"; };
 		2C54F0DC1D17ED5D005F35AD /* UserSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingViewController.swift; sourceTree = "<group>"; };
 		2C54F0E11D17F492005F35AD /* Switches.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Switches.swift; sourceTree = "<group>"; };
@@ -197,7 +197,6 @@
 			isa = PBXGroup;
 			children = (
 				2CF749D21D0562BE007A273B /* ThemeManager.swift */,
-				2C20D81E1D0FCB8E009A4990 /* KeyboardManager.swift */,
 				955DB23E1D1E3A4E00B598C4 /* FileManager.swift */,
 				95D5042C1D1FEE11008CFA7F /* ProgressHUDManager.swift */,
 			);
@@ -364,6 +363,7 @@
 				2C67AB7D1CFD2AAA008D53E8 /* ViewControllers */,
 				2C67AB801CFD2AAA008D53E8 /* Views */,
 				2C67AB7B1CFD2AAA008D53E8 /* AppDelegate.swift */,
+				2C4FFA421D2A173F00DBEEDB /* main.swift */,
 				2C67AB7C1CFD2AAA008D53E8 /* Bridging-Header.h */,
 			);
 			path = Classes;
@@ -804,6 +804,7 @@
 				2CF749CD1D0536CB007A273B /* Formatter.swift in Sources */,
 				2CF18C041D1A741B007535CD /* DeviceInfoModel.swift in Sources */,
 				2CF749BB1CFD80A0007A273B /* ScriptDetailViewController.swift in Sources */,
+				2C4FFA431D2A173F00DBEEDB /* main.swift in Sources */,
 				2C7342DD1D1140AE00CED0F3 /* ConstraintAttributes.swift in Sources */,
 				2C54F0F71D192805005F35AD /* ApplicationListCell.swift in Sources */,
 				2C7342E81D1140AE00CED0F3 /* ViewController+SnapKit.swift in Sources */,
@@ -837,7 +838,6 @@
 				2C7342DE1D1140AE00CED0F3 /* ConstraintDescription.swift in Sources */,
 				2C7342ED1D123E9C00CED0F3 /* RenameView.swift in Sources */,
 				2C7342DC1D1140AE00CED0F3 /* Constraint.swift in Sources */,
-				2C20D81F1D0FCB8E009A4990 /* KeyboardManager.swift in Sources */,
 				953949D61D28FC8D00BE75AA /* Service.swift in Sources */,
 				2CD2F5671D13A1C0001C873F /* Sizer.swift in Sources */,
 				2C7342F31D1260D800CED0F3 /* NewNameView.swift in Sources */,

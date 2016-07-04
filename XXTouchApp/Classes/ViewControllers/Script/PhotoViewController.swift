@@ -82,6 +82,7 @@ class PhotoViewController: UIViewController {
     scrollView.contentSize = self.image.size
     minScale = scrollView.frame.width/self.image.size.width
     scrollView.minimumZoomScale = minScale
+    scrollView.zoomScale = minScale
   }
 }
 

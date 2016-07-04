@@ -16,33 +16,35 @@ class Service {
     case POST = "POST"
     case DELETE = "DELETE"
     case PUT = "PUT"
-    
-    //    var title: String {
-    //      switch self {
-    //      case .GET: return "GET"
-    //      case .POST: return "POST"
-    //      case .DELETE: return "DELETE"
-    //      case .PUT: return "PUT"
-    //      }
-    //    }
   }
   
   enum Host: String {
-    case Localhost = "http://127.0.0.1:46952"
-    case Remotehost = "http://soze.synology.me:46952"
-    case Local = "http://192.168.0.101:46952"
-    
-    //    var title: String {
-    //      switch self {
-    //      case .Localhost: return "http://127.0.0.1:46952"
-    //      case .Remotehost: return "http://soze.synology.me:46952"
-    //      case .Local: return "http://192.168.0.101:46952"
-    //      }
-    //    }
+    case Localhost = "http://127.0.0.1"
+    case Remotehost = "http://soze.synology.me"
+    case Local = "http://192.168.0.101"
   }
   
   static var baseURLString: String {
-    return Host.Localhost.rawValue
+    return Host.Localhost.rawValue.stringByAppendingString(reloadPort())
+  }
+  
+  class func reloadPort() -> String{
+    let path = "/var/mobile/Media/1ferver/1ferver.conf"
+    //    let path = "/1ferver.conf"
+    //    let docPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+    let fileManager = NSFileManager.defaultManager()
+    //    let isExists = fileManager.fileExistsAtPath(docPath.first!.stringByAppendingString(path))
+    let isExists = fileManager.fileExistsAtPath(path)
+    if isExists {
+      //      let url = NSURL(string: docPath.first!.stringByAppendingString(path))
+      let url = NSURL(string: path)
+      let readData = JSON(data: NSData(contentsOfFile: url!.path!)!)
+      if !readData["port"].stringValue.isEmpty {
+        return ":".stringByAppendingString(readData["port"].stringValue)
+      }
+      return ":46952"
+    }
+    return ":46952"
   }
   
   class func requestTimeout() -> NSTimeInterval {
