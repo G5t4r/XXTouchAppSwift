@@ -43,13 +43,23 @@ class ScriptViewController: UIViewController {
     tableView.contentInset.bottom = Constants.Size.tabBarHeight
     tableView.scrollIndicatorInsets.bottom = tableView.contentInset.bottom
     tableView.backgroundColor = UIColor.whiteColor()
+    
     let header = MJRefreshNormalHeader.init(refreshingBlock: { [weak self] _ in
       guard let `self` = self else { return }
       self.fetchScriptList()
       })
     header.lastUpdatedTimeLabel.hidden = true
-    
     tableView.mj_header = header
+    //    let header = MJRefreshGifHeader.init { [weak self] _ in
+    //      guard let `self` = self else { return }
+    //      self.fetchScriptList()
+    //    }
+    //    header.setImages(<#T##images: [AnyObject]!##[AnyObject]!#>, forState: .Idle)
+    //    header.setImages(<#T##images: [AnyObject]!##[AnyObject]!#>, forState: .Pulling)
+    //    header.setImages(<#T##images: [AnyObject]!##[AnyObject]!#>, forState: .Refreshing)
+    //    header.lastUpdatedTimeLabel.hidden = true
+    //    header.stateLabel.hidden = true
+    //    tableView.mj_header = header
     
     renameView.hidden = true
     blurView.hidden = true

@@ -12,6 +12,16 @@ class AuthorizationViewController: UIViewController {
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private let authorizationCell = AuthorizationCell()
   private let authorizationBindCell = AuthorizationBindCell()
+  private let deviceId: String
+  
+  init(deviceId: String) {
+    self.deviceId = deviceId
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -162,7 +172,7 @@ extension AuthorizationViewController {
   }
   
   private func getDeviceAuthInfo() {
-    Service.getDeviceAuthInfo { [weak self] (data, _, error) in
+    Service.getDeviceAuthInfo(deviceId: self.deviceId) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)

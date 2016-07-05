@@ -18,14 +18,13 @@ class Service {
     case PUT = "PUT"
   }
   
-  enum Host: String {
-    case Localhost = "http://127.0.0.1"
-    case Remotehost = "http://soze.synology.me"
-    case Local = "http://192.168.0.101"
+  static var baseURLString: String {
+    get { return LocalStorage.baseURLString()!.stringByAppendingString(reloadPort()) }
+    //    set { LocalStorage.saveBaseURLString(newValue) }
   }
   
-  static var baseURLString: String {
-    return Host.Localhost.rawValue.stringByAppendingString(reloadPort())
+  static var baseAuthURLString: String {
+    get { return LocalStorage.baseAuthURLString()! }
   }
   
   class func reloadPort() -> String{
@@ -333,8 +332,12 @@ extension Service {
   }
   
   // 获得当前设备的授权信息
-  class func getDeviceAuthInfo(completionHandler completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
-    return request(method: .POST, host: baseURLString, path: "/device_auth_info", completionHandler: completionHandler)
+  //  class func getDeviceAuthInfo(completionHandler completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
+  //    return request(method: .POST, host: baseURLString, path: "/device_auth_info", completionHandler: completionHandler)
+  //  }
+  class func getDeviceAuthInfo(deviceId deviceId: String, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
+    let did = "did=".stringByAppendingString(deviceId)
+    return request(method: .POST, host: baseAuthURLString, path: "/xxtouchee/device_info", value: did, completionHandler: completionHandler)
   }
   
   // 开发文档

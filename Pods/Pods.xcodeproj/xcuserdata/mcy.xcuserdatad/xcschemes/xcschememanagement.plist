@@ -39,6 +39,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>VIPhotoView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>iOS-blur.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,12 +57,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>0E75F646848E613C8B8107B68E1E7154</key>
+		<key>0FEFCED0DFD9044B714F80F336070127</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>0FEFCED0DFD9044B714F80F336070127</key>
+		<key>12F57594895FCD6D3AE96D40697C12DE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -72,17 +77,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>74C157B18587ED794C1BAA3E9830D17B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>8E16F23C3941DDC72C45FC1B5C8EE8CD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B4A3E08D49931371F7247521A50EAF79</key>
+		<key>9CEAF1D1AB581BF173311BD2E0CD3E28</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CD666F0ADF1128F7F2418E0FF0325018</key>
+		<key>B4A3E08D49931371F7247521A50EAF79</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -44,7 +44,7 @@ class ScriptCell: SWTableViewCell {
   
   private func makeConstriants() {
     scriptImage.snp_makeConstraints { (make) in
-      make.leading.equalTo(contentView).inset(15)
+      make.leading.equalTo(contentView).offset(15)
       make.height.width.equalTo(Sizer.valueForDevice(phone: 40, pad: 60))
       make.centerY.equalTo(contentView)
     }
@@ -52,7 +52,7 @@ class ScriptCell: SWTableViewCell {
     nameLabel.snp_makeConstraints { (make) in
       make.top.equalTo(contentView).offset(Sizer.valueForDevice(phone: 10, pad: 15))
       make.trailing.equalTo(contentView).offset(Sizer.valueForDevice(phone: -100, pad: -120))
-      make.leading.equalTo(contentView).offset(Sizer.valueForDevice(phone: 70, pad: 85))
+      make.leading.equalTo(contentView).offset(Sizer.valueForDevice(phone: 60, pad: 85))
     }
     
     scriptTime.snp_makeConstraints { (make) in

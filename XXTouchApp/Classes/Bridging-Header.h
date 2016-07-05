@@ -22,3 +22,6 @@
 #import "CYRTextView/CYRTextView.h"
 #import "NJKWebViewProgress/NJKWebViewProgress.h"
 #import "NJKWebViewProgress/NJKWebViewProgressView.h"
+#import "VIPhotoView/VIPhotoView.h"
+#import "VLDContextSheet.h"
+#import "VLDContextSheetItem.h"

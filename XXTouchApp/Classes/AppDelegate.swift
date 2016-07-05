@@ -14,20 +14,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    
-    let isFile = FileManager.sharedManager.respringFileExistsAtPath()
-    if isFile {
+    if FileManager.sharedManager.respringFileExistsAtPath() {
       JCAlertView.showTwoButtonsWithTitle(Constants.Text.prompt, message: "XXTouch 安装后需要注销以完成服务完全更新，是否立即注销设备？", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: { 
         MixC.sharedManager.logout()
         }, buttonType: JCAlertViewButtonType.Cancel, buttonTitle: Constants.Text.cancel, click: {
           exit(0)
       })
     } else {
-      // 键盘管理
-      //      KeyboardManager.configure()
+      // 注册 Defaults
+      Defaults.configure()
       
-      // 读取转菊花配置
-      ProgressHUDManager.sharedManager.startConfig()
+      // 加载转菊花配置
+      ProgressHUDManager.startConfig()
       
       // 加载程序窗口
       setupAndShowWindow()

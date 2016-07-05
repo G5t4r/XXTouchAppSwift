@@ -109,6 +109,7 @@ class MoreViewController: UIViewController {
     return titleList
   }()
   private var host = ""
+  private var deviceId = ""
   private let moreRemoteServiceCell = MoreRemoteServiceCell()
   
   override func viewDidLoad() {
@@ -332,7 +333,7 @@ extension MoreViewController {
   private func authorization(rowIndex: Int) {
     switch rowIndex {
     /// 授权
-    case 0: self.navigationController?.pushViewController(AuthorizationViewController(), animated: true)
+    case 0: self.navigationController?.pushViewController(AuthorizationViewController(deviceId: self.deviceId), animated: true)
     default:break
     }
   }
@@ -420,6 +421,7 @@ extension MoreViewController {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
+          self.deviceId = json["data"]["deviceid"].stringValue
           if json["data"]["wifi_ip"].stringValue == Service.Local {
             self.host = "请连接到可用Wi-Fi"
           } else {

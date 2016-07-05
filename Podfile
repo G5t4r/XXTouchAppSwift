@@ -12,4 +12,5 @@ pod 'KVNProgress'
 pod 'JCAlertView'
 pod 'CYRTextView'
 pod 'NJKWebViewProgress'
+pod 'VIPhotoView'
 end
