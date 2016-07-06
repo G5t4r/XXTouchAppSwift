@@ -53,6 +53,12 @@ class Service {
     return 5.0
   }
   
+  class func config() -> NSURLSessionConfiguration {
+    let conf = NSURLSessionConfiguration.defaultSessionConfiguration()
+    conf.requestCachePolicy = .ReloadIgnoringLocalCacheData
+    return conf
+  }
+  
   class func request(method method: Method, host: String, path: String, parameters: [String : AnyObject], completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
     let data = try? NSJSONSerialization.dataWithJSONObject(parameters, options: .PrettyPrinted)
     let url = NSURL(string: host)!
@@ -60,7 +66,7 @@ class Service {
     request.HTTPMethod = method.rawValue
     request.HTTPBody = data
     request.timeoutInterval = requestTimeout()
-    let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: nil, delegateQueue: .mainQueue())
+    let session = NSURLSession(configuration: config(), delegate: nil, delegateQueue: .mainQueue())
     let task = session.dataTaskWithRequest(request, completionHandler: completionHandler)
     task.resume()
     return task
@@ -73,7 +79,7 @@ class Service {
     request.HTTPMethod = method.rawValue
     request.HTTPBody = data
     request.timeoutInterval = requestTimeout()
-    let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: nil, delegateQueue: .mainQueue())
+    let session = NSURLSession(configuration: config(), delegate: nil, delegateQueue: .mainQueue())
     let task = session.dataTaskWithRequest(request, completionHandler: completionHandler)
     task.resume()
     return task
@@ -84,7 +90,7 @@ class Service {
     let request = NSMutableURLRequest(URL: url.URLByAppendingPathComponent(path))
     request.HTTPMethod = method.rawValue
     request.timeoutInterval = requestTimeout()
-    let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: nil, delegateQueue: .mainQueue())
+    let session = NSURLSession(configuration: config(), delegate: nil, delegateQueue: .mainQueue())
     let task = session.dataTaskWithRequest(request, completionHandler: completionHandler)
     task.resume()
     return task

@@ -70,19 +70,20 @@ extension AppDelegate {
   private func createRootViewController() -> UIViewController {
     let tabBarController = UITabBarController()
     let scriptNavigationController = UINavigationController(rootViewController: ScriptViewController())
-    scriptNavigationController.tabBarItem = UITabBarItem(title: "我的脚本", image: UIImage(named: "scriptTab"), selectedImage: nil)
+    scriptNavigationController.tabBarItem = UITabBarItem(title: "我的脚本", image: UIImage(named: "script_selected"), selectedImage: nil)
     
-    let catalogNavigationController = UINavigationController(rootViewController: CatalogViewController())
-    catalogNavigationController.tabBarItem = UITabBarItem(title: "目录", image: UIImage(named: "scriptTab"), selectedImage: nil)
+    //    let catalogNavigationController = UINavigationController(rootViewController: CatalogViewController())
+    //    catalogNavigationController.tabBarItem = UITabBarItem(title: "目录", image: UIImage(named: "scriptTab"), selectedImage: nil)
     
     let moreNavigationController = UINavigationController(rootViewController: MoreViewController())
-    moreNavigationController.tabBarItem = UITabBarItem(title: "更多", image: UIImage(named: "moreTab"), selectedImage: nil)
+    moreNavigationController.tabBarItem = UITabBarItem(title: "更多", image: UIImage(named: "more_selected"), selectedImage: nil)
     
     let viewControllers: [UIViewController] = [
       scriptNavigationController,
       moreNavigationController
     ]
     tabBarController.viewControllers = viewControllers
+    
     return tabBarController
   }
 }

@@ -49,4 +49,6 @@
 
 @property (nonatomic, assign) BOOL lineCursorEnabled;
 
+- (id)initWithFrame:(CGRect)frame;
+
 @end

@@ -40,8 +40,6 @@ class ScriptViewController: UIViewController {
     tableView.registerClass(ScriptCell.self, forCellReuseIdentifier: NSStringFromClass(ScriptCell))
     tableView.delegate = self
     tableView.dataSource = self
-    tableView.contentInset.bottom = Constants.Size.tabBarHeight
-    tableView.scrollIndicatorInsets.bottom = tableView.contentInset.bottom
     tableView.backgroundColor = UIColor.whiteColor()
     
     let header = MJRefreshNormalHeader.init(refreshingBlock: { [weak self] _ in
@@ -587,7 +585,7 @@ extension ScriptViewController: SWTableViewCellDelegate {
         switch json["code"].intValue {
         case 0:
           let scriptDetailViewController = ScriptDetailViewController(fileName: fileName, fileText: json["data"].stringValue)
-          scriptDetailViewController.hidesBottomBarWhenPushed = true
+          //          scriptDetailViewController.hidesBottomBarWhenPushed = true
           self.navigationController?.pushViewController(scriptDetailViewController, animated: true)
         default:
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)

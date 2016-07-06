@@ -31,12 +31,12 @@ class Suffix {
   
   /// 末尾是否包含.lua 或 .txt
   class func haveSuffix(string: String) -> String {
-    let isLUA = string.hasSuffix(Section.LUA.title)
-    let isXXT = string.hasSuffix(Section.XXT.title)
-    let isTXT = string.hasSuffix(Section.TXT.title)
-    let isJPG = string.hasSuffix(Section.JPG.title)
-    let isBMP = string.hasSuffix(Section.BMP.title)
-    let isPNG = string.hasSuffix(Section.PNG.title)
+    let isLUA = CaseString.lowercase(string).hasSuffix(Section.LUA.title)
+    let isXXT = CaseString.lowercase(string).hasSuffix(Section.XXT.title)
+    let isTXT = CaseString.lowercase(string).hasSuffix(Section.TXT.title)
+    let isJPG = CaseString.lowercase(string).hasSuffix(Section.JPG.title)
+    let isBMP = CaseString.lowercase(string).hasSuffix(Section.BMP.title)
+    let isPNG = CaseString.lowercase(string).hasSuffix(Section.PNG.title)
     if isLUA {
       return Section.LUA.title
     } else if isXXT {

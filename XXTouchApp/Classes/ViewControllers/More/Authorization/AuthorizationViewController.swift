@@ -49,7 +49,7 @@ class AuthorizationViewController: UIViewController {
   
   private func setupAction() {
     authorizationBindCell.codeTextField.addTarget(self, action: #selector(editingChanged(_:)), forControlEvents: .EditingChanged)
-    authorizationBindCell.sumbitButton.addTarget(self, action: #selector(sumbit), forControlEvents: .TouchUpInside)
+    authorizationBindCell.sumbitButton.addTarget(self, action: #selector(sumbit(_:)), forControlEvents: .TouchUpInside)
     tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(touch)))
   }
 }
@@ -73,9 +73,10 @@ extension AuthorizationViewController {
     authorizationBindCell.sumbitButton.enabled = enabled
   }
   
-  @objc private func sumbit() {
+  @objc private func sumbit(button: UIButton) {
+    authorizationBindCell.codeTextField.resignFirstResponder()
+    ButtonAnimator.buttonWithAnimation(button, completion: nil)
     if let code = authorizationBindCell.codeTextField.text {
-      authorizationBindCell.codeTextField.resignFirstResponder()
       bindCode(code)
     }
   }

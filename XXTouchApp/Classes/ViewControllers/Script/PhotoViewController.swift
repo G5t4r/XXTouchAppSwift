@@ -9,17 +9,10 @@
 import UIKit
 
 class PhotoViewController: UIViewController {
-  //  private let scrollView = UIScrollView()
-  //  private let imageView = UIImageView()
   private let image: UIImage
   private let name: String
-  //  private var currentScale: CGFloat = 0
-  //  private var maxScale: CGFloat = 4.0
-  //  private var minScale: CGFloat = 0.15
-  //  private let photoEditView = PhotoEditView()
-  //  private var isOpen = false
   private var photoView: VIPhotoView!
-  private var contextSheet: VLDContextSheet!
+  //  private var contextSheet: VLDContextSheet!
   
   init(image: UIImage, name: String) {
     self.image = image
@@ -29,11 +22,6 @@ class PhotoViewController: UIViewController {
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-  
-  override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
-    self.navigationController?.setNavigationBarHidden(true, animated: true)
   }
   
   // 隐藏电池栏
@@ -52,83 +40,48 @@ class PhotoViewController: UIViewController {
   private func setupUI() {
     automaticallyAdjustsScrollViewInsets = false
     view.backgroundColor = UIColor.whiteColor()
-    photoView = VIPhotoView(frame: self.view.bounds, andImage: self.image, nav: self.navigationController, showView: self.view)
-    photoView.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
+    photoView = VIPhotoView(frame: view.bounds, andImage: self.image)
+    //    photoView.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
     
-    let item1 = VLDContextSheetItem(title: "取色", image: UIImage(named: "add"), highlightedImage: UIImage(named: "add_highlighted"))
-    let item2 = VLDContextSheetItem(title: "gift", image: UIImage(named: "gift"), highlightedImage: UIImage(named: "gift_highlighted"))
-    let item3 = VLDContextSheetItem(title: "gift", image: UIImage(named: "gift"), highlightedImage: UIImage(named: "gift_highlighted"))
-    contextSheet = VLDContextSheet(items: [item1, item2, item3])
-    contextSheet.delegate = self
+    //    let item1 = VLDContextSheetItem(title: "取色", image: UIImage(named: "add"), highlightedImage: UIImage(named: "add_highlighted"))
+    //    let item2 = VLDContextSheetItem(title: "gift", image: UIImage(named: "gift"), highlightedImage: UIImage(named: "gift_highlighted"))
+    //    let item3 = VLDContextSheetItem(title: "gift", image: UIImage(named: "gift"), highlightedImage: UIImage(named: "gift_highlighted"))
+    //    contextSheet = VLDContextSheet(items: [item1, item2, item3])
+    //    contextSheet.delegate = self
     
-    view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(show(_:))))
-    
-    //    self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "编辑", style: .Plain, target: self, action: #selector(edit(_:)))
-    
-    //    imageView.userInteractionEnabled = true
-    //    imageView.contentMode = .ScaleAspectFit
-    //    
-    //    
-    //    scrollView.frame = view.bounds
-    //    scrollView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-    //    scrollView.delegate = self
-    //    scrollView.maximumZoomScale = maxScale
-    //    
-    //    scrollView.showsVerticalScrollIndicator = false
-    //    scrollView.showsHorizontalScrollIndicator = false
-    //    scrollView.backgroundColor = UIColor.lightGrayColor()
-    
-    //    photoEditView.hidden = true
-    
-    //    scrollView.addSubview(imageView)
-    //    view.addSubview(scrollView)
-    //    view.addSubview(photoEditView)
     view.addSubview(photoView)
   }
   
   private func makeConstriants() {
-    //    photoEditView.snp_makeConstraints { (make) in
-    //      make.bottom.leading.trailing.equalTo(view)
-    //      make.height.equalTo(80)
-    //    }
-    //    menuButton.snp_makeConstraints { (make) in
-    //      make.bottom.trailing.equalTo(view).inset(-60)
-    //      make.width.height.equalTo(200)
-    //    }
+    
   }
   
   private func setupAction() {
-    //    let tap = UITapGestureRecognizer(target: self, action: #selector(doubleSize(_:)))
-    //    tap.numberOfTapsRequired = 2
-    //    imageView.addGestureRecognizer(tap)
-    
-    //    let tap = UITapGestureRecognizer(target: self, action: #selector(navHidden(_:)))
-    //    tap.requireGestureRecognizerToFail(photoView.tapGestureRecognizer)
-    //    photoView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(navHidden(_:))))
+    //    view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(show(_:))))
   }
   
   private func bind() {
     navigationItem.title = self.name
-    //    imageView.image = self.image
-    //    imageView.sizeToFit()
-    //    scrollView.contentSize = self.image.size
-    //    minScale = scrollView.frame.width/self.image.size.width
-    //    scrollView.minimumZoomScale = minScale
-    //    scrollView.zoomScale = minScale
   }
 }
 
-extension PhotoViewController: VLDContextSheetDelegate {
-  func contextSheet(contextSheet: VLDContextSheet!, didSelectItem item: VLDContextSheetItem!) {
-    print(item.title)
-  }
-  
-  @objc private func show(long: UILongPressGestureRecognizer) {
-    if long.state == UIGestureRecognizerState.Began {
-      contextSheet.startWithGestureRecognizer(long, inView: self.view)
-    }
-  }
-}
+//extension PhotoViewController: VLDContextSheetDelegate {
+//  func contextSheet(contextSheet: VLDContextSheet!, didSelectItem item: VLDContextSheetItem!) {
+//    print(item.title)
+//  }
+//  
+//  @objc private func show(long: UILongPressGestureRecognizer) {
+//    if long.state == UIGestureRecognizerState.Began {
+//      contextSheet.startWithGestureRecognizer(long, inView: self.view)
+//    }
+//  }
+//}
+
+
+
+
+
+
 
 //extension PhotoViewController: UIScrollViewDelegate {
 //  func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {

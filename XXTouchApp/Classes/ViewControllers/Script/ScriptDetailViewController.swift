@@ -11,7 +11,7 @@ import UIKit
 class ScriptDetailViewController: UIViewController {
   private let fileName: String
   private let fileText: String
-  private let textView = CYRTextView()
+  private let textView = XXTextView(frame: CGRectZero)
   private var oldText = ""
   
   override func viewDidLoad() {
@@ -41,12 +41,6 @@ class ScriptDetailViewController: UIViewController {
     
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
     
-    textView.backgroundColor = UIColor(rgb: 0x434343)
-    textView.textColor = UIColor.whiteColor()
-    textView.gutterLineColor = UIColor.blackColor()
-    textView.lineCursorEnabled = false
-    textView.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 13, pad: 17))
-    textView.autocorrectionType = .No // 关闭自动更正
     //    textView.tokens = tokens() as [AnyObject]
     
     view.addSubview(textView)

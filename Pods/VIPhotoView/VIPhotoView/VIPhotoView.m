@@ -54,18 +54,17 @@
 
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, strong) UINavigationController* nav;
-@property (nonatomic, strong) UIView *showView;
 
 @property (nonatomic) BOOL rotating;
 @property (nonatomic) CGSize minSize;
+@property (nonatomic) CGFloat multiple;
 
 @end
 
 @implementation VIPhotoView
 
 
-- (instancetype)initWithFrame:(CGRect)frame andImage:(UIImage *)image nav:(UINavigationController *)nav showView:(UIView *)showView
+- (instancetype)initWithFrame:(CGRect)frame andImage:(UIImage *)image
 {
   self = [super initWithFrame:frame];
   if (self) {
@@ -73,8 +72,7 @@
     self.bouncesZoom = YES;
     self.showsVerticalScrollIndicator = false;
     self.showsHorizontalScrollIndicator = false;
-    _nav = nav;
-    _showView = showView;
+    _multiple = 4;
     
     // Add container view
     UIView *containerView = [[UIView alloc] initWithFrame:self.bounds];
@@ -97,7 +95,7 @@
     
     self.contentSize = imageSize;
     self.minSize = imageSize;
-    
+    self.contentOffset = CGPointMake(0, -44);
     
     [self setMaxMinZoomScale];
     
@@ -154,7 +152,7 @@
 {
   UITapGestureRecognizer *oneTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHandler:)];
   oneTap.numberOfTapsRequired = 1;
-  [_showView addGestureRecognizer:oneTap];
+  [_containerView addGestureRecognizer:oneTap];
   
   UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHandler:)];
   doubleTap.numberOfTapsRequired = 2;
@@ -180,13 +178,15 @@
 - (void)tapHandler:(UITapGestureRecognizer *)recognizer
 {
   if (recognizer.numberOfTapsRequired == 1) {
-    [_nav setNavigationBarHidden:!_nav.navigationBarHidden animated:YES];
+    //
+    
+    
   } else if (recognizer.numberOfTapsRequired == 2) {
     if (self.zoomScale > self.minimumZoomScale) {
       [self setZoomScale:self.minimumZoomScale animated:YES];
     } else if (self.zoomScale < self.maximumZoomScale) {
       CGPoint location = [recognizer locationInView:recognizer.view];
-      CGRect zoomToRect = CGRectMake(0, 0, 50, 50);
+      CGRect zoomToRect = CGRectMake(0, 0, 0, 0);
       zoomToRect.origin = CGPointMake(location.x - CGRectGetWidth(zoomToRect)/2, location.y - CGRectGetHeight(zoomToRect)/2);
       [self zoomToRect:zoomToRect animated:YES];
     }
@@ -207,7 +207,7 @@
   CGSize imageSize = self.imageView.image.size;
   CGSize imagePresentationSize = self.imageView.contentSize;
   CGFloat maxScale = MAX(imageSize.height / imagePresentationSize.height, imageSize.width / imagePresentationSize.width);
-  self.maximumZoomScale = MAX(1, maxScale); // Should not less than 1
+  self.maximumZoomScale = MAX(1, maxScale*_multiple); // Should not less than 1
   self.minimumZoomScale = 1.0;
 }
 
@@ -226,7 +226,7 @@
   top -= frame.origin.y;
   left -= frame.origin.x;
   
-  self.contentInset = UIEdgeInsetsMake(top, left, top, left);
+  self.contentInset = UIEdgeInsetsMake(top+44, left, top, left);
 }
 
 @end

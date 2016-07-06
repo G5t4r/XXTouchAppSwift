@@ -13,7 +13,7 @@ protocol NewScriptViewControllerDelegate: NSObjectProtocol {
 }
 
 class NewScriptViewController: UIViewController {
-  private let textView = CYRTextView()
+  private let textView = XXTextView(frame: CGRectZero)
   weak var delegate: NewScriptViewControllerDelegate?
   private let newNameView = NewNameView()
   private let blurView = JCRBlurView()
@@ -45,13 +45,6 @@ class NewScriptViewController: UIViewController {
     
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
-    
-    textView.backgroundColor = UIColor(rgb: 0x434343)
-    textView.textColor = UIColor.whiteColor()
-    textView.gutterLineColor = UIColor.blackColor()
-    textView.lineCursorEnabled = false
-    textView.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 13, pad: 17))
-    textView.autocorrectionType = .No // 关闭自动更正
     
     newNameView.hidden = true
     blurView.hidden = true

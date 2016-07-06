@@ -10,6 +10,6 @@
 
 @interface VIPhotoView : UIScrollView
 
-- (instancetype)initWithFrame:(CGRect)frame andImage:(UIImage *)image nav:(UINavigationController *)nav showView:(UIView *)showView;
+- (instancetype)initWithFrame:(CGRect)frame andImage:(UIImage *)image;
 
 @end

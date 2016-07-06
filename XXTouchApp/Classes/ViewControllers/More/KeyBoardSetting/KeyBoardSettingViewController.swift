@@ -65,8 +65,6 @@ class KeyBoardSettingViewController: UIViewController {
     
     tableView.delegate  = self
     tableView.dataSource = self
-    //    tableView.contentInset.bottom = Constants.Size.tabBarHeight
-    //    tableView.scrollIndicatorInsets.bottom = tableView.contentInset.bottom
     
     view.addSubview(tableView)
   }
