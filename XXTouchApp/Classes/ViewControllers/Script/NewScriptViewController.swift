@@ -89,6 +89,10 @@ class NewScriptViewController: UIViewController {
   
   private func bind() {
     extensionName = newNameView.luaButton.titleLabel?.text ?? ".lua"
+    textView.extensionButton.addEventHandler({
+      // TODO 扩展函数
+      
+      }, forControlEvents: .TouchUpInside)
   }
   
   @objc private func luaClick(button: UIButton) {
@@ -123,13 +127,16 @@ class NewScriptViewController: UIViewController {
     }
   }
   
+  private func submitUpdate(enabled: Bool, color: UIColor) {
+    newNameView.submitButton.enabled = enabled
+    newNameView.submitButton.backgroundColor = color
+  }
+  
   @objc private func editingChanged() {
     if newNameView.newNameTextField.text?.characters.count != 0{
-      newNameView.submitButton.enabled = true
-      newNameView.submitButton.backgroundColor = ThemeManager.Theme.tintColor
+      submitUpdate(true, color: ThemeManager.Theme.tintColor)
     } else {
-      newNameView.submitButton.enabled = false
-      newNameView.submitButton.backgroundColor = ThemeManager.Theme.lightTextColor
+      submitUpdate(false, color: ThemeManager.Theme.lightTextColor)
     }
   }
   
@@ -237,6 +244,8 @@ class NewScriptViewController: UIViewController {
           })
           
         default:
+          self.newNameView.newNameTextField.text?.removeAll()
+          self.submitUpdate(false, color: ThemeManager.Theme.lightTextColor)
           JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
           KVNProgress.dismiss()
           return

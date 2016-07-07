@@ -29,7 +29,9 @@ class AboutViewController: UIViewController {
   
   private var deviceCellList = [AboutInfoCell]()
   
-  private let aboutEmailCell = AboutEmailCell()
+  private let qqGroupCell = AboutCustomCell(buttonTitle: "开发者QQ群：40898074", backgroundColor: UIColor(rgb: 0x3d85c6))
+  
+  private let webCell = AboutCustomCell(buttonTitle: "官方网站", backgroundColor: UIColor(rgb: 0xff9900))
   
   private var deviceId = ""
   
@@ -59,7 +61,8 @@ class AboutViewController: UIViewController {
   }
   
   private func setupAction() {
-    aboutEmailCell.emailButton.addTarget(self, action: #selector(email), forControlEvents: .TouchUpInside)
+    qqGroupCell.button.addTarget(self, action: #selector(qqGroup), forControlEvents: .TouchUpInside)
+    webCell.button.addTarget(self, action: #selector(web), forControlEvents: .TouchUpInside)
   }
   
   private func bind() {
@@ -76,8 +79,19 @@ class AboutViewController: UIViewController {
 }
 
 extension AboutViewController {
-  @objc private func email() {
-    UIApplication.sharedApplication().openURL(NSURL(string: "mailto:info@xxtouch.com")!)
+  
+  @objc private func qqGroup() {
+    //    UIApplication.sharedApplication().openURL(NSURL(string: "mailto:info@xxtouch.com")!)
+    let url = NSURL(string: "mqqapi://card/show_pslcard?src_type=internal&version=1&uin=40898074&card_type=group&source=external")
+    if UIApplication.sharedApplication().canOpenURL(url!) {
+      UIApplication.sharedApplication().openURL(url!)
+    } else {
+      JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: "123", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+    }
+  }
+  
+  @objc private func web() {
+    UIApplication.sharedApplication().openURL(NSURL(string: "http://www.xxtouch.com")!)
   }
 }
 
@@ -119,7 +133,7 @@ extension AboutViewController {
 
 extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return 3
+    return 4
   }
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -133,7 +147,8 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     switch indexPath.section {
     case 0: return aboutTitleCell
     case 1: return deviceCellList[indexPath.row]
-    case 2: return aboutEmailCell
+    case 2: return qqGroupCell
+    case 3: return webCell
     default: return UITableViewCell()
     }
   }
@@ -153,8 +168,7 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     switch indexPath.section {
     case 0: return Sizer.valueForDevice(phone: 190, pad: 200)
     case 1: return Sizer.valueForDevice(phone: 55, pad: 75)
-    case 2: return Sizer.valueForDevice(phone: 40, pad: 60)
-    default: return 0
+    default: return Sizer.valueForDevice(phone: 40, pad: 60)
     }
   }
   

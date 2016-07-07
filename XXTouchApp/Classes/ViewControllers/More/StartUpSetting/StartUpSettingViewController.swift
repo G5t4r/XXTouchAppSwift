@@ -14,7 +14,7 @@ class StartUpSettingViewController: UIViewController {
   private var currentSelectedScriptName = ""
   
   private lazy var startUpCell: StartUpCell = {
-    let startUpCell = StartUpCell(title: "开机启动", info: "开机启动脚本可能是一个危险的操作，例如脚本本身会重启设备，那么将会出现开机之后脚本将设备再次重启的情况，这种情况需要按音量键-键启动设备并删除自启动的脚本")
+    let startUpCell = StartUpCell(title: "开机启动", info: "开机启动脚本可能是一个危险的操作，例如脚本本身会重启设备，那么将会出现开机之后脚本将设备再次重启的情况，这种情况需要按音量键+键启动设备并删除自启动的脚本")
     return startUpCell
   }()
   

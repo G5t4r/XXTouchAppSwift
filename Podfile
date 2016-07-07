@@ -13,4 +13,5 @@ pod 'JCAlertView'
 pod 'CYRTextView'
 pod 'NJKWebViewProgress'
 pod 'VIPhotoView'
+pod 'RFKeyboardToolbar'
 end

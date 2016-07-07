@@ -25,3 +25,4 @@
 #import "VIPhotoView/VIPhotoView.h"
 #import "VLDContextSheet.h"
 #import "VLDContextSheetItem.h"
+#import "RFKeyboardToolbar/RFKeyboardToolbar.h"

@@ -38,7 +38,7 @@ class MoreCustomCell: UITableViewCell {
     icon.snp_makeConstraints { (make) in
       make.leading.equalTo(contentView).offset(20)
       make.centerY.equalTo(contentView)
-      make.height.width.equalTo(Sizer.valueForDevice(phone: 36, pad: 56))
+      make.height.width.equalTo(Sizer.valueForDevice(phone: 32, pad: 56))
     }
     
     titleLabel.snp_makeConstraints { (make) in

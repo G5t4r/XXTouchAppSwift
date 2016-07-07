@@ -169,11 +169,11 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
     switch indexPath.section {
     case 0:
       if indexPath.row == 0 {
-        return Sizer.valueForDevice(phone: 70, pad: 95)
+        return Sizer.valueForDevice(phone: 55, pad: 95)
       } else {
-        return Sizer.valueForDevice(phone: 55, pad: 80)
+        return Sizer.valueForDevice(phone: 45, pad: 80)
       }
-    default: return Sizer.valueForDevice(phone: 55, pad: 80)
+    default: return Sizer.valueForDevice(phone: 45, pad: 80)
     }
   }
   

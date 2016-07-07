@@ -42,7 +42,7 @@ class MoreRemoteServiceCell: UITableViewCell {
     icon.snp_makeConstraints { (make) in
       make.leading.equalTo(contentView).offset(20)
       make.centerY.equalTo(contentView)
-      make.height.width.equalTo(Sizer.valueForDevice(phone: 36, pad: 60))
+      make.height.width.equalTo(Sizer.valueForDevice(phone: 32, pad: 60))
     }
     
     titleLabel.snp_makeConstraints { (make) in
@@ -51,7 +51,7 @@ class MoreRemoteServiceCell: UITableViewCell {
     }
     
     hostLabel.snp_makeConstraints { (make) in
-      make.bottom.equalTo(contentView).offset(Sizer.valueForDevice(phone: -16, pad: -22))
+      make.bottom.equalTo(contentView).offset(Sizer.valueForDevice(phone: -9.5, pad: -22))
       make.leading.equalTo(icon.snp_trailing).offset(15)
     }
     

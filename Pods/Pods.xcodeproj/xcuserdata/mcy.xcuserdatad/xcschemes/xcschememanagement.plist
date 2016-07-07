@@ -34,6 +34,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>RFKeyboardToolbar.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SWTableViewCell.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -62,12 +67,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>12F57594895FCD6D3AE96D40697C12DE</key>
+		<key>20E727714AEB3D8F1B854CA943803339</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>20E727714AEB3D8F1B854CA943803339</key>
+		<key>2421807246A1E43DE9AE122E273586CF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5C19CBA4D8F2B9D23583C9F8B736EF30</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>624D61322916340189CED7A1A8453907</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,17 +92,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>74C157B18587ED794C1BAA3E9830D17B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>8E16F23C3941DDC72C45FC1B5C8EE8CD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9CEAF1D1AB581BF173311BD2E0CD3E28</key>
+		<key>AE0FCD2DE1BD48B4ED907715D05726EC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
