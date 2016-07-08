@@ -55,25 +55,23 @@ class RecordSettingViewController: UIViewController {
 
 extension RecordSettingViewController {
   private func getRecordConf() {
-    if !KVNProgress.isVisible() {
-      KVNProgress.showWithStatus(Constants.Text.reloading)
-    }
+    self.view.showHUD(text: Constants.Text.reloading)
     Service.getRecordConf { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
-        KVNProgress.dismiss()
+        self.view.dismissHUD()
         switch json["code"].intValue {
         case 0:
           self.recordVolumeUpCell.switches.on = json["data"]["record_volume_up"].boolValue
           self.recordVolumeDownCell.switches.on = json["data"]["record_volume_down"].boolValue
         default:
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
           return
         }
       }
       if error != nil {
-        KVNProgress.updateStatus(Constants.Error.failure)
+        self.view.updateHUD(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.getRecordConf()
         }
@@ -102,24 +100,22 @@ extension RecordSettingViewController {
   }
   
   private func setRecordVolume(type: String) {
-    if !KVNProgress.isVisible() {
-      KVNProgress.showWithStatus(Constants.Text.reloading)
-    }
+    self.view.showHUD(text: Constants.Text.reloading)
     Service.setRecordConf(type: type) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
-        KVNProgress.dismiss()
+        self.view.dismissHUD()
         switch json["code"].intValue {
         case 0:break
           
         default:
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
           return
         }
       }
       if error != nil {
-        KVNProgress.updateStatus(Constants.Error.failure)
+        self.view.updateHUD(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.setRecordVolume(type)
         }

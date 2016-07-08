@@ -83,14 +83,12 @@ class KeyBoardSettingViewController: UIViewController {
 
 extension KeyBoardSettingViewController {
   private func getVolumeActionConf() {
-    if !KVNProgress.isVisible() {
-      KVNProgress.showWithStatus(Constants.Text.reloading)
-    }
+    self.view.showHUD(text: Constants.Text.reloading)
     Service.getVolumeActionConf { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
-        KVNProgress.dismiss()
+        self.view.dismissHUD()
         switch json["code"].intValue {
         case 0:
           let holdVolumeUpIndex = json["data"]["hold_volume_up"].intValue
@@ -102,12 +100,12 @@ extension KeyBoardSettingViewController {
           let clickVolumeDownIndex = json["data"]["click_volume_down"].intValue
           self.clickVolumeDownCell.bind(self.volumeActionList[clickVolumeDownIndex], info: self.volumeInfoList[clickVolumeDownIndex])
         default:
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
           return
         }
       }
       if error != nil {
-        KVNProgress.updateStatus(Constants.Error.failure)
+        self.view.updateHUD(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.getVolumeActionConf()
         }
@@ -214,13 +212,13 @@ extension KeyBoardSettingViewController: UIActionSheetDelegate {
         switch json["code"].intValue {
         case 0: self.getVolumeActionConf()
         default:
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
-          KVNProgress.dismiss()
+          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.view.dismissHUD()
           return
         }
       }
       if error != nil {
-        KVNProgress.showWithStatus(Constants.Error.failure)
+        self.view.showHUD(text: Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.setVolumeAction(value, type: type)
         }

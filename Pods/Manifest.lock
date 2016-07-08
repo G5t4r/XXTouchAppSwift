@@ -1,8 +1,7 @@
 PODS:
   - CYRTextView (0.4.0)
+  - DQAlertView (1.2.1)
   - iOS-blur (0.0.5)
-  - JCAlertView (1.1.5)
-  - KVNProgress (2.2.4)
   - MJRefresh (3.1.7)
   - NJKWebViewProgress (0.2.3):
     - NJKWebViewProgress/Core (= 0.2.3)
@@ -16,9 +15,8 @@ PODS:
 
 DEPENDENCIES:
   - CYRTextView
+  - DQAlertView
   - iOS-blur
-  - JCAlertView
-  - KVNProgress
   - MJRefresh
   - NJKWebViewProgress
   - RFKeyboardToolbar
@@ -28,9 +26,8 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   CYRTextView: 1c1a4d708eee54ecad66b8ad42dbfe73083bdfce
+  DQAlertView: 438c2799ae5437f2f9683f8a627314aa91eb5032
   iOS-blur: 8e4a4a2202b881e940869eca0c957808cbdf0a19
-  JCAlertView: c65a7b298b8b497b3db783d82f719b88f4914869
-  KVNProgress: 541edcea5a1fef592aceac8d791a410d38cb499d
   MJRefresh: f67f0750d57a4e4ae433da549359ca53b52cdc7d
   NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
   RFKeyboardToolbar: c96a7d9458564d1fedc8ef6844b6c467934aade2
@@ -38,6 +35,6 @@ SPEC CHECKSUMS:
   TAOverlay: 940e37fdb45fbc9acfc73bf1089668367e3b1be6
   VIPhotoView: bdc0cf8ddadda754b451869bd3a919e8eb5c11ab
 
-PODFILE CHECKSUM: 8f98e2af21db616b211836f99053b209210c2fd6
+PODFILE CHECKSUM: dfe229689cfc050bbae2494db99fbf971e462469
 
 COCOAPODS: 1.0.1

@@ -10,7 +10,6 @@
 		2C20D81C1D0FC74A009A4990 /* UIViewController+Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20D81B1D0FC74A009A4990 /* UIViewController+Transition.swift */; };
 		2C2E7D371D2C974E00117025 /* CaseString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2E7D361D2C974E00117025 /* CaseString.swift */; };
 		2C2E7D391D2CC42300117025 /* ButtonAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2E7D381D2CC42300117025 /* ButtonAnimator.swift */; };
-		2C2E7D4C1D2CD57100117025 /* XXTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2E7D4B1D2CD57100117025 /* XXTextView.swift */; };
 		2C4FFA3C1D2600B100DBEEDB /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4FFA3B1D2600B100DBEEDB /* PhotoViewController.swift */; };
 		2C4FFA3F1D264D3800DBEEDB /* PhotoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4FFA3E1D264D3800DBEEDB /* PhotoEditView.swift */; };
 		2C4FFA431D2A173F00DBEEDB /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4FFA421D2A173F00DBEEDB /* main.swift */; };
@@ -85,7 +84,8 @@
 		955DB23D1D1E370200B598C4 /* MixC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955DB23C1D1E370200B598C4 /* MixC.swift */; };
 		955DB23F1D1E3A4E00B598C4 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955DB23E1D1E3A4E00B598C4 /* FileManager.swift */; };
 		95AB90CD1D21717200FA4C52 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AB90CC1D21717200FA4C52 /* Button.swift */; };
-		95D5042D1D1FEE11008CFA7F /* ProgressHUDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D5042C1D1FEE11008CFA7F /* ProgressHUDManager.swift */; };
+		95D555F21D3001D400499947 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D555F11D3001D400499947 /* AlertView.swift */; };
+		95D555F41D30050200499947 /* XXTTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D555F31D30050200499947 /* XXTTextView.swift */; };
 		95F94B821D1832C300532016 /* StartUpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F94B811D1832C300532016 /* StartUpCell.swift */; };
 		A5301A4B68230B93462B1215 /* libPods-XXTouchApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ACF28B837117B6CAD47A3345 /* libPods-XXTouchApp.a */; };
 /* End PBXBuildFile section */
@@ -104,7 +104,6 @@
 		2C20D81B1D0FC74A009A4990 /* UIViewController+Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Transition.swift"; sourceTree = "<group>"; };
 		2C2E7D361D2C974E00117025 /* CaseString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseString.swift; sourceTree = "<group>"; };
 		2C2E7D381D2CC42300117025 /* ButtonAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonAnimator.swift; sourceTree = "<group>"; };
-		2C2E7D4B1D2CD57100117025 /* XXTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XXTextView.swift; sourceTree = "<group>"; };
 		2C4FFA3B1D2600B100DBEEDB /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		2C4FFA3E1D264D3800DBEEDB /* PhotoEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoEditView.swift; sourceTree = "<group>"; };
 		2C4FFA421D2A173F00DBEEDB /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -191,7 +190,8 @@
 		955DB23C1D1E370200B598C4 /* MixC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MixC.swift; sourceTree = "<group>"; };
 		955DB23E1D1E3A4E00B598C4 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		95AB90CC1D21717200FA4C52 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
-		95D5042C1D1FEE11008CFA7F /* ProgressHUDManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressHUDManager.swift; sourceTree = "<group>"; };
+		95D555F11D3001D400499947 /* AlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		95D555F31D30050200499947 /* XXTTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XXTTextView.swift; sourceTree = "<group>"; };
 		95F94B811D1832C300532016 /* StartUpCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartUpCell.swift; sourceTree = "<group>"; };
 		ACF28B837117B6CAD47A3345 /* libPods-XXTouchApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTouchApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAF7FD6C2555EECC81802827 /* Pods-XXTouchApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTouchApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XXTouchApp/Pods-XXTouchApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -221,7 +221,6 @@
 			children = (
 				2CF749D21D0562BE007A273B /* ThemeManager.swift */,
 				955DB23E1D1E3A4E00B598C4 /* FileManager.swift */,
-				95D5042C1D1FEE11008CFA7F /* ProgressHUDManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -272,7 +271,8 @@
 			children = (
 				2C54F0E11D17F492005F35AD /* Switches.swift */,
 				95AB90CC1D21717200FA4C52 /* Button.swift */,
-				2C2E7D4B1D2CD57100117025 /* XXTextView.swift */,
+				95D555F31D30050200499947 /* XXTTextView.swift */,
+				95D555F11D3001D400499947 /* AlertView.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -846,6 +846,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C54F0F01D1916E5005F35AD /* AuthorizationBindCell.swift in Sources */,
+				95D555F21D3001D400499947 /* AlertView.swift in Sources */,
 				2CD2F56D1D13B0D6001C873F /* KeyBoardSettingViewController.swift in Sources */,
 				2CF749D81D0577C4007A273B /* MoreViewController.swift in Sources */,
 				2C7342E51D1140AE00CED0F3 /* LayoutConstraint.swift in Sources */,
@@ -888,10 +889,10 @@
 				2CF18C021D1A728B007535CD /* AboutTitleCell.swift in Sources */,
 				2C4FFA3F1D264D3800DBEEDB /* PhotoEditView.swift in Sources */,
 				2C7342E01D1140AE00CED0F3 /* ConstraintMaker.swift in Sources */,
-				2C2E7D4C1D2CD57100117025 /* XXTextView.swift in Sources */,
 				2C54F0F41D1926CA005F35AD /* ApplicationListModel.swift in Sources */,
 				2C54F0F91D193559005F35AD /* ApplicationDetailViewController.swift in Sources */,
 				2CD7E7A41D2E5C5D0023D099 /* AboutCustomCell.swift in Sources */,
+				95D555F41D30050200499947 /* XXTTextView.swift in Sources */,
 				2C54F0E21D17F492005F35AD /* Switches.swift in Sources */,
 				2C7342DE1D1140AE00CED0F3 /* ConstraintDescription.swift in Sources */,
 				2C7342ED1D123E9C00CED0F3 /* RenameView.swift in Sources */,
@@ -914,7 +915,6 @@
 				2C7342E61D1140AE00CED0F3 /* SnapKit.swift in Sources */,
 				2CF3974C1D2BA76C00BAE04C /* VLDContextSheet.m in Sources */,
 				2C7342E71D1140AE00CED0F3 /* View+SnapKit.swift in Sources */,
-				95D5042D1D1FEE11008CFA7F /* ProgressHUDManager.swift in Sources */,
 				2C2E7D371D2C974E00117025 /* CaseString.swift in Sources */,
 				2CF749C51CFD8BA6007A273B /* NewScriptViewController.swift in Sources */,
 				2CF749D11D053A41007A273B /* ScriptModel.swift in Sources */,

@@ -13,7 +13,7 @@ protocol NewScriptViewControllerDelegate: NSObjectProtocol {
 }
 
 class NewScriptViewController: UIViewController {
-  private let textView = XXTextView(frame: CGRectZero)
+  private let textView = XXTTextView(frame: CGRectZero)
   weak var delegate: NewScriptViewControllerDelegate?
   private let newNameView = NewNameView()
   private let blurView = JCRBlurView()
@@ -21,6 +21,7 @@ class NewScriptViewController: UIViewController {
   private var extensionName = ""
   private var tap: UITapGestureRecognizer!
   private var nextbarButton: UIBarButtonItem!
+  private var isBack = false
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -89,10 +90,10 @@ class NewScriptViewController: UIViewController {
   
   private func bind() {
     extensionName = newNameView.luaButton.titleLabel?.text ?? ".lua"
-//    textView.extensionButton.addEventHandler({
-//      // TODO 扩展函数
-//      
-//      }, forControlEvents: .TouchUpInside)
+    //    textView.extensionButton.addEventHandler({
+    //      // TODO 扩展函数
+    //      
+    //      }, forControlEvents: .TouchUpInside)
   }
   
   @objc private func luaClick(button: UIButton) {
@@ -186,9 +187,15 @@ class NewScriptViewController: UIViewController {
       self.navigationController?.popViewControllerAnimated(true)
       return
     }
-    JCAlertView.showTwoButtonsWithTitle(Constants.Text.prompt, message: "是否丢弃当前更改？", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.yes, click: {
+    isBack = true
+    textView.resignFirstResponder()
+    let alert = AlertView.show(messgae: "是否丢弃当前更改？", cancelButtonTitle: Constants.Text.no, otherButtonTitle: Constants.Text.yes)
+    alert.otherButtonAction = {
       self.navigationController?.popViewControllerAnimated(true)
-      }, buttonType: JCAlertViewButtonType.Cancel, buttonTitle: Constants.Text.no, click: nil)
+    }
+    alert.cancelButtonAction = {
+      self.isBack = false
+    }
   }
   
   @objc private func keyboardWillAppear(notification: NSNotification) {
@@ -205,31 +212,31 @@ class NewScriptViewController: UIViewController {
   }
   
   @objc private func keyboardWillHide(notification: NSNotification) {
-    UIView.animateWithDuration(0.5, animations: {
-      self.textView.contentInset.top = Constants.Size.axtNavigationBarHeight
-      self.textView.scrollIndicatorInsets.top = self.textView.contentInset.top
-      self.view.frame.origin.y = 0
-    }) { (_) in
-      NSNotificationCenter.defaultCenter().removeObserver(self)
-      self.newNameView.newNameTextField.text?.removeAll()
-      self.newNameView.hidden = false
-      self.blurView.hidden = false
-      self.newNameView.alpha = 1
-      self.newNameView.transform = CGAffineTransformTranslate(self.newNameView.transform, 0, self.view.frame.height/2)
-      UIView.animateWithDuration(self.animationDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 15, options: [], animations: {
-        self.newNameView.transform = CGAffineTransformIdentity
-        self.blurView.alpha = 1
-        }, completion: { (_) in
-          self.tap.enabled = true
-      })
+    if !isBack {
+      UIView.animateWithDuration(self.animationDuration, animations: {
+        self.textView.contentInset.top = Constants.Size.axtNavigationBarHeight
+        self.textView.scrollIndicatorInsets.top = self.textView.contentInset.top
+        self.view.frame.origin.y = 0
+      }) { (_) in
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+        self.newNameView.newNameTextField.text?.removeAll()
+        self.newNameView.hidden = false
+        self.blurView.hidden = false
+        self.newNameView.alpha = 1
+        self.newNameView.transform = CGAffineTransformTranslate(self.newNameView.transform, 0, self.view.frame.height/2)
+        UIView.animateWithDuration(self.animationDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 15, options: [], animations: {
+          self.newNameView.transform = CGAffineTransformIdentity
+          self.blurView.alpha = 1
+          }, completion: { (_) in
+            self.tap.enabled = true
+        })
+      }
     }
   }
   
   /// 新建脚本
   private func addScript() {
-    if !KVNProgress.isVisible() {
-      KVNProgress.showWithStatus("正在保存")
-    }
+    self.view.showHUD(text: "正在保存")
     let fileName = newNameView.newNameTextField.text!+self.extensionName
     Service.newScriptFile(filename: fileName, data: textView.text) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
@@ -237,22 +244,21 @@ class NewScriptViewController: UIViewController {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
-          KVNProgress.showSuccessWithStatus(Constants.Text.createDone, completion: {
+          self.view.showHUD(.Success, text: Constants.Text.createDone, completionBlock: { (_) in
             self.closeNewNameViewAnimator()
             self.onef_navigationBack(true)
             self.delegate?.reloadScriptList()
           })
-          
         default:
           self.newNameView.newNameTextField.text?.removeAll()
           self.submitUpdate(false, color: ThemeManager.Theme.lightTextColor)
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
-          KVNProgress.dismiss()
+          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.view.dismissHUD()
           return
         }
       }
       if error != nil {
-        KVNProgress.updateStatus(Constants.Error.failure)
+        self.view.updateHUD(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.addScript()
         }

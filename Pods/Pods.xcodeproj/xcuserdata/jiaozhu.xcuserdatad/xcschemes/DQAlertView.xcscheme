@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '7A6DBB2B3B17E5C23D454B62CCA2F62E'
-               BlueprintName = 'Pods-XXTouchApp'
+               BlueprintIdentifier = 'B7BAF5E0D95762FD26AAE834A871A017'
+               BlueprintName = 'DQAlertView'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libPods-XXTouchApp.a'>
+               BuildableName = 'libDQAlertView.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

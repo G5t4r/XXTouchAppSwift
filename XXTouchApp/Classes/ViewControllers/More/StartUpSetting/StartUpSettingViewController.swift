@@ -64,9 +64,7 @@ extension StartUpSettingViewController {
 /// 请求
 extension StartUpSettingViewController {
   private func getStartupConf() {
-    if !KVNProgress.isVisible() {
-      KVNProgress.showWithStatus(Constants.Text.reloading)
-    }
+    self.view.showHUD(text: Constants.Text.reloading)
     Service.getStartupConf { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
@@ -80,13 +78,13 @@ extension StartUpSettingViewController {
           self.currentSelectedScriptName = json["data"]["startup_script"].stringValue
           self.fetchScriptList()
         default:
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
-          KVNProgress.dismiss()
+          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.view.dismissHUD()
           return
         }
       }
       if error != nil {
-        KVNProgress.updateStatus(Constants.Error.failure)
+        self.view.updateHUD(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.getStartupConf()
         }
@@ -100,7 +98,7 @@ extension StartUpSettingViewController {
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
-        KVNProgress.dismiss()
+        self.view.dismissHUD()
         self.scriptList.removeAll()
         switch json["code"].intValue {
         case 0:
@@ -122,7 +120,7 @@ extension StartUpSettingViewController {
             let cell = cell as! StartUpListCell
             if let indexPath = self.tableView.indexPathForCell(cell) {
               if self.currentSelectedScriptName == self.scriptList[indexPath.row].name {
-                self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .Bottom)
+                self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .None)
                 self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
                 cell.scriptSelectedHidden(false)
                 //                cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
@@ -135,7 +133,7 @@ extension StartUpSettingViewController {
         }
       }
       if error != nil {
-        KVNProgress.updateStatus(Constants.Error.failure)
+        self.view.updateHUD(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.getStartupConf()
         }
@@ -144,23 +142,21 @@ extension StartUpSettingViewController {
   }
   
   private func setStartupRun(type: String) {
-    if !KVNProgress.isVisible() {
-      KVNProgress.showWithStatus(Constants.Text.reloading)
-    }
+    self.view.showHUD(text: Constants.Text.reloading)
     Service.setStartupRunOnOrOff(type: type) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
-        KVNProgress.dismiss()
+        self.view.dismissHUD()
         switch json["code"].intValue {
         case 0:break
         default:
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
           return
         }
       }
       if error != nil {
-        KVNProgress.updateStatus(Constants.Error.failure)
+        self.view.updateHUD(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.setStartupRun(type)
         }
@@ -173,16 +169,16 @@ extension StartUpSettingViewController {
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
-        KVNProgress.dismiss()
+        self.view.dismissHUD()
         switch json["code"].intValue {
         case 0: break
         default:
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
           return
         }
       }
       if error != nil {
-        KVNProgress.showWithStatus(Constants.Error.failure)
+        self.view.showHUD(text: Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.selectStartupScriptFile(name)
         }

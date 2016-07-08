@@ -11,7 +11,7 @@ import UIKit
 class ScriptDetailViewController: UIViewController {
   private let fileName: String
   private let fileText: String
-  private let textView = XXTextView(frame: CGRectZero)
+  private let textView = XXTTextView(frame: CGRectZero)
   private var oldText = ""
   
   override func viewDidLoad() {
@@ -71,26 +71,24 @@ class ScriptDetailViewController: UIViewController {
   }
   
   private func fetchWriteScript() {
-    if !KVNProgress.isVisible() {
-      KVNProgress.showWithStatus("正在保存")
-    }
+    self.view.showHUD(text: "正在保存")
     Service.writeScriptFile(filename: self.fileName, data: self.textView.text) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
-          KVNProgress.showSuccessWithStatus(Constants.Text.saveSuccessful, completion: {
+          self.view.showHUD(.Success, text: Constants.Text.saveSuccessful, completionBlock: { (_) in
             self.navigationController?.popViewControllerAnimated(true)
           })
         default:
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
-          KVNProgress.dismiss()
+          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.view.dismissHUD()
           return
         }
       }
       if error != nil {
-        KVNProgress.updateStatus(Constants.Error.failure)
+        self.view.updateHUD(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.fetchWriteScript()
         }
@@ -107,9 +105,10 @@ class ScriptDetailViewController: UIViewController {
       self.navigationController?.popViewControllerAnimated(true)
       return
     }
-    JCAlertView.showTwoButtonsWithTitle(Constants.Text.prompt, message: "是否丢弃当前更改？", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.yes, click: {
+    textView.resignFirstResponder()
+    AlertView.show(messgae: "是否丢弃当前更改？", cancelButtonTitle: Constants.Text.no, otherButtonTitle: Constants.Text.yes).otherButtonAction = {
       self.navigationController?.popViewControllerAnimated(true)
-      }, buttonType: JCAlertViewButtonType.Cancel, buttonTitle: Constants.Text.no, click: nil)
+    }
   }
   
   @objc private func keyboardWillShow(notification: NSNotification) {

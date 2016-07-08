@@ -15,17 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     if FileManager.sharedManager.respringFileExistsAtPath() {
-      JCAlertView.showTwoButtonsWithTitle(Constants.Text.prompt, message: "XXTouch 安装后需要注销以完成服务完全更新，是否立即注销设备？", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: { 
-        MixC.sharedManager.logout()
-        }, buttonType: JCAlertViewButtonType.Cancel, buttonTitle: Constants.Text.cancel, click: {
-          exit(0)
-      })
+      AlertView.showApp(message: "XXTouch 安装后需要注销以完成服务完全更新，是否立即注销设备？", delegate: self, cancelButtonTitle: Constants.Text.no, otherButtonTitles: Constants.Text.yes)
     } else {
       // 注册 Defaults
       Defaults.configure()
-      
-      // 加载转菊花配置
-      ProgressHUDManager.startConfig()
       
       // 加载程序窗口
       setupAndShowWindow()
@@ -54,6 +47,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func applicationWillTerminate(application: UIApplication) {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+  }
+}
+
+extension AppDelegate: UIAlertViewDelegate {
+  func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    switch buttonIndex {
+    case 0: exit(0)
+    case 1: MixC.sharedManager.logout()
+    default: break
+    }
   }
 }
 

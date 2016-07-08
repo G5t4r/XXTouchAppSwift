@@ -11,7 +11,7 @@ import UIKit
 enum HUDType {
   case Loading
   case Error
-  case Completed
+  case Success
 }
 
 var isShow = false
@@ -25,14 +25,15 @@ extension UIView {
     switch type {
     case .Loading:
       options = [.OverlayShadow, .OverlayTypeActivitySquare, .OverlaySizeRoundedRect]
-    case .Completed:
+    case .Success:
       options = [.OverlayShadow, .OverlayTypeSuccess, .OverlaySizeRoundedRect, .AutoHide]
-      TAOverlay.setOverlayIconColor(UIColor(rgb: 0x1dbd1d))
+    //      TAOverlay.setOverlayIconColor(UIColor(rgb: 0x1dbd1d))
     case .Error:
       options = [.OverlayShadow, .OverlayTypeError, .OverlaySizeRoundedRect, .AutoHide]
     }
     TAOverlay.showOverlayWithLabel(text, options: options)
     TAOverlay.setOverlayLabelTextColor(UIColor(rgb: 0x434343))
+    TAOverlay.setOverlayIconColor(UIColor.grayColor())
     TAOverlay.setOverlayShadowColor(UIColor.blackColor().colorWithAlphaComponent(0.65))
     TAOverlay.setCompletionBlock(completionBlock)
   }

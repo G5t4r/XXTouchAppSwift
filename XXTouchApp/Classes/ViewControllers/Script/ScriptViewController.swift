@@ -118,7 +118,7 @@ class ScriptViewController: UIViewController {
             }
           }
         default:
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
           return
         }
       }
@@ -172,13 +172,12 @@ class ScriptViewController: UIViewController {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
-          // 保存成功提示
-          self.view.dismissHUD(completionBlock: { (_) in
+          self.view.showHUD(.Success, text: Constants.Text.saveSuccessful, completionBlock: { (_) in
             self.closeRenameViewAnimator()
             self.fetchScriptList()
           })
         default:
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
           self.view.dismissHUD()
           return
         }
@@ -201,10 +200,7 @@ class ScriptViewController: UIViewController {
   
   /// 扫一扫
   @objc private func sweep(button: UIBarButtonItem) {
-    if !KVNProgress.isVisible() {
-      KVNProgress.showWithStatus("正在加载")
-    }
-    
+    self.view.showHUD(text: Constants.Text.reloading)
     Service.sweep { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
@@ -212,15 +208,15 @@ class ScriptViewController: UIViewController {
         switch json["code"].intValue {
         case 0:
           dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(3 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
-            KVNProgress.dismiss()
+            self.view.dismissHUD()
           })
         default:
-          KVNProgress.dismiss()
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.view.dismissHUD()
         }
       }
       if error != nil {
-        KVNProgress.updateStatus(Constants.Error.failure)
+        self.view.updateHUD(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.sweep(button)
         }
@@ -329,31 +325,6 @@ class ScriptViewController: UIViewController {
 }
 
 extension ScriptViewController: UIActionSheetDelegate {
-  //  func actionSheet(actionSheet: UIActionSheet, didDismissWithButtonIndex buttonIndex: Int) {
-  //    guard buttonIndex != actionSheet.cancelButtonIndex else { return }
-  //    if self.oldExtensionName == Suffix.Section.LUA.title || self.oldExtensionName == Suffix.Section.XXT.title {
-  //      switch buttonIndex {
-  //      /// 运行
-  //      case 0: launchScriptFile()
-  //      /// 停止
-  //      case 1: isRunning()
-  //      /// 编辑
-  //      case 2: edit(self.indexPath)
-  //      /// 重命名
-  //      case 3: openRenameViewAnimator()
-  //      default: return
-  //      }
-  //    } else {
-  //      switch buttonIndex {
-  //      /// 编辑
-  //      case 0: edit(self.indexPath)
-  //      /// 重命名
-  //      case 1: openRenameViewAnimator()
-  //      default: return
-  //      }
-  //    }
-  //  }
-  
   func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
     guard buttonIndex != actionSheet.cancelButtonIndex else { return }
     if self.oldExtensionName == Suffix.Section.LUA.title || self.oldExtensionName == Suffix.Section.XXT.title {
@@ -380,33 +351,26 @@ extension ScriptViewController: UIActionSheetDelegate {
   }
   
   private func launchScriptFile() {
-    if !KVNProgress.isVisible() {
-      KVNProgress.showWithStatus("正在启动")
-    }
+    self.view.showHUD(text: "正在启动")
     Service.launchScriptFile { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
         switch json["code"].intValue {
-        case 0: KVNProgress.showSuccessWithStatus(json["message"].stringValue)
+        case 0: self.view.showHUD(.Success, text: json["message"].stringValue)
         case 2:
           let messgae = json["message"].stringValue + "\n" + json["detail"].stringValue
-          //          self.alert(title: Constants.Text.prompt, message: messgae, delegate: nil, cancelButtonTitle: Constants.Text.ok)
-          
-          
-          
-          
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: messgae, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
-          KVNProgress.dismiss()
+          AlertView.show(messgae: messgae, cancelButtonTitle: Constants.Text.ok)
+          self.view.dismissHUD()
           return
         default:
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
-          KVNProgress.dismiss()
+          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.view.dismissHUD()
           return
         }
       }
       if error != nil {
-        KVNProgress.updateStatus(Constants.Error.failure)
+        self.view.updateHUD(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.launchScriptFile()
         }
@@ -415,21 +379,18 @@ extension ScriptViewController: UIActionSheetDelegate {
   }
   
   private func isRunning() {
-    if !KVNProgress.isVisible() {
-      KVNProgress.showWithStatus("正在关闭")
-    }
-    
+    self.view.showHUD(text: "正在关闭")
     Service.isRunning { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
         switch json["code"].intValue {
-        case 0: KVNProgress.showErrorWithStatus(Constants.Text.notRuningScript)
+        case 0: self.view.showHUD(.Error, text: Constants.Text.notRuningScript)
         default: self.stopScriptFile()
         }
       }
       if error != nil {
-        KVNProgress.updateStatus(Constants.Error.failure)
+        self.view.updateHUD(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.isRunning()
         }
@@ -438,21 +399,20 @@ extension ScriptViewController: UIActionSheetDelegate {
   }
   
   private func stopScriptFile() {
-    
     Service.stopScriptFile { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
         switch json["code"].intValue {
-        case 0: KVNProgress.showSuccessWithStatus(json["message"].stringValue)
+        case 0: self.view.showHUD(.Success, text: json["message"].stringValue)
         default:
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
-          KVNProgress.dismiss()
+          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.view.dismissHUD()
           return
         }
       }
       if error != nil {
-        KVNProgress.showWithStatus(Constants.Error.failure)
+        self.view.showHUD(text: Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.stopScriptFile()
         }
@@ -465,16 +425,16 @@ extension ScriptViewController: UIActionSheetDelegate {
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
-        KVNProgress.dismiss()
+        self.view.dismissHUD()
         switch json["code"].intValue {
         case 0: break
         default:
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
           return
         }
       }
       if error != nil {
-        KVNProgress.showWithStatus(Constants.Error.failure)
+        self.view.showHUD(text: Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.selectScriptFile(name)
         }
@@ -542,7 +502,7 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
     } else if suffix == Suffix.Section.JPG.title || suffix == Suffix.Section.BMP.title || suffix == Suffix.Section.PNG.title {
       readFile(scriptList[indexPath.row].name)
     } else {
-      KVNProgress.showErrorWithStatus(Constants.Text.notSelected)
+      self.view.showHUD(.Error, text: Constants.Text.notSelected)
     }
   }
   
@@ -562,9 +522,6 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
 /// 读取文件
 extension ScriptViewController {
   private func readFile(name: String) {
-    //    if !KVNProgress.isVisible() {
-    //      KVNProgress.showWithStatus(Constants.Text.reloading)
-    //    }
     Service.readFile(filename: name) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
@@ -572,21 +529,21 @@ extension ScriptViewController {
         switch json["code"].intValue {
         case 0:
           if let image = Base64.base64StringToUIImage(json["data"].stringValue) {
-            KVNProgress.dismiss()
+            self.view.dismissHUD()
             let photoViewController = PhotoViewController(image: image, name: name)
             photoViewController.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(photoViewController, animated: true)
           } else {
-            KVNProgress.showErrorWithStatus(Constants.Text.notReload)
+            self.view.showHUD(.Error, text: Constants.Text.notReload)
           }
         default:
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
-          KVNProgress.dismiss()
+          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.view.dismissHUD()
           return
         }
       }
       if error != nil {
-        KVNProgress.updateStatus(Constants.Error.failure)
+        self.view.updateHUD(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.readFile(name)
         }
@@ -597,30 +554,27 @@ extension ScriptViewController {
 
 extension ScriptViewController: SWTableViewCellDelegate {
   private func fetchReadScript(fileName: String) {
-    //    if !KVNProgress.isVisible() {
-    //      KVNProgress.showWithStatus(Constants.Text.reloading)
-    //    }
     Service.readScriptFile(filename: fileName) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       guard JSON(data: data!) != nil else {
-        KVNProgress.showErrorWithStatus(Constants.Text.notFile)
+        self.view.showHUD(.Error, text: Constants.Text.notFile)
         return
       }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
-        KVNProgress.dismiss()
+        self.view.dismissHUD()
         switch json["code"].intValue {
         case 0:
           let scriptDetailViewController = ScriptDetailViewController(fileName: fileName, fileText: json["data"].stringValue)
           scriptDetailViewController.hidesBottomBarWhenPushed = true
           self.navigationController?.pushViewController(scriptDetailViewController, animated: true)
         default:
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
           return
         }
       }
       if error != nil {
-        KVNProgress.updateStatus(Constants.Error.failure)
+        self.view.updateHUD(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.fetchReadScript(fileName)
         }
@@ -632,7 +586,7 @@ extension ScriptViewController: SWTableViewCellDelegate {
     let fileName = scriptList[indexPath.row].name
     let suffix = Suffix.haveSuffix(fileName)
     guard suffix != Suffix.Section.XXT.title else {
-      KVNProgress.showErrorWithStatus(Constants.Text.notEnScript)
+      self.view.showHUD(.Error, text: Constants.Text.notEnScript)
       return
     }
     fetchReadScript(fileName)
@@ -640,10 +594,9 @@ extension ScriptViewController: SWTableViewCellDelegate {
   
   private func edit(indexPath: NSIndexPath) {
     if scriptList[indexPath.row].size > 3*1024*1024 {
-      JCAlertView.showTwoButtonsWithTitle(Constants.Text.warning, message: "文件过大\n是否需要忍受可能卡死的风险继续编辑？", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: { 
+      AlertView.show(messgae: "文件过大\n是否需要忍受可能卡死的风险继续编辑？", cancelButtonTitle: Constants.Text.cancel, otherButtonTitle: Constants.Text.ok).otherButtonAction = {
         self.intoEdit(indexPath)
-        }, buttonType: JCAlertViewButtonType.Cancel, buttonTitle: Constants.Text.cancel, click: nil)
-      
+      }
     } else {
       intoEdit(indexPath)
     }
@@ -665,14 +618,12 @@ extension ScriptViewController: SWTableViewCellDelegate {
     case 0:
       /// 删除文件
       if let indexPath = tableView.indexPathForCell(cell) {
-        if !KVNProgress.isVisible() {
-          KVNProgress.showWithStatus("正在删除")
-        }
+        self.view.showHUD(text: "正在删除")
         Service.removeFile(filename: scriptList[indexPath.row].name) { [weak self] (data, _, error) in
           guard let `self` = self else { return }
           if let data = data where JSON(data: data) != nil {
             let json = JSON(data: data)
-            KVNProgress.dismiss()
+            self.view.dismissHUD()
             switch json["code"].intValue {
             case 0:
               self.scriptList.removeAtIndex(indexPath.row)
@@ -680,12 +631,12 @@ extension ScriptViewController: SWTableViewCellDelegate {
               self.tableView.setEditing(false, animated: true)
               self.tableView.reloadData()
             default:
-              JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+              AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
               return
             }
           }
           if error != nil {
-            KVNProgress.updateStatus(Constants.Error.failure)
+            self.view.updateHUD(Constants.Error.failure)
             MixC.sharedManager.restart { (_) in
               self.fetchScriptList()
             }

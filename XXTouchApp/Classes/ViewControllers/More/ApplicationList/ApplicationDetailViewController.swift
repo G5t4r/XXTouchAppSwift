@@ -100,7 +100,7 @@ class ApplicationDetailViewController: UIViewController {
     case 3: UIPasteboard.generalPasteboard().string = model.dataPath
     default: return
     }
-    KVNProgress.showSuccessWithStatus(Constants.Text.copy) { 
+    self.view.showHUD(.Success, text: Constants.Text.copy) { (_) in
       self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
   }

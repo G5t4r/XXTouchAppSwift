@@ -17,8 +17,6 @@
 #import "SWTableViewCell/SWTableViewCell.h"
 #import "MJRefresh/MJRefresh.h"
 #import "iOS-blur/JCRBlurView.h"
-#import "KVNProgress/KVNProgress.h"
-#import "JCAlertView/JCAlertView.h"
 #import "CYRTextView/CYRTextView.h"
 #import "NJKWebViewProgress/NJKWebViewProgress.h"
 #import "NJKWebViewProgress/NJKWebViewProgressView.h"
@@ -27,3 +25,4 @@
 #import "VLDContextSheetItem.h"
 #import "RFKeyboardToolbar/RFKeyboardToolbar.h"
 #import "TAOverlay/TAOverlay.h"
+#import "DQAlertView/DQAlertView.h"

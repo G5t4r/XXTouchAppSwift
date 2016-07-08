@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '7A6DBB2B3B17E5C23D454B62CCA2F62E'
-               BlueprintName = 'Pods-XXTouchApp'
+               BlueprintIdentifier = '111EBF2DD9C974285124734FAC00D66D'
+               BlueprintName = 'VIPhotoView'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libPods-XXTouchApp.a'>
+               BuildableName = 'libVIPhotoView.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

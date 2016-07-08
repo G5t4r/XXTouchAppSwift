@@ -86,7 +86,7 @@ extension AboutViewController {
     if UIApplication.sharedApplication().canOpenURL(url!) {
       UIApplication.sharedApplication().openURL(url!)
     } else {
-      JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: "QQ群号：40898074", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+      AlertView.show(messgae: "QQ群号：40898074", cancelButtonTitle: Constants.Text.ok)
     }
   }
   
@@ -98,14 +98,12 @@ extension AboutViewController {
 // 请求
 extension AboutViewController {
   private func getDeviceinfo() {
-    if !KVNProgress.isVisible() {
-      KVNProgress.showWithStatus(Constants.Text.reloading)
-    }
+    self.view.showHUD(text: Constants.Text.reloading)
     Service.getDeviceinfo { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
-        KVNProgress.dismiss()
+        self.view.dismissHUD()
         switch json["code"].intValue {
         case 0:
           self.zeVersionCell.bind(json["data"]["zeversion"].stringValue)
@@ -117,12 +115,12 @@ extension AboutViewController {
           self.deviceIdCell.bind(json["data"]["deviceid"].stringValue)
           self.deviceId = json["data"]["deviceid"].stringValue
         default:
-          JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: json["message"].stringValue, buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
           return
         }
       }
       if error != nil {
-        KVNProgress.updateStatus(Constants.Error.failure)
+        self.view.updateHUD(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.getDeviceinfo()
         }
@@ -158,7 +156,7 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
     case 1:
       if indexPath.row == 6 {
         UIPasteboard.generalPasteboard().string = deviceId
-        KVNProgress.showSuccessWithStatus(Constants.Text.copy)
+        self.view.showHUD(.Success, text: Constants.Text.copy)
       }
     default: break
     }

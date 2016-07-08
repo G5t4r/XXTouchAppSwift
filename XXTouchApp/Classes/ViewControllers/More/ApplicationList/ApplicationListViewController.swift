@@ -53,14 +53,12 @@ class ApplicationListViewController: UIViewController {
 // 请求
 extension ApplicationListViewController {
   private func fetchBundles() {
-    if !KVNProgress.isVisible() {
-      KVNProgress.showWithStatus(Constants.Text.reloading)
-    }
+    self.view.showHUD(text: Constants.Text.reloading)
     Service.fetchBundlesList { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
-        KVNProgress.dismiss()
+        self.view.dismissHUD()
         switch json["code"].intValue {
         case 0:
           let list = json["data"]
@@ -73,7 +71,7 @@ extension ApplicationListViewController {
         self.tableView.reloadData()
       }
       if error != nil {
-        KVNProgress.updateStatus(Constants.Error.failure)
+        self.view.updateHUD(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
           self.fetchBundles()
         }

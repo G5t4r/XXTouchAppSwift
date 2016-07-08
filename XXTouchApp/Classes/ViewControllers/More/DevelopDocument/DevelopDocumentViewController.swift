@@ -100,11 +100,11 @@ extension DevelopDocumentViewController: UIWebViewDelegate, NJKWebViewProgressDe
   }
   
   func webViewDidStartLoad(webView: UIWebView) {
-    KVNProgress.showWithStatus(Constants.Text.reloading)
+    self.view.showHUD(text: Constants.Text.reloading)
   }
   
   func webViewDidFinishLoad(webView: UIWebView) {
-    KVNProgress.dismiss()
+    self.view.dismissHUD()
     // 固定显示缩放比例
     if UIDevice.isPhone {
       webView.stringByEvaluatingJavaScriptFromString("document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '80%'")
@@ -118,7 +118,7 @@ extension DevelopDocumentViewController: UIWebViewDelegate, NJKWebViewProgressDe
   }
   
   func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
-    JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: "加载失败，请重新加载", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+    AlertView.show(messgae: "加载失败，请重新加载", cancelButtonTitle: Constants.Text.ok)
   }
 }
 
