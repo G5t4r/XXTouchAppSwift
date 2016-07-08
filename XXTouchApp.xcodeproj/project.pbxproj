@@ -60,6 +60,7 @@
 		2CD2F5701D13C00D001C873F /* KeyBoardSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD2F56F1D13C00D001C873F /* KeyBoardSettingCell.swift */; };
 		2CD2F5731D13E7F3001C873F /* RecordSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD2F5721D13E7F3001C873F /* RecordSettingViewController.swift */; };
 		2CD7E7A41D2E5C5D0023D099 /* AboutCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7E7A31D2E5C5D0023D099 /* AboutCustomCell.swift */; };
+		2CD7E7AC1D2F9F7B0023D099 /* UIView+HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7E7AB1D2F9F7B0023D099 /* UIView+HUD.swift */; };
 		2CF18BF71D1946B5007535CD /* ApplicationDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF18BF61D1946B5007535CD /* ApplicationDetailCell.swift */; };
 		2CF18BFA1D1A440B007535CD /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF18BF91D1A440B007535CD /* AboutViewController.swift */; };
 		2CF18BFF1D1A5E31007535CD /* DevelopDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF18BFE1D1A5E31007535CD /* DevelopDocumentViewController.swift */; };
@@ -159,6 +160,7 @@
 		2CD2F56F1D13C00D001C873F /* KeyBoardSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyBoardSettingCell.swift; sourceTree = "<group>"; };
 		2CD2F5721D13E7F3001C873F /* RecordSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordSettingViewController.swift; sourceTree = "<group>"; };
 		2CD7E7A31D2E5C5D0023D099 /* AboutCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutCustomCell.swift; sourceTree = "<group>"; };
+		2CD7E7AB1D2F9F7B0023D099 /* UIView+HUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+HUD.swift"; sourceTree = "<group>"; };
 		2CF18BF61D1946B5007535CD /* ApplicationDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationDetailCell.swift; sourceTree = "<group>"; };
 		2CF18BF91D1A440B007535CD /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		2CF18BFE1D1A5E31007535CD /* DevelopDocumentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevelopDocumentViewController.swift; sourceTree = "<group>"; };
@@ -441,6 +443,7 @@
 				2CD2F5681D13A280001C873F /* UIDevice+DeviceCheck.swift */,
 				2C73413C1D110FB100CED0F3 /* UIViewController+Alert.swift */,
 				2C20D81B1D0FC74A009A4990 /* UIViewController+Transition.swift */,
+				2CD7E7AB1D2F9F7B0023D099 /* UIView+HUD.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -859,6 +862,7 @@
 				2C54F0F71D192805005F35AD /* ApplicationListCell.swift in Sources */,
 				2C7342E81D1140AE00CED0F3 /* ViewController+SnapKit.swift in Sources */,
 				2C54F0E51D18D1DA005F35AD /* UserSettingCell.swift in Sources */,
+				2CD7E7AC1D2F9F7B0023D099 /* UIView+HUD.swift in Sources */,
 				2C4FFA501D2B73E100DBEEDB /* Defaults.swift in Sources */,
 				2CC5F5881D1CFD040028467F /* MoreRemoteServiceCell.swift in Sources */,
 				2C20D81C1D0FC74A009A4990 /* UIViewController+Transition.swift in Sources */,

@@ -25,7 +25,7 @@ class AboutCustomCell: UITableViewCell {
   
   private func setupUI() {
     button.titleLabel?.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
-    button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+    button.setTitleColor(UIColor.blackColor(), forState: .Normal)
     
     contentView.addSubview(button)
   }

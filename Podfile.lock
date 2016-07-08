@@ -11,6 +11,7 @@ PODS:
   - NJKWebViewProgress/ProgressView (0.2.3)
   - RFKeyboardToolbar (1.3)
   - SWTableViewCell (0.3.7)
+  - TAOverlay (2.0.1)
   - VIPhotoView (0.1)
 
 DEPENDENCIES:
@@ -22,6 +23,7 @@ DEPENDENCIES:
   - NJKWebViewProgress
   - RFKeyboardToolbar
   - SWTableViewCell
+  - TAOverlay
   - VIPhotoView
 
 SPEC CHECKSUMS:
@@ -33,8 +35,9 @@ SPEC CHECKSUMS:
   NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
   RFKeyboardToolbar: c96a7d9458564d1fedc8ef6844b6c467934aade2
   SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
+  TAOverlay: 940e37fdb45fbc9acfc73bf1089668367e3b1be6
   VIPhotoView: bdc0cf8ddadda754b451869bd3a919e8eb5c11ab
 
-PODFILE CHECKSUM: 58ee1d14a706146f2fa9bba393a87bd040c8015d
+PODFILE CHECKSUM: 8f98e2af21db616b211836f99053b209210c2fd6
 
 COCOAPODS: 1.0.1

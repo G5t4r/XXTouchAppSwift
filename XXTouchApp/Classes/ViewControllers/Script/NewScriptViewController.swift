@@ -89,10 +89,10 @@ class NewScriptViewController: UIViewController {
   
   private func bind() {
     extensionName = newNameView.luaButton.titleLabel?.text ?? ".lua"
-    textView.extensionButton.addEventHandler({
-      // TODO 扩展函数
-      
-      }, forControlEvents: .TouchUpInside)
+//    textView.extensionButton.addEventHandler({
+//      // TODO 扩展函数
+//      
+//      }, forControlEvents: .TouchUpInside)
   }
   
   @objc private func luaClick(button: UIButton) {

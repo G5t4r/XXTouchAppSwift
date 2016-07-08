@@ -23,15 +23,15 @@ class XXTextView: CYRTextView {
     //    self.lineCursorEnabled = false
     self.font = UIFont(name: "Menlo-Regular", size: Sizer.valueForDevice(phone: 12, pad: 16))
     self.autocorrectionType = .No // 关闭自动更正
-    self.inputAccessoryView = RFKeyboardToolbar(
-      buttons: [
-        extensionButton,
-        basisButton,
-        indentationButton,
-        touchDown,
-        touchMove
-      ]
-    )
+//    self.inputAccessoryView = RFKeyboardToolbar(
+//      buttons: [
+//        extensionButton,
+//        basisButton,
+//        indentationButton,
+//        touchDown,
+//        touchMove
+//      ]
+//    )
   }
   
   required init?(coder aDecoder: NSCoder) {

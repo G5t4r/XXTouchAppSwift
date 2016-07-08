@@ -29,9 +29,9 @@ class AboutViewController: UIViewController {
   
   private var deviceCellList = [AboutInfoCell]()
   
-  private let qqGroupCell = AboutCustomCell(buttonTitle: "开发者QQ群：40898074", backgroundColor: UIColor(rgb: 0x3d85c6))
+  private let qqGroupCell = AboutCustomCell(buttonTitle: "开发者QQ群", backgroundColor: UIColor.clearColor())
   
-  private let webCell = AboutCustomCell(buttonTitle: "官方网站", backgroundColor: UIColor(rgb: 0xff9900))
+  private let webCell = AboutCustomCell(buttonTitle: "官方网站", backgroundColor: UIColor.clearColor())
   
   private var deviceId = ""
   
@@ -86,7 +86,7 @@ extension AboutViewController {
     if UIApplication.sharedApplication().canOpenURL(url!) {
       UIApplication.sharedApplication().openURL(url!)
     } else {
-      JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: "123", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
+      JCAlertView.showOneButtonWithTitle(Constants.Text.prompt, message: "QQ群号：40898074", buttonType: JCAlertViewButtonType.Default, buttonTitle: Constants.Text.ok, click: nil)
     }
   }
   

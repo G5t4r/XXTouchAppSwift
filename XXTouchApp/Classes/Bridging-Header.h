@@ -26,3 +26,4 @@
 #import "VLDContextSheet.h"
 #import "VLDContextSheetItem.h"
 #import "RFKeyboardToolbar/RFKeyboardToolbar.h"
+#import "TAOverlay/TAOverlay.h"
