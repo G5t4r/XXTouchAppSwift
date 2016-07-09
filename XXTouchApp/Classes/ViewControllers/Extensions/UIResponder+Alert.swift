@@ -23,8 +23,4 @@ extension UIResponder {
     alertView.addButtonWithTitle(otherButtonTitles)
     alertView.showAlertViewWithCompleteBlock(completeAlertViewFunc)
   }
-  
-  func actionSheetAction() {
-    
-  }
 }

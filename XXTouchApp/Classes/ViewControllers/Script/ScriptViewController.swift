@@ -590,12 +590,13 @@ extension ScriptViewController: SWTableViewCellDelegate {
   
   private func edit(indexPath: NSIndexPath) {
     if scriptList[indexPath.row].size > 3*1024*1024 {
-      self.alertAction(message: "文件过大\n是否需要忍受可能卡死的风险继续编辑？", completeAlertViewFunc: { (buttonIndex) in
+      self.alertAction(message: "文件过大\n是否需要忍受可能卡死的风险继续编辑？", completeAlertViewFunc: { [weak self] (buttonIndex) in
+        guard let `self` = self else { return }
         switch buttonIndex {
         case 1: self.intoEdit(indexPath)
         default: break
         }
-      })
+        })
     } else {
       intoEdit(indexPath)
     }

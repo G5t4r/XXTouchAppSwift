@@ -106,7 +106,8 @@ class ScriptDetailViewController: UIViewController {
       return
     }
     textView.resignFirstResponder()
-    self.alertAction(message: "是否丢弃当前更改？", completeAlertViewFunc: { (buttonIndex) in
+    self.alertAction(message: "是否丢弃当前更改？", completeAlertViewFunc: { [weak self] (buttonIndex) in
+      guard let `self` = self else { return }
       switch buttonIndex {
       case 1: self.navigationController?.popViewControllerAnimated(true)
       default: break

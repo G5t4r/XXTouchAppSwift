@@ -317,7 +317,8 @@ extension MoreViewController {
     switch rowIndex {
     /// 重启服务
     case 1:
-      self.alertAction(message: "确定要重启XXTouch服务么？", completeAlertViewFunc: { (buttonIndex) in
+      self.alertAction(message: "确定要重启XXTouch服务么？", completeAlertViewFunc: { [weak self] (buttonIndex) in
+        guard let `self` = self else { return }
         switch buttonIndex {
         case 1: self.restart()
         default: break
@@ -365,7 +366,8 @@ extension MoreViewController {
     case 0: self.navigationController?.pushViewController(ApplicationListViewController(), animated: true)
     /// 清空GPS伪装信息
     case 1:
-      self.alertAction(message: "确定要清空GPS伪装信息么？", completeAlertViewFunc: { (buttonIndex) in
+      self.alertAction(message: "确定要清空GPS伪装信息么？", completeAlertViewFunc: { [weak self] (buttonIndex) in
+        guard let `self` = self else { return }
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         switch buttonIndex {
         case 1: self.clearGps()
@@ -374,7 +376,8 @@ extension MoreViewController {
       })
     /// 清理 UI 缓存
     case 2:
-      self.alertAction(message: "确定要清理 UI 缓存么？\n(这个操作有可能引起注销或图标不见)", completeAlertViewFunc: { (buttonIndex) in
+      self.alertAction(message: "确定要清理 UI 缓存么？\n(这个操作有可能引起注销或图标不见)", completeAlertViewFunc: { [weak self] (buttonIndex) in
+        guard let `self` = self else { return }
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         switch buttonIndex {
         case 1: self.clearUIcache()
@@ -383,7 +386,8 @@ extension MoreViewController {
       })
     /// 全清设备
     case 3:
-      self.alertAction(message: "确定要全清设备么？\n(这个操作将会关闭所有应用并删除所有应用的资料及重置设备标识信息)", completeAlertViewFunc: { (buttonIndex) in
+      self.alertAction(message: "确定要全清设备么？\n(这个操作将会关闭所有应用并删除所有应用的资料及重置设备标识信息)", completeAlertViewFunc: { [weak self] (buttonIndex) in
+        guard let `self` = self else { return }
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         switch buttonIndex {
         case 1: self.clearAll()
@@ -392,7 +396,8 @@ extension MoreViewController {
       })
     /// 注销设备
     case 4:
-      self.alertAction(message: "确定要注销设备么？", completeAlertViewFunc: { (buttonIndex) in
+      self.alertAction(message: "确定要注销设备么？", completeAlertViewFunc: { [weak self] (buttonIndex) in
+        guard let `self` = self else { return }
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         switch buttonIndex {
         case 1: MixC.sharedManager.logout()
@@ -401,7 +406,8 @@ extension MoreViewController {
       })
     /// 重启设备
     case 5:
-      self.alertAction(message: "确定要重启设备么？", completeAlertViewFunc: { (buttonIndex) in
+      self.alertAction(message: "确定要重启设备么？", completeAlertViewFunc: { [weak self] (buttonIndex) in
+        guard let `self` = self else { return }
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         switch buttonIndex {
         case 1: self.reboot()

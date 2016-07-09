@@ -144,13 +144,14 @@ extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataS
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     switch indexPath.section {
     case 4:
-      self.alertAction(message: "是否确定要清理？", completeAlertViewFunc: { (buttonIndex) in
+      self.alertAction(message: "是否确定要清理？", completeAlertViewFunc: { [weak self] (buttonIndex) in
+        guard let `self` = self else { return }
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         switch buttonIndex {
         case 1: self.clearAppData()
         default: break
         }
-      })
+        })
     default: break
     }
   }
@@ -180,6 +181,9 @@ extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataS
   
   func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     if UIDevice.isPad {
+      if section == 4 {
+        return nil
+      }
       return CustomHeaderOrFooter(title: headerTitleList[section], textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(18), alignment: .Left)
     } else {
       return nil

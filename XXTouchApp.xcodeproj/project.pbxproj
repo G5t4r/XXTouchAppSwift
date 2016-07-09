@@ -78,6 +78,7 @@
 		2CF749D81D0577C4007A273B /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF749D71D0577C4007A273B /* MoreViewController.swift */; };
 		9509B7811D25777A0074010B /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509B7801D25777A0074010B /* CatalogViewController.swift */; };
 		950FC3611D1988660091DBA4 /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950FC3601D1988660091DBA4 /* Base64.swift */; };
+		951F59B41D312AD600D6F405 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951F59B31D312AD600D6F405 /* AlertView.swift */; };
 		953949D61D28FC8D00BE75AA /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953949D51D28FC8D00BE75AA /* Service.swift */; };
 		953C5D331D30E4E800477C35 /* UIAlertView+Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953C5D321D30E4E800477C35 /* UIAlertView+Block.swift */; };
 		953C5D371D30EB0400477C35 /* UIResponder+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953C5D361D30EB0400477C35 /* UIResponder+Alert.swift */; };
@@ -185,6 +186,7 @@
 		8A6F1DF544CDD739F1B52DAA /* Pods-XXTouchApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTouchApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XXTouchApp/Pods-XXTouchApp.debug.xcconfig"; sourceTree = "<group>"; };
 		9509B7801D25777A0074010B /* CatalogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		950FC3601D1988660091DBA4 /* Base64.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64.swift; sourceTree = "<group>"; };
+		951F59B31D312AD600D6F405 /* AlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		953949D51D28FC8D00BE75AA /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		953C5D321D30E4E800477C35 /* UIAlertView+Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertView+Block.swift"; sourceTree = "<group>"; };
 		953C5D361D30EB0400477C35 /* UIResponder+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIResponder+Alert.swift"; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				2C54F0E11D17F492005F35AD /* Switches.swift */,
 				95AB90CC1D21717200FA4C52 /* Button.swift */,
 				95D555F31D30050200499947 /* XXTTextView.swift */,
+				951F59B31D312AD600D6F405 /* AlertView.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -895,6 +898,7 @@
 				953C5D391D30EB3C00477C35 /* UIActionSheet+Block.swift in Sources */,
 				2C54F0F41D1926CA005F35AD /* ApplicationListModel.swift in Sources */,
 				2C54F0F91D193559005F35AD /* ApplicationDetailViewController.swift in Sources */,
+				951F59B41D312AD600D6F405 /* AlertView.swift in Sources */,
 				95D555F41D30050200499947 /* XXTTextView.swift in Sources */,
 				2C54F0E21D17F492005F35AD /* Switches.swift in Sources */,
 				2C7342DE1D1140AE00CED0F3 /* ConstraintDescription.swift in Sources */,
