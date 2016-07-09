@@ -96,30 +96,30 @@ extension AuthorizationViewController {
           } else {
             message = "充值成功\n本次充值时间：\(Formatter.formatDayTime(time))"
           }
-          AlertView.show(messgae: message, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: message)
           self.view.dismissHUD()
           self.authorizationCell.iconVip()
           self.authorizationBindCell.codeTextField.text?.removeAll()
           self.submitUpdate(titleColor: ThemeManager.Theme.lightTextColor, backgroundColor: ThemeManager.Theme.separatorColor, enabled: false)
           self.getExpireDate()
         case 1:
-          AlertView.show(messgae: Constants.Error.connectServerFail, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: Constants.Error.connectServerFail)
           self.view.dismissHUD()
           return
         case -1:
-          AlertView.show(messgae: Constants.Error.verificationFailure, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: Constants.Error.verificationFailure)
           self.view.dismissHUD()
           return
         case -2:
-          AlertView.show(messgae: Constants.Error.invalidCode, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: Constants.Error.invalidCode)
           self.view.dismissHUD()
           return
         case 112:
-          AlertView.show(messgae: Constants.Error.serverBusy, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: Constants.Error.serverBusy)
           self.view.dismissHUD()
           return
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -155,7 +155,7 @@ extension AuthorizationViewController {
           }
           self.getDeviceAuthInfo()
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           return
         }
       }
@@ -185,7 +185,7 @@ extension AuthorizationViewController {
             self.authorizationCell.iconVip()
           }
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           return
         }
       }

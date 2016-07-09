@@ -66,7 +66,7 @@ extension RecordSettingViewController {
           self.recordVolumeUpCell.switches.on = json["data"]["record_volume_up"].boolValue
           self.recordVolumeDownCell.switches.on = json["data"]["record_volume_down"].boolValue
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           return
         }
       }
@@ -110,7 +110,7 @@ extension RecordSettingViewController {
         case 0:break
           
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           return
         }
       }

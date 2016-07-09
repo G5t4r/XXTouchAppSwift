@@ -102,7 +102,7 @@ extension UserSettingViewController {
           let noNeedPushidAlert = json["data"]["no_need_pushid_alert"].boolValue
           noNeedPushidAlert ? self.noNeedPushidAlertCell.bind(self.alertValue[1]) : self.noNeedPushidAlertCell.bind(self.alertValue[0])
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           return
         }
       }
@@ -139,7 +139,6 @@ extension UserSettingViewController: UITableViewDelegate, UITableViewDataSource 
     /// ActionSheet
     let actionSheet = UIActionSheet()
     actionSheet.title = userSettingList[indexPath.section]
-    actionSheet.delegate = self
     actionSheet.cancelButtonIndex = 2
     switch indexPath.section {
     case 1:
@@ -150,7 +149,35 @@ extension UserSettingViewController: UITableViewDelegate, UITableViewDataSource 
       actionSheet.addButtonWithTitle(alertValue[1])
     }
     actionSheet.addButtonWithTitle(Constants.Text.cancel)
-    actionSheet.showInView(view)
+    actionSheet.showActionSheetWithCompleteBlock(view) { (buttonIndex) in
+      guard buttonIndex != actionSheet.cancelButtonIndex else { return }
+      switch self.userPrompt {
+      case .NoSimAlert:
+        switch buttonIndex {
+        case 0: self.setUserConf("setNosimAlertOff")
+        case 1: self.setUserConf("setNosimAlertOn")
+        default: break
+        }
+      case .NoSimStatusbar:
+        switch buttonIndex {
+        case 0: self.setUserConf("setNosimStatusbarOff")
+        case 1: self.setUserConf("setNosimStatusbarOn")
+        default: break
+        }
+      case .NoLowPowerAlert:
+        switch buttonIndex {
+        case 0: self.setUserConf("setNoLowPowerAlertOff")
+        case 1: self.setUserConf("setNoLowPowerAlertOn")
+        default: break
+        }
+      case .NoNeedPushidAlert:
+        switch buttonIndex {
+        case 0: self.setUserConf("setNoNeedPushidAlertOff")
+        case 1: self.setUserConf("setNoNeedPushidAlertOn")
+        default: break
+        }
+      }
+    }
     
     switch indexPath.section {
     case 0: userPrompt = .NoSimAlert
@@ -190,37 +217,7 @@ extension UserSettingViewController: UITableViewDelegate, UITableViewDataSource 
   }
 }
 
-extension UserSettingViewController: UIActionSheetDelegate {
-  func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
-    guard buttonIndex != actionSheet.cancelButtonIndex else { return }
-    switch userPrompt {
-    case .NoSimAlert:
-      switch buttonIndex {
-      case 0: setUserConf("setNosimAlertOff")
-      case 1: setUserConf("setNosimAlertOn")
-      default: break
-      }
-    case .NoSimStatusbar:
-      switch buttonIndex {
-      case 0: setUserConf("setNosimStatusbarOff")
-      case 1: setUserConf("setNosimStatusbarOn")
-      default: break
-      }
-    case .NoLowPowerAlert:
-      switch buttonIndex {
-      case 0: setUserConf("setNoLowPowerAlertOff")
-      case 1: setUserConf("setNoLowPowerAlertOn")
-      default: break
-      }
-    case .NoNeedPushidAlert:
-      switch buttonIndex {
-      case 0: setUserConf("setNoNeedPushidAlertOff")
-      case 1: setUserConf("setNoNeedPushidAlertOn")
-      default: break
-      }
-    }
-  }
-  
+extension UserSettingViewController {
   private func setUserConf(type: String) {
     Service.setUserConf(type: type) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
@@ -229,7 +226,7 @@ extension UserSettingViewController: UIActionSheetDelegate {
         switch json["code"].intValue {
         case 0: self.getUserConf()
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }

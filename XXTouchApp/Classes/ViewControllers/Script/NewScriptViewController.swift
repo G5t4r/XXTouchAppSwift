@@ -21,7 +21,6 @@ class NewScriptViewController: UIViewController {
   private var extensionName = ""
   private var tap: UITapGestureRecognizer!
   private var nextbarButton: UIBarButtonItem!
-  private var isBack = false
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -187,15 +186,12 @@ class NewScriptViewController: UIViewController {
       self.navigationController?.popViewControllerAnimated(true)
       return
     }
-    isBack = true
-    textView.resignFirstResponder()
-    let alert = AlertView.show(messgae: "是否丢弃当前更改？", cancelButtonTitle: Constants.Text.no, otherButtonTitle: Constants.Text.yes)
-    alert.otherButtonAction = {
-      self.navigationController?.popViewControllerAnimated(true)
-    }
-    alert.cancelButtonAction = {
-      self.isBack = false
-    }
+    self.alertAction(message: "是否丢弃当前更改？", completeAlertViewFunc: { (buttonIndex) in
+      switch buttonIndex {
+      case 1: self.navigationController?.popViewControllerAnimated(true)
+      default: break
+      }
+    })
   }
   
   @objc private func keyboardWillAppear(notification: NSNotification) {
@@ -212,25 +208,23 @@ class NewScriptViewController: UIViewController {
   }
   
   @objc private func keyboardWillHide(notification: NSNotification) {
-    if !isBack {
-      UIView.animateWithDuration(self.animationDuration, animations: {
-        self.textView.contentInset.top = Constants.Size.axtNavigationBarHeight
-        self.textView.scrollIndicatorInsets.top = self.textView.contentInset.top
-        self.view.frame.origin.y = 0
-      }) { (_) in
-        NSNotificationCenter.defaultCenter().removeObserver(self)
-        self.newNameView.newNameTextField.text?.removeAll()
-        self.newNameView.hidden = false
-        self.blurView.hidden = false
-        self.newNameView.alpha = 1
-        self.newNameView.transform = CGAffineTransformTranslate(self.newNameView.transform, 0, self.view.frame.height/2)
-        UIView.animateWithDuration(self.animationDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 15, options: [], animations: {
-          self.newNameView.transform = CGAffineTransformIdentity
-          self.blurView.alpha = 1
-          }, completion: { (_) in
-            self.tap.enabled = true
-        })
-      }
+    UIView.animateWithDuration(self.animationDuration, animations: {
+      self.textView.contentInset.top = Constants.Size.axtNavigationBarHeight
+      self.textView.scrollIndicatorInsets.top = self.textView.contentInset.top
+      self.view.frame.origin.y = 0
+    }) { (_) in
+      NSNotificationCenter.defaultCenter().removeObserver(self)
+      self.newNameView.newNameTextField.text?.removeAll()
+      self.newNameView.hidden = false
+      self.blurView.hidden = false
+      self.newNameView.alpha = 1
+      self.newNameView.transform = CGAffineTransformTranslate(self.newNameView.transform, 0, self.view.frame.height/2)
+      UIView.animateWithDuration(self.animationDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 15, options: [], animations: {
+        self.newNameView.transform = CGAffineTransformIdentity
+        self.blurView.alpha = 1
+        }, completion: { (_) in
+          self.tap.enabled = true
+      })
     }
   }
   
@@ -252,7 +246,7 @@ class NewScriptViewController: UIViewController {
         default:
           self.newNameView.newNameTextField.text?.removeAll()
           self.submitUpdate(false, color: ThemeManager.Theme.lightTextColor)
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }

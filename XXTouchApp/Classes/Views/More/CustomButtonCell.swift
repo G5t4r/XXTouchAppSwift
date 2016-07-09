@@ -1,20 +1,21 @@
 //
-//  AboutCustomCell.swift
+//  CustomButtonCell.swift
 //  XXTouchApp
 //
-//  Created by mcy on 16/7/7.
+//  Created by 教主 on 16/7/9.
 //  Copyright © 2016年 mcy. All rights reserved.
 //
 
 import UIKit
 
-class AboutCustomCell: UITableViewCell {
+class CustomButtonCell: UITableViewCell {
   let button = UIButton(type: .Custom)
   
-  init(buttonTitle: String, backgroundColor: UIColor) {
+  init(buttonTitle: String, backgroundColor: UIColor = UIColor.clearColor(), titleColor: UIColor = UIColor.blackColor()) {
     super.init(style: .Default, reuseIdentifier: nil)
     button.setTitle(buttonTitle, forState: .Normal)
     button.backgroundColor = backgroundColor
+    button.setTitleColor(titleColor, forState: .Normal)
     setupUI()
     makeConstriants()
   }
@@ -24,8 +25,8 @@ class AboutCustomCell: UITableViewCell {
   }
   
   private func setupUI() {
+    button.userInteractionEnabled = false
     button.titleLabel?.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
-    button.setTitleColor(UIColor.blackColor(), forState: .Normal)
     
     contentView.addSubview(button)
   }

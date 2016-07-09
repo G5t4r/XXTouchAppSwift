@@ -29,9 +29,9 @@ class AboutViewController: UIViewController {
   
   private var deviceCellList = [AboutInfoCell]()
   
-  private let qqGroupCell = AboutCustomCell(buttonTitle: "开发者QQ群", backgroundColor: UIColor.clearColor())
+  private let qqGroupCell = CustomButtonCell(buttonTitle: "开发者QQ群")
   
-  private let webCell = AboutCustomCell(buttonTitle: "官方网站", backgroundColor: UIColor.clearColor())
+  private let webCell = CustomButtonCell(buttonTitle: "官方网站")
   
   private var deviceId = ""
   
@@ -61,8 +61,8 @@ class AboutViewController: UIViewController {
   }
   
   private func setupAction() {
-    qqGroupCell.button.addTarget(self, action: #selector(qqGroup), forControlEvents: .TouchUpInside)
-    webCell.button.addTarget(self, action: #selector(web), forControlEvents: .TouchUpInside)
+    //    qqGroupCell.button.addTarget(self, action: #selector(qqGroup), forControlEvents: .TouchUpInside)
+    //    webCell.button.addTarget(self, action: #selector(web), forControlEvents: .TouchUpInside)
   }
   
   private func bind() {
@@ -80,17 +80,17 @@ class AboutViewController: UIViewController {
 
 extension AboutViewController {
   
-  @objc private func qqGroup() {
+  private func qqGroup() {
     //    UIApplication.sharedApplication().openURL(NSURL(string: "mailto:info@xxtouch.com")!)
     let url = NSURL(string: "mqqapi://card/show_pslcard?src_type=internal&version=1&uin=40898074&card_type=group&source=external")
     if UIApplication.sharedApplication().canOpenURL(url!) {
       UIApplication.sharedApplication().openURL(url!)
     } else {
-      AlertView.show(messgae: "QQ群号：40898074", cancelButtonTitle: Constants.Text.ok)
+      self.alert(message: "QQ群号：40898074")
     }
   }
   
-  @objc private func web() {
+  private func web() {
     UIApplication.sharedApplication().openURL(NSURL(string: "http://www.xxtouch.com")!)
   }
 }
@@ -115,7 +115,7 @@ extension AboutViewController {
           self.deviceIdCell.bind(json["data"]["deviceid"].stringValue)
           self.deviceId = json["data"]["deviceid"].stringValue
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           return
         }
       }
@@ -152,12 +152,15 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    tableView.deselectRowAtIndexPath(indexPath, animated: true)
     switch indexPath.section {
     case 1:
       if indexPath.row == 6 {
         UIPasteboard.generalPasteboard().string = deviceId
         self.view.showHUD(.Success, text: Constants.Text.copy)
       }
+    case 2: qqGroup()
+    case 3: web()
     default: break
     }
   }

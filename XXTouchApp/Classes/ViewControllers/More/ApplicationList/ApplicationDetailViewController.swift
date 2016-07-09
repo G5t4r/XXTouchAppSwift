@@ -46,6 +46,13 @@ class ApplicationDetailViewController: UIViewController {
     return headerTitleList
   }()
   
+  private var clearAppDataCell: CustomButtonCell = {
+    let clearAppDataCell = CustomButtonCell(buttonTitle: "清理应用数据", titleColor: UIColor.whiteColor())
+    clearAppDataCell.backgroundColor = UIColor(rgb: 0xe85e5e)
+    return clearAppDataCell
+  }()
+  
+  
   override func viewDidLayoutSubviews() {
     appBundlePathCell.scrollView.contentSize.width = appBundlePathCell.titleLabel.mj_textWith()+40
     appDataPathCell.scrollView.contentSize.width = appDataPathCell.titleLabel.mj_textWith()+40
@@ -108,7 +115,7 @@ class ApplicationDetailViewController: UIViewController {
 
 extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataSource {
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return 4
+    return 5
   }
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -129,12 +136,23 @@ extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataS
     case 3:
       appDataPathCell.bind(model.dataPath)
       return appDataPathCell
+    case 4: return clearAppDataCell
     default: return UITableViewCell()
     }
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    print("1232")
+    switch indexPath.section {
+    case 4:
+      self.alertAction(message: "是否确定要清理？", completeAlertViewFunc: { (buttonIndex) in
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        switch buttonIndex {
+        case 1: self.clearAppData()
+        default: break
+        }
+      })
+    default: break
+    }
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -153,6 +171,9 @@ extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataS
     if UIDevice.isPad {
       return nil
     } else {
+      if section == 4 {
+        return nil
+      }
       return headerTitleList[section]
     }
   }
@@ -162,6 +183,31 @@ extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataS
       return CustomHeaderOrFooter(title: headerTitleList[section], textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(18), alignment: .Left)
     } else {
       return nil
+    }
+  }
+}
+
+extension ApplicationDetailViewController {
+  func clearAppData() {
+    self.view.showHUD(text: "正在清除")
+    Service.clearAppData(bid: model.packageName) { [weak self] (data, _, error) in
+      guard let `self` = self else { return }
+      if let data = data where JSON(data: data) != nil {
+        let json = JSON(data: data)
+        switch json["code"].intValue {
+        case 0: self.view.showHUD(.Success, text: "清除成功")
+        default:
+          self.alert(message: json["message"].stringValue)
+          self.view.dismissHUD()
+          return
+        }
+      }
+      if error != nil {
+        self.view.updateHUD(Constants.Error.failure)
+        MixC.sharedManager.restart { (_) in
+          self.clearAppData()
+        }
+      }
     }
   }
 }

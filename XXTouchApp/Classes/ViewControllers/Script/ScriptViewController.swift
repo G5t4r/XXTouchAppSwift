@@ -118,7 +118,7 @@ class ScriptViewController: UIViewController {
             }
           }
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           return
         }
       }
@@ -177,7 +177,7 @@ class ScriptViewController: UIViewController {
             self.fetchScriptList()
           })
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -211,7 +211,7 @@ class ScriptViewController: UIViewController {
             self.view.dismissHUD()
           })
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           self.view.dismissHUD()
         }
       }
@@ -234,7 +234,6 @@ class ScriptViewController: UIViewController {
     /// ActionSheet
     let actionSheet = UIActionSheet()
     actionSheet.title = self.oldName
-    actionSheet.delegate = self
     if self.oldExtensionName == Suffix.Section.LUA.title || self.oldExtensionName == Suffix.Section.XXT.title {
       actionSheet.destructiveButtonIndex = 0
       actionSheet.cancelButtonIndex = 4
@@ -248,13 +247,35 @@ class ScriptViewController: UIViewController {
       actionSheet.addButtonWithTitle("重命名")
     }
     actionSheet.addButtonWithTitle(Constants.Text.cancel)
-    actionSheet.showInView(view)
+    actionSheet.showActionSheetWithCompleteBlock(view) { (buttonIndex) in
+      guard buttonIndex != actionSheet.cancelButtonIndex else { return }
+      if self.oldExtensionName == Suffix.Section.LUA.title || self.oldExtensionName == Suffix.Section.XXT.title {
+        switch buttonIndex {
+        /// 运行
+        case 0: self.launchScriptFile()
+        /// 停止
+        case 1: self.isRunning()
+        /// 编辑
+        case 2: self.edit(self.indexPath)
+        /// 重命名
+        case 3: self.openRenameViewAnimator()
+        default: return
+        }
+      } else {
+        switch buttonIndex {
+        /// 编辑
+        case 0: self.edit(self.indexPath)
+        /// 重命名
+        case 1: self.openRenameViewAnimator()
+        default: return
+        }
+      }
+    }
     
     if self.oldExtensionName == Suffix.Section.LUA.title || self.oldExtensionName == Suffix.Section.XXT.title {
       for cell in tableView.visibleCells {
         let cell = cell as! ScriptCell
         cell.scriptSelectedHidden(true)
-        //      cell.backgroundColor = UIColor.whiteColor()
       }
       for model in scriptList {
         model.isSelected = false
@@ -324,32 +345,7 @@ class ScriptViewController: UIViewController {
   }
 }
 
-extension ScriptViewController: UIActionSheetDelegate {
-  func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
-    guard buttonIndex != actionSheet.cancelButtonIndex else { return }
-    if self.oldExtensionName == Suffix.Section.LUA.title || self.oldExtensionName == Suffix.Section.XXT.title {
-      switch buttonIndex {
-      /// 运行
-      case 0: launchScriptFile()
-      /// 停止
-      case 1: isRunning()
-      /// 编辑
-      case 2: edit(self.indexPath)
-      /// 重命名
-      case 3: openRenameViewAnimator()
-      default: return
-      }
-    } else {
-      switch buttonIndex {
-      /// 编辑
-      case 0: edit(self.indexPath)
-      /// 重命名
-      case 1: openRenameViewAnimator()
-      default: return
-      }
-    }
-  }
-  
+extension ScriptViewController {
   private func launchScriptFile() {
     self.view.showHUD(text: "正在启动")
     Service.launchScriptFile { [weak self] (data, _, error) in
@@ -360,11 +356,11 @@ extension ScriptViewController: UIActionSheetDelegate {
         case 0: self.view.showHUD(.Success, text: json["message"].stringValue)
         case 2:
           let messgae = json["message"].stringValue + "\n" + json["detail"].stringValue
-          AlertView.show(messgae: messgae, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: messgae)
           self.view.dismissHUD()
           return
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -406,7 +402,7 @@ extension ScriptViewController: UIActionSheetDelegate {
         switch json["code"].intValue {
         case 0: self.view.showHUD(.Success, text: json["message"].stringValue)
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -429,7 +425,7 @@ extension ScriptViewController: UIActionSheetDelegate {
         switch json["code"].intValue {
         case 0: break
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           return
         }
       }
@@ -537,7 +533,7 @@ extension ScriptViewController {
             self.view.showHUD(.Error, text: Constants.Text.notReload)
           }
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -569,7 +565,7 @@ extension ScriptViewController: SWTableViewCellDelegate {
           scriptDetailViewController.hidesBottomBarWhenPushed = true
           self.navigationController?.pushViewController(scriptDetailViewController, animated: true)
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           return
         }
       }
@@ -594,9 +590,12 @@ extension ScriptViewController: SWTableViewCellDelegate {
   
   private func edit(indexPath: NSIndexPath) {
     if scriptList[indexPath.row].size > 3*1024*1024 {
-      AlertView.show(messgae: "文件过大\n是否需要忍受可能卡死的风险继续编辑？", cancelButtonTitle: Constants.Text.cancel, otherButtonTitle: Constants.Text.ok).otherButtonAction = {
-        self.intoEdit(indexPath)
-      }
+      self.alertAction(message: "文件过大\n是否需要忍受可能卡死的风险继续编辑？", completeAlertViewFunc: { (buttonIndex) in
+        switch buttonIndex {
+        case 1: self.intoEdit(indexPath)
+        default: break
+        }
+      })
     } else {
       intoEdit(indexPath)
     }
@@ -631,7 +630,7 @@ extension ScriptViewController: SWTableViewCellDelegate {
               self.tableView.setEditing(false, animated: true)
               self.tableView.reloadData()
             default:
-              AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+              self.alert(message: json["message"].stringValue)
               return
             }
           }

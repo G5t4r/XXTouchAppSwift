@@ -24,7 +24,7 @@ class AboutInfoCell: UITableViewCell {
   }
   
   private func setupUI() {
-    self.selectionStyle = .None
+    //    self.selectionStyle = .None
     valueLabel.textColor = ThemeManager.Theme.lightTextColor
     valueLabel.numberOfLines = 0
     valueLabel.textAlignment = .Right

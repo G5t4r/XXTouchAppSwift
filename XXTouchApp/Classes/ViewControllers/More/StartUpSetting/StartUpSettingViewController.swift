@@ -78,7 +78,7 @@ extension StartUpSettingViewController {
           self.currentSelectedScriptName = json["data"]["startup_script"].stringValue
           self.fetchScriptList()
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -151,7 +151,7 @@ extension StartUpSettingViewController {
         switch json["code"].intValue {
         case 0:break
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           return
         }
       }
@@ -173,7 +173,7 @@ extension StartUpSettingViewController {
         switch json["code"].intValue {
         case 0: break
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           return
         }
       }

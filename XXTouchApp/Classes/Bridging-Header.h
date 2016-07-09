@@ -25,4 +25,3 @@
 #import "VLDContextSheetItem.h"
 #import "RFKeyboardToolbar/RFKeyboardToolbar.h"
 #import "TAOverlay/TAOverlay.h"
-#import "DQAlertView/DQAlertView.h"

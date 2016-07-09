@@ -100,7 +100,7 @@ extension KeyBoardSettingViewController {
           let clickVolumeDownIndex = json["data"]["click_volume_down"].intValue
           self.clickVolumeDownCell.bind(self.volumeActionList[clickVolumeDownIndex], info: self.volumeInfoList[clickVolumeDownIndex])
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           return
         }
       }
@@ -137,13 +137,20 @@ extension KeyBoardSettingViewController: UITableViewDelegate, UITableViewDataSou
     /// ActionSheet
     let actionSheet = UIActionSheet()
     actionSheet.title = volumePromptList[indexPath.section]
-    actionSheet.delegate = self
     actionSheet.cancelButtonIndex = 3
     actionSheet.addButtonWithTitle(volumeActionList[0])
     actionSheet.addButtonWithTitle(volumeActionList[1])
     actionSheet.addButtonWithTitle(volumeActionList[2])
     actionSheet.addButtonWithTitle(Constants.Text.cancel)
-    actionSheet.showInView(view)
+    actionSheet.showActionSheetWithCompleteBlock(view) { (buttonIndex) in
+      guard buttonIndex != actionSheet.cancelButtonIndex else { return }
+      switch self.volumePrompt {
+      case .LongUpVolume: self.setVolumeAction(String(buttonIndex),type: "setHoldVolumeUpAction")
+      case .LongDownVolume: self.setVolumeAction(String(buttonIndex),type: "setHoldVolumeDownAction")
+      case .ClickUpVolume: self.setVolumeAction(String(buttonIndex),type: "setClickVolumeUpAction")
+      case .ClickDownVolume: self.setVolumeAction(String(buttonIndex),type: "setClickVolumeDownAction")
+      }
+    }
     
     switch indexPath.section {
     case 0: volumePrompt = .LongUpVolume
@@ -193,17 +200,7 @@ extension KeyBoardSettingViewController: UITableViewDelegate, UITableViewDataSou
   }
 }
 
-extension KeyBoardSettingViewController: UIActionSheetDelegate {
-  func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
-    guard buttonIndex != actionSheet.cancelButtonIndex else { return }
-    switch volumePrompt {
-    case .LongUpVolume: setVolumeAction(String(buttonIndex),type: "setHoldVolumeUpAction")
-    case .LongDownVolume: setVolumeAction(String(buttonIndex),type: "setHoldVolumeDownAction")
-    case .ClickUpVolume: setVolumeAction(String(buttonIndex),type: "setClickVolumeUpAction")
-    case .ClickDownVolume: setVolumeAction(String(buttonIndex),type: "setClickVolumeDownAction")
-    }
-  }
-  
+extension KeyBoardSettingViewController {
   func setVolumeAction(value: String, type: String) {
     Service.setVolumeActionConf(value: value, type: type) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
@@ -212,7 +209,7 @@ extension KeyBoardSettingViewController: UIActionSheetDelegate {
         switch json["code"].intValue {
         case 0: self.getVolumeActionConf()
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }

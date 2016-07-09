@@ -118,7 +118,7 @@ extension DevelopDocumentViewController: UIWebViewDelegate, NJKWebViewProgressDe
   }
   
   func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
-    AlertView.show(messgae: "加载失败，请重新加载", cancelButtonTitle: Constants.Text.ok)
+    self.alert(message: "加载失败，请重新加载")
   }
 }
 

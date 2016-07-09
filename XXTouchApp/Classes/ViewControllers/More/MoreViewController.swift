@@ -203,7 +203,7 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
     /// 设置
     case 2: return key(indexPath.row)
     /// 系统
-    case 3: return system(indexPath.row)
+    case 3: return system(indexPath)
     /// 帮助
     case 4: return help(indexPath.row)
     default:break
@@ -268,7 +268,7 @@ extension MoreViewController {
           self.moreRemoteServiceCell.switchs.on = opened
           self.titleLabelAnimation(opened)
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           return
         }
       }
@@ -299,7 +299,7 @@ extension MoreViewController {
         switch json["code"].intValue {
         case 0: self.getDeviceinfo()
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -317,9 +317,12 @@ extension MoreViewController {
     switch rowIndex {
     /// 重启服务
     case 1:
-      AlertView.show(messgae: "确定要重启XXTouch服务么？", cancelButtonTitle: Constants.Text.cancel, otherButtonTitle: Constants.Text.ok).otherButtonAction = {
-        self.restart()
-      }
+      self.alertAction(message: "确定要重启XXTouch服务么？", completeAlertViewFunc: { (buttonIndex) in
+        switch buttonIndex {
+        case 1: self.restart()
+        default: break
+        }
+      })
     default:break
     }
   }
@@ -356,35 +359,55 @@ extension MoreViewController {
 
 // MARK: - 系统
 extension MoreViewController {
-  private func system(rowIndex: Int) {
-    switch rowIndex {
+  private func system(indexPath: NSIndexPath) {
+    switch indexPath.row {
     /// 应用列表
     case 0: self.navigationController?.pushViewController(ApplicationListViewController(), animated: true)
     /// 清空GPS伪装信息
     case 1:
-      AlertView.show(messgae: "确定要清空GPS伪装信息么？", cancelButtonTitle: Constants.Text.cancel, otherButtonTitle: Constants.Text.ok).otherButtonAction = {
-        self.clearGps()
-      }
+      self.alertAction(message: "确定要清空GPS伪装信息么？", completeAlertViewFunc: { (buttonIndex) in
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        switch buttonIndex {
+        case 1: self.clearGps()
+        default: break
+        }
+      })
     /// 清理 UI 缓存
     case 2:
-      AlertView.show(messgae: "确定要清理 UI 缓存么？\n(这个操作有可能引起注销或图标不见)", cancelButtonTitle: Constants.Text.cancel, otherButtonTitle: Constants.Text.ok).otherButtonAction = {
-        self.clearUIcache()
-      }
+      self.alertAction(message: "确定要清理 UI 缓存么？\n(这个操作有可能引起注销或图标不见)", completeAlertViewFunc: { (buttonIndex) in
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        switch buttonIndex {
+        case 1: self.clearUIcache()
+        default: break
+        }
+      })
     /// 全清设备
     case 3:
-      AlertView.show(messgae: "确定要全清设备么？\n(这个操作将会关闭所有应用并删除所有应用的资料及重置设备标识信息)", cancelButtonTitle: Constants.Text.cancel, otherButtonTitle: Constants.Text.ok).otherButtonAction = {
-        self.clearAll()
-      }
+      self.alertAction(message: "确定要全清设备么？\n(这个操作将会关闭所有应用并删除所有应用的资料及重置设备标识信息)", completeAlertViewFunc: { (buttonIndex) in
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        switch buttonIndex {
+        case 1: self.clearAll()
+        default: break
+        }
+      })
     /// 注销设备
     case 4:
-      AlertView.show(messgae: "确定要注销设备么？", cancelButtonTitle: Constants.Text.cancel, otherButtonTitle: Constants.Text.ok).otherButtonAction = {
-        MixC.sharedManager.logout()
-      }
+      self.alertAction(message: "确定要注销设备么？", completeAlertViewFunc: { (buttonIndex) in
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        switch buttonIndex {
+        case 1: MixC.sharedManager.logout()
+        default: break
+        }
+      })
     /// 重启设备
     case 5:
-      AlertView.show(messgae: "确定要重启设备么？", cancelButtonTitle: Constants.Text.cancel, otherButtonTitle: Constants.Text.ok).otherButtonAction = {
-        self.reboot()
-      }
+      self.alertAction(message: "确定要重启设备么？", completeAlertViewFunc: { (buttonIndex) in
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        switch buttonIndex {
+        case 1: self.reboot()
+        default: break
+        }
+      })
     default: break
     }
   }
@@ -423,7 +446,7 @@ extension MoreViewController {
           }
           self.fetchRemoteAccessStatus()
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -453,7 +476,7 @@ extension MoreViewController {
             })
           })
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -476,7 +499,7 @@ extension MoreViewController {
         switch json["code"].intValue {
         case 0: self.view.showHUD(.Success, text: "清空成功")
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -499,7 +522,7 @@ extension MoreViewController {
         switch json["code"].intValue {
         case 0: self.view.showHUD(.Success, text: "清理成功")
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -522,7 +545,7 @@ extension MoreViewController {
         switch json["code"].intValue {
         case 0: self.view.showHUD(.Success, text: "全清成功")
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -546,7 +569,7 @@ extension MoreViewController {
         switch json["code"].intValue {
         case 0: break
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           return
         }
       }

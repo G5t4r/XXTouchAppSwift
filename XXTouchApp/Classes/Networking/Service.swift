@@ -328,6 +328,14 @@ extension Service {
     return request(method: .POST, host: baseURLString, path: "/bundles", completionHandler: completionHandler)
   }
   
+  // 清除应用数据
+  class func clearAppData(bid bid: String, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
+    let parameters = [
+      "bid" : bid
+    ]
+    return request(method: .POST, host: baseURLString, path: "/clear_app_data", parameters: parameters, completionHandler: completionHandler)
+  }
+  
   // 绑定一个授权码
   class func bindCode(code code: String, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
     return request(method: .POST, host: baseURLString, path: "/bind_code", value: code, completionHandler: completionHandler)

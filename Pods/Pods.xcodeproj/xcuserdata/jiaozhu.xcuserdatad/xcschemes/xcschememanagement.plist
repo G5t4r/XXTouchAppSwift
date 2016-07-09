@@ -9,11 +9,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>DQAlertView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>MJRefresh.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -57,17 +52,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>06237D85F50938E79E292083F3B0AF3D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>0FEFCED0DFD9044B714F80F336070127</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>111EBF2DD9C974285124734FAC00D66D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,22 +62,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5D2CB0BCBC117C0B0C5FCA1F1D1D19F0</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>70BC44266C6FFE30D2C57129458E070B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7A6DBB2B3B17E5C23D454B62CCA2F62E</key>
+		<key>795994E0CE96212D409619F1F76C25D8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9AE0C4D3364A8A8E83641C2E9A863831</key>
+		<key>7C3235226A83B27097AA2758BBEB2E60</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -102,7 +82,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B7BAF5E0D95762FD26AAE834A871A017</key>
+		<key>C20101C00C3292B16B5159D251AF703D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D99DEA4B5AB2AAA01B64E06160B13E2D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DD14F3A707EDB4DA43B6257FC5B0FC7A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -82,7 +82,7 @@ class ScriptDetailViewController: UIViewController {
             self.navigationController?.popViewControllerAnimated(true)
           })
         default:
-          AlertView.show(messgae: json["message"].stringValue, cancelButtonTitle: Constants.Text.ok)
+          self.alert(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -106,9 +106,12 @@ class ScriptDetailViewController: UIViewController {
       return
     }
     textView.resignFirstResponder()
-    AlertView.show(messgae: "是否丢弃当前更改？", cancelButtonTitle: Constants.Text.no, otherButtonTitle: Constants.Text.yes).otherButtonAction = {
-      self.navigationController?.popViewControllerAnimated(true)
-    }
+    self.alertAction(message: "是否丢弃当前更改？", completeAlertViewFunc: { (buttonIndex) in
+      switch buttonIndex {
+      case 1: self.navigationController?.popViewControllerAnimated(true)
+      default: break
+      }
+    })
   }
   
   @objc private func keyboardWillShow(notification: NSNotification) {

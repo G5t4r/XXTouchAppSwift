@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '111EBF2DD9C974285124734FAC00D66D'
+               BlueprintIdentifier = '795994E0CE96212D409619F1F76C25D8'
                BlueprintName = 'VIPhotoView'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libVIPhotoView.a'>

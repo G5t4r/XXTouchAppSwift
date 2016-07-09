@@ -15,7 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     if FileManager.sharedManager.respringFileExistsAtPath() {
-      AlertView.showApp(message: "XXTouch 安装后需要注销以完成服务完全更新，是否立即注销设备？", delegate: self, cancelButtonTitle: Constants.Text.no, otherButtonTitles: Constants.Text.yes)
+      self.alertAction(message: "XXTouch 安装后需要注销以完成服务完全更新，是否立即注销设备？", completeAlertViewFunc: { (buttonIndex) in
+        switch buttonIndex {
+        case 0: exit(0)
+        case 1: MixC.sharedManager.logout()
+        default: break
+        }
+      })
     } else {
       // 注册 Defaults
       Defaults.configure()
@@ -50,15 +56,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 }
 
-extension AppDelegate: UIAlertViewDelegate {
-  func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-    switch buttonIndex {
-    case 0: exit(0)
-    case 1: MixC.sharedManager.logout()
-    default: break
-    }
-  }
-}
+//extension AppDelegate: UIAlertViewDelegate {
+//  func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+//    switch buttonIndex {
+//    case 0: exit(0)
+//    case 1: MixC.sharedManager.logout()
+//    default: break
+//    }
+//  }
+//}
 
 extension AppDelegate {
   private func setupAndShowWindow() {
