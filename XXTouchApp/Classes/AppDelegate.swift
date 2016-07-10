@@ -15,12 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     if FileManager.sharedManager.respringFileExistsAtPath() {
-      self.alertAction(message: "XXTouch 安装后需要注销以完成服务完全更新，是否立即注销设备？", completeAlertViewFunc: { (buttonIndex) in
-        switch buttonIndex {
-        case 0: exit(0)
-        case 1: MixC.sharedManager.logout()
-        default: break
-        }
+      self.alertShowTwoButton(message: "XXTouch 安装后需要注销以完成服务完全更新，是否立即注销设备？", cancelHandler: { (_) in
+        exit(0)
+        }, otherHandler: { (_) in
+          MixC.sharedManager.logout()
       })
     } else {
       // 注册 Defaults

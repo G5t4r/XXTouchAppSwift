@@ -13,4 +13,5 @@ pod 'NJKWebViewProgress'
 pod 'VIPhotoView'
 pod 'RFKeyboardToolbar'
 pod 'TAOverlay'
+pod 'SIAlertView'
 end

@@ -13,6 +13,12 @@ class AuthorizationViewController: UIViewController {
   private let authorizationCell = AuthorizationCell()
   private let authorizationBindCell = AuthorizationBindCell()
   private let deviceId: String
+  private var bindCodeCell: CustomButtonCell = {
+    let bindCodeCell = CustomButtonCell(buttonTitle: "充值", titleColor: ThemeManager.Theme.lightTextColor)
+    bindCodeCell.backgroundColor = ThemeManager.Theme.separatorColor
+    bindCodeCell.userInteractionEnabled = false
+    return bindCodeCell
+  }()
   
   init(deviceId: String) {
     self.deviceId = deviceId
@@ -49,8 +55,6 @@ class AuthorizationViewController: UIViewController {
   
   private func setupAction() {
     authorizationBindCell.codeTextField.addTarget(self, action: #selector(editingChanged(_:)), forControlEvents: .EditingChanged)
-    authorizationBindCell.sumbitButton.addTarget(self, action: #selector(sumbit(_:)), forControlEvents: .TouchUpInside)
-    tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(touch)))
   }
 }
 
@@ -61,27 +65,19 @@ extension AuthorizationViewController {
     let one = string.rangeOfString("1")
     let two = string.rangeOfString("2")
     if zero.length > 0 || one.length > 0 || two.length > 0 || textField.text?.characters.count != 16{
-      submitUpdate(titleColor: ThemeManager.Theme.lightTextColor, backgroundColor: ThemeManager.Theme.separatorColor, enabled: false)
+      bindCodeUpdate(titleColor: ThemeManager.Theme.lightTextColor, backgroundColor: ThemeManager.Theme.separatorColor, enabled: false)
     } else {
-      submitUpdate(titleColor: UIColor.whiteColor(), backgroundColor: ThemeManager.Theme.redBackgroundColor, enabled: true)
+      bindCodeUpdate(titleColor: UIColor.whiteColor(), backgroundColor: ThemeManager.Theme.redBackgroundColor, enabled: true)
     }
   }
   
-  private func submitUpdate(titleColor titleColor: UIColor, backgroundColor: UIColor, enabled: Bool) {
-    authorizationBindCell.sumbitButton.setTitleColor(titleColor, forState: .Normal)
-    authorizationBindCell.sumbitButton.backgroundColor = backgroundColor
-    authorizationBindCell.sumbitButton.enabled = enabled
+  private func bindCodeUpdate(titleColor titleColor: UIColor, backgroundColor: UIColor, enabled: Bool) {
+    bindCodeCell.button.setTitleColor(titleColor, forState: .Normal)
+    bindCodeCell.button.backgroundColor = backgroundColor
+    bindCodeCell.userInteractionEnabled = enabled
   }
   
-  @objc private func sumbit(button: UIButton) {
-    authorizationBindCell.codeTextField.resignFirstResponder()
-    ButtonAnimator.buttonWithAnimation(button, completion: nil)
-    if let code = authorizationBindCell.codeTextField.text {
-      bindCode(code)
-    }
-  }
-  
-  private func bindCode(code: String) {
+  private func bindCode(code: String, indexPath: NSIndexPath) {
     self.view.showHUD(text: "正在充值")
     Service.bindCode(code: code) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
@@ -96,30 +92,48 @@ extension AuthorizationViewController {
           } else {
             message = "充值成功\n本次充值时间：\(Formatter.formatDayTime(time))"
           }
-          self.alert(message: message)
+          self.alertShowOneButton(message: message, cancelHandler: { [weak self] (_) in
+            guard let `self` = self else { return }
+            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            })
           self.view.dismissHUD()
           self.authorizationCell.iconVip()
           self.authorizationBindCell.codeTextField.text?.removeAll()
-          self.submitUpdate(titleColor: ThemeManager.Theme.lightTextColor, backgroundColor: ThemeManager.Theme.separatorColor, enabled: false)
+          self.bindCodeUpdate(titleColor: ThemeManager.Theme.lightTextColor, backgroundColor: ThemeManager.Theme.separatorColor, enabled: false)
           self.getExpireDate()
         case 1:
-          self.alert(message: Constants.Error.connectServerFail)
+          self.alertShowOneButton(message: Constants.Error.connectServerFail, cancelHandler: { [weak self] (_) in
+            guard let `self` = self else { return }
+            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            })
           self.view.dismissHUD()
           return
         case -1:
-          self.alert(message: Constants.Error.verificationFailure)
+          self.alertShowOneButton(message: Constants.Error.verificationFailure, cancelHandler: { [weak self] (_) in
+            guard let `self` = self else { return }
+            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            })
           self.view.dismissHUD()
           return
         case -2:
-          self.alert(message: Constants.Error.invalidCode)
+          self.alertShowOneButton(message: Constants.Error.invalidCode, cancelHandler: { [weak self] (_) in
+            guard let `self` = self else { return }
+            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            })
           self.view.dismissHUD()
           return
         case 112:
-          self.alert(message: Constants.Error.serverBusy)
+          self.alertShowOneButton(message: Constants.Error.serverBusy, cancelHandler: { [weak self] (_) in
+            guard let `self` = self else { return }
+            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            })
           self.view.dismissHUD()
           return
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue, cancelHandler: { [weak self] (_) in
+            guard let `self` = self else { return }
+            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            })
           self.view.dismissHUD()
           return
         }
@@ -127,7 +141,7 @@ extension AuthorizationViewController {
       if error != nil {
         self.view.updateHUD(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
-          self.bindCode(code)
+          self.bindCode(code, indexPath: indexPath)
         }
       }
     }
@@ -155,7 +169,7 @@ extension AuthorizationViewController {
           }
           self.getDeviceAuthInfo()
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           return
         }
       }
@@ -185,7 +199,7 @@ extension AuthorizationViewController {
             self.authorizationCell.iconVip()
           }
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           return
         }
       }
@@ -201,7 +215,7 @@ extension AuthorizationViewController {
 
 extension AuthorizationViewController: UITableViewDelegate, UITableViewDataSource {
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return 2
+    return 3
   }
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -212,22 +226,34 @@ extension AuthorizationViewController: UITableViewDelegate, UITableViewDataSourc
     switch indexPath.section {
     case 0: return authorizationCell
     case 1: return authorizationBindCell
+    case 2: return bindCodeCell
     default: return UITableViewCell()
+    }
+  }
+  
+  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    switch indexPath.section {
+    case 2:
+      authorizationBindCell.codeTextField.resignFirstResponder()
+      if let code = authorizationBindCell.codeTextField.text {
+        bindCode(code, indexPath: indexPath)
+      }
+    default: break
     }
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     switch indexPath.section {
-    case 0: return Sizer.valueForDevice(phone: 45, pad: 65)
-    case 1: return Sizer.valueForDevice(phone: 125, pad: 180)
-    default: return 0.01
+    case 1: return Sizer.valueForDevice(phone: 70, pad: 130)
+    default: return Sizer.valueForDevice(phone: 45, pad: 65)
     }
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     switch section {
     case 0: return Sizer.valueForDevice(phone: 30, pad: 50)
-    default: return Sizer.valueForDevice(phone: 10, pad: 15)
+    case 1: return Sizer.valueForDevice(phone: 10, pad: 15)
+    default: return 0.01
     }
   }
   
@@ -256,11 +282,5 @@ extension AuthorizationViewController: UITableViewDelegate, UITableViewDataSourc
     } else {
       return nil
     }
-  }
-}
-
-extension AuthorizationViewController {
-  @objc private func touch() {
-    authorizationBindCell.codeTextField.resignFirstResponder()
   }
 }

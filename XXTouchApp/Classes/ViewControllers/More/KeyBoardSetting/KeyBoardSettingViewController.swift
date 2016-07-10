@@ -100,7 +100,7 @@ extension KeyBoardSettingViewController {
           let clickVolumeDownIndex = json["data"]["click_volume_down"].intValue
           self.clickVolumeDownCell.bind(self.volumeActionList[clickVolumeDownIndex], info: self.volumeInfoList[clickVolumeDownIndex])
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           return
         }
       }
@@ -209,7 +209,7 @@ extension KeyBoardSettingViewController {
         switch json["code"].intValue {
         case 0: self.getVolumeActionConf()
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }

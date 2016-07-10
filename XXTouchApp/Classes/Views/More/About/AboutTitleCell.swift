@@ -39,14 +39,14 @@ class AboutTitleCell: UITableViewCell {
   
   private func makeConstriants() {
     titleLabel.snp_makeConstraints { (make) in
-      make.top.equalTo(contentView).offset(15)
+      make.top.equalTo(contentView).offset(Sizer.valueForDevice(phone: 15, pad: 30))
       make.leading.trailing.equalTo(contentView).inset(10)
     }
     
     copyrightLabel.snp_makeConstraints { (make) in
-      make.top.equalTo(titleLabel.snp_bottom).offset(15)
+      make.top.equalTo(titleLabel.snp_bottom).offset(Sizer.valueForDevice(phone: 10, pad: 20))
       make.leading.trailing.equalTo(titleLabel)
-      make.bottom.equalTo(contentView).offset(-15)
+//      make.bottom.equalTo(contentView).offset(-15)
     }
   }
   

@@ -186,13 +186,10 @@ class NewScriptViewController: UIViewController {
       self.navigationController?.popViewControllerAnimated(true)
       return
     }
-    self.alertAction(message: "是否丢弃当前更改？", completeAlertViewFunc: { [weak self] (buttonIndex) in
+    self.alertShowTwoButton(message: "是否丢弃当前更改？") { [weak self] (_) in
       guard let `self` = self else { return }
-      switch buttonIndex {
-      case 1: self.navigationController?.popViewControllerAnimated(true)
-      default: break
-      }
-    })
+      self.navigationController?.popViewControllerAnimated(true)
+    }
   }
   
   @objc private func keyboardWillAppear(notification: NSNotification) {
@@ -247,7 +244,7 @@ class NewScriptViewController: UIViewController {
         default:
           self.newNameView.newNameTextField.text?.removeAll()
           self.submitUpdate(false, color: ThemeManager.Theme.lightTextColor)
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }

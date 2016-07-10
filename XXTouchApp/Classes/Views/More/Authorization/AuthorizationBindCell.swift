@@ -10,7 +10,7 @@ import UIKit
 
 class AuthorizationBindCell: UITableViewCell {
   let codeTextField = UITextField()
-  let sumbitButton = UIButton(type: .Custom)
+  //  let sumbitButton = UIButton(type: .Custom)
   
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -30,16 +30,17 @@ class AuthorizationBindCell: UITableViewCell {
     codeTextField.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
     codeTextField.keyboardType = .ASCIICapable
     codeTextField.autocorrectionType = .No
+    codeTextField.delegate = self
     
-    sumbitButton.setTitle("充值", forState: .Normal)
-    sumbitButton.titleLabel?.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
-    sumbitButton.setTitleColor(ThemeManager.Theme.lightTextColor, forState: .Normal)
-    sumbitButton.backgroundColor = ThemeManager.Theme.separatorColor
-    sumbitButton.layer.cornerRadius = 5
-    sumbitButton.enabled = false
+    //    sumbitButton.setTitle("充值", forState: .Normal)
+    //    sumbitButton.titleLabel?.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
+    //    sumbitButton.setTitleColor(ThemeManager.Theme.lightTextColor, forState: .Normal)
+    //    sumbitButton.backgroundColor = ThemeManager.Theme.separatorColor
+    //    sumbitButton.layer.cornerRadius = 5
+    //    sumbitButton.enabled = false
     
     contentView.addSubview(codeTextField)
-    contentView.addSubview(sumbitButton)
+    //    contentView.addSubview(sumbitButton)
   }
   
   private func makeConstriants() {
@@ -49,11 +50,16 @@ class AuthorizationBindCell: UITableViewCell {
       make.height.equalTo(Sizer.valueForDevice(phone: 40, pad: 60))
     }
     
-    sumbitButton.snp_makeConstraints { (make) in
-      make.top.equalTo(codeTextField.snp_bottom).offset(Sizer.valueForDevice(phone: 15, pad: 20))
-      make.leading.trailing.equalTo(codeTextField)
-      make.height.equalTo(codeTextField)
-    }
+    //    sumbitButton.snp_makeConstraints { (make) in
+    //      make.top.equalTo(codeTextField.snp_bottom).offset(Sizer.valueForDevice(phone: 15, pad: 20))
+    //      make.leading.trailing.equalTo(codeTextField)
+    //      make.height.equalTo(codeTextField)
+    //    }
   }
-  
+}
+
+extension AuthorizationBindCell: UITextFieldDelegate {
+  func textFieldShouldReturn(textField: UITextField) -> Bool {
+    return textField.resignFirstResponder()
+  }
 }

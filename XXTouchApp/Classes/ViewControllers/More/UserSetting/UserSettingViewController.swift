@@ -102,7 +102,7 @@ extension UserSettingViewController {
           let noNeedPushidAlert = json["data"]["no_need_pushid_alert"].boolValue
           noNeedPushidAlert ? self.noNeedPushidAlertCell.bind(self.alertValue[1]) : self.noNeedPushidAlertCell.bind(self.alertValue[0])
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           return
         }
       }
@@ -226,7 +226,7 @@ extension UserSettingViewController {
         switch json["code"].intValue {
         case 0: self.getUserConf()
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }

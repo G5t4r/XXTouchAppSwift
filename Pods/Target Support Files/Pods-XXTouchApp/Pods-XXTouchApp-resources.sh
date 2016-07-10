@@ -81,10 +81,12 @@ EOM
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
+  install_resource "SIAlertView/SIAlertView/SIAlertView.bundle"
   install_resource "TAOverlay/TAOverlay/TAOverlay.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "MJRefresh/MJRefresh/MJRefresh.bundle"
+  install_resource "SIAlertView/SIAlertView/SIAlertView.bundle"
   install_resource "TAOverlay/TAOverlay/TAOverlay.bundle"
 fi
 

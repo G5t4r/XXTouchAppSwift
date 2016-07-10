@@ -169,11 +169,11 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
     switch indexPath.section {
     case 0:
       if indexPath.row == 0 {
-        return Sizer.valueForDevice(phone: 55, pad: 95)
+        return Sizer.valueForDevice(phone: 55, pad: 70)
       } else {
-        return Sizer.valueForDevice(phone: 45, pad: 80)
+        return Sizer.valueForDevice(phone: 45, pad: 60)
       }
-    default: return Sizer.valueForDevice(phone: 45, pad: 80)
+    default: return Sizer.valueForDevice(phone: 45, pad: 60)
     }
   }
   
@@ -197,7 +197,7 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     switch indexPath.section {
     /// 服务
-    case 0: return service(indexPath.row)
+    case 0: return service(indexPath)
     /// 授权
     case 1: return authorization(indexPath.row)
     /// 设置
@@ -242,7 +242,7 @@ extension MoreViewController {
       self.moreRemoteServiceCell.bind("远程服务已打开", host: self.host)
       self.moreRemoteServiceCell.hostLabelHidden(!switchs)
       self.moreRemoteServiceCell.titleLabel.snp_remakeConstraints { (make) in
-        make.top.equalTo(self.moreRemoteServiceCell.contentView).offset(Sizer.valueForDevice(phone: 9, pad: 24))
+        make.top.equalTo(self.moreRemoteServiceCell.contentView).offset(Sizer.valueForDevice(phone: 9, pad: 11))
         make.leading.equalTo(self.moreRemoteServiceCell.icon.snp_trailing).offset(15)
       }
       self.moreRemoteServiceCell.hostLabelHidden(!switchs)
@@ -268,7 +268,7 @@ extension MoreViewController {
           self.moreRemoteServiceCell.switchs.on = opened
           self.titleLabelAnimation(opened)
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           return
         }
       }
@@ -299,7 +299,7 @@ extension MoreViewController {
         switch json["code"].intValue {
         case 0: self.getDeviceinfo()
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -313,17 +313,18 @@ extension MoreViewController {
     }
   }
   
-  private func service(rowIndex: Int) {
-    switch rowIndex {
+  private func service(indexPath: NSIndexPath) {
+    switch indexPath.row {
     /// 重启服务
     case 1:
-      self.alertAction(message: "确定要重启XXTouch服务么？", completeAlertViewFunc: { [weak self] (buttonIndex) in
+      self.alertShowTwoButton(message: "确定要重启XXTouch服务么？", cancelHandler: { [weak self] (_) in
         guard let `self` = self else { return }
-        switch buttonIndex {
-        case 1: self.restart()
-        default: break
-        }
-      })
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        }, otherHandler: { [weak self] (_) in
+          guard let `self` = self else { return }
+          self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+          self.restart()
+        })
     default:break
     }
   }
@@ -366,54 +367,54 @@ extension MoreViewController {
     case 0: self.navigationController?.pushViewController(ApplicationListViewController(), animated: true)
     /// 清空GPS伪装信息
     case 1:
-      self.alertAction(message: "确定要清空GPS伪装信息么？", completeAlertViewFunc: { [weak self] (buttonIndex) in
+      self.alertShowTwoButton(message: "确定要清空GPS伪装信息么？", cancelHandler: { [weak self] (_) in
         guard let `self` = self else { return }
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        switch buttonIndex {
-        case 1: self.clearGps()
-        default: break
-        }
-      })
+        }, otherHandler: { [weak self] (_) in
+          guard let `self` = self else { return }
+          self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+          self.clearGps()
+        })
     /// 清理 UI 缓存
     case 2:
-      self.alertAction(message: "确定要清理 UI 缓存么？\n(这个操作有可能引起注销或图标不见)", completeAlertViewFunc: { [weak self] (buttonIndex) in
+      self.alertShowTwoButton(message: "确定要清理 UI 缓存么？\n(这个操作有可能引起注销或图标不见)", cancelHandler: { [weak self] (_) in
         guard let `self` = self else { return }
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        switch buttonIndex {
-        case 1: self.clearUIcache()
-        default: break
-        }
-      })
+        }, otherHandler: { [weak self] (_) in
+          guard let `self` = self else { return }
+          self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+          self.clearUIcache()
+        })
     /// 全清设备
     case 3:
-      self.alertAction(message: "确定要全清设备么？\n(这个操作将会关闭所有应用并删除所有应用的资料及重置设备标识信息)", completeAlertViewFunc: { [weak self] (buttonIndex) in
+      self.alertShowTwoButton(message: "确定要全清设备么？\n(这个操作将会关闭所有应用并删除所有应用的资料及重置设备标识信息)", cancelHandler: { [weak self] (_) in
         guard let `self` = self else { return }
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        switch buttonIndex {
-        case 1: self.clearAll()
-        default: break
-        }
-      })
+        }, otherHandler: { [weak self] (_) in
+          guard let `self` = self else { return }
+          self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+          self.clearAll()
+        })
     /// 注销设备
     case 4:
-      self.alertAction(message: "确定要注销设备么？", completeAlertViewFunc: { [weak self] (buttonIndex) in
+      self.alertShowTwoButton(message: "确定要注销设备么？", cancelHandler: { [weak self] (_) in
         guard let `self` = self else { return }
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        switch buttonIndex {
-        case 1: MixC.sharedManager.logout()
-        default: break
-        }
-      })
+        }, otherHandler: { [weak self] (_) in
+          guard let `self` = self else { return }
+          self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+          MixC.sharedManager.logout()
+        })
     /// 重启设备
     case 5:
-      self.alertAction(message: "确定要重启设备么？", completeAlertViewFunc: { [weak self] (buttonIndex) in
+      self.alertShowTwoButton(message: "确定要重启设备么？", cancelHandler: { [weak self] (_) in
         guard let `self` = self else { return }
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        switch buttonIndex {
-        case 1: self.reboot()
-        default: break
-        }
-      })
+        }, otherHandler: { [weak self] (_) in
+          guard let `self` = self else { return }
+          self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+          self.reboot()
+        })
     default: break
     }
   }
@@ -452,7 +453,7 @@ extension MoreViewController {
           }
           self.fetchRemoteAccessStatus()
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -482,7 +483,7 @@ extension MoreViewController {
             })
           })
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -505,7 +506,7 @@ extension MoreViewController {
         switch json["code"].intValue {
         case 0: self.view.showHUD(.Success, text: "清空成功")
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -528,7 +529,7 @@ extension MoreViewController {
         switch json["code"].intValue {
         case 0: self.view.showHUD(.Success, text: "清理成功")
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -551,7 +552,7 @@ extension MoreViewController {
         switch json["code"].intValue {
         case 0: self.view.showHUD(.Success, text: "全清成功")
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -575,7 +576,7 @@ extension MoreViewController {
         switch json["code"].intValue {
         case 0: break
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           return
         }
       }

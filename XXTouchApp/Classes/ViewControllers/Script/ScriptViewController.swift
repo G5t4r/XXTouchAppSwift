@@ -118,7 +118,7 @@ class ScriptViewController: UIViewController {
             }
           }
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           return
         }
       }
@@ -177,7 +177,7 @@ class ScriptViewController: UIViewController {
             self.fetchScriptList()
           })
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -211,7 +211,7 @@ class ScriptViewController: UIViewController {
             self.view.dismissHUD()
           })
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           self.view.dismissHUD()
         }
       }
@@ -356,11 +356,11 @@ extension ScriptViewController {
         case 0: self.view.showHUD(.Success, text: json["message"].stringValue)
         case 2:
           let messgae = json["message"].stringValue + "\n" + json["detail"].stringValue
-          self.alert(message: messgae)
+          self.alertShowOneButton(message: messgae)
           self.view.dismissHUD()
           return
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -402,7 +402,7 @@ extension ScriptViewController {
         switch json["code"].intValue {
         case 0: self.view.showHUD(.Success, text: json["message"].stringValue)
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -425,7 +425,7 @@ extension ScriptViewController {
         switch json["code"].intValue {
         case 0: break
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           return
         }
       }
@@ -533,7 +533,7 @@ extension ScriptViewController {
             self.view.showHUD(.Error, text: Constants.Text.notReload)
           }
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }
@@ -565,7 +565,7 @@ extension ScriptViewController: SWTableViewCellDelegate {
           scriptDetailViewController.hidesBottomBarWhenPushed = true
           self.navigationController?.pushViewController(scriptDetailViewController, animated: true)
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           return
         }
       }
@@ -590,12 +590,9 @@ extension ScriptViewController: SWTableViewCellDelegate {
   
   private func edit(indexPath: NSIndexPath) {
     if scriptList[indexPath.row].size > 3*1024*1024 {
-      self.alertAction(message: "文件过大\n是否需要忍受可能卡死的风险继续编辑？", completeAlertViewFunc: { [weak self] (buttonIndex) in
+      self.alertShowTwoButton(message: "文件过大\n是否需要忍受可能卡死的风险继续编辑？", otherHandler: { [weak self] (_) in
         guard let `self` = self else { return }
-        switch buttonIndex {
-        case 1: self.intoEdit(indexPath)
-        default: break
-        }
+        self.intoEdit(indexPath)
         })
     } else {
       intoEdit(indexPath)
@@ -631,7 +628,7 @@ extension ScriptViewController: SWTableViewCellDelegate {
               self.tableView.setEditing(false, animated: true)
               self.tableView.reloadData()
             default:
-              self.alert(message: json["message"].stringValue)
+              self.alertShowOneButton(message: json["message"].stringValue)
               return
             }
           }

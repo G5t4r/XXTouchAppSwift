@@ -25,7 +25,7 @@ class Formatter {
   
   class func formatDate(unixTime: Int64) -> String {
     let formatter = NSDateFormatter()
-    formatter.dateFormat = "yyy-MM-dd"
+    formatter.dateFormat = "yyy-MM-dd HH:mm:ss"
     let date = NSDate(timeIntervalSince1970: NSTimeInterval(unixTime))
     return formatter.stringFromDate(date)
   }

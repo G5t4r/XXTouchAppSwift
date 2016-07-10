@@ -48,7 +48,7 @@ class ApplicationDetailViewController: UIViewController {
   
   private var clearAppDataCell: CustomButtonCell = {
     let clearAppDataCell = CustomButtonCell(buttonTitle: "清理应用数据", titleColor: UIColor.whiteColor())
-    clearAppDataCell.backgroundColor = UIColor(rgb: 0xe85e5e)
+    clearAppDataCell.backgroundColor = ThemeManager.Theme.redBackgroundColor
     return clearAppDataCell
   }()
   
@@ -144,13 +144,13 @@ extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataS
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     switch indexPath.section {
     case 4:
-      self.alertAction(message: "是否确定要清理？", completeAlertViewFunc: { [weak self] (buttonIndex) in
+      self.alertShowTwoButton(message: "是否确定要清理？", cancelHandler: { [weak self] (_) in
         guard let `self` = self else { return }
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        switch buttonIndex {
-        case 1: self.clearAppData()
-        default: break
-        }
+        }, otherHandler: { [weak self] (_) in
+          guard let `self` = self else { return }
+          self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+          self.clearAppData()
         })
     default: break
     }
@@ -201,7 +201,7 @@ extension ApplicationDetailViewController {
         switch json["code"].intValue {
         case 0: self.view.showHUD(.Success, text: "清除成功")
         default:
-          self.alert(message: json["message"].stringValue)
+          self.alertShowOneButton(message: json["message"].stringValue)
           self.view.dismissHUD()
           return
         }

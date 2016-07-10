@@ -35,11 +35,20 @@ extension UIActionSheet: UIActionSheetDelegate {
     self.showInView(inView)
   }
   
-  public func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
+  public func actionSheet(actionSheet: UIActionSheet, didDismissWithButtonIndex buttonIndex: Int) {
     let completeActionSheetFuncObj: CompleteActionSheetFuncClass? = objc_getAssociatedObject(self, &UIActionSheet.key) as? CompleteActionSheetFuncClass
     
     if completeActionSheetFuncObj != nil && completeActionSheetFuncObj?.completeActionSheetFunc != nil{
       completeActionSheetFuncObj!.completeActionSheetFunc!(buttonIndex: buttonIndex)
     }
   }
+  
+  // 冲突
+  //  public func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
+  //    let completeActionSheetFuncObj: CompleteActionSheetFuncClass? = objc_getAssociatedObject(self, &UIActionSheet.key) as? CompleteActionSheetFuncClass
+  //    
+  //    if completeActionSheetFuncObj != nil && completeActionSheetFuncObj?.completeActionSheetFunc != nil{
+  //      completeActionSheetFuncObj!.completeActionSheetFunc!(buttonIndex: buttonIndex)
+  //    }
+  //  }
 }

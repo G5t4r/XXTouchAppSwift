@@ -21,7 +21,7 @@ extension ThemeManager {
     static let lightTextColor = UIColor(rgb: 0x999999)
     static let lightGrayBackgroundColor = UIColor(rgb: 0xeeeeee)
     static let yellowGrayBackgroundColor = UIColor(rgb: 0xf4f4f4)
-    static let redBackgroundColor = UIColor(rgb: 0xe06666)
+    static let redBackgroundColor = UIColor(rgb: 0xf55e4e)
     static let greenBackgroundColor = UIColor(rgb: 0x02a66f)
   }
 }
