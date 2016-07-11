@@ -22,10 +22,18 @@ class ScriptViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    setupUI()
-    makeConstriants()
-    setupAction()
-    fetchScriptList()
+    if FileManager.sharedManager.respringFileExistsAtPath() {
+      self.alertShowTwoButton(message: "XXTouch 安装后需要注销以完成服务完全更新，是否立即注销设备？", cancelHandler: { (_) in
+        exit(0)
+        }, otherHandler: { (_) in
+          MixC.sharedManager.logout()
+      })
+    } else {
+      setupUI()
+      makeConstriants()
+      setupAction()
+      fetchScriptList()
+    }
   }
   
   private func setupUI() {
@@ -231,46 +239,38 @@ class ScriptViewController: UIViewController {
     self.oldExtensionName = Suffix.haveSuffix(scriptList[indexPath.row].name)
     editingChanged()
     
-    /// ActionSheet
-    let actionSheet = UIActionSheet()
-    actionSheet.title = self.oldName
+    // SIActionSheet
+    let actionSheet = SIActionSheet(title: self.oldName)
     if self.oldExtensionName == Suffix.Section.LUA.title || self.oldExtensionName == Suffix.Section.XXT.title {
-      actionSheet.destructiveButtonIndex = 0
-      actionSheet.cancelButtonIndex = 4
-      actionSheet.addButtonWithTitle("运行")
-      actionSheet.addButtonWithTitle("停止")
-      actionSheet.addButtonWithTitle("编辑")
-      actionSheet.addButtonWithTitle("重命名")
+      actionSheet.addButtonWithTitle("运行", type: .Destructive) { [weak self] (_) in
+        guard let `self` = self else { return }
+        self.launchScriptFile()
+      }
+      actionSheet.addButtonWithTitle("停止", type: .Default) { [weak self](_) in
+        guard let `self` = self else { return }
+        self.isRunning()
+      }
+      actionSheet.addButtonWithTitle("编辑", type: .Default) { [weak self] (_) in
+        guard let `self` = self else { return }
+        self.edit(self.indexPath)
+      }
+      actionSheet.addButtonWithTitle("重命名", type: .Default) { [weak self] (_) in
+        guard let `self` = self else { return }
+        self.openRenameViewAnimator()
+      }
     } else {
-      actionSheet.cancelButtonIndex = 2
-      actionSheet.addButtonWithTitle("编辑")
-      actionSheet.addButtonWithTitle("重命名")
-    }
-    actionSheet.addButtonWithTitle(Constants.Text.cancel)
-    actionSheet.showActionSheetWithCompleteBlock(view) { (buttonIndex) in
-      guard buttonIndex != actionSheet.cancelButtonIndex else { return }
-      if self.oldExtensionName == Suffix.Section.LUA.title || self.oldExtensionName == Suffix.Section.XXT.title {
-        switch buttonIndex {
-        /// 运行
-        case 0: self.launchScriptFile()
-        /// 停止
-        case 1: self.isRunning()
-        /// 编辑
-        case 2: self.edit(self.indexPath)
-        /// 重命名
-        case 3: self.openRenameViewAnimator()
-        default: return
-        }
-      } else {
-        switch buttonIndex {
-        /// 编辑
-        case 0: self.edit(self.indexPath)
-        /// 重命名
-        case 1: self.openRenameViewAnimator()
-        default: return
-        }
+      actionSheet.addButtonWithTitle("编辑", type: .Default) { [weak self] (_) in
+        guard let `self` = self else { return }
+        self.edit(self.indexPath)
+      }
+      actionSheet.addButtonWithTitle("重命名", type: .Default) { [weak self] (_) in
+        guard let `self` = self else { return }
+        self.openRenameViewAnimator()
       }
     }
+    actionSheet.addButtonWithTitle(Constants.Text.cancel, type: .Cancel) { (_) in }
+    actionSheet.allowTapBackgroundToDismiss = true
+    actionSheet.show()
     
     if self.oldExtensionName == Suffix.Section.LUA.title || self.oldExtensionName == Suffix.Section.XXT.title {
       for cell in tableView.visibleCells {
@@ -287,7 +287,6 @@ class ScriptViewController: UIViewController {
       cell.scriptSelectedHidden(false)
       let model = scriptList[indexPath.row]
       model.isSelected = true
-      //    cell.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
       selectScriptFile(scriptList[indexPath.row].name)
     }
   }

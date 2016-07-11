@@ -96,6 +96,28 @@ class Service {
     task.resume()
     return task
   }
+  
+  class func syncRequest(method method: Method, host: String, path: String, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
+    let url = NSURL(string: host)!
+    let request = NSMutableURLRequest(URL: url.URLByAppendingPathComponent(path))
+    request.HTTPMethod = method.rawValue
+    let session = NSURLSession(configuration: config(), delegate: nil, delegateQueue: .mainQueue())
+    let task = session.dataTaskWithRequest(request, completionHandler: completionHandler)
+    task.resume()
+    return task
+  }
+  
+  class func syncRequest(method method: Method, host: String, path: String, parameters: [String : AnyObject], completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
+    let data = try? NSJSONSerialization.dataWithJSONObject(parameters, options: .PrettyPrinted)
+    let url = NSURL(string: host)!
+    let request = NSMutableURLRequest(URL: url.URLByAppendingPathComponent(path))
+    request.HTTPMethod = method.rawValue
+    request.HTTPBody = data
+    let session = NSURLSession(configuration: config(), delegate: nil, delegateQueue: .mainQueue())
+    let task = session.dataTaskWithRequest(request, completionHandler: completionHandler)
+    task.resume()
+    return task
+  }
 }
 
 // 脚本页面相关请求
@@ -233,7 +255,7 @@ extension Service {
   
   // 全清设备
   class func clearAll(completionHandler completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
-    return request(method: .POST, host: baseURLString, path: "/clear_all", completionHandler: completionHandler)
+    return syncRequest(method: .POST, host: baseURLString, path: "/clear_all", completionHandler: completionHandler)
   }
   
   // 重启设备
@@ -333,7 +355,7 @@ extension Service {
     let parameters = [
       "bid" : bid
     ]
-    return request(method: .POST, host: baseURLString, path: "/clear_app_data", parameters: parameters, completionHandler: completionHandler)
+    return syncRequest(method: .POST, host: baseURLString, path: "/clear_app_data", parameters: parameters, completionHandler: completionHandler)
   }
   
   // 绑定一个授权码

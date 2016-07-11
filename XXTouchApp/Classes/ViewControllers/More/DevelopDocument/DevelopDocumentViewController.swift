@@ -74,21 +74,13 @@ extension DevelopDocumentViewController {
   }
   
   @objc private func skip() {
-    let actionSheet = UIActionSheet()
-    actionSheet.title = navigationItem.title!
-    actionSheet.delegate = self
-    actionSheet.destructiveButtonIndex = 0
-    actionSheet.cancelButtonIndex = 1
-    actionSheet.addButtonWithTitle("跳转到Safari")
-    actionSheet.addButtonWithTitle(Constants.Text.cancel)
-    actionSheet.showInView(view)
-  }
-}
-
-extension DevelopDocumentViewController: UIActionSheetDelegate {
-  func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
-    guard buttonIndex != actionSheet.cancelButtonIndex else { return }
-    UIApplication.sharedApplication().openURL(NSURL(string: Service.developDocument())!)
+    let actionSheet = SIActionSheet(title: navigationItem.title!)
+    actionSheet.addButtonWithTitle("跳转到Safari", type: .Destructive) { (_) in
+      UIApplication.sharedApplication().openURL(NSURL(string: Service.developDocument())!)
+    }
+    actionSheet.addButtonWithTitle(Constants.Text.cancel, type: .Cancel) { (_) in}
+    actionSheet.allowTapBackgroundToDismiss = true
+    actionSheet.show()
   }
 }
 

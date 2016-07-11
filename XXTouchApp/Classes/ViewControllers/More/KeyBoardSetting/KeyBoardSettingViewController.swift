@@ -43,14 +43,6 @@ class KeyBoardSettingViewController: UIViewController {
     return volumePromptList
   }()
   
-  enum VolumePrompt {
-    case LongUpVolume
-    case LongDownVolume
-    case ClickUpVolume
-    case ClickDownVolume
-  }
-  var volumePrompt = VolumePrompt.LongUpVolume
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
@@ -134,31 +126,41 @@ extension KeyBoardSettingViewController: UITableViewDelegate, UITableViewDataSou
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    /// ActionSheet
-    let actionSheet = UIActionSheet()
-    actionSheet.title = volumePromptList[indexPath.section]
-    actionSheet.cancelButtonIndex = 3
-    actionSheet.addButtonWithTitle(volumeActionList[0])
-    actionSheet.addButtonWithTitle(volumeActionList[1])
-    actionSheet.addButtonWithTitle(volumeActionList[2])
-    actionSheet.addButtonWithTitle(Constants.Text.cancel)
-    actionSheet.showActionSheetWithCompleteBlock(view) { (buttonIndex) in
-      guard buttonIndex != actionSheet.cancelButtonIndex else { return }
-      switch self.volumePrompt {
-      case .LongUpVolume: self.setVolumeAction(String(buttonIndex),type: "setHoldVolumeUpAction")
-      case .LongDownVolume: self.setVolumeAction(String(buttonIndex),type: "setHoldVolumeDownAction")
-      case .ClickUpVolume: self.setVolumeAction(String(buttonIndex),type: "setClickVolumeUpAction")
-      case .ClickDownVolume: self.setVolumeAction(String(buttonIndex),type: "setClickVolumeDownAction")
+    
+    let actionSheet = SIActionSheet(title: volumePromptList[indexPath.section])
+    actionSheet.addButtonWithTitle(volumeActionList[0], type: .Default) { [weak self] (action) in
+      guard let `self` = self else { return }
+      switch indexPath.section {
+      case 0: self.setVolumeAction(String(0),type: "setHoldVolumeUpAction")
+      case 1: self.setVolumeAction(String(0),type: "setHoldVolumeDownAction")
+      case 2: self.setVolumeAction(String(0),type: "setClickVolumeUpAction")
+      case 3: self.setVolumeAction(String(0),type: "setClickVolumeDownAction")
+      default: break
       }
     }
-    
-    switch indexPath.section {
-    case 0: volumePrompt = .LongUpVolume
-    case 1: volumePrompt = .LongDownVolume
-    case 2: volumePrompt = .ClickUpVolume
-    case 3: volumePrompt = .ClickDownVolume
-    default:break
+    actionSheet.addButtonWithTitle(volumeActionList[1], type: .Default) { [weak self] (_) in
+      guard let `self` = self else { return }
+      switch indexPath.section {
+      case 0: self.setVolumeAction(String(1),type: "setHoldVolumeUpAction")
+      case 1: self.setVolumeAction(String(1),type: "setHoldVolumeDownAction")
+      case 2: self.setVolumeAction(String(1),type: "setClickVolumeUpAction")
+      case 3: self.setVolumeAction(String(1),type: "setClickVolumeDownAction")
+      default: break
+      }
     }
+    actionSheet.addButtonWithTitle(volumeActionList[2], type: .Default) { [weak self] (_) in
+      guard let `self` = self else { return }
+      switch indexPath.section {
+      case 0: self.setVolumeAction(String(2),type: "setHoldVolumeUpAction")
+      case 1: self.setVolumeAction(String(2),type: "setHoldVolumeDownAction")
+      case 2: self.setVolumeAction(String(2),type: "setClickVolumeUpAction")
+      case 3: self.setVolumeAction(String(2),type: "setClickVolumeDownAction")
+      default: break
+      }
+    }
+    actionSheet.addButtonWithTitle(Constants.Text.cancel, type: .Cancel) { (_) in}
+    actionSheet.allowTapBackgroundToDismiss = true
+    actionSheet.show()
   }
   
   func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

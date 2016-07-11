@@ -40,7 +40,7 @@ class MoreRemoteServiceCell: UITableViewCell {
   
   private func makeConstriants() {
     icon.snp_makeConstraints { (make) in
-      make.leading.equalTo(contentView).offset(20)
+      make.leading.equalTo(contentView).offset(Sizer.valueForDevice(phone: 15, pad: 20))
       make.centerY.equalTo(contentView)
       make.height.width.equalTo(Sizer.valueForDevice(phone: 28, pad: 38))
     }

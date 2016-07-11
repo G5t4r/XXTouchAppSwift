@@ -9,16 +9,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>JCAlertView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>KVNProgress.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>MJRefresh.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -35,6 +25,11 @@
 			<false/>
 		</dict>
 		<key>RFKeyboardToolbar.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SIAlertView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -62,11 +57,6 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>06B2232CE73059846F04E5C3DFEE0D38</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>0FEFCED0DFD9044B714F80F336070127</key>
 		<dict>
 			<key>primary</key>
@@ -77,17 +67,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2D997111F231D41993024D08756B945A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5D406177E2FAD88299DB5A8E7649AD7C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>660B1BBB81DAC8605A63CA490411EADC</key>
+		<key>6D2897733C0A665058CBBF76DB213D13</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -97,12 +77,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8E16F23C3941DDC72C45FC1B5C8EE8CD</key>
+		<key>8BB17847AD4F66C83A4EFD1DC7EA7D0C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9EBA726A49DBAAB3AABDEDD3875E4F63</key>
+		<key>96141707C6A7D7BC02D074F20C1E5B02</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AFE06154AFC9D83E128402A00FED0F4A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -112,7 +97,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F090768C198F53A3C4E120ED08BD3896</key>
+		<key>C58EF1ADFD2B968760ECE92D7AA21AB8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CDF7CC3763E43A64D648854BC93AA30D</key>
 		<dict>
 			<key>primary</key>
 			<true/>

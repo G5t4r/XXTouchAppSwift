@@ -557,12 +557,12 @@ extension MoreViewController {
           return
         }
       }
-      if error != nil {
-        self.view.updateHUD(Constants.Error.failure)
-        MixC.sharedManager.restart { (_) in
-          self.clearAll()
-        }
-      }
+      //      if error != nil {
+      //        self.view.updateHUD(Constants.Error.failure)
+      //        MixC.sharedManager.restart { (_) in
+      //          self.clearAll()
+      //        }
+      //      }
     }
   }
   

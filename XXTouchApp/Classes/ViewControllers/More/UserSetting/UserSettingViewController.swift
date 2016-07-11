@@ -42,14 +42,6 @@ class UserSettingViewController: UIViewController {
   private let noLowPowerAlertCell = UserSettingCell()
   private let noNeedPushidAlertCell = UserSettingCell()
   
-  enum UserPrompt {
-    case NoSimAlert
-    case NoSimStatusbar
-    case NoLowPowerAlert
-    case NoNeedPushidAlert
-  }
-  var userPrompt = UserPrompt.NoSimAlert
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
@@ -136,56 +128,42 @@ extension UserSettingViewController: UITableViewDelegate, UITableViewDataSource 
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    /// ActionSheet
-    let actionSheet = UIActionSheet()
-    actionSheet.title = userSettingList[indexPath.section]
-    actionSheet.cancelButtonIndex = 2
+    
+    let actionSheet = SIActionSheet(title: userSettingList[indexPath.section])
     switch indexPath.section {
     case 1:
-      actionSheet.addButtonWithTitle(showValue[0])
-      actionSheet.addButtonWithTitle(showValue[1])
+      actionSheet.addButtonWithTitle(showValue[0], type: .Default) { [weak self] (action) in
+        guard let `self` = self else { return }
+        self.setUserConf("setNosimStatusbarOff")
+        
+      }
+      actionSheet.addButtonWithTitle(showValue[1], type: .Default) { [weak self] (action) in
+        guard let `self` = self else { return }
+        self.setUserConf("setNosimStatusbarOn")
+      }
     default:
-      actionSheet.addButtonWithTitle(alertValue[0])
-      actionSheet.addButtonWithTitle(alertValue[1])
-    }
-    actionSheet.addButtonWithTitle(Constants.Text.cancel)
-    actionSheet.showActionSheetWithCompleteBlock(view) { (buttonIndex) in
-      guard buttonIndex != actionSheet.cancelButtonIndex else { return }
-      switch self.userPrompt {
-      case .NoSimAlert:
-        switch buttonIndex {
+      actionSheet.addButtonWithTitle(alertValue[0], type: .Default) { [weak self] (action) in
+        guard let `self` = self else { return }
+        switch indexPath.section {
         case 0: self.setUserConf("setNosimAlertOff")
-        case 1: self.setUserConf("setNosimAlertOn")
+        case 2: self.setUserConf("setNoLowPowerAlertOff")
+        case 3: self.setUserConf("setNoNeedPushidAlertOff")
         default: break
         }
-      case .NoSimStatusbar:
-        switch buttonIndex {
-        case 0: self.setUserConf("setNosimStatusbarOff")
-        case 1: self.setUserConf("setNosimStatusbarOn")
-        default: break
-        }
-      case .NoLowPowerAlert:
-        switch buttonIndex {
-        case 0: self.setUserConf("setNoLowPowerAlertOff")
-        case 1: self.setUserConf("setNoLowPowerAlertOn")
-        default: break
-        }
-      case .NoNeedPushidAlert:
-        switch buttonIndex {
-        case 0: self.setUserConf("setNoNeedPushidAlertOff")
-        case 1: self.setUserConf("setNoNeedPushidAlertOn")
+      }
+      actionSheet.addButtonWithTitle(alertValue[1], type: .Default) { [weak self] (action) in
+        guard let `self` = self else { return }
+        switch indexPath.section {
+        case 0: self.setUserConf("setNosimAlertOn")
+        case 2: self.setUserConf("setNoLowPowerAlertOn")
+        case 3: self.setUserConf("setNoNeedPushidAlertOn")
         default: break
         }
       }
     }
-    
-    switch indexPath.section {
-    case 0: userPrompt = .NoSimAlert
-    case 1: userPrompt = .NoSimStatusbar
-    case 2: userPrompt = .NoLowPowerAlert
-    case 3: userPrompt = .NoNeedPushidAlert
-    default:break
-    }
+    actionSheet.addButtonWithTitle(Constants.Text.cancel, type: .Cancel) { (_) in}
+    actionSheet.allowTapBackgroundToDismiss = true
+    actionSheet.show()
   }
   
   func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

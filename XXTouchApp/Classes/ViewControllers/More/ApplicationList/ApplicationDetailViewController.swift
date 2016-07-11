@@ -206,12 +206,12 @@ extension ApplicationDetailViewController {
           return
         }
       }
-      if error != nil {
-        self.view.updateHUD(Constants.Error.failure)
-        MixC.sharedManager.restart { (_) in
-          self.clearAppData()
-        }
-      }
+      //      if error != nil {
+      //        self.view.updateHUD(Constants.Error.failure)
+      //        MixC.sharedManager.restart { (_) in
+      //          self.clearAppData()
+      //        }
+      //      }
     }
   }
 }
