@@ -35,6 +35,16 @@ class AboutViewController: UIViewController {
   
   private var deviceId = ""
   
+  init() {
+    super.init(nibName: nil, bundle: nil)
+    self.contentSizeInPopup = CGSizeMake(view.frame.width/1.05, view.frame.height/1.5)
+    //    self.landscapeContentSizeInPopup = CGSizeMake(view.frame.height/1.5, view.frame.width/1.05)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()

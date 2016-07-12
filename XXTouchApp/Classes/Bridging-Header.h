@@ -27,3 +27,4 @@
 #import "TAOverlay/TAOverlay.h"
 #import "SIAlertView/SIAlertView.h"
 #import "SIActionSheet.h"
+#import "STPopup/STPopup.h"

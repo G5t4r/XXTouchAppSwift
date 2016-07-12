@@ -20,7 +20,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // 加载程序窗口
     setupAndShowWindow()
     
+    // 创建3D-Touch
+    createThreeDeeTouch(application)
+    
     return true
+  }
+  
+  @available(iOS 9.0, *)
+  func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+    let handledShortCutItem = handleShortCutItem(shortcutItem)
+    completionHandler(handledShortCutItem)
   }
   
   func applicationWillResignActive(application: UIApplication) {
@@ -46,15 +55,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 }
 
-//extension AppDelegate: UIAlertViewDelegate {
-//  func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-//    switch buttonIndex {
-//    case 0: exit(0)
-//    case 1: MixC.sharedManager.logout()
-//    default: break
-//    }
-//  }
-//}
+extension AppDelegate {
+  // 3D-Touch 创建
+  private func createThreeDeeTouch(application: UIApplication) {
+    if #available(iOS 9.0, *) {
+      if self.window?.traitCollection.forceTouchCapability == UIForceTouchCapability.Available {
+        let sweepItemIcon = UIApplicationShortcutIcon(templateImageName: "3dtouchsweep")
+        let sweepItem = UIMutableApplicationShortcutItem(type: "sweep", localizedTitle: "扫一扫", localizedSubtitle: nil, icon: sweepItemIcon, userInfo: nil)
+        
+        let launchItemIcon = UIApplicationShortcutIcon(templateImageName: "3dtouchlaunch")
+        let launchItem = UIMutableApplicationShortcutItem(type: "launch", localizedTitle: "启动脚本", localizedSubtitle: nil, icon: launchItemIcon, userInfo: nil)
+        
+        let stopItemIcon = UIApplicationShortcutIcon(templateImageName: "3dtouchstop")
+        let stopItem = UIMutableApplicationShortcutItem(type: "stop", localizedTitle: "停止脚本", localizedSubtitle: nil, icon: stopItemIcon, userInfo: nil)
+        
+        application.shortcutItems = [stopItem, launchItem, sweepItem]
+      }
+    }
+  }
+  
+  //3D-Touch 跳转
+  @available(iOS 9.0, *)
+  private func handleShortCutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
+    var handled = false
+    let tabBarViewController = window!.rootViewController as? UITabBarController
+    let navController = tabBarViewController?.viewControllers?.first as? UINavigationController
+    let scriptViewController = navController?.viewControllers.first as! ScriptViewController
+    switch shortcutItem.type {
+    // 扫一扫
+    case "sweep":
+      scriptViewController.sweep()
+      handled = true
+    // 启动脚本
+    case "launch":
+      scriptViewController.launchScriptFile()
+      handled = true
+    // 停止脚本
+    case "stop":
+      scriptViewController.isRunning()
+      handled = true
+    default: break
+    }
+    return handled
+  }
+}
 
 extension AppDelegate {
   private func setupAndShowWindow() {

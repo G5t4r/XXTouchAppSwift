@@ -43,7 +43,7 @@ class ScriptViewController: UIViewController {
     let rightImage = UIImage(named: "new")!.imageWithRenderingMode(.AlwaysOriginal)
     navigationItem.rightBarButtonItem = UIBarButtonItem(image: rightImage, style: .Plain, target: self, action: #selector(addScript(_:)))
     let leftImage = UIImage(named: "sweep")!.imageWithRenderingMode(.AlwaysOriginal)
-    navigationItem.leftBarButtonItem = UIBarButtonItem(image: leftImage, style: .Plain, target: self, action: #selector(sweep(_:)))
+    navigationItem.leftBarButtonItem = UIBarButtonItem(image: leftImage, style: .Plain, target: self, action: #selector(sweep))
     
     tableView.registerClass(ScriptCell.self, forCellReuseIdentifier: NSStringFromClass(ScriptCell))
     tableView.delegate = self
@@ -207,8 +207,8 @@ class ScriptViewController: UIViewController {
   }
   
   /// 扫一扫
-  @objc private func sweep(button: UIBarButtonItem) {
-    self.view.showHUD(text: Constants.Text.reloading)
+  func sweep() {
+    self.view.showHUD(text: "扫一扫 正在加载")
     Service.sweep { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
@@ -226,7 +226,7 @@ class ScriptViewController: UIViewController {
       if error != nil {
         self.view.updateHUD(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
-          self.sweep(button)
+          self.sweep()
         }
       }
     }
@@ -345,7 +345,7 @@ class ScriptViewController: UIViewController {
 }
 
 extension ScriptViewController {
-  private func launchScriptFile() {
+  func launchScriptFile() {
     self.view.showHUD(text: "正在启动")
     Service.launchScriptFile { [weak self] (data, _, error) in
       guard let `self` = self else { return }
@@ -373,7 +373,7 @@ extension ScriptViewController {
     }
   }
   
-  private func isRunning() {
+  func isRunning() {
     self.view.showHUD(text: "正在关闭")
     Service.isRunning { [weak self] (data, _, error) in
       guard let `self` = self else { return }

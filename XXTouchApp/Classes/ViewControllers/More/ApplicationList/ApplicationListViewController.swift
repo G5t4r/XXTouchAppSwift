@@ -19,6 +19,16 @@ class ApplicationListViewController: UIViewController {
     }
   }
   
+  init() {
+    super.init(nibName: nil, bundle: nil)
+    self.contentSizeInPopup = CGSizeMake(view.frame.width/1.05, view.frame.height/1.5)
+    //    self.landscapeContentSizeInPopup = CGSizeMake(view.frame.height/1.5, view.frame.width/1.05)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
@@ -94,7 +104,9 @@ extension ApplicationListViewController: UITableViewDelegate, UITableViewDataSou
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     let applicationDetailViewController = ApplicationDetailViewController(model: appList[indexPath.row])
-    self.navigationController?.pushViewController(applicationDetailViewController, animated: true)
+    self.popupController.pushViewController(applicationDetailViewController, animated: true)
+    
+    //    self.navigationController?.pushViewController(applicationDetailViewController, animated: true)
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

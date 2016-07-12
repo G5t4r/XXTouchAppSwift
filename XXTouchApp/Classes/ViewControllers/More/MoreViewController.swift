@@ -351,9 +351,17 @@ extension MoreViewController {
     /// 录制设置
     case 1: self.navigationController?.pushViewController(RecordSettingViewController(), animated: true)
     /// 开机启动设置
-    case 2: self.navigationController?.pushViewController(StartUpSettingViewController(), animated: true)
+    case 2:
+      let startUpSettingPopupController = STPopupController(rootViewController: StartUpSettingViewController())
+      startUpSettingPopupController.containerView.layer.cornerRadius = 4
+      startUpSettingPopupController.presentInViewController(self)
+      //            self.navigationController?.pushViewController(StartUpSettingViewController(), animated: true)
     /// 用户偏好设置
-    case 3: self.navigationController?.pushViewController(UserSettingViewController(), animated: true)
+    case 3:
+      let userSettingPopupController = STPopupController(rootViewController: UserSettingViewController())
+      userSettingPopupController.containerView.layer.cornerRadius = 4
+      userSettingPopupController.presentInViewController(self)
+    //      self.navigationController?.pushViewController(UserSettingViewController(), animated: true)
     default:break
     }
   }
@@ -364,7 +372,11 @@ extension MoreViewController {
   private func system(indexPath: NSIndexPath) {
     switch indexPath.row {
     /// 应用列表
-    case 0: self.navigationController?.pushViewController(ApplicationListViewController(), animated: true)
+    case 0:
+      let applicationListPopupController = STPopupController(rootViewController: ApplicationListViewController())
+      //      applicationListPopupController.containerView.layer.cornerRadius = 4
+      applicationListPopupController.presentInViewController(self)
+      //      self.navigationController?.pushViewController(ApplicationListViewController(), animated: true)
     /// 清空GPS伪装信息
     case 1:
       self.alertShowTwoButton(message: "确定要清空GPS伪装信息么？", cancelHandler: { [weak self] (_) in
@@ -426,11 +438,21 @@ extension MoreViewController {
     switch rowIndex {
     /// 开发文档
     case 0:
-      let developDocumentViewController = DevelopDocumentViewController()
-      developDocumentViewController.hidesBottomBarWhenPushed = true
-      self.navigationController?.pushViewController(developDocumentViewController, animated: true)
+      let developDocumentPopupController = STPopupController(rootViewController: DevelopDocumentViewController())
+      developDocumentPopupController.containerView.layer.cornerRadius = 4
+      developDocumentPopupController.presentInViewController(self)
+      
+      
+      //      let developDocumentViewController = DevelopDocumentViewController()
+      //      developDocumentViewController.hidesBottomBarWhenPushed = true
+      //      self.navigationController?.pushViewController(developDocumentViewController, animated: true)
     /// 关于
-    case 1: self.navigationController?.pushViewController(AboutViewController(), animated: true)
+    case 1:
+      let aboutPopupController = STPopupController(rootViewController: AboutViewController())
+      aboutPopupController.containerView.layer.cornerRadius = 4
+      aboutPopupController.presentInViewController(self)
+      
+    //      self.navigationController?.pushViewController(AboutViewController(), animated: true)
     default: break
     }
   }
