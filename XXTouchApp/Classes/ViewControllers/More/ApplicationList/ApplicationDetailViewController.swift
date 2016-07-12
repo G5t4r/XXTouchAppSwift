@@ -68,8 +68,6 @@ class ApplicationDetailViewController: UIViewController {
   init(model: ApplicationListModel) {
     self.model = model
     super.init(nibName: nil, bundle: nil)
-    self.contentSizeInPopup = CGSizeMake(view.frame.width/1.05, view.frame.height/1.5)
-    //    self.landscapeContentSizeInPopup = CGSizeMake(view.frame.height/1.5, view.frame.width/1.05)
   }
   
   required init?(coder aDecoder: NSCoder) {
