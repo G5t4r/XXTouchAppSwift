@@ -28,8 +28,8 @@ class AboutInfoCell: UITableViewCell {
     valueLabel.textColor = ThemeManager.Theme.lightTextColor
     valueLabel.numberOfLines = 0
     valueLabel.textAlignment = .Right
-    valueLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
-    titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
+    valueLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 21))
+    titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 21))
     
     contentView.addSubview(titleLabel)
     contentView.addSubview(valueLabel)
@@ -38,12 +38,12 @@ class AboutInfoCell: UITableViewCell {
   private func makeConstriants() {
     titleLabel.snp_makeConstraints { (make) in
       make.centerY.equalTo(contentView)
-      make.leading.equalTo(contentView).offset(Sizer.valueForDevice(phone: 20, pad: 50))
+      make.leading.equalTo(contentView).offset(Sizer.valueForDevice(phone: 20, pad: 25))
     }
     
     valueLabel.snp_makeConstraints { (make) in
       make.centerY.equalTo(contentView)
-      make.trailing.equalTo(contentView).offset(Sizer.valueForDevice(phone: -20, pad: -50))
+      make.trailing.equalTo(contentView).offset(Sizer.valueForDevice(phone: -20, pad: -25))
       make.leading.equalTo(contentView).offset(90)
     }
   }

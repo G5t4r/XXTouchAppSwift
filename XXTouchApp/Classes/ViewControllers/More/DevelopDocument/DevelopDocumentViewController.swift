@@ -77,7 +77,7 @@ extension DevelopDocumentViewController {
   @objc private func skip() {
     developDocumentInfoPopupController = STPopupController(rootViewController: DevelopDocumentInfoViewController())
     developDocumentInfoPopupController.backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(backgroundDismiss)))
-    developDocumentInfoPopupController.containerView.layer.cornerRadius = 2
+    developDocumentInfoPopupController.containerView.layer.cornerRadius = Sizer.valueForDevice(phone: 2, pad: 3)
     developDocumentInfoPopupController.presentInViewController(self)
   }
   

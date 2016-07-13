@@ -26,7 +26,7 @@ class ApplicationListCell: UITableViewCell {
     self.accessoryType = .DisclosureIndicator
     packageNameLabel.textAlignment = .Center
     packageNameLabel.textColor = UIColor(rgb: 0x3d85c6)
-    packageNameLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
+    packageNameLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 21))
     
     contentView.addSubview(iconImageView)
     contentView.addSubview(packageNameLabel)
@@ -34,14 +34,14 @@ class ApplicationListCell: UITableViewCell {
   
   private func makeConstriants() {
     iconImageView.snp_makeConstraints { (make) in
-      make.leading.equalTo(contentView).offset(20)
+      make.leading.equalTo(contentView).offset(Sizer.valueForDevice(phone: 20, pad: 25))
       make.centerY.equalTo(contentView)
-      make.width.height.equalTo(Sizer.valueForDevice(phone: 36, pad: 56))
+      make.width.height.equalTo(Sizer.valueForDevice(phone: 36, pad: 54))
     }
     
     packageNameLabel.snp_makeConstraints { (make) in
       make.centerY.equalTo(contentView)
-      make.leading.equalTo(iconImageView.snp_trailing).offset(15)
+      make.leading.equalTo(iconImageView.snp_trailing).offset(Sizer.valueForDevice(phone: 15, pad: 20))
     }
   }
   

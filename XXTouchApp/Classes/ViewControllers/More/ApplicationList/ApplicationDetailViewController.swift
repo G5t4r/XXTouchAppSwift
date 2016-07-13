@@ -54,8 +54,8 @@ class ApplicationDetailViewController: UIViewController {
   
   
   override func viewDidLayoutSubviews() {
-    appBundlePathCell.scrollView.contentSize.width = appBundlePathCell.titleLabel.mj_textWith()+40
-    appDataPathCell.scrollView.contentSize.width = appDataPathCell.titleLabel.mj_textWith()+40
+    appBundlePathCell.scrollView.contentSize.width = appBundlePathCell.titleLabel.mj_textWith()+Sizer.valueForDevice(phone: 40, pad: 45)
+    appDataPathCell.scrollView.contentSize.width = appDataPathCell.titleLabel.mj_textWith()+Sizer.valueForDevice(phone: 40, pad: 45)
   }
   
   override func viewDidLoad() {
@@ -157,7 +157,7 @@ extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataS
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return Sizer.valueForDevice(phone: 30, pad: 50)
+    return Sizer.valueForDevice(phone: 30, pad: 40)
   }
   
   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -165,7 +165,7 @@ extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataS
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return Sizer.valueForDevice(phone: 45, pad: 65)
+    return Sizer.valueForDevice(phone: 45, pad: 55)
   }
   
   func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -184,7 +184,7 @@ extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataS
       if section == 4 {
         return nil
       }
-      return CustomHeaderOrFooter(title: headerTitleList[section], textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(18), alignment: .Left)
+      return CustomHeaderOrFooter(title: headerTitleList[section], textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(17), alignment: .Left)
     } else {
       return nil
     }

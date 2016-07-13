@@ -21,7 +21,8 @@ class NewNameViewController: UIViewController {
   init(data: String) {
     self.data = data
     super.init(nibName: nil, bundle: nil)
-    self.contentSizeInPopup = CGSize(width: view.frame.width/1.05, height: 100)
+    self.contentSizeInPopup = CGSize(width: view.frame.width/1.05, height: Sizer.valueForDevice(phone: 100, pad: 110))
+    
   }
   
   required init?(coder aDecoder: NSCoder) {

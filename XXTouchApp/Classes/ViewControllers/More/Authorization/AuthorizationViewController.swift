@@ -244,14 +244,14 @@ extension AuthorizationViewController: UITableViewDelegate, UITableViewDataSourc
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     switch indexPath.section {
-    case 1: return Sizer.valueForDevice(phone: 70, pad: 130)
+    case 1: return Sizer.valueForDevice(phone: 70, pad: 100)
     default: return Sizer.valueForDevice(phone: 45, pad: 65)
     }
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     switch section {
-    case 0: return Sizer.valueForDevice(phone: 30, pad: 50)
+    case 0: return Sizer.valueForDevice(phone: 30, pad: 40)
     case 1: return Sizer.valueForDevice(phone: 10, pad: 15)
     default: return 0.01
     }
@@ -276,7 +276,7 @@ extension AuthorizationViewController: UITableViewDelegate, UITableViewDataSourc
     if UIDevice.isPad {
       switch section {
       case 0:
-        return CustomHeaderOrFooter(title: "到期时间", textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(18), alignment: .Left)
+        return CustomHeaderOrFooter(title: "到期时间", textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(17), alignment: .Left)
       default: return nil
       }
     } else {

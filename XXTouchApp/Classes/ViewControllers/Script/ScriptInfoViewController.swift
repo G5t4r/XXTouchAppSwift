@@ -42,7 +42,7 @@ class ScriptInfoViewController: UIViewController {
     self.type = type
     super.init(nibName: nil, bundle: nil)
     var height: CGFloat
-    self.type.number == (InfoType.LaunchAndEdit.number) ? (height = 205) : (height = 105)
+    self.type.number == (InfoType.LaunchAndEdit.number) ? (height = Sizer.valueForDevice(phone: 205, pad: 235)) : (height = Sizer.valueForDevice(phone: 105, pad: 135))
     self.contentSizeInPopup = CGSize(width: view.frame.width/1.05, height: height)
   }
   
@@ -76,7 +76,7 @@ class ScriptInfoViewController: UIViewController {
   
   private func makeConstriants() {
     tableView.snp_makeConstraints { (make) in
-      make.leading.trailing.equalTo(view).inset(5)
+      make.leading.trailing.equalTo(view).inset(Sizer.valueForDevice(phone: 5, pad: 7))
       make.top.bottom.equalTo(view)
       //      make.edges.equalTo(view)
     }
@@ -146,7 +146,7 @@ extension ScriptInfoViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return 5
+    return Sizer.valueForDevice(phone: 5, pad: 7)
   }
   
   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -154,7 +154,7 @@ extension ScriptInfoViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return 45
+    return Sizer.valueForDevice(phone: 45, pad: 50)
   }
 }
 

@@ -26,8 +26,8 @@ class StartUpListCell: UITableViewCell {
   
   private func setupUI() {
     scriptTime.textColor = ThemeManager.Theme.lightTextColor
-    scriptTime.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 11, pad: 14))
-    nameLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
+    scriptTime.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 11, pad: 13))
+    nameLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 21))
     scriptSelectedImage.hidden = true
     
     scriptImage.contentMode = .ScaleAspectFit
@@ -41,25 +41,25 @@ class StartUpListCell: UITableViewCell {
   private func makeConstriants() {
     scriptImage.snp_makeConstraints { (make) in
       make.leading.equalTo(contentView).inset(15)
-      make.height.width.equalTo(Sizer.valueForDevice(phone: 40, pad: 60))
+      make.height.width.equalTo(Sizer.valueForDevice(phone: 32, pad: 40))
       make.centerY.equalTo(contentView)
     }
     
     nameLabel.snp_makeConstraints { (make) in
-      make.top.equalTo(contentView).offset(Sizer.valueForDevice(phone: 10, pad: 15))
+      make.top.equalTo(contentView).offset(Sizer.valueForDevice(phone: 11, pad: 12))
       make.trailing.equalTo(contentView).offset(Sizer.valueForDevice(phone: -100, pad: -120))
-      make.leading.equalTo(contentView).offset(Sizer.valueForDevice(phone: 70, pad: 85))
+      make.leading.equalTo(contentView).offset(Sizer.valueForDevice(phone: 55, pad: 70))
     }
     
     scriptTime.snp_makeConstraints { (make) in
-      make.top.equalTo(nameLabel.snp_bottom).offset(5)
+      make.top.equalTo(nameLabel.snp_bottom).offset(3)
       make.leading.equalTo(nameLabel)
     }
     
     scriptSelectedImage.snp_makeConstraints { (make) in
-      make.trailing.equalTo(contentView).offset(-20)
+      make.trailing.equalTo(contentView).offset(Sizer.valueForDevice(phone: -20, pad: -30))
       make.centerY.equalTo(contentView)
-      make.width.height.equalTo(Sizer.valueForDevice(phone: 22, pad: 32))
+      make.width.height.equalTo(Sizer.valueForDevice(phone: 22, pad: 30))
     }
   }
   

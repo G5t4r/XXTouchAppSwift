@@ -26,10 +26,10 @@ class AboutTitleCell: UITableViewCell {
     self.selectionStyle = .None
     titleLabel.text = "XXTouch"
     titleLabel.textColor = UIColor(rgb: 0x073763)
-    titleLabel.font = UIFont.boldSystemFontOfSize(Sizer.valueForDevice(phone: 32, pad: 37))
+    titleLabel.font = UIFont.boldSystemFontOfSize(Sizer.valueForDevice(phone: 32, pad: 36))
     titleLabel.textAlignment = .Center
     copyrightLabel.text = "该软件版权归 xxtouch.com 所有；对于任何破解、修改行为 xxtouch.com 持有追究法律责任的权利；最终解释权归 xxtouch.com 所有。"
-    copyrightLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
+    copyrightLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 21))
     copyrightLabel.textAlignment = .Center
     copyrightLabel.numberOfLines = 0
     
@@ -39,7 +39,7 @@ class AboutTitleCell: UITableViewCell {
   
   private func makeConstriants() {
     titleLabel.snp_makeConstraints { (make) in
-      make.top.equalTo(contentView).offset(Sizer.valueForDevice(phone: 15, pad: 30))
+      make.top.equalTo(contentView).offset(Sizer.valueForDevice(phone: 15, pad: 25))
       make.leading.trailing.equalTo(contentView).inset(10)
     }
     

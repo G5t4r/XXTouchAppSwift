@@ -144,7 +144,7 @@ extension KeyBoardSettingViewController: UITableViewDelegate, UITableViewDataSou
     viewController.delegate = self
     keyBoardSettingInfoPopupController = STPopupController(rootViewController: viewController)
     keyBoardSettingInfoPopupController.backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(backgroundDismiss)))
-    keyBoardSettingInfoPopupController.containerView.layer.cornerRadius = 2
+    keyBoardSettingInfoPopupController.containerView.layer.cornerRadius = Sizer.valueForDevice(phone: 2, pad: 3)
     keyBoardSettingInfoPopupController.presentInViewController(self)
   }
   
@@ -162,7 +162,7 @@ extension KeyBoardSettingViewController: UITableViewDelegate, UITableViewDataSou
   
   func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     if UIDevice.isPad {
-      return CustomHeaderOrFooter(title: volumePromptList[section], textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(18), alignment: .Left)
+      return CustomHeaderOrFooter(title: volumePromptList[section], textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(17), alignment: .Left)
     } else {
       return nil
     }
@@ -170,17 +170,17 @@ extension KeyBoardSettingViewController: UITableViewDelegate, UITableViewDataSou
   
   func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
     switch section {
-    case 3: return CustomHeaderOrFooter(title: "*设置 [无动作] 表示不拦截音量键事件\n*如安装了Activator则这里设置不生效", textColor: UIColor.redColor(), font: UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 15, pad: 20)))
+    case 3: return CustomHeaderOrFooter(title: "*设置 [无动作] 表示不拦截音量键事件\n*如安装了Activator则这里设置不生效", textColor: UIColor.redColor(), font: UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 15, pad: 19)))
     default: return nil
     }
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return Sizer.valueForDevice(phone: 60, pad: 85)
+    return Sizer.valueForDevice(phone: 60, pad: 75)
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return Sizer.valueForDevice(phone: 30, pad: 50)
+    return Sizer.valueForDevice(phone: 30, pad: 40)
   }
   
   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -236,14 +236,12 @@ extension KeyBoardSettingViewController {
 // 自定义SectionHeader
 class CustomHeaderOrFooter: UITableViewHeaderFooterView {
   let titleLabel = UILabel()
-  var top: Int
   
-  init(title: String, textColor: UIColor, font: UIFont, top: Int = 15, alignment: NSTextAlignment = .Center) {
+  init(title: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment = .Center) {
     titleLabel.text = title
     titleLabel.font = font
     titleLabel.textColor = textColor
     titleLabel.textAlignment = alignment
-    self.top = top
     super.init(reuseIdentifier: nil)
     setupUI()
     makeConstraints()
@@ -257,7 +255,7 @@ class CustomHeaderOrFooter: UITableViewHeaderFooterView {
   private func makeConstraints() {
     titleLabel.snp_makeConstraints { (make) in
       make.leading.trailing.equalTo(self).inset(20)
-      make.top.equalTo(self).offset(self.top)
+      make.centerY.equalTo(self)
     }
   }
   

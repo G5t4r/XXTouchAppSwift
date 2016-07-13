@@ -34,7 +34,7 @@ class UserSettingInfoViewController: UIViewController {
     self.infoTitle = infoTitle
     self.type = type
     super.init(nibName: nil, bundle: nil)
-    self.contentSizeInPopup = CGSize(width: view.frame.width/1.05, height: 105)
+    self.contentSizeInPopup = CGSize(width: view.frame.width/1.05, height: Sizer.valueForDevice(phone: 105, pad: 121))
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -60,7 +60,7 @@ class UserSettingInfoViewController: UIViewController {
   
   private func makeConstriants() {
     tableView.snp_makeConstraints { (make) in
-      make.leading.trailing.equalTo(view).inset(5)
+      make.leading.trailing.equalTo(view).inset(Sizer.valueForDevice(phone: 5, pad: 7))
       make.top.bottom.equalTo(view)
     }
   }
@@ -106,11 +106,11 @@ extension UserSettingInfoViewController: UITableViewDelegate, UITableViewDataSou
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return 45
+    return Sizer.valueForDevice(phone: 45, pad: 50)
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return 5
+    return Sizer.valueForDevice(phone: 5, pad: 7)
   }
   
   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

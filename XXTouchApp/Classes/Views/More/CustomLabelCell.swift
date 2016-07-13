@@ -28,6 +28,7 @@ class CustomLabelCell: UITableViewCell {
   
   private func setupUI() {
     titleLabel.textAlignment = .Center
+    titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 19))
     
     leftLine.backgroundColor = ThemeManager.Theme.separatorColor
     rightLine.backgroundColor = ThemeManager.Theme.separatorColor

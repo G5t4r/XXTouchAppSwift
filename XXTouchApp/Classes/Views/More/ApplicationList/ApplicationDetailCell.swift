@@ -25,7 +25,7 @@ class ApplicationDetailCell: UITableViewCell {
   }
   
   private func setupUI() {
-    titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
+    titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 21))
     titleLabel.textColor = UIColor(rgb: 0x3d85c6)
     titleLabel.sizeToFit()
     
@@ -44,7 +44,7 @@ class ApplicationDetailCell: UITableViewCell {
     
     titleLabel.snp_makeConstraints { (make) in
       make.centerY.equalTo(scrollView)
-      make.leading.equalTo(scrollView).offset(20)
+      make.leading.equalTo(scrollView).offset(Sizer.valueForDevice(phone: 20, pad: 25))
     }
   }
   

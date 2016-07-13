@@ -25,7 +25,7 @@ class AuthorizationCell: UITableViewCell {
   private func setupUI() {
     self.selectionStyle = .None
     titleLabel.text = "正在获取设备授权信息.."
-    titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
+    titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 21))
     titleLabel.textColor = ThemeManager.Theme.tintColor
     contentView.addSubview(icon)
     contentView.addSubview(titleLabel)
@@ -34,8 +34,8 @@ class AuthorizationCell: UITableViewCell {
   private func makeConstriants() {
     icon.snp_makeConstraints { (make) in
       make.centerY.equalTo(titleLabel)
-      make.leading.equalTo(contentView).offset(15)
-      make.width.height.equalTo(25)
+      make.leading.equalTo(contentView).offset(Sizer.valueForDevice(phone: 15, pad: 20))
+      make.width.height.equalTo(Sizer.valueForDevice(phone: 25, pad: 33))
     }
     
     titleLabel.snp_makeConstraints { (make) in

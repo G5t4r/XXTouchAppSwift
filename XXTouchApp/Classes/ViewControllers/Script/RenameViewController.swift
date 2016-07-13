@@ -20,7 +20,7 @@ class RenameViewController: UIViewController {
   init(oldName: String) {
     self.oldName = oldName
     super.init(nibName: nil, bundle: nil)
-    self.contentSizeInPopup = CGSize(width: view.frame.width/1.05, height: 60)
+    self.contentSizeInPopup = CGSize(width: view.frame.width/1.05, height: Sizer.valueForDevice(phone: 60, pad: 65))
   }
   
   required init?(coder aDecoder: NSCoder) {

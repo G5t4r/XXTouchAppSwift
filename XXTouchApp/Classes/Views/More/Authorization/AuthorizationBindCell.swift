@@ -27,7 +27,7 @@ class AuthorizationBindCell: UITableViewCell {
     codeTextField.clearButtonMode = .WhileEditing
     codeTextField.placeholder = "在这里填入授权码"
     codeTextField.borderStyle = .RoundedRect
-    codeTextField.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
+    codeTextField.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 21))
     codeTextField.keyboardType = .ASCIICapable
     codeTextField.autocorrectionType = .No
     codeTextField.delegate = self

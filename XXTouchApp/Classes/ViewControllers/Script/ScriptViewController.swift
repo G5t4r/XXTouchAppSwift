@@ -188,7 +188,7 @@ class ScriptViewController: UIViewController {
     viewController.delegate = self
     viewController.rootDelegate = self
     scriptInfoPopupController = STPopupController(rootViewController: viewController)
-    scriptInfoPopupController.containerView.layer.cornerRadius = 2
+    scriptInfoPopupController.containerView.layer.cornerRadius = Sizer.valueForDevice(phone: 2, pad: 3)
     scriptInfoPopupController.backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(backgroundDismiss)))
     scriptInfoPopupController.presentInViewController(self)
     
@@ -388,7 +388,7 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return Sizer.valueForDevice(phone: 60, pad: 80)
+    return Sizer.valueForDevice(phone: 60, pad: 70)
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

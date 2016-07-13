@@ -52,7 +52,7 @@ class NewScriptViewController: UIViewController {
     viewController.delegate = self
     newNameViewControllerPopupController = STPopupController(rootViewController: viewController)
     newNameViewControllerPopupController.backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(backgroundDismiss)))
-    newNameViewControllerPopupController.containerView.layer.cornerRadius = 2
+    newNameViewControllerPopupController.containerView.layer.cornerRadius = Sizer.valueForDevice(phone: 2, pad: 3)
     newNameViewControllerPopupController.presentInViewController(self)
   }
   

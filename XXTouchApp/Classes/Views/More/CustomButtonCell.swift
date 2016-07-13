@@ -26,7 +26,7 @@ class CustomButtonCell: UITableViewCell {
   
   private func setupUI() {
     button.userInteractionEnabled = false
-    button.titleLabel?.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
+    button.titleLabel?.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 21))
     
     contentView.addSubview(button)
   }

@@ -24,7 +24,7 @@ class UserSettingCell: UITableViewCell {
   private func setupUI() {
     self.accessoryType = .DisclosureIndicator
     titleLabel.textColor = UIColor.blackColor()
-    titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
+    titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 21))
     
     contentView.addSubview(titleLabel)
   }
@@ -32,7 +32,7 @@ class UserSettingCell: UITableViewCell {
   private func makeConstriants() {
     titleLabel.snp_makeConstraints { (make) in
       make.centerY.equalTo(contentView)
-      make.leading.trailing.equalTo(contentView).inset(20)
+      make.leading.trailing.equalTo(contentView).inset(Sizer.valueForDevice(phone: 20, pad: 25))
     }
   }
   

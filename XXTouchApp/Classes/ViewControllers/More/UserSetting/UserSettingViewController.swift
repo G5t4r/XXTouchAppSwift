@@ -146,7 +146,7 @@ extension UserSettingViewController: UITableViewDelegate, UITableViewDataSource 
     viewController.delegate = self
     userSettingInfoPopupController = STPopupController(rootViewController: viewController)
     userSettingInfoPopupController.backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(backgroundDismiss)))
-    userSettingInfoPopupController.containerView.layer.cornerRadius = 2
+    userSettingInfoPopupController.containerView.layer.cornerRadius = Sizer.valueForDevice(phone: 2, pad: 3)
     userSettingInfoPopupController.presentInViewController(self)
   }
   
@@ -164,18 +164,18 @@ extension UserSettingViewController: UITableViewDelegate, UITableViewDataSource 
   
   func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     if UIDevice.isPad {
-      return CustomHeaderOrFooter(title: userSettingList[section], textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(18), alignment: .Left)
+      return CustomHeaderOrFooter(title: userSettingList[section], textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(17), alignment: .Left)
     } else {
       return nil
     }
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return Sizer.valueForDevice(phone: 45, pad: 65)
+    return Sizer.valueForDevice(phone: 45, pad: 55)
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return Sizer.valueForDevice(phone: 30, pad: 50)
+    return Sizer.valueForDevice(phone: 30, pad: 40)
   }
   
   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

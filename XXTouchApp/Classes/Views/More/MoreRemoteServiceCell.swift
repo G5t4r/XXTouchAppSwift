@@ -27,9 +27,9 @@ class MoreRemoteServiceCell: UITableViewCell {
   private func setupUI() {
     self.selectionStyle = .None
     titleLabel.text = "正在读取远程服务.."
-    titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
+    titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 21))
     hostLabel.textColor = ThemeManager.Theme.tintColor
-    hostLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 13, pad: 17))
+    hostLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 13, pad: 16))
     hostLabel.hidden = true
     
     contentView.addSubview(icon)
@@ -42,7 +42,7 @@ class MoreRemoteServiceCell: UITableViewCell {
     icon.snp_makeConstraints { (make) in
       make.leading.equalTo(contentView).offset(Sizer.valueForDevice(phone: 15, pad: 20))
       make.centerY.equalTo(contentView)
-      make.height.width.equalTo(Sizer.valueForDevice(phone: 28, pad: 38))
+      make.height.width.equalTo(Sizer.valueForDevice(phone: 28, pad: 36))
     }
     
     titleLabel.snp_makeConstraints { (make) in
@@ -51,7 +51,7 @@ class MoreRemoteServiceCell: UITableViewCell {
     }
     
     hostLabel.snp_makeConstraints { (make) in
-      make.bottom.equalTo(contentView).offset(Sizer.valueForDevice(phone: -9, pad: -11))
+      make.bottom.equalTo(contentView).offset(Sizer.valueForDevice(phone: -9, pad: -9))
       make.leading.equalTo(icon.snp_trailing).offset(15)
     }
     

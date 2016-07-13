@@ -26,9 +26,9 @@ class ScriptCell: SWTableViewCell {
   }
   
   private func setupUI() {
-    nameLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
+    nameLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 21))
     scriptTime.textColor = ThemeManager.Theme.lightTextColor
-    scriptTime.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 11, pad: 14))
+    scriptTime.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 11, pad: 13))
     scriptSelectedImage.hidden = true
     
     infoButton.setImage(UIImage(named: "infoIcon"), forState: .Normal)
@@ -45,12 +45,12 @@ class ScriptCell: SWTableViewCell {
   private func makeConstriants() {
     scriptImage.snp_makeConstraints { (make) in
       make.leading.equalTo(contentView).offset(15)
-      make.height.width.equalTo(Sizer.valueForDevice(phone: 32, pad: 42))
+      make.height.width.equalTo(Sizer.valueForDevice(phone: 32, pad: 40))
       make.centerY.equalTo(contentView)
     }
     
     nameLabel.snp_makeConstraints { (make) in
-      make.top.equalTo(contentView).offset(Sizer.valueForDevice(phone: 11, pad: 16))
+      make.top.equalTo(contentView).offset(Sizer.valueForDevice(phone: 11, pad: 12))
       make.trailing.equalTo(contentView).offset(Sizer.valueForDevice(phone: -100, pad: -120))
       make.leading.equalTo(contentView).offset(Sizer.valueForDevice(phone: 55, pad: 70))
     }
@@ -61,7 +61,7 @@ class ScriptCell: SWTableViewCell {
     }
     
     infoButton.snp_makeConstraints { (make) in
-      make.trailing.equalTo(contentView).offset(-20)
+      make.trailing.equalTo(contentView).offset(Sizer.valueForDevice(phone: -20, pad: -30))
       make.centerY.equalTo(contentView)
       make.width.height.equalTo(Sizer.valueForDevice(phone: 22, pad: 32))
     }
@@ -69,7 +69,7 @@ class ScriptCell: SWTableViewCell {
     scriptSelectedImage.snp_makeConstraints { (make) in
       make.trailing.equalTo(infoButton.snp_leading).offset(-20)
       make.centerY.equalTo(contentView)
-      make.width.height.equalTo(Sizer.valueForDevice(phone: 22, pad: 32))
+      make.width.height.equalTo(Sizer.valueForDevice(phone: 22, pad: 30))
     }
   }
   
