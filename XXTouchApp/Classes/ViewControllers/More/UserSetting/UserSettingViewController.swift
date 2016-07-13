@@ -41,6 +41,14 @@ class UserSettingViewController: UIViewController {
   private let noSimStatusbarCell = UserSettingCell()
   private let noLowPowerAlertCell = UserSettingCell()
   private let noNeedPushidAlertCell = UserSettingCell()
+  private var userSettingInfoPopupController: STPopupController!
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    if let indexPath = tableView.indexPathForSelectedRow {
+      tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -128,42 +136,22 @@ extension UserSettingViewController: UITableViewDelegate, UITableViewDataSource 
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    
-    let actionSheet = SIActionSheet(title: userSettingList[indexPath.section])
-    switch indexPath.section {
-    case 1:
-      actionSheet.addButtonWithTitle(showValue[0], type: .Default) { [weak self] (action) in
-        guard let `self` = self else { return }
-        self.setUserConf("setNosimStatusbarOff")
-        
-      }
-      actionSheet.addButtonWithTitle(showValue[1], type: .Default) { [weak self] (action) in
-        guard let `self` = self else { return }
-        self.setUserConf("setNosimStatusbarOn")
-      }
-    default:
-      actionSheet.addButtonWithTitle(alertValue[0], type: .Default) { [weak self] (action) in
-        guard let `self` = self else { return }
-        switch indexPath.section {
-        case 0: self.setUserConf("setNosimAlertOff")
-        case 2: self.setUserConf("setNoLowPowerAlertOff")
-        case 3: self.setUserConf("setNoNeedPushidAlertOff")
-        default: break
-        }
-      }
-      actionSheet.addButtonWithTitle(alertValue[1], type: .Default) { [weak self] (action) in
-        guard let `self` = self else { return }
-        switch indexPath.section {
-        case 0: self.setUserConf("setNosimAlertOn")
-        case 2: self.setUserConf("setNoLowPowerAlertOn")
-        case 3: self.setUserConf("setNoNeedPushidAlertOn")
-        default: break
-        }
-      }
-    }
-    actionSheet.addButtonWithTitle(Constants.Text.cancel, type: .Cancel) { (_) in}
-    actionSheet.allowTapBackgroundToDismiss = true
-    actionSheet.show()
+    let type = [
+      UserActionType.NoSimAlert,
+      UserActionType.NoSimStatusbar,
+      UserActionType.LowPowerAlert,
+      UserActionType.NeedPushidAlert
+    ]
+    let viewController = UserSettingInfoViewController(infoTitle: userSettingList[indexPath.section], type: type[indexPath.section])
+    viewController.delegate = self
+    userSettingInfoPopupController = STPopupController(rootViewController: viewController)
+    userSettingInfoPopupController.backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(backgroundDismiss)))
+    userSettingInfoPopupController.containerView.layer.cornerRadius = 2
+    userSettingInfoPopupController.presentInViewController(self)
+  }
+  
+  @objc private func backgroundDismiss() {
+    userSettingInfoPopupController.dismiss()
   }
   
   func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -192,6 +180,40 @@ extension UserSettingViewController: UITableViewDelegate, UITableViewDataSource 
   
   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
     return 0.01
+  }
+}
+
+extension UserSettingViewController: UserSettingInfoViewControllerDelegate {
+  func setNoSimAlertOnOrOff(index: Int) {
+    switch index {
+    case 0: self.setUserConf("setNosimAlertOff")
+    case 1: self.setUserConf("setNosimAlertOn")
+    default: break
+    }
+  }
+  
+  func setNosimStatusbarOnOrOff(index: Int) {
+    switch index {
+    case 0: self.setUserConf("setNosimStatusbarOff")
+    case 1: self.setUserConf("setNosimStatusbarOn")
+    default: break
+    }
+  }
+  
+  func setLowPowerAlertOnOrOff(index: Int) {
+    switch index {
+    case 0: self.setUserConf("setNoLowPowerAlertOff")
+    case 1: self.setUserConf("setNoLowPowerAlertOn")
+    default: break
+    }
+  }
+  
+  func setNeedPushidAlertOnOrOff(index: Int) {
+    switch index {
+    case 0: self.setUserConf("setNoNeedPushidAlertOff")
+    case 1: self.setUserConf("setNoNeedPushidAlertOn")
+    default: break
+    }
   }
 }
 

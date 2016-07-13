@@ -40,20 +40,10 @@ class ScriptDetailViewController: UIViewController {
     navigationItem.leftBarButtonItem = UIBarButtonItem(title: "返回", style: .Plain, target: self, action: #selector(back))
     
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-    
-    //    textView.tokens = tokens() as [AnyObject]
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     
     view.addSubview(textView)
   }
-  
-  //  private func tokens() -> NSArray {
-  //    let array = [
-  //      CYRToken.init(name: "one", expression: "for", attributes: [NSForegroundColorAttributeName: UIColor(rgb:0x9900ff)])
-  //      
-  //      
-  //    ]
-  //    return array
-  //  }
   
   private func makeConstriants() {
     textView.snp_makeConstraints { (make) in
@@ -122,6 +112,14 @@ class ScriptDetailViewController: UIViewController {
       self.textView.contentInset.top = height+Constants.Size.axtNavigationBarHeight
       self.textView.scrollIndicatorInsets.top = self.textView.contentInset.top
       self.view.frame.origin.y = -height
+      }, completion: nil)
+  }
+  
+  @objc private func keyboardWillHide(notification: NSNotification) {
+    UIView.animateWithDuration(0.5, animations: {
+      self.textView.contentInset.top = Constants.Size.axtNavigationBarHeight
+      self.textView.scrollIndicatorInsets.top = self.textView.contentInset.top
+      self.view.frame.origin.y = 0
       }, completion: nil)
   }
 }

@@ -23,7 +23,6 @@ class UserSettingCell: UITableViewCell {
   
   private func setupUI() {
     self.accessoryType = .DisclosureIndicator
-    self.selectionStyle = .None
     titleLabel.textColor = UIColor.blackColor()
     titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
     

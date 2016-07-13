@@ -7,11 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2C06B4BE1D3377D9000A780C /* SIActionSheet.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2C06B4B71D3377D9000A780C /* SIActionSheet.bundle */; };
-		2C06B4BF1D3377D9000A780C /* SIActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C06B4B91D3377D9000A780C /* SIActionSheet.m */; };
-		2C06B4C01D3377D9000A780C /* SIPopoverBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C06B4BB1D3377D9000A780C /* SIPopoverBackgroundView.m */; };
-		2C06B4C11D3377D9000A780C /* UIWindow+SIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C06B4BD1D3377D9000A780C /* UIWindow+SIUtils.m */; };
 		2C06B4C71D339F0E000A780C /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06B4C61D339F0E000A780C /* UIViewController+Extension.swift */; };
+		2C06B4CB1D35CF07000A780C /* ScriptInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06B4CA1D35CF07000A780C /* ScriptInfoViewController.swift */; };
+		2C06B4CE1D35D4D2000A780C /* CustomLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06B4CD1D35D4D2000A780C /* CustomLabelCell.swift */; };
+		2C06B4D01D35F167000A780C /* KeyBoardSettingInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06B4CF1D35F167000A780C /* KeyBoardSettingInfoViewController.swift */; };
+		2C06B4D21D360DF8000A780C /* UserSettingInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06B4D11D360DF8000A780C /* UserSettingInfoViewController.swift */; };
+		2C06B4D41D3614DA000A780C /* DevelopDocumentInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06B4D31D3614DA000A780C /* DevelopDocumentInfoViewController.swift */; };
+		2C06B4D61D3618FF000A780C /* NewNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06B4D51D3618FF000A780C /* NewNameViewController.swift */; };
+		2C06B4D81D36264B000A780C /* RenameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06B4D71D36264B000A780C /* RenameViewController.swift */; };
 		2C20D81C1D0FC74A009A4990 /* UIViewController+Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20D81B1D0FC74A009A4990 /* UIViewController+Transition.swift */; };
 		2C2E7D371D2C974E00117025 /* CaseString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2E7D361D2C974E00117025 /* CaseString.swift */; };
 		2C4FFA3C1D2600B100DBEEDB /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4FFA3B1D2600B100DBEEDB /* PhotoViewController.swift */; };
@@ -107,14 +110,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2C06B4B71D3377D9000A780C /* SIActionSheet.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SIActionSheet.bundle; sourceTree = "<group>"; };
-		2C06B4B81D3377D9000A780C /* SIActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIActionSheet.h; sourceTree = "<group>"; };
-		2C06B4B91D3377D9000A780C /* SIActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIActionSheet.m; sourceTree = "<group>"; };
-		2C06B4BA1D3377D9000A780C /* SIPopoverBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIPopoverBackgroundView.h; sourceTree = "<group>"; };
-		2C06B4BB1D3377D9000A780C /* SIPopoverBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIPopoverBackgroundView.m; sourceTree = "<group>"; };
-		2C06B4BC1D3377D9000A780C /* UIWindow+SIUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+SIUtils.h"; sourceTree = "<group>"; };
-		2C06B4BD1D3377D9000A780C /* UIWindow+SIUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+SIUtils.m"; sourceTree = "<group>"; };
 		2C06B4C61D339F0E000A780C /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		2C06B4CA1D35CF07000A780C /* ScriptInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptInfoViewController.swift; sourceTree = "<group>"; };
+		2C06B4CD1D35D4D2000A780C /* CustomLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLabelCell.swift; sourceTree = "<group>"; };
+		2C06B4CF1D35F167000A780C /* KeyBoardSettingInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyBoardSettingInfoViewController.swift; sourceTree = "<group>"; };
+		2C06B4D11D360DF8000A780C /* UserSettingInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingInfoViewController.swift; sourceTree = "<group>"; };
+		2C06B4D31D3614DA000A780C /* DevelopDocumentInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevelopDocumentInfoViewController.swift; sourceTree = "<group>"; };
+		2C06B4D51D3618FF000A780C /* NewNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewNameViewController.swift; sourceTree = "<group>"; };
+		2C06B4D71D36264B000A780C /* RenameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenameViewController.swift; sourceTree = "<group>"; };
 		2C20D81B1D0FC74A009A4990 /* UIViewController+Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Transition.swift"; sourceTree = "<group>"; };
 		2C2E7D361D2C974E00117025 /* CaseString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseString.swift; sourceTree = "<group>"; };
 		2C4FFA3B1D2600B100DBEEDB /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
@@ -231,20 +234,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2C06B4B61D3377D9000A780C /* SIActionSheet */ = {
-			isa = PBXGroup;
-			children = (
-				2C06B4B71D3377D9000A780C /* SIActionSheet.bundle */,
-				2C06B4B81D3377D9000A780C /* SIActionSheet.h */,
-				2C06B4B91D3377D9000A780C /* SIActionSheet.m */,
-				2C06B4BA1D3377D9000A780C /* SIPopoverBackgroundView.h */,
-				2C06B4BB1D3377D9000A780C /* SIPopoverBackgroundView.m */,
-				2C06B4BC1D3377D9000A780C /* UIWindow+SIUtils.h */,
-				2C06B4BD1D3377D9000A780C /* UIWindow+SIUtils.m */,
-			);
-			path = SIActionSheet;
-			sourceTree = "<group>";
-		};
 		2C20D81D1D0FCB81009A4990 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -291,6 +280,7 @@
 			isa = PBXGroup;
 			children = (
 				2C54F0DC1D17ED5D005F35AD /* UserSettingViewController.swift */,
+				2C06B4D11D360DF8000A780C /* UserSettingInfoViewController.swift */,
 			);
 			path = UserSetting;
 			sourceTree = "<group>";
@@ -448,9 +438,12 @@
 			isa = PBXGroup;
 			children = (
 				2C4FFA3A1D26009500DBEEDB /* Photo */,
+				2C06B4D51D3618FF000A780C /* NewNameViewController.swift */,
+				2C06B4D71D36264B000A780C /* RenameViewController.swift */,
 				2CF749C41CFD8BA6007A273B /* NewScriptViewController.swift */,
 				2CF749BA1CFD80A0007A273B /* ScriptDetailViewController.swift */,
 				2C67AB7F1CFD2AAA008D53E8 /* ScriptViewController.swift */,
+				2C06B4CA1D35CF07000A780C /* ScriptInfoViewController.swift */,
 			);
 			path = Script;
 			sourceTree = "<group>";
@@ -482,7 +475,6 @@
 		2C7340881D10FB4300CED0F3 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
-				2C06B4B61D3377D9000A780C /* SIActionSheet */,
 				2CF397451D2BA76C00BAE04C /* VLDContextSheet */,
 				2C7342CD1D1140AE00CED0F3 /* SnapKit */,
 				2C7340891D10FC6100CED0F3 /* SwiftyJSON */,
@@ -556,6 +548,7 @@
 				2CD2F5621D127B90001C873F /* MoreCustomCell.swift */,
 				2CC5F5871D1CFD040028467F /* MoreRemoteServiceCell.swift */,
 				953C5D3E1D30F99F00477C35 /* CustomButtonCell.swift */,
+				2C06B4CD1D35D4D2000A780C /* CustomLabelCell.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -564,6 +557,7 @@
 			isa = PBXGroup;
 			children = (
 				2CD2F56C1D13B0D6001C873F /* KeyBoardSettingViewController.swift */,
+				2C06B4CF1D35F167000A780C /* KeyBoardSettingInfoViewController.swift */,
 			);
 			path = KeyBoardSetting;
 			sourceTree = "<group>";
@@ -596,6 +590,7 @@
 			isa = PBXGroup;
 			children = (
 				2CF18BFE1D1A5E31007535CD /* DevelopDocumentViewController.swift */,
+				2C06B4D31D3614DA000A780C /* DevelopDocumentInfoViewController.swift */,
 			);
 			path = DevelopDocument;
 			sourceTree = "<group>";
@@ -812,7 +807,6 @@
 				2C7342E41D1140AE00CED0F3 /* Info.plist in Resources */,
 				2C67AB411CFD218E008D53E8 /* Assets.xcassets in Resources */,
 				2C4FFA4B1D2B708500DBEEDB /* Defaults.plist in Resources */,
-				2C06B4BE1D3377D9000A780C /* SIActionSheet.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -882,6 +876,7 @@
 				2C54F0F01D1916E5005F35AD /* AuthorizationBindCell.swift in Sources */,
 				2CD2F56D1D13B0D6001C873F /* KeyBoardSettingViewController.swift in Sources */,
 				2CF749D81D0577C4007A273B /* MoreViewController.swift in Sources */,
+				2C06B4D81D36264B000A780C /* RenameViewController.swift in Sources */,
 				2C7342E51D1140AE00CED0F3 /* LayoutConstraint.swift in Sources */,
 				2C54F0EB1D1907BC005F35AD /* AuthorizationViewController.swift in Sources */,
 				2C7342DF1D1140AE00CED0F3 /* ConstraintItem.swift in Sources */,
@@ -893,6 +888,7 @@
 				2CF18C041D1A741B007535CD /* DeviceInfoModel.swift in Sources */,
 				2CF749BB1CFD80A0007A273B /* ScriptDetailViewController.swift in Sources */,
 				2C4FFA431D2A173F00DBEEDB /* main.swift in Sources */,
+				2C06B4D41D3614DA000A780C /* DevelopDocumentInfoViewController.swift in Sources */,
 				2C7342DD1D1140AE00CED0F3 /* ConstraintAttributes.swift in Sources */,
 				2C54F0F71D192805005F35AD /* ApplicationListCell.swift in Sources */,
 				2C7342E81D1140AE00CED0F3 /* ViewController+SnapKit.swift in Sources */,
@@ -910,12 +906,13 @@
 				2C54F0DD1D17ED5D005F35AD /* UserSettingViewController.swift in Sources */,
 				2CF18BFA1D1A440B007535CD /* AboutViewController.swift in Sources */,
 				95AB90CD1D21717200FA4C52 /* Button.swift in Sources */,
-				2C06B4C01D3377D9000A780C /* SIPopoverBackgroundView.m in Sources */,
 				2C4FFA4E1D2B71AD00DBEEDB /* LocalStorage.swift in Sources */,
 				2C54F0DA1D17E436005F35AD /* StartUpListCell.swift in Sources */,
 				2CD2F5631D127B90001C873F /* MoreCustomCell.swift in Sources */,
 				2CC84C031D17B48600D4230D /* StartUpSettingViewController.swift in Sources */,
+				2C06B4CB1D35CF07000A780C /* ScriptInfoViewController.swift in Sources */,
 				2CD2F5731D13E7F3001C873F /* RecordSettingViewController.swift in Sources */,
+				2C06B4D21D360DF8000A780C /* UserSettingInfoViewController.swift in Sources */,
 				2CF18BFF1D1A5E31007535CD /* DevelopDocumentViewController.swift in Sources */,
 				2CD2F5701D13C00D001C873F /* KeyBoardSettingCell.swift in Sources */,
 				9509B7811D25777A0074010B /* CatalogViewController.swift in Sources */,
@@ -929,6 +926,7 @@
 				95D555F41D30050200499947 /* XXTTextView.swift in Sources */,
 				2C54F0E21D17F492005F35AD /* Switches.swift in Sources */,
 				2C7342DE1D1140AE00CED0F3 /* ConstraintDescription.swift in Sources */,
+				2C06B4D01D35F167000A780C /* KeyBoardSettingInfoViewController.swift in Sources */,
 				2C7342ED1D123E9C00CED0F3 /* RenameView.swift in Sources */,
 				2C7342DC1D1140AE00CED0F3 /* Constraint.swift in Sources */,
 				953949D61D28FC8D00BE75AA /* Service.swift in Sources */,
@@ -938,7 +936,7 @@
 				2CF749C71CFD8D1E007A273B /* UIColor+RGB.swift in Sources */,
 				2CF18C061D1A80BC007535CD /* AboutInfoCell.swift in Sources */,
 				2CC84C091D17B69200D4230D /* CustomSettingCell.swift in Sources */,
-				2C06B4C11D3377D9000A780C /* UIWindow+SIUtils.m in Sources */,
+				2C06B4CE1D35D4D2000A780C /* CustomLabelCell.swift in Sources */,
 				2C7342E31D1140AE00CED0F3 /* EdgeInsets.swift in Sources */,
 				2C7342E21D1140AE00CED0F3 /* Debugging.swift in Sources */,
 				2CF3974D1D2BA76C00BAE04C /* VLDContextSheetItem.m in Sources */,
@@ -952,13 +950,13 @@
 				2C7342E71D1140AE00CED0F3 /* View+SnapKit.swift in Sources */,
 				957EDDC61D320809000E1749 /* Version.swift in Sources */,
 				953C5D371D30EB0400477C35 /* UIResponder+Alert.swift in Sources */,
-				2C06B4BF1D3377D9000A780C /* SIActionSheet.m in Sources */,
 				2C2E7D371D2C974E00117025 /* CaseString.swift in Sources */,
 				2CF749C51CFD8BA6007A273B /* NewScriptViewController.swift in Sources */,
 				2CF749D11D053A41007A273B /* ScriptModel.swift in Sources */,
 				2CD2F5691D13A280001C873F /* UIDevice+DeviceCheck.swift in Sources */,
 				2C54F0EE1D190BE4005F35AD /* AuthorizationCell.swift in Sources */,
 				2CF749BF1CFD8552007A273B /* Constants.swift in Sources */,
+				2C06B4D61D3618FF000A780C /* NewNameViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'EABF44B93D659FE5D1141E6DC9BF15D2'
+               BlueprintIdentifier = '7785F76C180CCBEA8F2C6E75A8B759A0'
                BlueprintName = 'RFKeyboardToolbar'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libRFKeyboardToolbar.a'>

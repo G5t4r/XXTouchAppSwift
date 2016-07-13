@@ -24,7 +24,6 @@ class KeyBoardSettingCell: UITableViewCell {
   
   private func setupUI() {
     self.accessoryType = .DisclosureIndicator
-    self.selectionStyle = .None
     titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
     infoLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 12, pad: 17))
     infoLabel.textColor = ThemeManager.Theme.lightTextColor

@@ -14,6 +14,7 @@ class KeyBoardSettingViewController: UIViewController {
   private let holdVolumeDownCell = KeyBoardSettingCell()
   private let clickVolumeUpCell = KeyBoardSettingCell()
   private let clickVolumeDownCell = KeyBoardSettingCell()
+  private var keyBoardSettingInfoPopupController: STPopupController!
   
   private lazy var volumeActionList: [String] = {
     let volumeActionList = [
@@ -42,6 +43,13 @@ class KeyBoardSettingViewController: UIViewController {
     ]
     return volumePromptList
   }()
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    if let indexPath = tableView.indexPathForSelectedRow {
+      tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -126,41 +134,22 @@ extension KeyBoardSettingViewController: UITableViewDelegate, UITableViewDataSou
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    
-    let actionSheet = SIActionSheet(title: volumePromptList[indexPath.section])
-    actionSheet.addButtonWithTitle(volumeActionList[0], type: .Default) { [weak self] (action) in
-      guard let `self` = self else { return }
-      switch indexPath.section {
-      case 0: self.setVolumeAction(String(0),type: "setHoldVolumeUpAction")
-      case 1: self.setVolumeAction(String(0),type: "setHoldVolumeDownAction")
-      case 2: self.setVolumeAction(String(0),type: "setClickVolumeUpAction")
-      case 3: self.setVolumeAction(String(0),type: "setClickVolumeDownAction")
-      default: break
-      }
-    }
-    actionSheet.addButtonWithTitle(volumeActionList[1], type: .Default) { [weak self] (_) in
-      guard let `self` = self else { return }
-      switch indexPath.section {
-      case 0: self.setVolumeAction(String(1),type: "setHoldVolumeUpAction")
-      case 1: self.setVolumeAction(String(1),type: "setHoldVolumeDownAction")
-      case 2: self.setVolumeAction(String(1),type: "setClickVolumeUpAction")
-      case 3: self.setVolumeAction(String(1),type: "setClickVolumeDownAction")
-      default: break
-      }
-    }
-    actionSheet.addButtonWithTitle(volumeActionList[2], type: .Default) { [weak self] (_) in
-      guard let `self` = self else { return }
-      switch indexPath.section {
-      case 0: self.setVolumeAction(String(2),type: "setHoldVolumeUpAction")
-      case 1: self.setVolumeAction(String(2),type: "setHoldVolumeDownAction")
-      case 2: self.setVolumeAction(String(2),type: "setClickVolumeUpAction")
-      case 3: self.setVolumeAction(String(2),type: "setClickVolumeDownAction")
-      default: break
-      }
-    }
-    actionSheet.addButtonWithTitle(Constants.Text.cancel, type: .Cancel) { (_) in}
-    actionSheet.allowTapBackgroundToDismiss = true
-    actionSheet.show()
+    let type = [
+      KeyBoardActionType.HoldVolumeUp,
+      KeyBoardActionType.HoldVolumeDown,
+      KeyBoardActionType.ClickVolumeUp,
+      KeyBoardActionType.ClickVolumeDown
+    ]
+    let viewController = KeyBoardSettingInfoViewController(infoTitle: volumePromptList[indexPath.section], type: type[indexPath.section])
+    viewController.delegate = self
+    keyBoardSettingInfoPopupController = STPopupController(rootViewController: viewController)
+    keyBoardSettingInfoPopupController.backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(backgroundDismiss)))
+    keyBoardSettingInfoPopupController.containerView.layer.cornerRadius = 2
+    keyBoardSettingInfoPopupController.presentInViewController(self)
+  }
+  
+  @objc private func backgroundDismiss() {
+    keyBoardSettingInfoPopupController.dismiss()
   }
   
   func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -199,6 +188,24 @@ extension KeyBoardSettingViewController: UITableViewDelegate, UITableViewDataSou
       return Sizer.valueForDevice(phone: 65, pad: 85)
     }
     return 0.01
+  }
+}
+
+extension KeyBoardSettingViewController: KeyBoardSettingInfoViewControllerDelegate {
+  func setHoldVolumeUpAction(index: Int) {
+    self.setVolumeAction(String(index),type: "setHoldVolumeUpAction")
+  }
+  
+  func setHoldVolumeDownAction(index: Int) {
+    self.setVolumeAction(String(index),type: "setHoldVolumeDownAction")
+  }
+  
+  func setClickVolumeUpAction(index: Int) {
+    self.setVolumeAction(String(index),type: "setClickVolumeUpAction")
+  }
+  
+  func setClickVolumeDownAction(index: Int) {
+    self.setVolumeAction(String(index),type: "setClickVolumeDownAction")
   }
 }
 

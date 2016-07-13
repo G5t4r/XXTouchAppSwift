@@ -2,13 +2,13 @@
 inhibit_all_warnings!
 
 target :XXTouchApp do
-pod 'MJRefresh'
-pod 'SWTableViewCell'
 #pod 'DZNEmptyDataSet'
 #pod 'SDWebImage'
 #pod 'KVOController'
-pod 'iOS-blur'
+#pod 'iOS-blur'
 pod 'CYRTextView'
+pod 'MJRefresh'
+pod 'SWTableViewCell'
 pod 'NJKWebViewProgress'
 pod 'VIPhotoView'
 pod 'RFKeyboardToolbar'

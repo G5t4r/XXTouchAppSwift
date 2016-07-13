@@ -54,25 +54,10 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>iOS-blur.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0187CEAAF2805F0778A8FC83C30C7D6D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>04BB3E9C5BDC691C5702B11049BEA3DB</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>0FEFCED0DFD9044B714F80F336070127</key>
+		<key>0A4388D13D173BB897ECD9F11466B4B7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -82,7 +67,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>698BF6DD5C5C732CD7A2C27831993489</key>
+		<key>4C4256130B9BB427F2DCB5D46A42B588</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -92,12 +77,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>85BD0D22381E84D0DDEE8A643CA561DB</key>
+		<key>7785F76C180CCBEA8F2C6E75A8B759A0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>ACE514AEFAABF7A00B7A36B0C4DBD373</key>
+		<key>9DD3A88AF14432E3B31D23524F9A7ADA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A27EACA23808CABD16554919C564D7A9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -107,12 +97,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CE32EAAC1CF42651BEA010025CCB1BBB</key>
+		<key>EF162898CE491CCDBECA5E13314ECB55</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EABF44B93D659FE5D1141E6DC9BF15D2</key>
+		<key>FE5293FEDA0E1FF8EBB77949D319E0A7</key>
 		<dict>
 			<key>primary</key>
 			<true/>

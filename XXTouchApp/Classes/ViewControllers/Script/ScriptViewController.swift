@@ -14,11 +14,10 @@ class ScriptViewController: UIViewController {
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private var scriptList = [ScriptModel]()
   private var oldName = ""
-  private let renameView = RenameView()
-  private let blurView = JCRBlurView()
-  private let animationDuration = 0.5
   private var oldExtensionName = ""
   private var indexPath = NSIndexPath()
+  private var scriptInfoPopupController: STPopupController!
+  private var renamePopupController: STPopupController!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -31,7 +30,6 @@ class ScriptViewController: UIViewController {
     } else {
       setupUI()
       makeConstriants()
-      setupAction()
       fetchScriptList()
     }
   }
@@ -67,42 +65,13 @@ class ScriptViewController: UIViewController {
     //    header.stateLabel.hidden = true
     //    tableView.mj_header = header
     
-    renameView.hidden = true
-    blurView.hidden = true
-    blurView.alpha = 0
-    renameView.layer.cornerRadius = 5
-    
-    renameView.layer.shadowOffset = CGSize(width: 0, height: 3)
-    renameView.layer.shadowRadius = 3.0
-    renameView.layer.shadowColor = UIColor.blackColor().CGColor
-    renameView.layer.shadowOpacity = 0.4
-    
     view.addSubview(tableView)
-    view.addSubview(blurView)
-    view.addSubview(renameView)
   }
   
   private func makeConstriants() {
     tableView.snp_makeConstraints { (make) in
       make.edges.equalTo(view)
     }
-    
-    renameView.snp_makeConstraints{ (make) in
-      make.centerX.equalTo(view)
-      make.centerY.equalTo(view).offset(-120)
-      make.leading.trailing.equalTo(view).inset(Sizer.valueForPhone(inch_3_5: 20, inch_4_0: 20, inch_4_7: 32, inch_5_5: 42))
-      make.height.equalTo(60)
-    }
-    
-    blurView.snp_makeConstraints { (make) in
-      make.edges.equalTo(view)
-    }
-  }
-  
-  private func setupAction() {
-    renameView.submitButton.addTarget(self, action: #selector(submit), forControlEvents: .TouchUpInside)
-    blurView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(blurTap)))
-    renameView.newNameTextField.addTarget(self, action: #selector(editingChanged), forControlEvents: .EditingChanged)
   }
   
   private func getSelectedScriptFile() {
@@ -171,34 +140,6 @@ class ScriptViewController: UIViewController {
     }
   }
   
-  /// 重命名
-  private func renameFile() {
-    self.view.showHUD(text: "正在保存")
-    Service.renameFile(fileName: self.oldName, newFileName: renameView.newNameTextField.text!) { [weak self] (data, _, error) in
-      guard let `self` = self else { return }
-      if let data = data where JSON(data: data) != nil {
-        let json = JSON(data: data)
-        switch json["code"].intValue {
-        case 0:
-          self.view.showHUD(.Success, text: Constants.Text.saveSuccessful, completionBlock: { (_) in
-            self.closeRenameViewAnimator()
-            self.fetchScriptList()
-          })
-        default:
-          self.alertShowOneButton(message: json["message"].stringValue)
-          self.view.dismissHUD()
-          return
-        }
-      }
-      if error != nil {
-        self.view.updateHUD(Constants.Error.failure)
-        MixC.sharedManager.restart { (_) in
-          self.renameFile()
-        }
-      }
-    }
-  }
-  
   @objc private func addScript(button: UIBarButtonItem) {
     let newScriptViewController = NewScriptViewController()
     newScriptViewController.delegate = self
@@ -237,40 +178,19 @@ class ScriptViewController: UIViewController {
     self.indexPath = indexPath
     self.oldName = scriptList[indexPath.row].name
     self.oldExtensionName = Suffix.haveSuffix(scriptList[indexPath.row].name)
-    editingChanged()
     
-    // SIActionSheet
-    let actionSheet = SIActionSheet(title: self.oldName)
+    var viewController: ScriptInfoViewController
     if self.oldExtensionName == Suffix.Section.LUA.title || self.oldExtensionName == Suffix.Section.XXT.title {
-      actionSheet.addButtonWithTitle("运行", type: .Destructive) { [weak self] (_) in
-        guard let `self` = self else { return }
-        self.launchScriptFile()
-      }
-      actionSheet.addButtonWithTitle("停止", type: .Default) { [weak self](_) in
-        guard let `self` = self else { return }
-        self.isRunning()
-      }
-      actionSheet.addButtonWithTitle("编辑", type: .Default) { [weak self] (_) in
-        guard let `self` = self else { return }
-        self.edit(self.indexPath)
-      }
-      actionSheet.addButtonWithTitle("重命名", type: .Default) { [weak self] (_) in
-        guard let `self` = self else { return }
-        self.openRenameViewAnimator()
-      }
+      viewController = ScriptInfoViewController(infoTitle: scriptList[indexPath.row].name, type: .LaunchAndEdit)
     } else {
-      actionSheet.addButtonWithTitle("编辑", type: .Default) { [weak self] (_) in
-        guard let `self` = self else { return }
-        self.edit(self.indexPath)
-      }
-      actionSheet.addButtonWithTitle("重命名", type: .Default) { [weak self] (_) in
-        guard let `self` = self else { return }
-        self.openRenameViewAnimator()
-      }
+      viewController = ScriptInfoViewController(infoTitle: scriptList[indexPath.row].name, type: .NotRunAndEdit)
     }
-    actionSheet.addButtonWithTitle(Constants.Text.cancel, type: .Cancel) { (_) in }
-    actionSheet.allowTapBackgroundToDismiss = true
-    actionSheet.show()
+    viewController.delegate = self
+    viewController.rootDelegate = self
+    scriptInfoPopupController = STPopupController(rootViewController: viewController)
+    scriptInfoPopupController.containerView.layer.cornerRadius = 2
+    scriptInfoPopupController.backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(backgroundDismiss)))
+    scriptInfoPopupController.presentInViewController(self)
     
     if self.oldExtensionName == Suffix.Section.LUA.title || self.oldExtensionName == Suffix.Section.XXT.title {
       for cell in tableView.visibleCells {
@@ -291,56 +211,22 @@ class ScriptViewController: UIViewController {
     }
   }
   
-  @objc private func submit() {
-    renameView.newNameTextField.resignFirstResponder()
-    renameFile()
+  @objc private func backgroundDismiss() {
+    scriptInfoPopupController.dismiss()
+  }
+}
+
+extension ScriptViewController: ScriptInfoViewControllerDelegate {
+  func scriptInfoLaunch() {
+    self.launchScriptFile()
   }
   
-  @objc private func blurTap() {
-    if !renameView.newNameTextField.resignFirstResponder() {
-      closeRenameViewAnimator()
-    } else {
-      renameView.newNameTextField.resignFirstResponder()
-    }
+  func scriptInfoStop() {
+    self.isRunning()
   }
   
-  @objc private func editingChanged() {
-    if self.oldName != renameView.newNameTextField.text! && renameView.newNameTextField.text?.characters.count != 0{
-      renameView.submitButton.enabled = true
-      renameView.submitButton.backgroundColor = ThemeManager.Theme.tintColor
-    } else {
-      renameView.submitButton.enabled = false
-      renameView.submitButton.backgroundColor = ThemeManager.Theme.lightTextColor
-    }
-  }
-  
-  private func closeRenameViewAnimator() {
-    navigationController?.tabBarController?.tabBar.hidden = false
-    navigationController?.setNavigationBarHidden(false, animated: true)
-    UIView.animateWithDuration(animationDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 15, options: [], animations: {
-      self.blurView.alpha = 0
-      self.renameView.alpha = 0
-      }, completion: { (_) in
-        self.renameView.hidden = true
-        self.blurView.hidden = true
-        self.renameView.transform = CGAffineTransformIdentity
-    })
-  }
-  
-  private func openRenameViewAnimator() {
-    navigationController?.tabBarController?.tabBar.hidden = true
-    navigationController?.setNavigationBarHidden(true, animated: true)
-    renameView.newNameTextField.text = self.oldName
-    renameView.hidden = false
-    blurView.hidden = false
-    renameView.alpha = 1
-    renameView.transform = CGAffineTransformTranslate(renameView.transform, 0, self.view.frame.height/2)
-    UIView.animateWithDuration(animationDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 15, options: [], animations: {
-      self.renameView.transform = CGAffineTransformIdentity
-      self.blurView.alpha = 1
-      }, completion: { (_) in
-        
-    })
+  func scriptInfoEdit() {
+    self.edit(self.indexPath)
   }
 }
 
@@ -516,20 +402,24 @@ extension ScriptViewController: UITableViewDelegate, UITableViewDataSource {
 
 /// 读取文件
 extension ScriptViewController {
-  private func readFile(name: String) {
-    Service.readFile(filename: name) { [weak self] (data, _, error) in
+  private func readFile(fileName: String) {
+    Service.readFile(filename: fileName) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
+      //      guard JSON(data: data!) != nil else {
+      //        self.view.showHUD(.Error, text: Constants.Text.notFile)
+      //        return
+      //      }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
           if let image = Base64.base64StringToUIImage(json["data"].stringValue) {
             self.view.dismissHUD()
-            let photoViewController = PhotoViewController(image: image, name: name)
+            let photoViewController = PhotoViewController(image: image, name: fileName)
             photoViewController.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(photoViewController, animated: true)
           } else {
-            self.view.showHUD(.Error, text: Constants.Text.notReload)
+            self.view.showHUD(.Error, text: Constants.Text.notFile)
           }
         default:
           self.alertShowOneButton(message: json["message"].stringValue)
@@ -540,14 +430,12 @@ extension ScriptViewController {
       if error != nil {
         self.view.updateHUD(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
-          self.readFile(name)
+          self.readFile(fileName)
         }
       }
     }
   }
-}
-
-extension ScriptViewController: SWTableViewCellDelegate {
+  
   private func fetchReadScript(fileName: String) {
     Service.readScriptFile(filename: fileName) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
@@ -576,7 +464,9 @@ extension ScriptViewController: SWTableViewCellDelegate {
       }
     }
   }
-  
+}
+
+extension ScriptViewController: SWTableViewCellDelegate {
   private func intoEdit(indexPath: NSIndexPath) {
     let fileName = scriptList[indexPath.row].name
     let suffix = Suffix.haveSuffix(fileName)

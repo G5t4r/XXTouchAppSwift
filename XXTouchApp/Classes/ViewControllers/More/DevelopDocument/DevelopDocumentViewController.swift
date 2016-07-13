@@ -18,6 +18,7 @@ class DevelopDocumentViewController: UIViewController {
   }()
   private let progressProxy = NJKWebViewProgress()
   private let progressView = NJKWebViewProgressView()
+  private var developDocumentInfoPopupController: STPopupController!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -74,13 +75,14 @@ extension DevelopDocumentViewController {
   }
   
   @objc private func skip() {
-    let actionSheet = SIActionSheet(title: navigationItem.title!)
-    actionSheet.addButtonWithTitle("跳转到Safari", type: .Destructive) { (_) in
-      UIApplication.sharedApplication().openURL(NSURL(string: Service.developDocument())!)
-    }
-    actionSheet.addButtonWithTitle(Constants.Text.cancel, type: .Cancel) { (_) in}
-    actionSheet.allowTapBackgroundToDismiss = true
-    actionSheet.show()
+    developDocumentInfoPopupController = STPopupController(rootViewController: DevelopDocumentInfoViewController())
+    developDocumentInfoPopupController.backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(backgroundDismiss)))
+    developDocumentInfoPopupController.containerView.layer.cornerRadius = 2
+    developDocumentInfoPopupController.presentInViewController(self)
+  }
+  
+  @objc private func backgroundDismiss() {
+    developDocumentInfoPopupController.dismiss()
   }
 }
 
