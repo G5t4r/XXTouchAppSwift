@@ -9,9 +9,9 @@
 class CaseString {
   // 将扩展名转换为小写
   class func lowercase(string: String) -> String{
-    let s1 = string as NSString
-    let s2 = s1.substringFromIndex(s1.length-4)
-    let lowercaseString = s2.lowercaseString
+    //    let s1 = string as NSString
+    //    let s2 = s1.substringFromIndex(s1.length-4)
+    let lowercaseString = string.lowercaseString
     return lowercaseString
   }
 }

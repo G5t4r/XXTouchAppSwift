@@ -19,8 +19,8 @@ class Service {
   }
   
   static var baseURLString: String {
-    get { return LocalStorage.baseURLString()!.stringByAppendingString(reloadPort()) }
-//        get { return "http://10.3.1.123".stringByAppendingString(reloadPort()) }
+        get { return LocalStorage.baseURLString()!.stringByAppendingString(reloadPort()) }
+//    get { return "http://10.3.1.91".stringByAppendingString(reloadPort()) }
     //    set { LocalStorage.saveBaseURLString(newValue) }
   }
   
