@@ -49,4 +49,10 @@ class KeyBoardSettingCell: UITableViewCell {
     titleLabel.text = title
     infoLabel.text = info
   }
+  
+  func setStatus() {
+    self.titleLabel.textColor = ThemeManager.Theme.lightTextColor
+    self.userInteractionEnabled = false
+    self.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
+  }
 }

@@ -91,6 +91,14 @@ extension KeyBoardSettingViewController {
         self.view.dismissHUD()
         switch json["code"].intValue {
         case 0:
+          let activator = json["data"]["activator_installed"].boolValue
+          if activator {
+            self.holdVolumeUpCell.setStatus()
+            self.holdVolumeDownCell.setStatus()
+            self.clickVolumeUpCell.setStatus()
+            self.clickVolumeDownCell.setStatus()
+          }
+          
           let holdVolumeUpIndex = json["data"]["hold_volume_up"].intValue
           self.holdVolumeUpCell.bind(self.volumeActionList[holdVolumeUpIndex], info: self.volumeInfoList[holdVolumeUpIndex])
           let holdVolumeDownIndex = json["data"]["hold_volume_down"].intValue
@@ -170,7 +178,7 @@ extension KeyBoardSettingViewController: UITableViewDelegate, UITableViewDataSou
   
   func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
     switch section {
-    case 3: return CustomHeaderOrFooter(title: "*设置 [无动作] 表示不拦截音量键事件\n*如安装了Activator则这里设置不生效", textColor: UIColor.redColor(), font: UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 15, pad: 19)))
+    case 3: return CustomHeaderOrFooter(title: "*设置 [无动作] 表示不拦截音量键事件\n*如安装了Activator则这里设置不生效\n且屏蔽操作", textColor: UIColor.redColor(), font: UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 15, pad: 19)))
     default: return nil
     }
   }

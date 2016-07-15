@@ -111,6 +111,7 @@ class MoreViewController: UIViewController {
   private var host = ""
   private var deviceId = ""
   private let moreRemoteServiceCell = MoreRemoteServiceCell()
+  private var remoteService = false
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -266,6 +267,7 @@ extension MoreViewController {
         case 0:
           let opened = json["data"]["opened"].boolValue
           self.moreRemoteServiceCell.switchs.on = opened
+          self.remoteService = opened
           self.titleLabelAnimation(opened)
         default:
           self.alertShowOneButton(message: json["message"].stringValue)
@@ -353,7 +355,7 @@ extension MoreViewController {
     /// 开机启动设置
     case 2: self.navigationController?.pushViewController(StartUpSettingViewController(), animated: true)
     /// 用户偏好设置
-    case 3: self.navigationController?.pushViewController(UserSettingViewController(), animated: true)
+    case 3: self.navigationController?.pushViewController(UserSettingViewController(remoteService: self.remoteService), animated: true)
     default:break
     }
   }

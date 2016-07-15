@@ -19,8 +19,8 @@ class Service {
   }
   
   static var baseURLString: String {
-        get { return LocalStorage.baseURLString()!.stringByAppendingString(reloadPort()) }
-//    get { return "http://10.3.1.91".stringByAppendingString(reloadPort()) }
+    get { return LocalStorage.baseURLString()!.stringByAppendingString(reloadPort()) }
+    //    get { return "http://10.3.1.91".stringByAppendingString(reloadPort()) }
     //    set { LocalStorage.saveBaseURLString(newValue) }
   }
   
@@ -269,20 +269,25 @@ extension Service {
   }
   
   // 设置用户偏好配置
-  class func setUserConf(type type: String, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
-    var path: String
-    switch type {
-    case "setNosimAlertOff":        path = "/set_no_nosim_alert_off"
-    case "setNosimAlertOn":         path = "/set_no_nosim_alert_on"
-    case "setNosimStatusbarOff":    path = "/set_no_nosim_statusbar_off"
-    case "setNosimStatusbarOn":     path = "/set_no_nosim_statusbar_on"
-    case "setNoLowPowerAlertOff":   path = "/set_no_low_power_alert_off"
-    case "setNoLowPowerAlertOn":    path = "/set_no_low_power_alert_on"
-    case "setNoNeedPushidAlertOff": path = "/set_no_need_pushid_alert_off"
-    case "setNoNeedPushidAlertOn":  path = "/set_no_need_pushid_alert_on"
-    default: path = ""
-    }
-    return request(method: .POST, host: baseURLString, path: path, completionHandler: completionHandler)
+  class func setUserConf(type type: String, status: Bool, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
+    let parameters = [
+      type : status
+    ]
+    
+    return request(method: .POST, host: baseURLString, path: "/set_user_conf", parameters: parameters, completionHandler: completionHandler)
+    
+    //    var path: String
+    //    switch type {
+    //    case "setNosimAlertOff":        path = "/set_no_nosim_alert_off"
+    //    case "setNosimAlertOn":         path = "/set_no_nosim_alert_on"
+    //    case "setNosimStatusbarOff":    path = "/set_no_nosim_statusbar_off"
+    //    case "setNosimStatusbarOn":     path = "/set_no_nosim_statusbar_on"
+    //    case "setNoLowPowerAlertOff":   path = "/set_no_low_power_alert_off"
+    //    case "setNoLowPowerAlertOn":    path = "/set_no_low_power_alert_on"
+    //    case "setNoNeedPushidAlertOff": path = "/set_no_need_pushid_alert_off"
+    //    case "setNoNeedPushidAlertOn":  path = "/set_no_need_pushid_alert_on"
+    //    default: path = ""
+    //    }
   }
   
   // 获取开机启动设置
