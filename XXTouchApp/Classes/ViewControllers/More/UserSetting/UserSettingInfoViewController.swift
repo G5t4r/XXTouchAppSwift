@@ -28,10 +28,10 @@ class UserSettingInfoViewController: UIViewController {
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private let infoTitle: String
   private let type: UserActionType
-  private let idleCell = CustomLabelCell(title: "锁屏不掉线")
-  private let notIdleCell = CustomLabelCell(title: "锁屏断网")
-  private let autoLaunchCloseScriptCell = CustomLabelCell(title: "自动启动非正常结束的脚本")
-  private let stopDaemonCell = CustomLabelCell(title: "停用守护模式")
+  private let idleCell = CustomLabelCell(title: "正常休眠")
+  private let notIdleCell = CustomLabelCell(title: "锁屏不掉线")
+  private let daemonCell = CustomLabelCell(title: "会守护")
+  private let stopDaemonCell = CustomLabelCell(title: "不守护")
   private let popCell = CustomLabelCell(title: "会弹出")
   private let notPopCell = CustomLabelCell(title: "不弹出")
   private let showCell = CustomLabelCell(title: "会显示")
@@ -103,8 +103,8 @@ extension UserSettingInfoViewController: UITableViewDelegate, UITableViewDataSou
       }
     case .ScriptOnDaemon:
       switch indexPath.section {
-      case 0: return autoLaunchCloseScriptCell
-      case 1: return stopDaemonCell
+      case 0: return stopDaemonCell
+      case 1: return daemonCell
       default: return UITableViewCell()
       }
     default:

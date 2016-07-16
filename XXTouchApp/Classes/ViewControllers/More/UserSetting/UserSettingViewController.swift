@@ -29,16 +29,16 @@ class UserSettingViewController: UIViewController {
   
   private lazy var idleValue: [String] = {
     let idleValue = [
-      "锁屏不掉线",
-      "锁屏断网"
+      "正常休眠",
+      "锁屏不掉线"
     ]
     return idleValue
   }()
   
   private lazy var daemonValue: [String] = {
     let daemonValue = [
-      "自动启动非正常结束的脚本",
-      "停用守护模式"
+      "不守护",
+      "会守护"
     ]
     return daemonValue
   }()
@@ -144,7 +144,7 @@ extension UserSettingViewController {
           if self.remoteService {
             noIdle ? self.noIdleCell.bind(self.idleValue[1]) : self.noIdleCell.bind(self.idleValue[0])
           } else {
-            self.noIdleCell.bind(self.idleValue[1])
+            self.noIdleCell.bind(self.idleValue[0])
           }
           
           let daemon = json["data"][UserConfType.ScriptOnDaemon.title].boolValue
@@ -251,13 +251,13 @@ extension UserSettingViewController: UITableViewDelegate, UITableViewDataSource 
 extension UserSettingViewController: UserSettingInfoViewControllerDelegate {
   func setNoIdleOnOrOff(index: Int) {
     switch index {
-    case 0:
+    case 0: self.setUserConf(UserConfType.NoIdle.title, status: false)
+    case 1:
       guard self.remoteService else {
         self.alertShowOneButton(message: "此选项只有在远程服务为开启的状态生效")
         return
       }
-      self.setUserConf(UserConfType.NoIdle.title, status: false)
-    case 1: self.setUserConf(UserConfType.NoIdle.title, status: true)
+      self.setUserConf(UserConfType.NoIdle.title, status: true)
     default: break
     }
   }
