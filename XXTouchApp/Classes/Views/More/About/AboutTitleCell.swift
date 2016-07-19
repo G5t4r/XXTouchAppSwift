@@ -25,7 +25,7 @@ class AboutTitleCell: UITableViewCell {
     self.selectionStyle = .None
     titleLabel.text = "XXTouch"
     titleLabel.textColor = UIColor(rgb: 0x073763)
-    titleLabel.font = UIFont.boldSystemFontOfSize(Sizer.valueForDevice(phone: 28, pad: 32))
+    titleLabel.font = UIFont.boldSystemFontOfSize(Sizer.valueForDevice(phone: 32, pad: 36))
     titleLabel.textAlignment = .Center
     
     contentView.addSubview(titleLabel)

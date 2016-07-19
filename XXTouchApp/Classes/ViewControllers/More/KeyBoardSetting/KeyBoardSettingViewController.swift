@@ -244,8 +244,10 @@ extension KeyBoardSettingViewController {
 // 自定义SectionHeader
 class CustomHeaderOrFooter: UITableViewHeaderFooterView {
   let titleLabel = UILabel()
+  let offset: CGFloat
   
-  init(title: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment = .Center) {
+  init(title: String, textColor: UIColor, font: UIFont, alignment: NSTextAlignment = .Center, offset: CGFloat = 0) {
+    self.offset = offset
     titleLabel.text = title
     titleLabel.font = font
     titleLabel.textColor = textColor
@@ -263,7 +265,7 @@ class CustomHeaderOrFooter: UITableViewHeaderFooterView {
   private func makeConstraints() {
     titleLabel.snp_makeConstraints { (make) in
       make.leading.trailing.equalTo(self).inset(20)
-      make.centerY.equalTo(self)
+      make.centerY.equalTo(self).offset(self.offset)
     }
   }
   

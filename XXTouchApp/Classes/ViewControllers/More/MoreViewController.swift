@@ -222,9 +222,15 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     if UIDevice.isPad {
       return CustomHeaderOrFooter(title: titleList[section], textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(18), alignment: .Left)
-    } else {
-      return nil
     }
+    return nil
+  }
+  
+  func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    if section == 4 {
+      return CustomHeaderOrFooter(title: "© XXTouch", textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 14, pad: 18)), alignment: .Left, offset: -10)
+    }
+    return nil
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -232,6 +238,9 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    if section == 4 {
+      return Sizer.valueForDevice(phone: 50, pad: 70)
+    }
     return 0.01
   }
 }
