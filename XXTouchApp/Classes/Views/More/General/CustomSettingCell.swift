@@ -10,12 +10,9 @@ import UIKit
 
 class CustomSettingCell: UITableViewCell {
   private let titleLabel = UILabel()
-  let switches = Switches()
   
-  init(title: String, color: UIColor = UIColor.blackColor()) {
-    super.init(style: .Default, reuseIdentifier: nil)
-    self.titleLabel.text = title
-    self.titleLabel.textColor = color
+  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
     setupUI()
     makeConstriants()
   }
@@ -25,22 +22,21 @@ class CustomSettingCell: UITableViewCell {
   }
   
   private func setupUI() {
-    self.selectionStyle = .None
+    self.accessoryType = .DisclosureIndicator
+    titleLabel.textColor = UIColor.blackColor()
     titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 21))
     
     contentView.addSubview(titleLabel)
-    contentView.addSubview(switches)
   }
   
   private func makeConstriants() {
     titleLabel.snp_makeConstraints { (make) in
       make.centerY.equalTo(contentView)
-      make.leading.trailing.equalTo(contentView).inset(20)
+      make.leading.trailing.equalTo(contentView).inset(Sizer.valueForDevice(phone: 20, pad: 25))
     }
-    
-    switches.snp_makeConstraints { (make) in
-      make.centerY.equalTo(contentView)
-      make.trailing.equalTo(contentView).offset(-20)
-    }
+  }
+  
+  func bind(title: String) {
+    titleLabel.text = title
   }
 }

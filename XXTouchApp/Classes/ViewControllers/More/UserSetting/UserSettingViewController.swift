@@ -75,12 +75,12 @@ class UserSettingViewController: UIViewController {
     }
   }
   
-  private let noIdleCell = UserSettingCell()
-  private let scriptOnDaemonCell = UserSettingCell()
-  private let noSimAlertCell = UserSettingCell()
-  private let noSimStatusbarCell = UserSettingCell()
-  private let noLowPowerAlertCell = UserSettingCell()
-  private let noNeedPushidAlertCell = UserSettingCell()
+  private let noIdleCell = CustomSettingCell()
+  private let scriptOnDaemonCell = CustomSettingCell()
+  private let noSimAlertCell = CustomSettingCell()
+  private let noSimStatusbarCell = CustomSettingCell()
+  private let noLowPowerAlertCell = CustomSettingCell()
+  private let noNeedPushidAlertCell = CustomSettingCell()
   private var userSettingInfoPopupController: STPopupController!
   private let remoteService: Bool
   

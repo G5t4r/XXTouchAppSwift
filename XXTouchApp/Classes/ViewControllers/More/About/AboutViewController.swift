@@ -61,8 +61,7 @@ class AboutViewController: UIViewController {
   }
   
   private func setupAction() {
-    //    qqGroupCell.button.addTarget(self, action: #selector(qqGroup), forControlEvents: .TouchUpInside)
-    //    webCell.button.addTarget(self, action: #selector(web), forControlEvents: .TouchUpInside)
+
   }
   
   private func bind() {
@@ -81,7 +80,6 @@ class AboutViewController: UIViewController {
 extension AboutViewController {
   
   private func qqGroup() {
-    //    UIApplication.sharedApplication().openURL(NSURL(string: "mailto:info@xxtouch.com")!)
     let url = NSURL(string: "mqqapi://card/show_pslcard?src_type=internal&version=1&uin=40898074&card_type=group&source=external")
     if UIApplication.sharedApplication().canOpenURL(url!) {
       UIApplication.sharedApplication().openURL(url!)
@@ -167,7 +165,7 @@ extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     switch indexPath.section {
-    case 0: return Sizer.valueForDevice(phone: 170, pad: 175)
+    case 0: return Sizer.valueForDevice(phone: 65, pad: 70)
     case 1: return Sizer.valueForDevice(phone: 55, pad: 65)
     default: return Sizer.valueForDevice(phone: 40, pad: 50)
     }

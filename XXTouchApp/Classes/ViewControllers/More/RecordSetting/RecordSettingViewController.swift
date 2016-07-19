@@ -11,17 +11,40 @@ import UIKit
 class RecordSettingViewController: UIViewController {
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   
-  private lazy var recordVolumeUpCell: CustomSettingCell = {
-    let recordVolumeUpCell = CustomSettingCell(title: "录制也包括 [音量加]")
-    recordVolumeUpCell.switches.tag = 0
-    return recordVolumeUpCell
+  private lazy var recordSettingList: [String] = {
+    let recordSettingList = [
+      "录制包含音量加键",
+      "录制包含音量减键"
+    ]
+    return recordSettingList
   }()
   
-  private lazy var recordVolumeDownCell: CustomSettingCell = {
-    let recordVolumeDownCell = CustomSettingCell(title: "录制也包括 [音量减]")
-    recordVolumeDownCell.switches.tag = 1
-    return recordVolumeDownCell
+  private lazy var recordUpValue: [String] = {
+    let daemonValue = [
+      "录制音量加",
+      "不录制音量加"
+    ]
+    return daemonValue
   }()
+  
+  private lazy var recordDownValue: [String] = {
+    let daemonValue = [
+      "录制音量减",
+      "不录制音量减"
+    ]
+    return daemonValue
+  }()
+  
+  private let recordVolumeUpCell = CustomSettingCell()
+  private let recordVolumeDownCell = CustomSettingCell()
+  private var recordSettingInfoPopupController: STPopupController!
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    if let indexPath = tableView.indexPathForSelectedRow {
+      tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -48,8 +71,7 @@ class RecordSettingViewController: UIViewController {
   }
   
   private func setupAction() {
-    recordVolumeUpCell.switches.addTarget(self, action: #selector(recordVolumeValueChanged(_:)), forControlEvents: .ValueChanged)
-    recordVolumeDownCell.switches.addTarget(self, action: #selector(recordVolumeValueChanged(_:)), forControlEvents: .ValueChanged)
+    
   }
 }
 
@@ -63,8 +85,10 @@ extension RecordSettingViewController {
         self.view.dismissHUD()
         switch json["code"].intValue {
         case 0:
-          self.recordVolumeUpCell.switches.on = json["data"]["record_volume_up"].boolValue
-          self.recordVolumeDownCell.switches.on = json["data"]["record_volume_down"].boolValue
+          let upValue = json["data"]["record_volume_up"].boolValue
+          upValue ? self.recordVolumeUpCell.bind(self.recordUpValue[0]) : self.recordVolumeUpCell.bind(self.recordUpValue[1])
+          let downValue = json["data"]["record_volume_down"].boolValue
+          downValue ? self.recordVolumeDownCell.bind(self.recordDownValue[0]) : self.recordVolumeDownCell.bind(self.recordDownValue[1])
         default:
           self.alertShowOneButton(message: json["message"].stringValue)
           return
@@ -81,24 +105,6 @@ extension RecordSettingViewController {
 }
 
 extension RecordSettingViewController {
-  @objc private func recordVolumeValueChanged(switchState: UISwitch) {
-    switch switchState.tag {
-    case 0:
-      if switchState.on {
-        setRecordVolume("setRecordVolumeUpOn")
-      } else {
-        setRecordVolume("setRecordVolumeUpOff")
-      }
-    case 1:
-      if switchState.on {
-        setRecordVolume("setRecordVolumeDownOn")
-      } else {
-        setRecordVolume("setRecordVolumeDownOff")
-      }
-    default:break
-    }
-  }
-  
   private func setRecordVolume(type: String) {
     self.view.showHUD(text: Constants.Text.reloading)
     Service.setRecordConf(type: type) { [weak self] (data, _, error) in
@@ -107,8 +113,7 @@ extension RecordSettingViewController {
         let json = JSON(data: data)
         self.view.dismissHUD()
         switch json["code"].intValue {
-        case 0:break
-          
+        case 0: self.getRecordConf()
         default:
           self.alertShowOneButton(message: json["message"].stringValue)
           return
@@ -142,22 +147,66 @@ extension RecordSettingViewController: UITableViewDelegate, UITableViewDataSourc
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    let type = [
+      RecordActionType.RecordVolumeUp,
+      RecordActionType.RecordVolumeDown
+    ]
     
+    let viewController = RecordSettingInfoViewController(infoTitle: recordSettingList[indexPath.section], type: type[indexPath.section])
+    viewController.delegate = self
+    recordSettingInfoPopupController = STPopupController(rootViewController: viewController)
+    recordSettingInfoPopupController.backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(backgroundDismiss)))
+    recordSettingInfoPopupController.containerView.layer.cornerRadius = Sizer.valueForDevice(phone: 2, pad: 3)
+    recordSettingInfoPopupController.presentInViewController(self)
   }
   
-  func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return Sizer.valueForDevice(phone: 50, pad: 60)
+  @objc private func backgroundDismiss() {
+    recordSettingInfoPopupController.dismiss()
   }
   
-  func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return 0.01
-  }
-  
-  func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-    switch section {
-    case 0: return Sizer.valueForDevice(phone: 10, pad: 15)
-    default: return 0.01
+  func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    if UIDevice.isPad {
+      return nil
+    } else {
+      return recordSettingList[section]
     }
   }
   
+  func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    if UIDevice.isPad {
+      return CustomHeaderOrFooter(title: recordSettingList[section], textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(17), alignment: .Left)
+    } else {
+      return nil
+    }
+  }
+  
+  func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    return Sizer.valueForDevice(phone: 45, pad: 55)
+  }
+  
+  func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    return Sizer.valueForDevice(phone: 30, pad: 40)
+  }
+  
+  func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    return 0.01
+  }
+}
+
+extension RecordSettingViewController: RecordSettingInfoViewControllerDelegate {
+  func setRecordVolumeUpOnOrOff(index: Int) {
+    switch index {
+    case 0: setRecordVolume("setRecordVolumeUpOn")
+    case 1: setRecordVolume("setRecordVolumeUpOff")
+    default: break
+    }
+  }
+  
+  func setRecordVolumeDownOnOrOff(index: Int) {
+    switch index {
+    case 0: setRecordVolume("setRecordVolumeDownOn")
+    case 1: setRecordVolume("setRecordVolumeDownOff")
+    default: break
+    }
+  }
 }

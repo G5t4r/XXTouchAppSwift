@@ -68,9 +68,7 @@ class ScriptDetailViewController: UIViewController {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
-          self.view.showHUD(.Success, text: Constants.Text.saveSuccessful, completionBlock: { (_) in
-            self.navigationController?.popViewControllerAnimated(true)
-          })
+          self.view.showHUD(.Success, text: Constants.Text.saveSuccessful)
         default:
           self.alertShowOneButton(message: json["message"].stringValue)
           self.view.dismissHUD()
