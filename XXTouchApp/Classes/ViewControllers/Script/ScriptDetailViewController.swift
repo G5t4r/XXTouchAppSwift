@@ -10,9 +10,8 @@ import UIKit
 
 class ScriptDetailViewController: UIViewController {
   private let fileName: String
-  private let fileText: String
+  private var fileText: String
   private let textView = XXTTextView(frame: CGRectZero)
-  private var oldText = ""
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -24,7 +23,6 @@ class ScriptDetailViewController: UIViewController {
   init(fileName: String, fileText: String) {
     self.fileName = fileName
     self.fileText = fileText
-    self.oldText = fileText
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -68,6 +66,7 @@ class ScriptDetailViewController: UIViewController {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
+          self.fileText = self.textView.text
           self.view.showHUD(.Success, text: Constants.Text.saveSuccessful)
         default:
           self.alertShowOneButton(message: json["message"].stringValue)
@@ -89,7 +88,7 @@ class ScriptDetailViewController: UIViewController {
   }
   
   @objc private func back() {
-    guard self.oldText != self.textView.text else {
+    guard self.fileText != self.textView.text else {
       self.navigationController?.popViewControllerAnimated(true)
       return
     }
