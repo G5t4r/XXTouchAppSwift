@@ -43,10 +43,19 @@ class UserSettingViewController: UIViewController {
     return daemonValue
   }()
   
+  private lazy var scriptEndHintValue: [String] = {
+    let scriptEndHintValue = [
+      "有提示",
+      "无提示"
+    ]
+    return scriptEndHintValue
+  }()
+  
   private lazy var userSettingList: [String] = {
     let userSettingList = [
       "失眠模式",
       "脚本守护模式",
+      "脚本结束提示文字",
       "“无 SIM 卡” 弹窗",
       "“无 SIM 卡” 状态栏文字",
       "“低电量” 提示音及弹窗",
@@ -58,6 +67,7 @@ class UserSettingViewController: UIViewController {
   enum UserConfType {
     case NoIdle
     case ScriptOnDaemon
+    case ScriptEndHint
     case NoSimAlert
     case NoSimStatusbar
     case NoLowPowerAlert
@@ -67,6 +77,7 @@ class UserSettingViewController: UIViewController {
       switch self {
       case .NoIdle: return "no_idle"
       case .ScriptOnDaemon: return "script_on_daemon"
+      case .ScriptEndHint: return "script_end_hint"
       case .NoSimAlert: return "no_nosim_alert"
       case .NoSimStatusbar: return "no_nosim_statusbar"
       case .NoLowPowerAlert: return "no_low_power_alert"
@@ -77,6 +88,7 @@ class UserSettingViewController: UIViewController {
   
   private let noIdleCell = CustomSettingCell()
   private let scriptOnDaemonCell = CustomSettingCell()
+  private let scriptEndHintCell = CustomSettingCell()
   private let noSimAlertCell = CustomSettingCell()
   private let noSimStatusbarCell = CustomSettingCell()
   private let noLowPowerAlertCell = CustomSettingCell()
@@ -150,6 +162,9 @@ extension UserSettingViewController {
           let daemon = json["data"][UserConfType.ScriptOnDaemon.title].boolValue
           daemon ? self.scriptOnDaemonCell.bind(self.daemonValue[1]) : self.scriptOnDaemonCell.bind(self.daemonValue[0])
           
+          let endHint = json["data"][UserConfType.ScriptEndHint.title].boolValue
+          endHint ? self.scriptEndHintCell.bind(self.scriptEndHintValue[0]) : self.scriptEndHintCell.bind(self.scriptEndHintValue[1])
+          
           let noSimAlert = json["data"][UserConfType.NoSimAlert.title].boolValue
           noSimAlert ? self.noSimAlertCell.bind(self.alertValue[1]) : self.noSimAlertCell.bind(self.alertValue[0])
           
@@ -179,7 +194,7 @@ extension UserSettingViewController {
 
 extension UserSettingViewController: UITableViewDelegate, UITableViewDataSource {
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return 6
+    return 7
   }
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -190,10 +205,11 @@ extension UserSettingViewController: UITableViewDelegate, UITableViewDataSource 
     switch indexPath.section {
     case 0: return noIdleCell
     case 1: return scriptOnDaemonCell
-    case 2: return noSimAlertCell
-    case 3: return noSimStatusbarCell
-    case 4: return noLowPowerAlertCell
-    case 5: return noNeedPushidAlertCell
+    case 2: return scriptEndHintCell
+    case 3: return noSimAlertCell
+    case 4: return noSimStatusbarCell
+    case 5: return noLowPowerAlertCell
+    case 6: return noNeedPushidAlertCell
     default: return UITableViewCell()
     }
   }
@@ -202,6 +218,7 @@ extension UserSettingViewController: UITableViewDelegate, UITableViewDataSource 
     let type = [
       UserActionType.NoIdle,
       UserActionType.ScriptOnDaemon,
+      UserActionType.ScriptEndHint,
       UserActionType.NoSimAlert,
       UserActionType.NoSimStatusbar,
       UserActionType.LowPowerAlert,
@@ -270,6 +287,14 @@ extension UserSettingViewController: UserSettingInfoViewControllerDelegate {
     }
   }
   
+  func setScriptEndHintOnOrOff(index: Int) {
+    switch index {
+    case 0: self.setUserConf(UserConfType.ScriptEndHint.title, status: true)
+    case 1: self.setUserConf(UserConfType.ScriptEndHint.title, status: false)
+    default: break
+    }
+  }
+  
   func setNoSimAlertOnOrOff(index: Int) {
     switch index {
     case 0: self.setUserConf(UserConfType.NoSimAlert.title, status: false)
@@ -309,6 +334,7 @@ extension UserSettingViewController {
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
+        print(json)
         switch json["code"].intValue {
         case 0: self.getUserConf()
         default:

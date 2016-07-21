@@ -9,6 +9,7 @@
 protocol UserSettingInfoViewControllerDelegate: NSObjectProtocol {
   func setNoIdleOnOrOff(index: Int)
   func setScriptOnDaemonOnOrOff(index: Int)
+  func setScriptEndHintOnOrOff(index: Int)
   func setNoSimAlertOnOrOff(index: Int)
   func setNosimStatusbarOnOrOff(index: Int)
   func setLowPowerAlertOnOrOff(index: Int)
@@ -18,6 +19,7 @@ protocol UserSettingInfoViewControllerDelegate: NSObjectProtocol {
 enum UserActionType: Int {
   case NoIdle
   case ScriptOnDaemon
+  case ScriptEndHint
   case NoSimAlert
   case NoSimStatusbar
   case LowPowerAlert
@@ -30,6 +32,8 @@ class UserSettingInfoViewController: UIViewController {
   private let type: UserActionType
   private let idleCell = CustomLabelCell(title: "正常休眠")
   private let notIdleCell = CustomLabelCell(title: "锁屏不掉线")
+  private let hintCell = CustomLabelCell(title: "有提示")
+  private let notHintCell = CustomLabelCell(title: "无提示")
   private let daemonCell = CustomLabelCell(title: "会守护")
   private let stopDaemonCell = CustomLabelCell(title: "不守护")
   private let popCell = CustomLabelCell(title: "会弹出")
@@ -101,6 +105,12 @@ extension UserSettingInfoViewController: UITableViewDelegate, UITableViewDataSou
       case 1: return notIdleCell
       default: return UITableViewCell()
       }
+    case .ScriptEndHint:
+      switch indexPath.section {
+      case 0: return hintCell
+      case 1: return notHintCell
+      default: return UITableViewCell()
+      }
     case .ScriptOnDaemon:
       switch indexPath.section {
       case 0: return stopDaemonCell
@@ -120,6 +130,7 @@ extension UserSettingInfoViewController: UITableViewDelegate, UITableViewDataSou
     switch self.type {
     case .NoIdle: self.delegate?.setNoIdleOnOrOff(indexPath.section)
     case .ScriptOnDaemon: self.delegate?.setScriptOnDaemonOnOrOff(indexPath.section)
+    case .ScriptEndHint: self.delegate?.setScriptEndHintOnOrOff(indexPath.section)
     case .NoSimAlert: self.delegate?.setNoSimAlertOnOrOff(indexPath.section)
     case .NoSimStatusbar: self.delegate?.setNosimStatusbarOnOrOff(indexPath.section)
     case .LowPowerAlert: self.delegate?.setLowPowerAlertOnOrOff(indexPath.section)
