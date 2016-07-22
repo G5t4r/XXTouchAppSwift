@@ -275,19 +275,6 @@ extension Service {
     ]
     
     return request(method: .POST, host: baseURLString, path: "/set_user_conf", parameters: parameters, completionHandler: completionHandler)
-    
-    //    var path: String
-    //    switch type {
-    //    case "setNosimAlertOff":        path = "/set_no_nosim_alert_off"
-    //    case "setNosimAlertOn":         path = "/set_no_nosim_alert_on"
-    //    case "setNosimStatusbarOff":    path = "/set_no_nosim_statusbar_off"
-    //    case "setNosimStatusbarOn":     path = "/set_no_nosim_statusbar_on"
-    //    case "setNoLowPowerAlertOff":   path = "/set_no_low_power_alert_off"
-    //    case "setNoLowPowerAlertOn":    path = "/set_no_low_power_alert_on"
-    //    case "setNoNeedPushidAlertOff": path = "/set_no_need_pushid_alert_off"
-    //    case "setNoNeedPushidAlertOn":  path = "/set_no_need_pushid_alert_on"
-    //    default: path = ""
-    //    }
   }
   
   // 获取开机启动设置
