@@ -91,16 +91,16 @@ extension AuthorizationViewController {
             message = "测试充值成功\n本次为测试授权，不会增加授权时间"
           } else {
             message = "充值成功\n本次充值时间：\(Formatter.formatDayTime(time))"
-            self.authorizationCell.iconVip()
-            self.getExpireDate()
           }
           self.alertShowOneButton(message: message, cancelHandler: { [weak self] (_) in
             guard let `self` = self else { return }
             self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
             })
           self.view.dismissHUD()
+          self.authorizationCell.iconVip()
           self.authorizationBindCell.codeTextField.text?.removeAll()
           self.bindCodeUpdate(titleColor: ThemeManager.Theme.lightTextColor, backgroundColor: ThemeManager.Theme.separatorColor, enabled: false)
+          self.getExpireDate()
         case 1:
           self.alertShowOneButton(message: Constants.Error.connectServerFail, cancelHandler: { [weak self] (_) in
             guard let `self` = self else { return }
