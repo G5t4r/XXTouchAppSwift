@@ -9,7 +9,7 @@
 import UIKit
 
 class NewNameView: UIView {
-  let newNameTextField = UITextField()
+  let newNameTextField = BaseTextField()
   let submitButton = UIButton(type: .Custom)
   let luaButton = UIButton(type: .Custom)
   let txtButton = UIButton(type: .Custom)
@@ -28,10 +28,8 @@ class NewNameView: UIView {
     self.backgroundColor = ThemeManager.Theme.lightGrayBackgroundColor
     
     newNameTextField.placeholder = "请输入文件名"
-    newNameTextField.clearButtonMode = .WhileEditing
-    newNameTextField.borderStyle = .RoundedRect
-    newNameTextField.autocorrectionType = .No
     newNameTextField.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 19))
+    newNameTextField.showsBorderWhileEditing = true
     
     submitButton.setTitle("创建", forState: .Normal)
     submitButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)

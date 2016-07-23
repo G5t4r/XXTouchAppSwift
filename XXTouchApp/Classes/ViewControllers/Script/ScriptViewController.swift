@@ -19,6 +19,17 @@ class ScriptViewController: UIViewController {
   private var scriptInfoPopupController: STPopupController!
   private var renamePopupController: STPopupController!
   
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    for cell in tableView.visibleCells {
+      let cell = cell as! ScriptCell
+      if !cell.isUtilityButtonsHidden() {
+        cell.hideUtilityButtonsAnimated(true)
+      }
+    }
+  }
+  
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     if FileManager.sharedManager.respringFileExistsAtPath() {
@@ -534,6 +545,10 @@ extension ScriptViewController: SWTableViewCellDelegate {
   }
   
   func swipeableTableViewCellShouldHideUtilityButtonsOnSwipe(cell: SWTableViewCell!) -> Bool {
+    return true
+  }
+  
+  func swipeableTableViewCell(cell: SWTableViewCell!, canSwipeToState state: SWCellState) -> Bool {
     return true
   }
 }

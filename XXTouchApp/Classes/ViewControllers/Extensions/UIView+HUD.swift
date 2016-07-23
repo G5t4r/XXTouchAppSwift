@@ -14,37 +14,62 @@ enum HUDType {
   case Success
 }
 
-var isShow = false
+var hudIsShow = false
+var hudIsNotDelay = false
+var hudTimer: NSTimer!
+var hudTimeInterval: NSTimeInterval = 0.5
+var hudType: HUDType = .Loading
+var hudText: String? = nil
+var hudCompletionBlock: (Bool)->() = {_ in }
 
 extension UIView {
   
-  func showHUD(type: HUDType = .Loading, text: String? = nil, completionBlock: (Bool)->() = {_ in }) {
-    guard !isShow else { return }
+  func delay() {
+    guard !hudIsNotDelay else {
+      hudTimer.invalidate()
+      hudTimer = nil
+      return
+    }
     
     var options: TAOverlayOptions
-    switch type {
+    switch hudType {
     case .Loading:
       options = [.OverlayShadow, .OverlayTypeActivitySquare, .OverlaySizeRoundedRect]
     case .Success:
       options = [.OverlayShadow, .OverlayTypeSuccess, .OverlaySizeRoundedRect, .AutoHide]
-    //      TAOverlay.setOverlayIconColor(UIColor(rgb: 0x1dbd1d))
     case .Error:
       options = [.OverlayShadow, .OverlayTypeError, .OverlaySizeRoundedRect, .AutoHide]
     }
-    TAOverlay.showOverlayWithLabel(text, options: options)
+    TAOverlay.showOverlayWithLabel(hudText, options: options)
     TAOverlay.setOverlayLabelTextColor(UIColor(rgb: 0x434343))
     TAOverlay.setOverlayIconColor(UIColor.grayColor())
     TAOverlay.setOverlayShadowColor(UIColor.blackColor().colorWithAlphaComponent(0.65))
-    TAOverlay.setCompletionBlock(completionBlock)
+    TAOverlay.setCompletionBlock(hudCompletionBlock)
+  }
+  
+  func showHUD(type: HUDType = .Loading, text: String? = nil, completionBlock: (Bool)->() = {_ in }) {
+    guard !hudIsShow else { return }
+    hudIsNotDelay = false
+    hudType = type
+    hudText = text
+    hudCompletionBlock = completionBlock
+    if type == .Loading {
+      hudTimer = NSTimer.scheduledTimerWithTimeInterval(hudTimeInterval, target: self, selector: #selector(delay), userInfo: nil, repeats: false)
+    } else {
+      delay()
+    }
   }
   
   func updateHUD(text: String, showStatus: Bool = true) {
     TAOverlay.setOverlayLabelText(text)
-    isShow = showStatus
+    hudIsShow = showStatus
   }
   
   func dismissHUD(showStatus: Bool = false, completionBlock: (Bool)->() = {_ in}) {
-    isShow = showStatus
+    hudIsShow = showStatus
+    if hudType == .Loading {
+      hudIsNotDelay = true
+    }
     TAOverlay.hideOverlayWithCompletionBlock(completionBlock)
   }
 }

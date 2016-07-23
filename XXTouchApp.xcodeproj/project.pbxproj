@@ -19,7 +19,6 @@
 		2C2A051F1D3DE3A900F31EAE /* RecordSettingInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2A051E1D3DE3A900F31EAE /* RecordSettingInfoViewController.swift */; };
 		2C2E7D371D2C974E00117025 /* CaseString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2E7D361D2C974E00117025 /* CaseString.swift */; };
 		2C4FFA3C1D2600B100DBEEDB /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4FFA3B1D2600B100DBEEDB /* PhotoViewController.swift */; };
-		2C4FFA3F1D264D3800DBEEDB /* PhotoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4FFA3E1D264D3800DBEEDB /* PhotoEditView.swift */; };
 		2C4FFA431D2A173F00DBEEDB /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4FFA421D2A173F00DBEEDB /* main.swift */; };
 		2C4FFA4B1D2B708500DBEEDB /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C4FFA4A1D2B708500DBEEDB /* Defaults.plist */; };
 		2C4FFA4E1D2B71AD00DBEEDB /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4FFA4D1D2B71AD00DBEEDB /* LocalStorage.swift */; };
@@ -54,6 +53,7 @@
 		2C7342E81D1140AE00CED0F3 /* ViewController+SnapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7342DB1D1140AE00CED0F3 /* ViewController+SnapKit.swift */; };
 		2C7342ED1D123E9C00CED0F3 /* RenameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7342EC1D123E9C00CED0F3 /* RenameView.swift */; };
 		2C7342F31D1260D800CED0F3 /* NewNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7342F21D1260D800CED0F3 /* NewNameView.swift */; };
+		2CB9ED871D43416200588357 /* BaseTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB9ED861D43416200588357 /* BaseTextField.swift */; };
 		2CC5F5881D1CFD040028467F /* MoreRemoteServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC5F5871D1CFD040028467F /* MoreRemoteServiceCell.swift */; };
 		2CC84C001D178E2600D4230D /* Suffix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC84BFF1D178E2600D4230D /* Suffix.swift */; };
 		2CC84C031D17B48600D4230D /* StartUpSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC84C021D17B48600D4230D /* StartUpSettingViewController.swift */; };
@@ -122,7 +122,6 @@
 		2C2A051E1D3DE3A900F31EAE /* RecordSettingInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordSettingInfoViewController.swift; sourceTree = "<group>"; };
 		2C2E7D361D2C974E00117025 /* CaseString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseString.swift; sourceTree = "<group>"; };
 		2C4FFA3B1D2600B100DBEEDB /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
-		2C4FFA3E1D264D3800DBEEDB /* PhotoEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoEditView.swift; sourceTree = "<group>"; };
 		2C4FFA421D2A173F00DBEEDB /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		2C4FFA4A1D2B708500DBEEDB /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Defaults.plist; sourceTree = "<group>"; };
 		2C4FFA4D1D2B71AD00DBEEDB /* LocalStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
@@ -163,6 +162,7 @@
 		2C7342DB1D1140AE00CED0F3 /* ViewController+SnapKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+SnapKit.swift"; sourceTree = "<group>"; };
 		2C7342EC1D123E9C00CED0F3 /* RenameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenameView.swift; sourceTree = "<group>"; };
 		2C7342F21D1260D800CED0F3 /* NewNameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewNameView.swift; sourceTree = "<group>"; };
+		2CB9ED861D43416200588357 /* BaseTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTextField.swift; sourceTree = "<group>"; };
 		2CC5F5871D1CFD040028467F /* MoreRemoteServiceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreRemoteServiceCell.swift; sourceTree = "<group>"; };
 		2CC84BFF1D178E2600D4230D /* Suffix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Suffix.swift; sourceTree = "<group>"; };
 		2CC84C021D17B48600D4230D /* StartUpSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartUpSettingViewController.swift; sourceTree = "<group>"; };
@@ -254,7 +254,6 @@
 		2C4FFA3D1D264D2600DBEEDB /* Photo */ = {
 			isa = PBXGroup;
 			children = (
-				2C4FFA3E1D264D3800DBEEDB /* PhotoEditView.swift */,
 			);
 			path = Photo;
 			sourceTree = "<group>";
@@ -291,6 +290,7 @@
 				95AB90CC1D21717200FA4C52 /* Button.swift */,
 				2C54F0E11D17F492005F35AD /* Switches.swift */,
 				95D555F31D30050200499947 /* XXTTextView.swift */,
+				2CB9ED861D43416200588357 /* BaseTextField.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -909,7 +909,6 @@
 				9509B7811D25777A0074010B /* CatalogViewController.swift in Sources */,
 				2CF749D31D0562BE007A273B /* ThemeManager.swift in Sources */,
 				2CF18C021D1A728B007535CD /* AboutTitleCell.swift in Sources */,
-				2C4FFA3F1D264D3800DBEEDB /* PhotoEditView.swift in Sources */,
 				2C7342E01D1140AE00CED0F3 /* ConstraintMaker.swift in Sources */,
 				953C5D391D30EB3C00477C35 /* UIActionSheet+Block.swift in Sources */,
 				2C54F0F41D1926CA005F35AD /* ApplicationListModel.swift in Sources */,
@@ -940,6 +939,7 @@
 				2C7342E61D1140AE00CED0F3 /* SnapKit.swift in Sources */,
 				2CF3974C1D2BA76C00BAE04C /* VLDContextSheet.m in Sources */,
 				2C7342E71D1140AE00CED0F3 /* View+SnapKit.swift in Sources */,
+				2CB9ED871D43416200588357 /* BaseTextField.swift in Sources */,
 				957EDDC61D320809000E1749 /* Version.swift in Sources */,
 				953C5D371D30EB0400477C35 /* UIResponder+Alert.swift in Sources */,
 				2C2E7D371D2C974E00117025 /* CaseString.swift in Sources */,

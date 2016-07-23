@@ -14,9 +14,8 @@ class AuthorizationViewController: UIViewController {
   private let authorizationBindCell = AuthorizationBindCell()
   private let deviceId: String
   private var bindCodeCell: CustomButtonCell = {
-    let bindCodeCell = CustomButtonCell(buttonTitle: "充值", titleColor: ThemeManager.Theme.lightTextColor)
-    bindCodeCell.backgroundColor = ThemeManager.Theme.separatorColor
-    bindCodeCell.userInteractionEnabled = false
+    let bindCodeCell = CustomButtonCell(buttonTitle: "充值", titleColor: UIColor.whiteColor())
+    bindCodeCell.backgroundColor = ThemeManager.Theme.redBackgroundColor
     return bindCodeCell
   }()
   
@@ -54,30 +53,37 @@ class AuthorizationViewController: UIViewController {
   }
   
   private func setupAction() {
-    authorizationBindCell.codeTextField.addTarget(self, action: #selector(editingChanged(_:)), forControlEvents: .EditingChanged)
+    //    authorizationBindCell.codeTextField.addTarget(self, action: #selector(editingChanged(_:)), forControlEvents: .EditingChanged)
   }
 }
 
 extension AuthorizationViewController {
-  @objc private func editingChanged(textField: UITextField) {
-    let string = textField.text! as NSString
-    let zero = string.rangeOfString("0")
-    let one = string.rangeOfString("1")
-    let two = string.rangeOfString("2")
-    if zero.length > 0 || one.length > 0 || two.length > 0 || textField.text?.characters.count != 16{
-      bindCodeUpdate(titleColor: ThemeManager.Theme.lightTextColor, backgroundColor: ThemeManager.Theme.separatorColor, enabled: false)
-    } else {
-      bindCodeUpdate(titleColor: UIColor.whiteColor(), backgroundColor: ThemeManager.Theme.redBackgroundColor, enabled: true)
-    }
-  }
+  //  @objc private func editingChanged(textField: UITextField) {
+  //    let string = textField.text! as NSString
+  //    let zero = string.rangeOfString("0")
+  //    let one = string.rangeOfString("1")
+  //    let two = string.rangeOfString("2")
+  //    if zero.length > 0 || one.length > 0 || two.length > 0 || textField.text?.characters.count != 16{
+  //      bindCodeUpdate(titleColor: ThemeManager.Theme.lightTextColor, backgroundColor: ThemeManager.Theme.separatorColor, enabled: false)
+  //    } else {
+  //      bindCodeUpdate(titleColor: UIColor.whiteColor(), backgroundColor: ThemeManager.Theme.redBackgroundColor, enabled: true)
+  //    }
+  //  }
   
-  private func bindCodeUpdate(titleColor titleColor: UIColor, backgroundColor: UIColor, enabled: Bool) {
-    bindCodeCell.button.setTitleColor(titleColor, forState: .Normal)
-    bindCodeCell.button.backgroundColor = backgroundColor
-    bindCodeCell.userInteractionEnabled = enabled
-  }
+  //  private func bindCodeUpdate(titleColor titleColor: UIColor, backgroundColor: UIColor, enabled: Bool) {
+  //    bindCodeCell.button.setTitleColor(titleColor, forState: .Normal)
+  //    bindCodeCell.button.backgroundColor = backgroundColor
+  //    bindCodeCell.userInteractionEnabled = enabled
+  //  }
   
   private func bindCode(code: String, indexPath: NSIndexPath) {
+    guard !code.isEmpty else {
+      self.view.showHUD(.Error, text: "授权码不能为空", completionBlock: { [weak self] (_) in
+        guard let `self` = self else { return }
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        })
+      return
+    }
     self.view.showHUD(text: "正在充值")
     Service.bindCode(code: code) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
@@ -99,7 +105,6 @@ extension AuthorizationViewController {
           self.view.dismissHUD()
           self.authorizationCell.iconVip()
           self.authorizationBindCell.codeTextField.text?.removeAll()
-          self.bindCodeUpdate(titleColor: ThemeManager.Theme.lightTextColor, backgroundColor: ThemeManager.Theme.separatorColor, enabled: false)
           self.getExpireDate()
         case 1:
           self.alertShowOneButton(message: Constants.Error.connectServerFail, cancelHandler: { [weak self] (_) in

@@ -9,7 +9,7 @@
 import UIKit
 
 class AuthorizationBindCell: UITableViewCell {
-  let codeTextField = UITextField()
+  let codeTextField = BaseTextField()
   //  let sumbitButton = UIButton(type: .Custom)
   
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -24,13 +24,11 @@ class AuthorizationBindCell: UITableViewCell {
   
   private func setupUI() {
     self.selectionStyle = .None
-    codeTextField.clearButtonMode = .WhileEditing
     codeTextField.placeholder = "在这里填入授权码"
-    codeTextField.borderStyle = .RoundedRect
     codeTextField.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 21))
     codeTextField.keyboardType = .ASCIICapable
-    codeTextField.autocorrectionType = .No
     codeTextField.delegate = self
+    codeTextField.showsBorderWhileEditing = true
     
     //    sumbitButton.setTitle("充值", forState: .Normal)
     //    sumbitButton.titleLabel?.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 22))
