@@ -17,6 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // 注册 Defaults
     Defaults.configure()
     
+    // 初始化 JSContext
+    JsManager.sharedManager.initializeContext()
+    
     // 加载程序窗口
     setupAndShowWindow()
     
