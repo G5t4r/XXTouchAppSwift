@@ -16,11 +16,13 @@ class NewScriptViewController: UIViewController {
   private let textView = XXTTextView(frame: CGRectZero)
   weak var delegate: NewScriptViewControllerDelegate?
   private var newNameViewControllerPopupController: STPopupController!
+  //  private var extensionFuncListViewPopupController: STPopupController!
   
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
     makeConstriants()
+    setupAction()
   }
   
   override func viewWillDisappear(animated: Bool) {
@@ -45,6 +47,17 @@ class NewScriptViewController: UIViewController {
     textView.snp_makeConstraints { (make) in
       make.edges.equalTo(view)
     }
+  }
+  
+  private func setupAction() {
+    textView.extensionButton.addEventHandler({ [weak self] _ in
+      guard let `self` = self else { return }
+      self.textView.resignFirstResponder()
+      let viewController = ExtensionFuncListViewController()
+      let navController = UINavigationController()
+      navController.pushViewController(viewController, animated: false)
+      UIViewController.topMostViewController?.presentViewController(navController, animated: true, completion: nil)
+      }, forControlEvents: .TouchUpInside)
   }
   
   @objc private func next() {

@@ -12,8 +12,6 @@ class XXTTextView: CYRTextView {
   let extensionButton = RFToolbarButton(title: "扩展函数")
   let basisButton = RFToolbarButton(title: "基础函数")
   let indentationButton = RFToolbarButton(title: "代码缩进")
-  let touchDown = RFToolbarButton(title: "touch.down(id, x, y)")
-  let touchMove = RFToolbarButton(title: "touch.move(id, x, y)")
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -23,15 +21,13 @@ class XXTTextView: CYRTextView {
     //    self.lineCursorEnabled = false
     self.font = UIFont(name: "Menlo-Regular", size: Sizer.valueForDevice(phone: 11, pad: 15))
     self.autocorrectionType = .No // 关闭自动更正
-    //    self.inputAccessoryView = RFKeyboardToolbar(
-    //      buttons: [
-    //        extensionButton,
-    //        basisButton,
-    //        indentationButton,
-    //        touchDown,
-    //        touchMove
-    //      ]
-    //    )
+    self.inputAccessoryView = RFKeyboardToolbar(
+      buttons: [
+        extensionButton,
+        basisButton,
+        indentationButton
+      ]
+    )
   }
   
   required init?(coder aDecoder: NSCoder) {
