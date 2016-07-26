@@ -426,7 +426,7 @@ extension ScriptViewController {
         case 0:
           if let image = Base64.base64StringToUIImage(json["data"].stringValue) {
             self.view.dismissHUD()
-            let photoViewController = PhotoViewController(image: image, name: fileName)
+            let photoViewController = PhotoViewController(image: image, titleName: fileName)
             photoViewController.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(photoViewController, animated: true)
           } else {

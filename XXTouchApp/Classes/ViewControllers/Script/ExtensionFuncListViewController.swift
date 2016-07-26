@@ -7,24 +7,18 @@
 //
 
 import UIKit
+import CoreLocation
 
 class ExtensionFuncListViewController: UIViewController {
+  var funcCompletionHandler = FuncCompletionHandler()
+  
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private var list = [JSON]()
   
-  enum FuncListType {
-    case Pos
-    case Bid
-    case MPos
-    case Key
-    
-    var title: String {
-      switch self {
-      case .Pos: return "pos"
-      case .Bid: return "bid"
-      case .MPos: return "mpos"
-      case .Key: return "key"
-      }
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    if let indexPath = tableView.indexPathForSelectedRow {
+      tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
   }
   
@@ -37,7 +31,7 @@ class ExtensionFuncListViewController: UIViewController {
   }
   
   private func setupUI() {
-    navigationItem.title = "扩展函数列表"
+    navigationItem.title = "扩展函数"
     view.backgroundColor = UIColor.whiteColor()
     
     navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: #selector(dismiss))
@@ -62,7 +56,6 @@ class ExtensionFuncListViewController: UIViewController {
   
   private func bind() {
     self.list = JsManager.sharedManager.getFuncList()
-    //    print(JsManager.sharedManager.getCustomFunction("touch.on", colorList: PosColorListModel(x: 100, y: 200, color: 0xffffff)))
   }
   
   @objc private func dismiss() {
@@ -87,11 +80,18 @@ extension ExtensionFuncListViewController: UITableViewDelegate, UITableViewDataS
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    let args = self.list[indexPath.section]["args"].arrayValue
     let type = self.list[indexPath.section]["args"][0]["type"].stringValue
+    self.funcCompletionHandler.id = self.list[indexPath.section]["id"].stringValue
+    for args in self.list[indexPath.section]["args"].arrayValue {
+      self.funcCompletionHandler.titleNames.append(args["title"].stringValue)
+    }
     switch type {
-      //    case FuncListType.Pos.title:
-      //    case FuncListType.Bid.title:
+    case FuncListType.Pos.title:
+      let viewController = PhotoBrowsingViewController(funcCompletionHandler: self.funcCompletionHandler)
+      self.navigationController?.pushViewController(viewController, animated: true)
+    case FuncListType.Bid.title:
+      let viewController = ApplicationListViewController(type: .Bid, funcCompletionHandler: self.funcCompletionHandler)
+      self.navigationController?.pushViewController(viewController, animated: true)
       
     //    case FuncListType.MPos.title:
     default: break

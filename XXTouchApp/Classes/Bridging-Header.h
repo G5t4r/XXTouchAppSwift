@@ -21,8 +21,6 @@
 #import "NJKWebViewProgress/NJKWebViewProgress.h"
 #import "NJKWebViewProgress/NJKWebViewProgressView.h"
 #import "VIPhotoView/VIPhotoView.h"
-#import "VLDContextSheet.h"
-#import "VLDContextSheetItem.h"
 #import "RFKeyboardToolbar/RFKeyboardToolbar.h"
 #import "TAOverlay/TAOverlay.h"
 #import "SIAlertView/SIAlertView.h"

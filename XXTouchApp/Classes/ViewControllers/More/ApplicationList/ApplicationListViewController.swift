@@ -11,6 +11,8 @@ import UIKit
 class ApplicationListViewController: UIViewController {
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private var appList = [ApplicationListModel]()
+  var funcCompletionHandler: FuncCompletionHandler
+  private let type: FuncListType
   
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
@@ -19,11 +21,22 @@ class ApplicationListViewController: UIViewController {
     }
   }
   
+  init(type: FuncListType, funcCompletionHandler: FuncCompletionHandler = FuncCompletionHandler()) {
+    self.type = type
+    self.funcCompletionHandler = funcCompletionHandler
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
     makeConstriants()
     setupAction()
+    bind()
     fetchBundles()
   }
   
@@ -47,6 +60,10 @@ class ApplicationListViewController: UIViewController {
   
   private func setupAction() {
     
+  }
+  
+  private func bind() {
+    self.type == .Bid ? (navigationItem.title = self.funcCompletionHandler.titleNames.first) : (navigationItem.title = "应用列表")
   }
 }
 
@@ -93,8 +110,15 @@ extension ApplicationListViewController: UITableViewDelegate, UITableViewDataSou
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    let applicationDetailViewController = ApplicationDetailViewController(model: appList[indexPath.row])
-    self.navigationController?.pushViewController(applicationDetailViewController, animated: true)
+    if self.type == .Bid {
+      let bid = appList[indexPath.row].packageName
+      let string = JsManager.sharedManager.getCustomFunction(self.funcCompletionHandler.id, models: [[ : ]], bid: bid)
+      self.funcCompletionHandler.completionHandler?(.Bid, string)
+      self.dismissViewControllerAnimated(true, completion: nil)
+    } else {
+      let applicationDetailViewController = ApplicationDetailViewController(model: appList[indexPath.row])
+      self.navigationController?.pushViewController(applicationDetailViewController, animated: true)
+    }
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

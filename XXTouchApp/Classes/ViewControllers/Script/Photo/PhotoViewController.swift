@@ -10,13 +10,12 @@ import UIKit
 
 class PhotoViewController: UIViewController {
   private let image: UIImage
-  private let name: String
+  private let titleName: String
   private var photoView: VIPhotoView!
-  //  private var contextSheet: VLDContextSheet!
   
-  init(image: UIImage, name: String) {
+  init(image: UIImage, titleName: String) {
     self.image = image
-    self.name = name
+    self.titleName = titleName
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -41,13 +40,8 @@ class PhotoViewController: UIViewController {
     automaticallyAdjustsScrollViewInsets = false
     view.backgroundColor = UIColor.whiteColor()
     photoView = VIPhotoView(frame: view.bounds, andImage: self.image)
+    photoView.backgroundColor = UIColor.blackColor()
     //    photoView.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
-    
-    //    let item1 = VLDContextSheetItem(title: "取色", image: UIImage(named: "add"), highlightedImage: UIImage(named: "add_highlighted"))
-    //    let item2 = VLDContextSheetItem(title: "gift", image: UIImage(named: "gift"), highlightedImage: UIImage(named: "gift_highlighted"))
-    //    let item3 = VLDContextSheetItem(title: "gift", image: UIImage(named: "gift"), highlightedImage: UIImage(named: "gift_highlighted"))
-    //    contextSheet = VLDContextSheet(items: [item1, item2, item3])
-    //    contextSheet.delegate = self
     
     view.addSubview(photoView)
   }
@@ -57,25 +51,19 @@ class PhotoViewController: UIViewController {
   }
   
   private func setupAction() {
-    //    view.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(show(_:))))
+    
   }
   
   private func bind() {
-    navigationItem.title = self.name
+    navigationItem.title = self.titleName
   }
 }
 
-//extension PhotoViewController: VLDContextSheetDelegate {
-//  func contextSheet(contextSheet: VLDContextSheet!, didSelectItem item: VLDContextSheetItem!) {
-//    print(item.title)
-//  }
-//  
-//  @objc private func show(long: UILongPressGestureRecognizer) {
-//    if long.state == UIGestureRecognizerState.Began {
-//      contextSheet.startWithGestureRecognizer(long, inView: self.view)
-//    }
-//  }
-//}
+
+
+
+
+
 
 
 

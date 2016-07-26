@@ -8,6 +8,24 @@
 
 import UIKit
 
+enum FuncListType {
+  case Pos
+  case Bid
+  case MPos
+  case Key
+  case Nothing
+  
+  var title: String {
+    switch self {
+    case Pos: return "pos"
+    case Bid: return "bid"
+    case MPos: return "mpos"
+    case Key: return "key"
+    case Nothing: return ""
+    }
+  }
+}
+
 protocol NewScriptViewControllerDelegate: NSObjectProtocol {
   func reloadScriptList()
 }
@@ -16,7 +34,6 @@ class NewScriptViewController: UIViewController {
   private let textView = XXTTextView(frame: CGRectZero)
   weak var delegate: NewScriptViewControllerDelegate?
   private var newNameViewControllerPopupController: STPopupController!
-  //  private var extensionFuncListViewPopupController: STPopupController!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -50,6 +67,7 @@ class NewScriptViewController: UIViewController {
   }
   
   private func setupAction() {
+    // 扩展函数
     textView.extensionButton.addEventHandler({ [weak self] _ in
       guard let `self` = self else { return }
       self.textView.resignFirstResponder()
@@ -57,6 +75,15 @@ class NewScriptViewController: UIViewController {
       let navController = UINavigationController()
       navController.pushViewController(viewController, animated: false)
       UIViewController.topMostViewController?.presentViewController(navController, animated: true, completion: nil)
+      
+      viewController.funcCompletionHandler.completionHandler = { [weak self] type, string in
+        guard let `self` = self else { return }
+        switch type {
+        case .Bid: self.textView.insertText(string+"\n")
+          
+        default: break
+        }
+      }
       }, forControlEvents: .TouchUpInside)
   }
   

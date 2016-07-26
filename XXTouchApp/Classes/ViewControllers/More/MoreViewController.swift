@@ -375,7 +375,8 @@ extension MoreViewController {
   private func system(indexPath: NSIndexPath) {
     switch indexPath.row {
     /// 应用列表
-    case 0: self.navigationController?.pushViewController(ApplicationListViewController(), animated: true)
+    case 0: self.navigationController?.pushViewController(ApplicationListViewController(type: .Nothing), animated: true)
+      
     /// 清空GPS伪装信息
     case 1:
       self.alertShowTwoButton(message: "确定要清空GPS伪装信息么？", cancelHandler: { [weak self] (_) in

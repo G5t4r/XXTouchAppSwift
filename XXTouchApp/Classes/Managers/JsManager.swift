@@ -33,10 +33,17 @@ class JsManager {
     let listFunc = context.evaluateScript("formatList")
     let dic = listFunc.callWithArguments(nil).toDictionary()
     let json = JSON(dic)
+    return json["snippet_list"].arrayValue
+  }
+  
+  func getKeyList() -> [JSON] {
+    let listFunc = context.evaluateScript("formatList")
+    let dic = listFunc.callWithArguments(nil).toDictionary()
+    let json = JSON(dic)
     //    let model = PosColorListModel(x: "1", y: "2", color: "3")
     //    let models = [["x" : model.x, "y" : model.y, "color": model.color]]
     //    getCustomFunction("0", models: models)
-    return json["snippet_list"].arrayValue
+    return json["key_list"].arrayValue
   }
   
   func getCustomFunction(id: String, models: [[String : String]], bid: String = "") -> String {

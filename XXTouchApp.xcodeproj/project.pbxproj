@@ -71,9 +71,6 @@
 		2CF18C021D1A728B007535CD /* AboutTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF18C011D1A728B007535CD /* AboutTitleCell.swift */; };
 		2CF18C041D1A741B007535CD /* DeviceInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF18C031D1A741B007535CD /* DeviceInfoModel.swift */; };
 		2CF18C061D1A80BC007535CD /* AboutInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF18C051D1A80BC007535CD /* AboutInfoCell.swift */; };
-		2CF3974C1D2BA76C00BAE04C /* VLDContextSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF397471D2BA76C00BAE04C /* VLDContextSheet.m */; };
-		2CF3974D1D2BA76C00BAE04C /* VLDContextSheetItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF397491D2BA76C00BAE04C /* VLDContextSheetItem.m */; };
-		2CF3974E1D2BA76C00BAE04C /* VLDContextSheetItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF3974B1D2BA76C00BAE04C /* VLDContextSheetItemView.m */; };
 		2CF749BB1CFD80A0007A273B /* ScriptDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF749BA1CFD80A0007A273B /* ScriptDetailViewController.swift */; };
 		2CF749BF1CFD8552007A273B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF749BE1CFD8552007A273B /* Constants.swift */; };
 		2CF749C51CFD8BA6007A273B /* NewScriptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF749C41CFD8BA6007A273B /* NewScriptViewController.swift */; };
@@ -96,6 +93,9 @@
 		955DB23D1D1E370200B598C4 /* MixC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955DB23C1D1E370200B598C4 /* MixC.swift */; };
 		955DB23F1D1E3A4E00B598C4 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955DB23E1D1E3A4E00B598C4 /* FileManager.swift */; };
 		957EDDC61D320809000E1749 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957EDDC51D320809000E1749 /* Version.swift */; };
+		9592B4F21D470DBF000B479B /* FuncCompletionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9592B4F11D470DBF000B479B /* FuncCompletionHandler.swift */; };
+		9592B4F41D4718C9000B479B /* PhotoBrowsingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9592B4F31D4718C9000B479B /* PhotoBrowsingViewController.swift */; };
+		9592B4F61D473E12000B479B /* PhotoBrowsingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9592B4F51D473E12000B479B /* PhotoBrowsingCell.swift */; };
 		95AB90CD1D21717200FA4C52 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AB90CC1D21717200FA4C52 /* Button.swift */; };
 		95D1BA681D44B59A00DAE7F9 /* customformats.js in Resources */ = {isa = PBXBuildFile; fileRef = 95D1BA671D44B59A00DAE7F9 /* customformats.js */; };
 		95D1BA6A1D44B5AE00DAE7F9 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95D1BA691D44B5AE00DAE7F9 /* JavaScriptCore.framework */; };
@@ -127,7 +127,7 @@
 		2C20D81B1D0FC74A009A4990 /* UIViewController+Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Transition.swift"; sourceTree = "<group>"; };
 		2C2A051E1D3DE3A900F31EAE /* RecordSettingInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordSettingInfoViewController.swift; sourceTree = "<group>"; };
 		2C2E7D361D2C974E00117025 /* CaseString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseString.swift; sourceTree = "<group>"; };
-		2C4FFA3B1D2600B100DBEEDB /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
+		2C4FFA3B1D2600B100DBEEDB /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoViewController.swift; path = Photo/PhotoViewController.swift; sourceTree = "<group>"; };
 		2C4FFA421D2A173F00DBEEDB /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		2C4FFA4A1D2B708500DBEEDB /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Defaults.plist; sourceTree = "<group>"; };
 		2C4FFA4D1D2B71AD00DBEEDB /* LocalStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
@@ -186,12 +186,6 @@
 		2CF18C011D1A728B007535CD /* AboutTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutTitleCell.swift; sourceTree = "<group>"; };
 		2CF18C031D1A741B007535CD /* DeviceInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceInfoModel.swift; sourceTree = "<group>"; };
 		2CF18C051D1A80BC007535CD /* AboutInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutInfoCell.swift; sourceTree = "<group>"; };
-		2CF397461D2BA76C00BAE04C /* VLDContextSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLDContextSheet.h; sourceTree = "<group>"; };
-		2CF397471D2BA76C00BAE04C /* VLDContextSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLDContextSheet.m; sourceTree = "<group>"; };
-		2CF397481D2BA76C00BAE04C /* VLDContextSheetItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLDContextSheetItem.h; sourceTree = "<group>"; };
-		2CF397491D2BA76C00BAE04C /* VLDContextSheetItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLDContextSheetItem.m; sourceTree = "<group>"; };
-		2CF3974A1D2BA76C00BAE04C /* VLDContextSheetItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLDContextSheetItemView.h; sourceTree = "<group>"; };
-		2CF3974B1D2BA76C00BAE04C /* VLDContextSheetItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLDContextSheetItemView.m; sourceTree = "<group>"; };
 		2CF749BA1CFD80A0007A273B /* ScriptDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptDetailViewController.swift; sourceTree = "<group>"; };
 		2CF749BE1CFD8552007A273B /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2CF749C41CFD8BA6007A273B /* NewScriptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewScriptViewController.swift; sourceTree = "<group>"; };
@@ -217,6 +211,9 @@
 		955DB23C1D1E370200B598C4 /* MixC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MixC.swift; sourceTree = "<group>"; };
 		955DB23E1D1E3A4E00B598C4 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		957EDDC51D320809000E1749 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
+		9592B4F11D470DBF000B479B /* FuncCompletionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuncCompletionHandler.swift; sourceTree = "<group>"; };
+		9592B4F31D4718C9000B479B /* PhotoBrowsingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoBrowsingViewController.swift; sourceTree = "<group>"; };
+		9592B4F51D473E12000B479B /* PhotoBrowsingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoBrowsingCell.swift; sourceTree = "<group>"; };
 		95AB90CC1D21717200FA4C52 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		95D1BA671D44B59A00DAE7F9 /* customformats.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = customformats.js; sourceTree = "<group>"; };
 		95D1BA691D44B5AE00DAE7F9 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -255,21 +252,6 @@
 				95D1BA6B1D44B6B700DAE7F9 /* JsManager.swift */,
 			);
 			path = Managers;
-			sourceTree = "<group>";
-		};
-		2C4FFA3A1D26009500DBEEDB /* Photo */ = {
-			isa = PBXGroup;
-			children = (
-				2C4FFA3B1D2600B100DBEEDB /* PhotoViewController.swift */,
-			);
-			path = Photo;
-			sourceTree = "<group>";
-		};
-		2C4FFA3D1D264D2600DBEEDB /* Photo */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Photo;
 			sourceTree = "<group>";
 		};
 		2C4FFA4C1D2B719B00DBEEDB /* Storage */ = {
@@ -445,7 +427,7 @@
 		2C67AB7E1CFD2AAA008D53E8 /* Script */ = {
 			isa = PBXGroup;
 			children = (
-				2C4FFA3A1D26009500DBEEDB /* Photo */,
+				2C4FFA3B1D2600B100DBEEDB /* PhotoViewController.swift */,
 				2C06B4D51D3618FF000A780C /* NewNameViewController.swift */,
 				2CF749C41CFD8BA6007A273B /* NewScriptViewController.swift */,
 				2C06B4D71D36264B000A780C /* RenameViewController.swift */,
@@ -453,6 +435,8 @@
 				2C06B4CA1D35CF07000A780C /* ScriptInfoViewController.swift */,
 				2C67AB7F1CFD2AAA008D53E8 /* ScriptViewController.swift */,
 				955A45FE1D45DC55005C7372 /* ExtensionFuncListViewController.swift */,
+				9592B4F11D470DBF000B479B /* FuncCompletionHandler.swift */,
+				9592B4F31D4718C9000B479B /* PhotoBrowsingViewController.swift */,
 			);
 			path = Script;
 			sourceTree = "<group>";
@@ -486,7 +470,6 @@
 			children = (
 				2C7342CD1D1140AE00CED0F3 /* SnapKit */,
 				2C7340891D10FC6100CED0F3 /* SwiftyJSON */,
-				2CF397451D2BA76C00BAE04C /* VLDContextSheet */,
 			);
 			path = ThirdParty;
 			sourceTree = "<group>";
@@ -614,26 +597,13 @@
 			path = About;
 			sourceTree = "<group>";
 		};
-		2CF397451D2BA76C00BAE04C /* VLDContextSheet */ = {
-			isa = PBXGroup;
-			children = (
-				2CF397461D2BA76C00BAE04C /* VLDContextSheet.h */,
-				2CF397471D2BA76C00BAE04C /* VLDContextSheet.m */,
-				2CF397481D2BA76C00BAE04C /* VLDContextSheetItem.h */,
-				2CF397491D2BA76C00BAE04C /* VLDContextSheetItem.m */,
-				2CF3974A1D2BA76C00BAE04C /* VLDContextSheetItemView.h */,
-				2CF3974B1D2BA76C00BAE04C /* VLDContextSheetItemView.m */,
-			);
-			path = VLDContextSheet;
-			sourceTree = "<group>";
-		};
 		2CF749C81CFD9069007A273B /* Script */ = {
 			isa = PBXGroup;
 			children = (
-				2C4FFA3D1D264D2600DBEEDB /* Photo */,
 				2C7342F21D1260D800CED0F3 /* NewNameView.swift */,
 				2C7342EC1D123E9C00CED0F3 /* RenameView.swift */,
 				2CF749C91CFDA16F007A273B /* ScriptCell.swift */,
+				9592B4F51D473E12000B479B /* PhotoBrowsingCell.swift */,
 			);
 			path = Script;
 			sourceTree = "<group>";
@@ -907,6 +877,7 @@
 				2CF749CD1D0536CB007A273B /* Formatter.swift in Sources */,
 				2CF18C041D1A741B007535CD /* DeviceInfoModel.swift in Sources */,
 				2CF749BB1CFD80A0007A273B /* ScriptDetailViewController.swift in Sources */,
+				9592B4F41D4718C9000B479B /* PhotoBrowsingViewController.swift in Sources */,
 				2C4FFA431D2A173F00DBEEDB /* main.swift in Sources */,
 				2C06B4D41D3614DA000A780C /* DevelopDocumentInfoViewController.swift in Sources */,
 				2C7342DD1D1140AE00CED0F3 /* ConstraintAttributes.swift in Sources */,
@@ -961,18 +932,17 @@
 				2C06B4CE1D35D4D2000A780C /* CustomLabelCell.swift in Sources */,
 				2C7342E31D1140AE00CED0F3 /* EdgeInsets.swift in Sources */,
 				2C7342E21D1140AE00CED0F3 /* Debugging.swift in Sources */,
-				2CF3974D1D2BA76C00BAE04C /* VLDContextSheetItem.m in Sources */,
-				2CF3974E1D2BA76C00BAE04C /* VLDContextSheetItemView.m in Sources */,
 				950FC3611D1988660091DBA4 /* Base64.swift in Sources */,
 				2CC84C001D178E2600D4230D /* Suffix.swift in Sources */,
 				953C5D3F1D30F99F00477C35 /* CustomButtonCell.swift in Sources */,
 				2C67AB821CFD2AAA008D53E8 /* ScriptViewController.swift in Sources */,
 				2C7342E61D1140AE00CED0F3 /* SnapKit.swift in Sources */,
-				2CF3974C1D2BA76C00BAE04C /* VLDContextSheet.m in Sources */,
 				2C7342E71D1140AE00CED0F3 /* View+SnapKit.swift in Sources */,
 				955A46051D45F2AC005C7372 /* PosColorListModel.swift in Sources */,
 				2CB9ED871D43416200588357 /* BaseTextField.swift in Sources */,
+				9592B4F21D470DBF000B479B /* FuncCompletionHandler.swift in Sources */,
 				957EDDC61D320809000E1749 /* Version.swift in Sources */,
+				9592B4F61D473E12000B479B /* PhotoBrowsingCell.swift in Sources */,
 				953C5D371D30EB0400477C35 /* UIResponder+Alert.swift in Sources */,
 				2C2E7D371D2C974E00117025 /* CaseString.swift in Sources */,
 				2CF749C51CFD8BA6007A273B /* NewScriptViewController.swift in Sources */,
