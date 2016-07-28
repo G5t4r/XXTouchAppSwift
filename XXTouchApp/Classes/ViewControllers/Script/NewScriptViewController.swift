@@ -13,6 +13,7 @@ enum FuncListType {
   case Bid
   case MPos
   case Key
+  case Snippet
   case Nothing
   
   var title: String {
@@ -21,6 +22,7 @@ enum FuncListType {
     case Bid: return "bid"
     case MPos: return "mpos"
     case Key: return "key"
+    case Snippet: return "snippet"
     case Nothing: return ""
     }
   }
@@ -76,14 +78,29 @@ class NewScriptViewController: UIViewController {
       navController.pushViewController(viewController, animated: false)
       UIViewController.topMostViewController?.presentViewController(navController, animated: true, completion: nil)
       
-      viewController.funcCompletionHandler.completionHandler = { [weak self] type, string in
+      viewController.funcCompletionHandler.completionHandler = { [weak self] string in
         guard let `self` = self else { return }
-        switch type {
-        case .Bid: self.textView.insertText(string+"\n")
-          
-        default: break
-        }
+        self.textView.insertText(string+"\n")
       }
+      }, forControlEvents: .TouchUpInside)
+    
+    // 基础函数
+    textView.basisButton.addEventHandler({ [weak self] _ in
+      guard let `self` = self else { return }
+      let viewController = BasisFuncListViewController()
+      let navController = UINavigationController()
+      navController.pushViewController(viewController, animated: false)
+      UIViewController.topMostViewController?.presentViewController(navController, animated: true, completion: nil)
+      viewController.funcCompletionHandler.completionHandler = { [weak self] string in
+        guard let `self` = self else { return }
+        self.textView.insertText(string+"\n")
+      }
+      }, forControlEvents: .TouchUpInside)
+    
+    // 代码缩进
+    textView.indentationButton.addEventHandler({ [weak self] _ in
+      guard let `self` = self else { return }
+      self.textView.insertText("\t")
       }, forControlEvents: .TouchUpInside)
   }
   

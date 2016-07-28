@@ -113,7 +113,7 @@ extension ApplicationListViewController: UITableViewDelegate, UITableViewDataSou
     if self.type == .Bid {
       let bid = appList[indexPath.row].packageName
       let string = JsManager.sharedManager.getCustomFunction(self.funcCompletionHandler.id, models: [[ : ]], bid: bid)
-      self.funcCompletionHandler.completionHandler?(.Bid, string)
+      self.funcCompletionHandler.completionHandler?(string)
       self.dismissViewControllerAnimated(true, completion: nil)
     } else {
       let applicationDetailViewController = ApplicationDetailViewController(model: appList[indexPath.row])

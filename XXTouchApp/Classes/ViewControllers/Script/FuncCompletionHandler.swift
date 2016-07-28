@@ -11,5 +11,5 @@ import Foundation
 struct FuncCompletionHandler {
   var id: String = ""
   var titleNames = [String]()
-  var completionHandler: ((FuncListType, String)->Void)?
+  var completionHandler: ((String)->Void)?
 }

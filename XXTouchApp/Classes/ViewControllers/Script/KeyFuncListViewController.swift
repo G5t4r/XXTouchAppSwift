@@ -1,25 +1,26 @@
 //
-//  ExtensionFuncListViewController.swift
+//  KeyFuncListViewController.swift
 //  XXTouchApp
 //
-//  Created by 教主 on 16/7/25.
+//  Created by 教主 on 16/7/28.
 //  Copyright © 2016年 mcy. All rights reserved.
 //
 
 import UIKit
-import CoreLocation
 
-class ExtensionFuncListViewController: UIViewController {
+class KeyFuncListViewController: UIViewController {
   var funcCompletionHandler = FuncCompletionHandler()
   
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private var list = [JSON]()
   
-  override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
-    if let indexPath = tableView.indexPathForSelectedRow {
-      tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    }
+  init(funcCompletionHandler: FuncCompletionHandler) {
+    self.funcCompletionHandler = funcCompletionHandler
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
   
   override func viewDidLoad() {
@@ -31,10 +32,8 @@ class ExtensionFuncListViewController: UIViewController {
   }
   
   private func setupUI() {
-    navigationItem.title = "扩展函数"
+    navigationItem.title = "按键选择"
     view.backgroundColor = UIColor.whiteColor()
-    
-    navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: #selector(dismiss))
     
     tableView.delegate  = self
     tableView.dataSource = self
@@ -55,15 +54,11 @@ class ExtensionFuncListViewController: UIViewController {
   }
   
   private func bind() {
-    self.list = JsManager.sharedManager.getFuncList()
-  }
-  
-  @objc private func dismiss() {
-    dismissViewControllerAnimated(true, completion: nil)
+    self.list = JsManager.sharedManager.getKeyList()
   }
 }
 
-extension ExtensionFuncListViewController: UITableViewDelegate, UITableViewDataSource {
+extension KeyFuncListViewController: UITableViewDelegate, UITableViewDataSource {
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
     return self.list.count
   }
@@ -80,26 +75,10 @@ extension ExtensionFuncListViewController: UITableViewDelegate, UITableViewDataS
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    self.funcCompletionHandler.titleNames.removeAll()
-    let type = self.list[indexPath.section]["args"][0]["type"].stringValue
-    self.funcCompletionHandler.id = self.list[indexPath.section]["id"].stringValue
-    for args in self.list[indexPath.section]["args"].arrayValue {
-      self.funcCompletionHandler.titleNames.append(args["title"].stringValue)
-    }
-    switch type {
-    case FuncListType.Pos.title:
-      let viewController = PhotoBrowsingViewController(funcCompletionHandler: self.funcCompletionHandler)
-      self.navigationController?.pushViewController(viewController, animated: true)
-    case FuncListType.Bid.title:
-      let viewController = ApplicationListViewController(type: .Bid, funcCompletionHandler: self.funcCompletionHandler)
-      self.navigationController?.pushViewController(viewController, animated: true)
-    case FuncListType.Key.title:
-      let viewController = KeyFuncListViewController(funcCompletionHandler: self.funcCompletionHandler)
-      self.navigationController?.pushViewController(viewController, animated: true)
-      
-    //    case FuncListType.MPos.title:
-    default: break
-    }
+    let id = self.list[indexPath.section]["id"].stringValue
+    let code = JsManager.sharedManager.getCustomFunction(self.funcCompletionHandler.id, models: [[:]], keyid: id)
+    self.funcCompletionHandler.completionHandler?(code)
+    self.dismissViewControllerAnimated(true, completion: nil)
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

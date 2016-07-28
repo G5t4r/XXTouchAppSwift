@@ -39,6 +39,7 @@ extension Constants {
     static let notEnScript = "加密脚本无法编辑"
     static let notRuningScript = "当前无运行脚本"
     static let reloading = "正在加载"
+    static let importing = "正在导入"
     static let notFile = "不支持编辑该种编码的文件"
   }
 }

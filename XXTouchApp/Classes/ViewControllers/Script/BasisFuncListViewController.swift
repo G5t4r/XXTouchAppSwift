@@ -1,26 +1,18 @@
 //
-//  ExtensionFuncListViewController.swift
+//  BasisFuncListViewController.swift
 //  XXTouchApp
 //
-//  Created by 教主 on 16/7/25.
+//  Created by 教主 on 16/7/28.
 //  Copyright © 2016年 mcy. All rights reserved.
 //
 
 import UIKit
-import CoreLocation
 
-class ExtensionFuncListViewController: UIViewController {
+class BasisFuncListViewController: UIViewController {
   var funcCompletionHandler = FuncCompletionHandler()
   
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private var list = [JSON]()
-  
-  override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
-    if let indexPath = tableView.indexPathForSelectedRow {
-      tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    }
-  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -31,7 +23,7 @@ class ExtensionFuncListViewController: UIViewController {
   }
   
   private func setupUI() {
-    navigationItem.title = "扩展函数"
+    navigationItem.title = "基础函数"
     view.backgroundColor = UIColor.whiteColor()
     
     navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: #selector(dismiss))
@@ -55,7 +47,7 @@ class ExtensionFuncListViewController: UIViewController {
   }
   
   private func bind() {
-    self.list = JsManager.sharedManager.getFuncList()
+    self.list = JsManager.sharedManager.getSnippetList()
   }
   
   @objc private func dismiss() {
@@ -63,7 +55,7 @@ class ExtensionFuncListViewController: UIViewController {
   }
 }
 
-extension ExtensionFuncListViewController: UITableViewDelegate, UITableViewDataSource {
+extension BasisFuncListViewController: UITableViewDelegate, UITableViewDataSource {
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
     return self.list.count
   }
@@ -80,26 +72,9 @@ extension ExtensionFuncListViewController: UITableViewDelegate, UITableViewDataS
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    self.funcCompletionHandler.titleNames.removeAll()
-    let type = self.list[indexPath.section]["args"][0]["type"].stringValue
-    self.funcCompletionHandler.id = self.list[indexPath.section]["id"].stringValue
-    for args in self.list[indexPath.section]["args"].arrayValue {
-      self.funcCompletionHandler.titleNames.append(args["title"].stringValue)
-    }
-    switch type {
-    case FuncListType.Pos.title:
-      let viewController = PhotoBrowsingViewController(funcCompletionHandler: self.funcCompletionHandler)
-      self.navigationController?.pushViewController(viewController, animated: true)
-    case FuncListType.Bid.title:
-      let viewController = ApplicationListViewController(type: .Bid, funcCompletionHandler: self.funcCompletionHandler)
-      self.navigationController?.pushViewController(viewController, animated: true)
-    case FuncListType.Key.title:
-      let viewController = KeyFuncListViewController(funcCompletionHandler: self.funcCompletionHandler)
-      self.navigationController?.pushViewController(viewController, animated: true)
-      
-    //    case FuncListType.MPos.title:
-    default: break
-    }
+    let code = self.list[indexPath.section]["content"].stringValue
+    self.funcCompletionHandler.completionHandler?(code)
+    self.dismissViewControllerAnimated(true, completion: nil)
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

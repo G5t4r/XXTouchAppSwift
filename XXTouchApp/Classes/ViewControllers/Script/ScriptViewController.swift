@@ -426,9 +426,11 @@ extension ScriptViewController {
         case 0:
           if let image = Base64.base64StringToUIImage(json["data"].stringValue) {
             self.view.dismissHUD()
-            let photoViewController = PhotoViewController(image: image, titleName: fileName)
-            photoViewController.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(photoViewController, animated: true)
+            self.alertShowTwoButton(message: "是否需要将图片导入到相册？", otherHandler: { [weak self] (_) in
+              guard let `self` = self else { return }
+              self.view.showHUD(text: Constants.Text.importing)
+              UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.didFinishSavingWithError), nil)
+              })
           } else {
             self.view.showHUD(.Error, text: Constants.Text.notFile)
           }
@@ -445,6 +447,15 @@ extension ScriptViewController {
         }
       }
     }
+  }
+  
+  @objc private func didFinishSavingWithError(image: UIImage, didFinishSavingWithError: NSError?, contextInfo: AnyObject) {
+    if didFinishSavingWithError != nil {
+      self.alertShowOneButton(message: "导入失败")
+      return
+    }
+    self.view.dismissHUD()
+    self.alertShowOneButton(message: "导入成功")
   }
   
   private func fetchReadScript(fileName: String) {

@@ -82,6 +82,8 @@
 		2CF749D81D0577C4007A273B /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF749D71D0577C4007A273B /* MoreViewController.swift */; };
 		9509B7811D25777A0074010B /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509B7801D25777A0074010B /* CatalogViewController.swift */; };
 		950FC3611D1988660091DBA4 /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950FC3601D1988660091DBA4 /* Base64.swift */; };
+		9526C66D1D4A055900EFD1DD /* BasisFuncListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9526C66C1D4A055900EFD1DD /* BasisFuncListViewController.swift */; };
+		9526C66F1D4A08A400EFD1DD /* KeyFuncListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9526C66E1D4A08A400EFD1DD /* KeyFuncListViewController.swift */; };
 		953949D61D28FC8D00BE75AA /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953949D51D28FC8D00BE75AA /* Service.swift */; };
 		953C5D331D30E4E800477C35 /* UIAlertView+Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953C5D321D30E4E800477C35 /* UIAlertView+Block.swift */; };
 		953C5D371D30EB0400477C35 /* UIResponder+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953C5D361D30EB0400477C35 /* UIResponder+Alert.swift */; };
@@ -200,6 +202,8 @@
 		8A6F1DF544CDD739F1B52DAA /* Pods-XXTouchApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTouchApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XXTouchApp/Pods-XXTouchApp.debug.xcconfig"; sourceTree = "<group>"; };
 		9509B7801D25777A0074010B /* CatalogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		950FC3601D1988660091DBA4 /* Base64.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64.swift; sourceTree = "<group>"; };
+		9526C66C1D4A055900EFD1DD /* BasisFuncListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasisFuncListViewController.swift; sourceTree = "<group>"; };
+		9526C66E1D4A08A400EFD1DD /* KeyFuncListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyFuncListViewController.swift; sourceTree = "<group>"; };
 		953949D51D28FC8D00BE75AA /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		953C5D321D30E4E800477C35 /* UIAlertView+Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertView+Block.swift"; sourceTree = "<group>"; };
 		953C5D361D30EB0400477C35 /* UIResponder+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIResponder+Alert.swift"; sourceTree = "<group>"; };
@@ -435,6 +439,8 @@
 				2C06B4CA1D35CF07000A780C /* ScriptInfoViewController.swift */,
 				2C67AB7F1CFD2AAA008D53E8 /* ScriptViewController.swift */,
 				955A45FE1D45DC55005C7372 /* ExtensionFuncListViewController.swift */,
+				9526C66E1D4A08A400EFD1DD /* KeyFuncListViewController.swift */,
+				9526C66C1D4A055900EFD1DD /* BasisFuncListViewController.swift */,
 				9592B4F11D470DBF000B479B /* FuncCompletionHandler.swift */,
 				9592B4F31D4718C9000B479B /* PhotoBrowsingViewController.swift */,
 			);
@@ -881,6 +887,7 @@
 				2C4FFA431D2A173F00DBEEDB /* main.swift in Sources */,
 				2C06B4D41D3614DA000A780C /* DevelopDocumentInfoViewController.swift in Sources */,
 				2C7342DD1D1140AE00CED0F3 /* ConstraintAttributes.swift in Sources */,
+				9526C66D1D4A055900EFD1DD /* BasisFuncListViewController.swift in Sources */,
 				2C54F0F71D192805005F35AD /* ApplicationListCell.swift in Sources */,
 				2C7342E81D1140AE00CED0F3 /* ViewController+SnapKit.swift in Sources */,
 				2CD7E7AC1D2F9F7B0023D099 /* UIView+HUD.swift in Sources */,
@@ -929,6 +936,7 @@
 				2CF18C061D1A80BC007535CD /* AboutInfoCell.swift in Sources */,
 				955A46011D45DF92005C7372 /* CustomOneLabelCell.swift in Sources */,
 				2CC84C091D17B69200D4230D /* CustomSettingCell.swift in Sources */,
+				9526C66F1D4A08A400EFD1DD /* KeyFuncListViewController.swift in Sources */,
 				2C06B4CE1D35D4D2000A780C /* CustomLabelCell.swift in Sources */,
 				2C7342E31D1140AE00CED0F3 /* EdgeInsets.swift in Sources */,
 				2C7342E21D1140AE00CED0F3 /* Debugging.swift in Sources */,

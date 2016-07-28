@@ -118,13 +118,19 @@ customFunction = function(funcId, pos_color_list, bid, keyid) {
         case "touch.move":
             return "touch.move(0, " + pos_color_list[0].x + ", " + pos_color_list[0].y + ")";
         case "app.run":
-            return "app.run(" + bid + ")";
+            return "app.run(\"" + bid + "\")";
         case "screen.find_color":
 			var ret = "x, y = screen.find_color({\n";
 			for (var i=0; i<cars.length; i++) {
 				ret += "\t{" + pos_color_list[i].x + ", " + pos_color_list[i].y + ", " + pos_color_list[i].color + "},\n";
 			}
 			ret += "}, 90)";
+            return ret;
+        case "key.down":
+			var ret = "key.down(\"" + keyid + "\")";
+            return ret;
+        case "key.up":
+			var ret = "key.up(\"" + keyid + "\")";
             return ret;
     }
 }

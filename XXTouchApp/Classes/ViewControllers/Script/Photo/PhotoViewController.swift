@@ -9,17 +9,19 @@
 import UIKit
 
 class PhotoViewController: UIViewController {
+  var funcCompletionHandler: FuncCompletionHandler
   private let image: UIImage
-  private let titleName: String
   private var photoView: VIPhotoView!
-  private let contentView = ContentView()
-  private let id: String
+  private let oneTouchContentView = OneTouchContentView()
   private var modelDic = [[String: String]]()
+  private var isScroll = false
+  private let type: FuncListType
+  private var plusPointView = UIView()
   
-  init(id: String = "", image: UIImage, titleName: String) {
-    self.id = id
+  init(type: FuncListType, image: UIImage, funcCompletionHandler: FuncCompletionHandler) {
+    self.type = type
+    self.funcCompletionHandler = funcCompletionHandler
     self.image = image
-    self.titleName = titleName
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -45,45 +47,71 @@ class PhotoViewController: UIViewController {
     view.backgroundColor = UIColor.whiteColor()
     photoView = VIPhotoView(frame: view.bounds, andImage: self.image)
     photoView.backgroundColor = UIColor.blackColor()
-    //    photoView.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
     view.addSubview(photoView)
-    contentView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.9)
-    contentView.hidden = true
-    view.addSubview(contentView)
+    oneTouchContentView.hidden = true
+    oneTouchContentView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.9)
+    
+    view.addSubview(oneTouchContentView)
   }
   
   private func makeConstriants() {
-    contentView.snp_makeConstraints { (make) in
+    oneTouchContentView.snp_makeConstraints { (make) in
       make.top.equalTo(snp_topLayoutGuideBottom)
       make.leading.trailing.equalTo(view)
-      make.height.equalTo(20)
+      make.height.equalTo(30)
     }
   }
   
   private func setupAction() {
-    photoView.pointBlock = { [weak self] point in
-      guard let `self` = self else { return }
-      let model = PosColorListModel(x: String(Int(point.x)), y: String(Int(point.y)), color: "")
-      let dic = ["x" : model.x, "y" : model.y, "color": model.color]
-      self.modelDic = [dic]
-      let content = JsManager.sharedManager.getCustomFunction(self.id, models: self.modelDic)
-      self.contentView.addContent(content)
-      self.contentView.hidden = false
-      self.contentView.snp_remakeConstraints { (make) in
-        make.top.equalTo(self.snp_topLayoutGuideBottom)
-        make.leading.trailing.equalTo(self.view)
-        make.height.equalTo(self.contentView.label.mj_h+10)
-      }
-    }
+    oneTouchContentView.button.addTarget(self, action: #selector(inset), forControlEvents: .TouchUpInside)
+    photoView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
   }
   
   private func bind() {
-    navigationItem.title = self.titleName
+    navigationItem.title = self.funcCompletionHandler.titleNames[0]
   }
 }
 
-class ContentView: UIView {
+extension PhotoViewController {
+  @objc private func handleTap(tap: UITapGestureRecognizer) {
+    let point = tap.locationInView(view)
+    let x = point.x * UIScreen.mainScreen().scale
+    let y = point.y * UIScreen.mainScreen().scale
+    self.plusPointView.removeFromSuperview()
+    self.plusPointView.frame.origin = point
+    self.plusPointView.backgroundColor = UIColor.redColor()
+    self.plusPointView.frame.size = CGSize(width: 3,height: 3)
+    self.view.addSubview(self.plusPointView)
+    
+    self.oneTouchContentView.hidden = false
+    if !self.isScroll {
+      self.isScroll = true
+      self.photoView.setContentOffsetToView()
+    }
+    let model = PosColorListModel(x: String(Int(x)), y: String(Int(y)), color: "")
+    let dic = ["x" : model.x, "y" : model.y, "color": model.color]
+    self.modelDic = [dic]
+    let content = JsManager.sharedManager.getCustomFunction(self.funcCompletionHandler.id, models: self.modelDic)
+    self.oneTouchContentView.addContent(content)
+  }
+  
+  @objc private func inset(button: UIButton) {
+    self.funcCompletionHandler.completionHandler?(oneTouchContentView.label.text!)
+    self.dismissViewControllerAnimated(true, completion: nil)
+  }
+}
+
+class OneTouchContentView: UIView {
   let label = UILabel()
+  lazy var button: Button = {
+    let button = Button(type: .Custom)
+    button.setTitle("插入", forState: .Normal)
+    button.backgroundColor = ThemeManager.Theme.tintColor
+    button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+    button.titleLabel?.font = UIFont.systemFontOfSize(14)
+    button.layer.cornerRadius = 4.0
+    return button
+  }()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -101,12 +129,21 @@ class ContentView: UIView {
     label.font = UIFont.systemFontOfSize(14)
     
     self.addSubview(label)
+    self.addSubview(button)
   }
   
   private func makeConstriants() {
     label.snp_makeConstraints { (make) in
       make.leading.trailing.equalTo(self).inset(10)
+      make.centerY.equalTo(self)
       make.top.equalTo(self).offset(5)
+    }
+    
+    button.snp_makeConstraints { (make) in
+      make.trailing.equalTo(self).offset(-10)
+      make.centerY.equalTo(self)
+      make.width.equalTo(45)
+      make.height.equalTo(20)
     }
   }
   
