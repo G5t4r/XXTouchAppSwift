@@ -70,9 +70,9 @@
   if (self) {
     self.delegate = self;
     self.bouncesZoom = YES;
-    self.showsVerticalScrollIndicator = false;
-    self.showsHorizontalScrollIndicator = false;
-    _multiple = 4;
+    self.showsVerticalScrollIndicator = NO;
+    self.showsHorizontalScrollIndicator = NO;
+    _multiple = 8;
     
     // Add container view
     UIView *containerView = [[UIView alloc] initWithFrame:self.bounds];
@@ -154,11 +154,11 @@
   oneTap.numberOfTapsRequired = 1;
   [_containerView addGestureRecognizer:oneTap];
   
-  UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHandler:)];
-  doubleTap.numberOfTapsRequired = 2;
-  [_containerView addGestureRecognizer:doubleTap];
-  
-  [oneTap requireGestureRecognizerToFail:doubleTap];
+  //  UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHandler:)];
+  //  doubleTap.numberOfTapsRequired = 2;
+  //  [_containerView addGestureRecognizer:doubleTap];
+  //  
+  //  [oneTap requireGestureRecognizerToFail:doubleTap];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -178,19 +178,23 @@
 - (void)tapHandler:(UITapGestureRecognizer *)recognizer
 {
   if (recognizer.numberOfTapsRequired == 1) {
-    //
+    CGPoint point = [recognizer locationInView: self.superview];
+    NSInteger x = point.x * [[UIScreen mainScreen] scale];
+    NSInteger y = point.x * [[UIScreen mainScreen] scale];
     
-    
-  } else if (recognizer.numberOfTapsRequired == 2) {
-    if (self.zoomScale > self.minimumZoomScale) {
-      [self setZoomScale:self.minimumZoomScale animated:YES];
-    } else if (self.zoomScale < self.maximumZoomScale) {
-      CGPoint location = [recognizer locationInView:recognizer.view];
-      CGRect zoomToRect = CGRectMake(0, 0, 0, 0);
-      zoomToRect.origin = CGPointMake(location.x - CGRectGetWidth(zoomToRect)/2, location.y - CGRectGetHeight(zoomToRect)/2);
-      [self zoomToRect:zoomToRect animated:YES];
-    }
+    __weak __typeof(&*self)weakSelf = self;
+    weakSelf.pointBlock(CGPointMake(x, y));
   }
+  //  else if (recognizer.numberOfTapsRequired == 2) {
+  //    if (self.zoomScale > self.minimumZoomScale) {
+  //      [self setZoomScale:self.minimumZoomScale animated:YES];
+  //    } else if (self.zoomScale < self.maximumZoomScale) {
+  //      CGPoint location = [recognizer locationInView:recognizer.view];
+  //      CGRect zoomToRect = CGRectMake(0, 0, 0, 0);
+  //      zoomToRect.origin = CGPointMake(location.x - CGRectGetWidth(zoomToRect)/2, location.y - CGRectGetHeight(zoomToRect)/2);
+  //      [self zoomToRect:zoomToRect animated:YES];
+  //    }
+  //  }
 }
 
 #pragma mark - Notification

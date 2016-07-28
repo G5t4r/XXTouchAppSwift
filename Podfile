@@ -15,4 +15,5 @@ target :XXTouchApp do
   pod 'TAOverlay'
   pod 'SIAlertView'
   pod 'STPopup'
+  pod 'GPUImage'
 end

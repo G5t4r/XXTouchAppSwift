@@ -12,8 +12,12 @@ class PhotoViewController: UIViewController {
   private let image: UIImage
   private let titleName: String
   private var photoView: VIPhotoView!
+  private let contentView = ContentView()
+  private let id: String
+  private var modelDic = [[String: String]]()
   
-  init(image: UIImage, titleName: String) {
+  init(id: String = "", image: UIImage, titleName: String) {
+    self.id = id
     self.image = image
     self.titleName = titleName
     super.init(nibName: nil, bundle: nil)
@@ -42,16 +46,35 @@ class PhotoViewController: UIViewController {
     photoView = VIPhotoView(frame: view.bounds, andImage: self.image)
     photoView.backgroundColor = UIColor.blackColor()
     //    photoView.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
-    
     view.addSubview(photoView)
+    contentView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.9)
+    contentView.hidden = true
+    view.addSubview(contentView)
   }
   
   private func makeConstriants() {
-    
+    contentView.snp_makeConstraints { (make) in
+      make.top.equalTo(snp_topLayoutGuideBottom)
+      make.leading.trailing.equalTo(view)
+      make.height.equalTo(20)
+    }
   }
   
   private func setupAction() {
-    
+    photoView.pointBlock = { [weak self] point in
+      guard let `self` = self else { return }
+      let model = PosColorListModel(x: String(Int(point.x)), y: String(Int(point.y)), color: "")
+      let dic = ["x" : model.x, "y" : model.y, "color": model.color]
+      self.modelDic = [dic]
+      let content = JsManager.sharedManager.getCustomFunction(self.id, models: self.modelDic)
+      self.contentView.addContent(content)
+      self.contentView.hidden = false
+      self.contentView.snp_remakeConstraints { (make) in
+        make.top.equalTo(self.snp_topLayoutGuideBottom)
+        make.leading.trailing.equalTo(self.view)
+        make.height.equalTo(self.contentView.label.mj_h+10)
+      }
+    }
   }
   
   private func bind() {
@@ -59,95 +82,35 @@ class PhotoViewController: UIViewController {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-//extension PhotoViewController: UIScrollViewDelegate {
-//  func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
-//    return imageView
-//  }
-//  
-//  func scrollViewDidZoom(scrollView: UIScrollView) {
-//    centerScrollViewContent()
-//  }
-//  
-//  func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
-//    currentScale = scale
-//  }
-//  
-//  /**
-//   滚动视图内容居中
-//   */
-//  private func centerScrollViewContent() {
-//    var leftInset: CGFloat = (scrollView.frame.width - scrollView.contentSize.width)/2
-//    var topInset: CGFloat = (scrollView.frame.height - scrollView.contentSize.height - Constants.Size.axtNavigationBarHeight)/2
-//    topInset = max(topInset, 0)
-//    leftInset = max(leftInset, 0)
-//    var bottomInset: CGFloat = 0
-//    if isOpen {
-//      bottomInset = 80
-//    }
-//    scrollView.contentInset = UIEdgeInsets(top: topInset+Constants.Size.axtNavigationBarHeight,
-//                                           left: leftInset,
-//                                           bottom: bottomInset,
-//                                           right: 0)
-//  }
-//  
-//  @objc private func doubleSize(tap: UITapGestureRecognizer) {
-//    //当前倍数等于最大放大倍数
-//    //双击默认为缩小到原图
-//    if currentScale == maxScale {
-//      currentScale = minScale
-//      scrollView.setZoomScale(currentScale, animated: true)
-//      return
-//    }
-//    //当前等于最小放大倍数
-//    //双击默认为放大到最大倍数
-//    if currentScale == minScale {
-//      currentScale = maxScale
-//      scrollView.setZoomScale(currentScale, animated: true)
-//      return
-//    }
-//    
-//    let aveScale = minScale+(maxScale-minScale)/2.0 //中间倍数
-//    
-//    //当前倍数大于平均倍数
-//    //双击默认为放大最大倍数
-//    if (currentScale >= aveScale) {
-//      currentScale = maxScale
-//      scrollView.setZoomScale(currentScale, animated: true)
-//      return
-//    }
-//    
-//    //当前倍数小于平均倍数
-//    //双击默认为放大到最小倍数
-//    if (currentScale < aveScale) {
-//      currentScale = minScale
-//      scrollView.setZoomScale(currentScale, animated: true)
-//      return
-//    }
-//  }
-//}
-//
-//extension PhotoViewController {
-//  @objc private func edit(barButton: UIBarButtonItem) {
-//    isOpen = true
-//    scrollView.contentInset.bottom = 80
-//    photoEditView.transform = CGAffineTransformTranslate(photoEditView.transform, 0, 80)
-//    photoEditView.hidden = false
-//    UIView.animateWithDuration(0.3, animations: {
-//      self.photoEditView.transform = CGAffineTransformIdentity
-//    }) { (_) in
-//      
-//    }
-//  }
-//}
+class ContentView: UIView {
+  let label = UILabel()
+  
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    setupUI()
+    makeConstriants()
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  private func setupUI() {
+    label.textColor = UIColor.blackColor()
+    label.numberOfLines = 0
+    label.font = UIFont.systemFontOfSize(14)
+    
+    self.addSubview(label)
+  }
+  
+  private func makeConstriants() {
+    label.snp_makeConstraints { (make) in
+      make.leading.trailing.equalTo(self).inset(10)
+      make.top.equalTo(self).offset(5)
+    }
+  }
+  
+  func addContent(content: String) {
+    label.text = content
+  }
+}

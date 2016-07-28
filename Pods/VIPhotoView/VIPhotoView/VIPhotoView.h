@@ -10,6 +10,10 @@
 
 @interface VIPhotoView : UIScrollView
 
+typedef void (^PointBlock)(CGPoint);
+@property (nonatomic) PointBlock pointBlock;
+
 - (instancetype)initWithFrame:(CGRect)frame andImage:(UIImage *)image;
+
 
 @end

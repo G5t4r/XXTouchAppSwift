@@ -108,7 +108,7 @@ extension PhotoBrowsingViewController: UICollectionViewDelegate, UICollectionVie
   }
   
   func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    let viewController = PhotoViewController(image: self.images[indexPath.item], titleName: self.funcCompletionHandler.titleNames[0])
+    let viewController = PhotoViewController(id: self.funcCompletionHandler.id,image: self.images[indexPath.item], titleName: self.funcCompletionHandler.titleNames[0])
     self.navigationController?.pushViewController(viewController, animated: true)
   }
   
