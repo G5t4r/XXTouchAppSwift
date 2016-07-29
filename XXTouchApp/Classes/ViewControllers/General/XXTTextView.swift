@@ -10,8 +10,8 @@ import UIKit
 
 class XXTTextView: CYRTextView {
   let extensionButton = RFToolbarButton(title: "扩展函数")
-  let basisButton = RFToolbarButton(title: "基础函数")
-  let indentationButton = RFToolbarButton(title: "代码缩进")
+  let basisButton = RFToolbarButton(title: "语法片段")
+  let indentationButton = RFToolbarButton(title: "Tab")
   
   override init(frame: CGRect) {
     super.init(frame: frame)
