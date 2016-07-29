@@ -10,6 +10,7 @@ import UIKit
 
 class BasisFuncListViewController: UIViewController {
   var funcCompletionHandler = FuncCompletionHandler()
+  weak var delegate: ExtensionFuncListViewControllerDelegate?
   
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private var list = [JSON]()
@@ -51,6 +52,7 @@ class BasisFuncListViewController: UIViewController {
   }
   
   @objc private func dismiss() {
+    delegate?.becomeFirstResponderToTextView()
     dismissViewControllerAnimated(true, completion: nil)
   }
 }

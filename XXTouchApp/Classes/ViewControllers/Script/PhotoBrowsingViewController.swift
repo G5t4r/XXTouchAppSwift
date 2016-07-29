@@ -15,7 +15,7 @@ class PhotoBrowsingViewController: UIViewController {
   //资源库管理类
   private let assetsLibrary =  ALAssetsLibrary()
   //相册照片
-  private var images = [UIImage]()
+  private var assets = [ALAsset]()
   
   init(funcCompletionHandler: FuncCompletionHandler) {
     self.funcCompletionHandler = funcCompletionHandler
@@ -69,12 +69,9 @@ class PhotoBrowsingViewController: UIViewController {
         guard let `self` = self else { return }
         self.view.dismissHUD()
         guard let result = result else { return }
-        let representation = result.defaultRepresentation()
-        let imageBuffer = UnsafeMutablePointer<UInt8>.alloc(Int(representation.size()))
-        let bufferSize = representation.getBytes(imageBuffer, fromOffset: Int64(0), length: Int(representation.size()), error: nil)
-        let data =  NSData(bytesNoCopy: imageBuffer, length:bufferSize, freeWhenDone: true)
-        let image = UIImage(data: data)
-        self.images.append(image!)
+        if result.valueForProperty(ALAssetPropertyType) as? String == ALAssetTypePhoto {
+          self.assets.insert(result, atIndex: 0)
+        }
         })
       self.collectionView.reloadData()
     }) { [weak self] (error) in
@@ -98,23 +95,36 @@ class PhotoBrowsingViewController: UIViewController {
 
 extension PhotoBrowsingViewController: UICollectionViewDelegate, UICollectionViewDataSource {
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return self.images.count
+    return self.assets.count
   }
   
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(NSStringFromClass(PhotoBrowsingCell), forIndexPath: indexPath) as! PhotoBrowsingCell
-    cell.bind(self.images[indexPath.item])
+    let asset = self.assets[indexPath.item]
+    
+    
+    
+    //    let imageBuffer = UnsafeMutablePointer<UInt8>.alloc(Int(representation.size()))
+    //    let bufferSize = representation.getBytes(imageBuffer, fromOffset: Int64(0), length: Int(representation.size()), error: nil)
+    //    let data =  NSData(bytesNoCopy: imageBuffer, length:bufferSize, freeWhenDone: true)
+    //    let image = UIImage(data: data)
+    
+    let image = UIImage(CGImage: asset.thumbnail().takeUnretainedValue())
+    cell.bind(image)
     return cell
   }
   
   func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    let viewController = PhotoViewController(type: .Pos,image: self.images[indexPath.item], funcCompletionHandler: self.funcCompletionHandler)
+    let representation = self.assets[indexPath.item].defaultRepresentation()
+    let image = UIImage(CGImage: representation.fullResolutionImage().takeUnretainedValue(), scale: CGFloat(representation.scale()), orientation: .Up)
+    let viewController = PhotoViewController(type: .Pos,image: image, funcCompletionHandler: self.funcCompletionHandler)
     self.navigationController?.pushViewController(viewController, animated: true)
   }
   
   func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-    let itemWidth = CGRectGetWidth(collectionView.frame)/2-1
-    let image = self.images[indexPath.item]
+    let itemWidth = CGRectGetWidth(collectionView.frame)/4-1.5
+    let asset = self.assets[indexPath.item]
+    let image = UIImage(CGImage: asset.thumbnail().takeUnretainedValue())
     let itemHeight: CGFloat = itemWidth/image.size.width*image.size.height
     return CGSize(width: itemWidth, height: itemHeight)
   }

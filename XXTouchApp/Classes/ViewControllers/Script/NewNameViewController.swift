@@ -104,7 +104,8 @@ extension NewNameViewController {
   private func addScript() {
     self.view.showHUD(text: "正在保存")
     let fileName = newNameView.newNameTextField.text!+self.extensionName
-    Service.newScriptFile(filename: fileName, data: self.data) { [weak self] (data, _, error) in
+    guard let data = Base64.base64StringToString(self.data) else { return }
+    Service.newScriptFile(filename: fileName, data: data) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)

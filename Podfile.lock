@@ -1,6 +1,5 @@
 PODS:
   - CYRTextView (0.4.0)
-  - GPUImage (0.1.7)
   - MJRefresh (3.1.7)
   - NJKWebViewProgress (0.2.3):
     - NJKWebViewProgress/Core (= 0.2.3)
@@ -16,7 +15,6 @@ PODS:
 
 DEPENDENCIES:
   - CYRTextView
-  - GPUImage
   - MJRefresh
   - NJKWebViewProgress
   - RFKeyboardToolbar
@@ -28,7 +26,6 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   CYRTextView: 1c1a4d708eee54ecad66b8ad42dbfe73083bdfce
-  GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   MJRefresh: f67f0750d57a4e4ae433da549359ca53b52cdc7d
   NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
   RFKeyboardToolbar: c96a7d9458564d1fedc8ef6844b6c467934aade2
@@ -38,6 +35,6 @@ SPEC CHECKSUMS:
   TAOverlay: 940e37fdb45fbc9acfc73bf1089668367e3b1be6
   VIPhotoView: bdc0cf8ddadda754b451869bd3a919e8eb5c11ab
 
-PODFILE CHECKSUM: 70a99ca9f94ca4687085af760ec25f2c8a270bc1
+PODFILE CHECKSUM: 93bd9ee7181059893513ca63abbd3b2015cdad23
 
 COCOAPODS: 1.0.1

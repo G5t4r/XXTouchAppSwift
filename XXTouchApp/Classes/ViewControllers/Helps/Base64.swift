@@ -9,6 +9,13 @@
 import UIKit
 
 class Base64 {
+  class func base64StringToString(string: String) -> String? {
+    let data = string.dataUsingEncoding(NSUTF8StringEncoding)
+    guard let endata = data else { return nil }
+    let base64Encoded = endata.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
+    return base64Encoded
+  }
+  
   ///传入base64的字符串，可以是没有经过修改的转换成的以data开头的，也可以是base64的内容字符串，然后转换成UIImage
   class func base64StringToUIImage(base64String: String) -> UIImage? {
     var str = base64String

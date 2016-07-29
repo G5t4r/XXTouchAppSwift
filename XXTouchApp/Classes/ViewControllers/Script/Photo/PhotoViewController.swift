@@ -45,6 +45,7 @@ class PhotoViewController: UIViewController {
   private func setupUI() {
     automaticallyAdjustsScrollViewInsets = false
     view.backgroundColor = UIColor.whiteColor()
+    
     photoView = VIPhotoView(frame: view.bounds, andImage: self.image)
     photoView.backgroundColor = UIColor.blackColor()
     view.addSubview(photoView)
@@ -96,8 +97,8 @@ extension PhotoViewController {
   }
   
   @objc private func inset(button: UIButton) {
-    self.funcCompletionHandler.completionHandler?(oneTouchContentView.label.text!)
-    self.dismissViewControllerAnimated(true, completion: nil)
+    funcCompletionHandler.completionHandler?(oneTouchContentView.label.text!)
+    dismissViewControllerAnimated(true, completion: nil)
   }
 }
 

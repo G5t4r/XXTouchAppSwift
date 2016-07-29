@@ -58,6 +58,11 @@ class ScriptDetailViewController: UIViewController {
     NSNotificationCenter.defaultCenter().removeObserver(self)
   }
   
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+    textView.becomeFirstResponder()
+  }
+  
   private func fetchWriteScript() {
     self.view.showHUD(text: "正在保存")
     Service.writeScriptFile(filename: self.fileName, data: self.textView.text) { [weak self] (data, _, error) in
@@ -93,7 +98,10 @@ class ScriptDetailViewController: UIViewController {
       return
     }
     textView.resignFirstResponder()
-    self.alertShowTwoButton(message: "是否丢弃当前更改？") { [weak self] (_) in
+    self.alertShowTwoButton(message: "是否丢弃当前更改？", cancelHandler: { [weak self] (_) in
+      guard let `self` = self else { return }
+      self.textView.becomeFirstResponder()
+    }) { [weak self] (_) in
       guard let `self` = self else { return }
       self.navigationController?.popViewControllerAnimated(true)
     }

@@ -8,9 +8,15 @@
 
 import UIKit
 import CoreLocation
+import MobileCoreServices
+
+protocol ExtensionFuncListViewControllerDelegate: NSObjectProtocol {
+  func becomeFirstResponderToTextView()
+}
 
 class ExtensionFuncListViewController: UIViewController {
   var funcCompletionHandler = FuncCompletionHandler()
+  weak var delegate: ExtensionFuncListViewControllerDelegate?
   
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private var list = [JSON]()
@@ -59,6 +65,7 @@ class ExtensionFuncListViewController: UIViewController {
   }
   
   @objc private func dismiss() {
+    delegate?.becomeFirstResponderToTextView()
     dismissViewControllerAnimated(true, completion: nil)
   }
 }
