@@ -9,6 +9,12 @@
 import UIKit
 
 class AuthorizationViewController: UIViewController {
+  private enum Section: Int, Countable {
+    case Time
+    case Code
+    case Bind
+  }
+  
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private let authorizationCell = AuthorizationCell()
   private let authorizationBindCell = AuthorizationBindCell()
@@ -215,7 +221,7 @@ extension AuthorizationViewController {
 
 extension AuthorizationViewController: UITableViewDelegate, UITableViewDataSource {
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return 3
+    return Section.count
   }
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -223,17 +229,16 @@ extension AuthorizationViewController: UITableViewDelegate, UITableViewDataSourc
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    switch indexPath.section {
-    case 0: return authorizationCell
-    case 1: return authorizationBindCell
-    case 2: return bindCodeCell
-    default: return UITableViewCell()
+    switch Section(rawValue: indexPath.section)! {
+    case .Time: return authorizationCell
+    case .Code: return authorizationBindCell
+    case .Bind: return bindCodeCell
     }
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    switch indexPath.section {
-    case 2:
+    switch Section(rawValue: indexPath.section)! {
+    case .Bind:
       authorizationBindCell.codeTextField.resignFirstResponder()
       if let code = authorizationBindCell.codeTextField.text {
         bindCode(code, indexPath: indexPath)
@@ -243,16 +248,16 @@ extension AuthorizationViewController: UITableViewDelegate, UITableViewDataSourc
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    switch indexPath.section {
-    case 1: return Sizer.valueForDevice(phone: 70, pad: 100)
+    switch Section(rawValue: indexPath.section)! {
+    case .Code: return Sizer.valueForDevice(phone: 70, pad: 100)
     default: return Sizer.valueForDevice(phone: 45, pad: 65)
     }
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    switch section {
-    case 0: return Sizer.valueForDevice(phone: 30, pad: 40)
-    case 1: return Sizer.valueForDevice(phone: 10, pad: 15)
+    switch Section(rawValue: section)! {
+    case .Time: return Sizer.valueForDevice(phone: 30, pad: 40)
+    case .Code: return Sizer.valueForDevice(phone: 10, pad: 15)
     default: return 0.01
     }
   }
@@ -265,8 +270,8 @@ extension AuthorizationViewController: UITableViewDelegate, UITableViewDataSourc
     if UIDevice.isPad {
       return nil
     } else {
-      switch section {
-      case 0: return "到期时间"
+      switch Section(rawValue: section)! {
+      case .Time: return "到期时间"
       default: return nil
       }
     }
@@ -274,8 +279,8 @@ extension AuthorizationViewController: UITableViewDelegate, UITableViewDataSourc
   
   func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     if UIDevice.isPad {
-      switch section {
-      case 0:
+      switch Section(rawValue: section)! {
+      case .Time:
         return CustomHeaderOrFooter(title: "到期时间", textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(17), alignment: .Left)
       default: return nil
       }

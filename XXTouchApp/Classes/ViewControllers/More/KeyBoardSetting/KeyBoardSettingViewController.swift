@@ -9,6 +9,13 @@
 import UIKit
 
 class KeyBoardSettingViewController: UIViewController {
+  private enum Section: Int, Countable {
+    case HoldUp
+    case HoldDown
+    case ClickUp
+    case ClickDown
+  }
+  
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private let holdVolumeUpCell = KeyBoardSettingCell()
   private let holdVolumeDownCell = KeyBoardSettingCell()
@@ -124,7 +131,7 @@ extension KeyBoardSettingViewController {
 
 extension KeyBoardSettingViewController: UITableViewDelegate, UITableViewDataSource {
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return 4
+    return Section.count
   }
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -132,12 +139,11 @@ extension KeyBoardSettingViewController: UITableViewDelegate, UITableViewDataSou
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    switch indexPath.section {
-    case 0: return holdVolumeUpCell
-    case 1: return holdVolumeDownCell
-    case 2: return clickVolumeUpCell
-    case 3: return clickVolumeDownCell
-    default: return UITableViewCell()
+    switch Section(rawValue: indexPath.section)! {
+    case .HoldUp: return holdVolumeUpCell
+    case .HoldDown: return holdVolumeDownCell
+    case .ClickUp: return clickVolumeUpCell
+    case .ClickDown: return clickVolumeDownCell
     }
   }
   
@@ -177,8 +183,8 @@ extension KeyBoardSettingViewController: UITableViewDelegate, UITableViewDataSou
   }
   
   func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-    switch section {
-    case 3: return CustomHeaderOrFooter(title: "*设置 [无动作] 表示不拦截音量键事件\n*如安装了Activator则这里设置不生效\n且屏蔽操作", textColor: UIColor.redColor(), font: UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 15, pad: 19)))
+    switch Section(rawValue: section)! {
+    case .ClickDown: return CustomHeaderOrFooter(title: "*设置 [无动作] 表示不拦截音量键事件\n*如安装了Activator则这里设置不生效\n且屏蔽操作", textColor: UIColor.redColor(), font: UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 15, pad: 19)))
     default: return nil
     }
   }
@@ -192,10 +198,10 @@ extension KeyBoardSettingViewController: UITableViewDelegate, UITableViewDataSou
   }
   
   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-    if section == 3 {
-      return Sizer.valueForDevice(phone: 65, pad: 85)
+    switch Section(rawValue: section)! {
+    case .ClickDown: return Sizer.valueForDevice(phone: 65, pad: 85)
+    default: return 0.01
     }
-    return 0.01
   }
 }
 

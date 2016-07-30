@@ -19,6 +19,16 @@ enum RecordActionType: Int {
 }
 
 class RecordSettingInfoViewController: UIViewController {
+  private enum UpSection: Int, Countable {
+    case RecordUp
+    case NotRecordUp
+  }
+  
+  private enum DownSection: Int, Countable {
+    case RecordDown
+    case NotRecordDown
+  }
+  
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private let infoTitle: String
   private let type: RecordActionType
@@ -70,7 +80,7 @@ class RecordSettingInfoViewController: UIViewController {
 
 extension RecordSettingInfoViewController: UITableViewDelegate, UITableViewDataSource {
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return 2
+    return UpSection.count
   }
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -80,16 +90,14 @@ extension RecordSettingInfoViewController: UITableViewDelegate, UITableViewDataS
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     switch self.type {
     case .RecordVolumeUp:
-      switch indexPath.section {
-      case 0: return recordVolumeUpCell
-      case 1: return notRecordVolumeUpCell
-      default: return UITableViewCell()
+      switch UpSection(rawValue: indexPath.section)! {
+      case .RecordUp: return recordVolumeUpCell
+      case .NotRecordUp: return notRecordVolumeUpCell
       }
     case .RecordVolumeDown:
-      switch indexPath.section {
-      case 0: return recordVolumeDownCell
-      case 1: return notRecordVolumeDownCell
-      default: return UITableViewCell()
+      switch DownSection(rawValue: indexPath.section)! {
+      case .RecordDown: return recordVolumeDownCell
+      case .NotRecordDown: return notRecordVolumeDownCell
       }
     }
   }

@@ -9,6 +9,16 @@
 import UIKit
 
 class UserSettingViewController: UIViewController {
+  private enum Section: Int, Countable {
+    case NoIdle
+    case ScriptOnDaemon
+    case ScriptEndHint
+    case NoSimAlert
+    case NoSimStatusbar
+    case NoLowPowerAlert
+    case NoNeedPushidAlert
+  }
+  
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   
   private lazy var alertValue: [String] = {
@@ -194,7 +204,7 @@ extension UserSettingViewController {
 
 extension UserSettingViewController: UITableViewDelegate, UITableViewDataSource {
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return 7
+    return Section.count
   }
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -202,15 +212,14 @@ extension UserSettingViewController: UITableViewDelegate, UITableViewDataSource 
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    switch indexPath.section {
-    case 0: return noIdleCell
-    case 1: return scriptOnDaemonCell
-    case 2: return scriptEndHintCell
-    case 3: return noSimAlertCell
-    case 4: return noSimStatusbarCell
-    case 5: return noLowPowerAlertCell
-    case 6: return noNeedPushidAlertCell
-    default: return UITableViewCell()
+    switch Section(rawValue: indexPath.section)! {
+    case .NoIdle: return noIdleCell
+    case .ScriptOnDaemon: return scriptOnDaemonCell
+    case .ScriptEndHint: return scriptEndHintCell
+    case .NoSimAlert: return noSimAlertCell
+    case .NoSimStatusbar: return noSimStatusbarCell
+    case .NoLowPowerAlert: return noLowPowerAlertCell
+    case .NoNeedPushidAlert: return noNeedPushidAlertCell
     }
   }
   
@@ -334,7 +343,6 @@ extension UserSettingViewController {
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
-        print(json)
         switch json["code"].intValue {
         case 0: self.getUserConf()
         default:

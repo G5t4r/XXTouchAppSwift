@@ -9,6 +9,14 @@
 import UIKit
 
 class ApplicationDetailViewController: UIViewController {
+  private enum Section: Int, Countable {
+    case AppName
+    case AppPackageName
+    case AppBundlePath
+    case AppDataPath
+    case ClearAppData
+  }
+  
   private let model: ApplicationListModel
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   
@@ -100,11 +108,11 @@ class ApplicationDetailViewController: UIViewController {
   @objc private func pasteboard(tap: UITapGestureRecognizer) {
     let indexPath = NSIndexPath(forRow: 0, inSection: tap.view!.tag)
     tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
-    switch indexPath.section {
-    case 0: UIPasteboard.generalPasteboard().string = model.name
-    case 1: UIPasteboard.generalPasteboard().string = model.packageName
-    case 2: UIPasteboard.generalPasteboard().string = model.bundlePath
-    case 3: UIPasteboard.generalPasteboard().string = model.dataPath
+    switch Section(rawValue: indexPath.section)! {
+    case .AppName: UIPasteboard.generalPasteboard().string = model.name
+    case .AppPackageName: UIPasteboard.generalPasteboard().string = model.packageName
+    case .AppBundlePath: UIPasteboard.generalPasteboard().string = model.bundlePath
+    case .AppDataPath: UIPasteboard.generalPasteboard().string = model.dataPath
     default: return
     }
     self.view.showHUD(.Success, text: Constants.Text.copy) { (_) in
@@ -115,7 +123,7 @@ class ApplicationDetailViewController: UIViewController {
 
 extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataSource {
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return 5
+    return Section.count
   }
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -123,27 +131,26 @@ extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataS
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    switch indexPath.section {
-    case 0:
+    switch Section(rawValue: indexPath.section)! {
+    case .AppName:
       appNameCell.bind(model.name)
       return appNameCell
-    case 1:
+    case .AppPackageName:
       appPackageNameCell.bind(model.packageName)
       return appPackageNameCell
-    case 2:
+    case .AppBundlePath:
       appBundlePathCell.bind(model.bundlePath)
       return appBundlePathCell
-    case 3:
+    case .AppDataPath:
       appDataPathCell.bind(model.dataPath)
       return appDataPathCell
-    case 4: return clearAppDataCell
-    default: return UITableViewCell()
+    case .ClearAppData: return clearAppDataCell
     }
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    switch indexPath.section {
-    case 4:
+    switch Section(rawValue: indexPath.section)! {
+    case .ClearAppData:
       self.alertShowTwoButton(message: "是否确定要清理？", cancelHandler: { [weak self] (_) in
         guard let `self` = self else { return }
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -172,19 +179,19 @@ extension ApplicationDetailViewController: UITableViewDelegate, UITableViewDataS
     if UIDevice.isPad {
       return nil
     } else {
-      if section == 4 {
-        return nil
+      switch Section(rawValue: section)! {
+      case .ClearAppData: return nil
+      default: return headerTitleList[section]
       }
-      return headerTitleList[section]
     }
   }
   
   func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     if UIDevice.isPad {
-      if section == 4 {
-        return nil
+      switch Section(rawValue: section)! {
+      case .ClearAppData: return nil
+      default: return CustomHeaderOrFooter(title: headerTitleList[section], textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(17), alignment: .Left)
       }
-      return CustomHeaderOrFooter(title: headerTitleList[section], textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(17), alignment: .Left)
     } else {
       return nil
     }
@@ -206,12 +213,10 @@ extension ApplicationDetailViewController {
           return
         }
       }
-      //      if error != nil {
-      //        self.view.updateHUD(Constants.Error.failure)
-      //        MixC.sharedManager.restart { (_) in
-      //          self.clearAppData()
-      //        }
-      //      }
+      if error != nil {
+        self.view.dismissHUD()
+        self.alertShowOneButton(message: Constants.Error.networkFailure)
+      }
     }
   }
 }

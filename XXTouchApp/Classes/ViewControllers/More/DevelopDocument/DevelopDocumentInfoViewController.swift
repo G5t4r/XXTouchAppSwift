@@ -9,6 +9,10 @@
 import UIKit
 
 class DevelopDocumentInfoViewController: UIViewController {
+  private enum Section: Int, Countable {
+    case Safari
+  }
+  
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private let toSafariCell = CustomLabelCell(title: "跳转到Safari", backgroundColor: ThemeManager.Theme.redBackgroundColor, titleColor: UIColor.whiteColor())
   
@@ -48,7 +52,7 @@ class DevelopDocumentInfoViewController: UIViewController {
 
 extension DevelopDocumentInfoViewController: UITableViewDelegate, UITableViewDataSource {
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return 1
+    return Section.count
   }
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

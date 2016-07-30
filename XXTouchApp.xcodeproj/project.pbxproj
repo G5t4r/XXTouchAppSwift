@@ -88,6 +88,7 @@
 		953C5D331D30E4E800477C35 /* UIAlertView+Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953C5D321D30E4E800477C35 /* UIAlertView+Block.swift */; };
 		953C5D391D30EB3C00477C35 /* UIActionSheet+Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953C5D381D30EB3C00477C35 /* UIActionSheet+Block.swift */; };
 		953C5D3F1D30F99F00477C35 /* CustomButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953C5D3E1D30F99F00477C35 /* CustomButtonCell.swift */; };
+		9541B7451D4CA4BB00F2A878 /* Countable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9541B7441D4CA4BB00F2A878 /* Countable.swift */; };
 		955A45FF1D45DC55005C7372 /* ExtensionFuncListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955A45FE1D45DC55005C7372 /* ExtensionFuncListViewController.swift */; };
 		955A46011D45DF92005C7372 /* CustomOneLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955A46001D45DF92005C7372 /* CustomOneLabelCell.swift */; };
 		955A46051D45F2AC005C7372 /* PosColorListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955A46041D45F2AC005C7372 /* PosColorListModel.swift */; };
@@ -210,6 +211,7 @@
 		953C5D321D30E4E800477C35 /* UIAlertView+Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertView+Block.swift"; sourceTree = "<group>"; };
 		953C5D381D30EB3C00477C35 /* UIActionSheet+Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActionSheet+Block.swift"; sourceTree = "<group>"; };
 		953C5D3E1D30F99F00477C35 /* CustomButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButtonCell.swift; sourceTree = "<group>"; };
+		9541B7441D4CA4BB00F2A878 /* Countable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Countable.swift; sourceTree = "<group>"; };
 		955A45FE1D45DC55005C7372 /* ExtensionFuncListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionFuncListViewController.swift; sourceTree = "<group>"; };
 		955A46001D45DF92005C7372 /* CustomOneLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomOneLabelCell.swift; sourceTree = "<group>"; };
 		955A46041D45F2AC005C7372 /* PosColorListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PosColorListModel.swift; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 		2C67AB381CFD218E008D53E8 /* XXTouchApp */ = {
 			isa = PBXGroup;
 			children = (
+				9541B7431D4CA4A600F2A878 /* Protocols */,
 				95D1BA661D44B59A00DAE7F9 /* Js */,
 				2C67AB7A1CFD2AAA008D53E8 /* Classes */,
 				2C67AB681CFD22D4008D53E8 /* Resources */,
@@ -685,6 +688,14 @@
 			path = Catalog;
 			sourceTree = "<group>";
 		};
+		9541B7431D4CA4A600F2A878 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				9541B7441D4CA4BB00F2A878 /* Countable.swift */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
 		955DB23B1D1E36C000B598C4 /* Mix */ = {
 			isa = PBXGroup;
 			children = (
@@ -785,8 +796,6 @@
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
-			knownRegions = (
-			);
 			mainGroup = 2C67AB2D1CFD218E008D53E8;
 			productRefGroup = 2C67AB371CFD218E008D53E8 /* Products */;
 			projectDirPath = "";
@@ -891,6 +900,7 @@
 				2C4FFA431D2A173F00DBEEDB /* main.swift in Sources */,
 				2C06B4D41D3614DA000A780C /* DevelopDocumentInfoViewController.swift in Sources */,
 				2C7342DD1D1140AE00CED0F3 /* ConstraintAttributes.swift in Sources */,
+				9541B7451D4CA4BB00F2A878 /* Countable.swift in Sources */,
 				9526C66D1D4A055900EFD1DD /* BasisFuncListViewController.swift in Sources */,
 				2C54F0F71D192805005F35AD /* ApplicationListCell.swift in Sources */,
 				2C7342E81D1140AE00CED0F3 /* ViewController+SnapKit.swift in Sources */,

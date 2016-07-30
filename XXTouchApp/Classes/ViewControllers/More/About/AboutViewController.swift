@@ -9,6 +9,13 @@
 import UIKit
 
 class AboutViewController: UIViewController {
+  private enum Section: Int, Countable {
+    case Title
+    case Info
+    case QQGroup
+    case Web
+  }
+  
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private let aboutTitleCell = AboutTitleCell()
   
@@ -61,7 +68,7 @@ class AboutViewController: UIViewController {
   }
   
   private func setupAction() {
-
+    
   }
   
   private func bind() {
@@ -129,51 +136,50 @@ extension AboutViewController {
 
 extension AboutViewController: UITableViewDelegate, UITableViewDataSource {
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return 4
+    return Section.count
   }
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    switch section {
-    case 1: return 7
+    switch Section(rawValue: section)! {
+    case .Info: return 7
     default: return 1
     }
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    switch indexPath.section {
-    case 0: return aboutTitleCell
-    case 1: return deviceCellList[indexPath.row]
-    case 2: return qqGroupCell
-    case 3: return webCell
-    default: return UITableViewCell()
+    switch Section(rawValue: indexPath.section)! {
+    case .Title: return aboutTitleCell
+    case .Info: return deviceCellList[indexPath.row]
+    case .QQGroup: return qqGroupCell
+    case .Web: return webCell
     }
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    switch indexPath.section {
-    case 1:
+    switch Section(rawValue: indexPath.section)! {
+    case .Info:
       if indexPath.row == 6 {
         UIPasteboard.generalPasteboard().string = deviceId
         self.view.showHUD(.Success, text: Constants.Text.copy)
       }
-    case 2: qqGroup()
-    case 3: web()
+    case .QQGroup: qqGroup()
+    case .Web: web()
     default: break
     }
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    switch indexPath.section {
-    case 0: return Sizer.valueForDevice(phone: 70, pad: 75)
-    case 1: return Sizer.valueForDevice(phone: 55, pad: 65)
+    switch Section(rawValue: indexPath.section)! {
+    case .Title: return Sizer.valueForDevice(phone: 70, pad: 75)
+    case .Info: return Sizer.valueForDevice(phone: 55, pad: 65)
     default: return Sizer.valueForDevice(phone: 40, pad: 50)
     }
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    switch section {
-    case 0: return 0.01
+    switch Section(rawValue: section)! {
+    case .Title: return 0.01
     default: return Sizer.valueForDevice(phone: 10, pad: 15)
     }
   }

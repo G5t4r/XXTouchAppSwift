@@ -27,6 +27,31 @@ enum UserActionType: Int {
 }
 
 class UserSettingInfoViewController: UIViewController {
+  private enum IdleSection: Int, Countable {
+    case Idle
+    case NotIdle
+  }
+  
+  private enum HintSection: Int, Countable {
+    case Hint
+    case NotHint
+  }
+  
+  private enum DaemonSection: Int, Countable {
+    case Daemon
+    case StopDaemon
+  }
+  
+  private enum PopSection: Int, Countable {
+    case Pop
+    case NotPop
+  }
+  
+  private enum ShowSection: Int, Countable {
+    case Show
+    case NotShow
+  }
+  
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private let infoTitle: String
   private let type: UserActionType
@@ -84,7 +109,7 @@ class UserSettingInfoViewController: UIViewController {
 
 extension UserSettingInfoViewController: UITableViewDelegate, UITableViewDataSource {
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return 2
+    return IdleSection.count
   }
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -94,34 +119,29 @@ extension UserSettingInfoViewController: UITableViewDelegate, UITableViewDataSou
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     switch self.type {
     case .NoSimStatusbar:
-      switch indexPath.section {
-      case 0: return showCell
-      case 1: return notShowCell
-      default: return UITableViewCell()
+      switch ShowSection(rawValue: indexPath.section)! {
+      case .Show: return showCell
+      case .NotShow: return notShowCell
       }
     case .NoIdle:
-      switch indexPath.section {
-      case 0: return idleCell
-      case 1: return notIdleCell
-      default: return UITableViewCell()
+      switch IdleSection(rawValue: indexPath.section)! {
+      case .Idle: return idleCell
+      case .NotIdle: return notIdleCell
       }
     case .ScriptEndHint:
-      switch indexPath.section {
-      case 0: return hintCell
-      case 1: return notHintCell
-      default: return UITableViewCell()
+      switch HintSection(rawValue: indexPath.section)! {
+      case .Hint: return hintCell
+      case .NotHint: return notHintCell
       }
     case .ScriptOnDaemon:
-      switch indexPath.section {
-      case 0: return stopDaemonCell
-      case 1: return daemonCell
-      default: return UITableViewCell()
+      switch DaemonSection(rawValue: indexPath.section)! {
+      case .Daemon: return stopDaemonCell
+      case .StopDaemon: return daemonCell
       }
     default:
-      switch indexPath.section {
-      case 0: return popCell
-      case 1: return notPopCell
-      default: return UITableViewCell()
+      switch PopSection(rawValue: indexPath.section)! {
+      case .Pop: return popCell
+      case .NotPop: return notPopCell
       }
     }
   }

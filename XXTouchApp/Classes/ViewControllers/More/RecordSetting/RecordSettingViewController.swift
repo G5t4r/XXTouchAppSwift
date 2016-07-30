@@ -9,6 +9,11 @@
 import UIKit
 
 class RecordSettingViewController: UIViewController {
+  private enum Section: Int, Countable {
+    case RecordUp
+    case RecordDown
+  }
+  
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   
   private lazy var recordSettingList: [String] = {
@@ -131,7 +136,7 @@ extension RecordSettingViewController {
 
 extension RecordSettingViewController: UITableViewDelegate, UITableViewDataSource {
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return 2
+    return Section.count
   }
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -139,10 +144,9 @@ extension RecordSettingViewController: UITableViewDelegate, UITableViewDataSourc
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    switch indexPath.section {
-    case 0: return recordVolumeUpCell
-    case 1: return recordVolumeDownCell
-    default: return UITableViewCell()
+    switch Section(rawValue: indexPath.section)! {
+    case .RecordUp: return recordVolumeUpCell
+    case .RecordDown: return recordVolumeDownCell
     }
   }
   

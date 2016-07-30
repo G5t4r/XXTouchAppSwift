@@ -9,6 +9,11 @@
 import UIKit
 
 class StartUpSettingViewController: UIViewController {
+  private enum Section: Int, Countable {
+    case StartUp
+    case ScriptList
+  }
+  
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private var scriptList = [ScriptModel]()
   private var currentSelectedScriptName = ""
@@ -189,20 +194,20 @@ extension StartUpSettingViewController {
 
 extension StartUpSettingViewController: UITableViewDelegate, UITableViewDataSource {
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return 2
+    return Section.count
   }
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    switch section {
-    case 0:return 1
-    default:return scriptList.count
+    switch Section(rawValue: section)! {
+    case .StartUp: return 1
+    default: return scriptList.count
     }
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    switch indexPath.section {
-    case 0: return startUpCell
-    case 1:
+    switch Section(rawValue: indexPath.section)! {
+    case .StartUp: return startUpCell
+    case .ScriptList:
       let cell = tableView.dequeueReusableCellWithIdentifier(NSStringFromClass(StartUpListCell), forIndexPath: indexPath) as! StartUpListCell
       cell.bind(scriptList[indexPath.row])
       
@@ -214,13 +219,12 @@ extension StartUpSettingViewController: UITableViewDelegate, UITableViewDataSour
       //        cell.backgroundColor = UIColor.whiteColor()
       //      }
       return cell
-    default: return UITableViewCell()
     }
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    switch indexPath.section {
-    case 1:
+    switch Section(rawValue: indexPath.section)! {
+    case .ScriptList:
       tableView.deselectRowAtIndexPath(indexPath, animated: true)
       for cell in tableView.visibleCells {
         if cell is StartUpListCell {
@@ -245,15 +249,15 @@ extension StartUpSettingViewController: UITableViewDelegate, UITableViewDataSour
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    switch indexPath.section {
-    case 0: return Sizer.valueForDevice(phone: 130, pad: 130)
+    switch Section(rawValue: indexPath.section)! {
+    case .StartUp: return Sizer.valueForDevice(phone: 130, pad: 130)
     default: return Sizer.valueForDevice(phone: 60, pad: 70)
     }
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    switch section {
-    case 1: return Sizer.valueForDevice(phone: 30, pad: 40)
+    switch Section(rawValue: section)! {
+    case .ScriptList: return Sizer.valueForDevice(phone: 30, pad: 40)
     default: return 0.01
     }
   }
@@ -266,8 +270,8 @@ extension StartUpSettingViewController: UITableViewDelegate, UITableViewDataSour
     if UIDevice.isPad {
       return nil
     } else {
-      switch section {
-      case 1: return "选择需要开机启动的脚本"
+      switch Section(rawValue: section)! {
+      case .ScriptList: return "选择需要开机启动的脚本"
       default: return nil
       }
     }
@@ -275,8 +279,8 @@ extension StartUpSettingViewController: UITableViewDelegate, UITableViewDataSour
   
   func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     if UIDevice.isPad {
-      switch section {
-      case 1:
+      switch Section(rawValue: section)! {
+      case .ScriptList:
         return CustomHeaderOrFooter(title: "选择需要开机启动的脚本", textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(17), alignment: .Left)
       default: return nil
       }

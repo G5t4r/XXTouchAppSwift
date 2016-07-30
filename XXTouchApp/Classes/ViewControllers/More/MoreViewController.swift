@@ -108,6 +108,15 @@ class MoreViewController: UIViewController {
     ]
     return titleList
   }()
+  
+  private enum Section: Int, Countable {
+    case Service
+    case Authorization
+    case Setting
+    case System
+    case Help
+  }
+  
   private var host = ""
   private var deviceId = ""
   private let moreRemoteServiceCell = MoreRemoteServiceCell()
@@ -151,24 +160,22 @@ class MoreViewController: UIViewController {
 
 extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return titleList.count
+    return Section.count
   }
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    switch section {
-    case 0: return 2
-    case 1: return 1
-    case 2: return settingList.count
-    case 3: return systemList.count
-    case 4: return helpList.count
-    default:
-      return 0
+    switch Section(rawValue: section)! {
+    case .Service: return 2
+    case .Authorization: return 1
+    case .Setting: return settingList.count
+    case .System: return systemList.count
+    case .Help: return helpList.count
     }
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    switch indexPath.section {
-    case 0:
+    switch Section(rawValue: indexPath.section)! {
+    case .Service:
       if indexPath.row == 0 {
         return Sizer.valueForDevice(phone: 55, pad: 65)
       } else {
@@ -179,34 +186,32 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    switch indexPath.section {
-    case 0:
+    switch Section(rawValue: indexPath.section)! {
+    case .Service:
       if indexPath.row == 0 {
         return moreRemoteServiceCell
       } else {
         return MoreCustomCell(icon: iconServiceList[0], title: serviceList[0])
       }
-    case 1: return MoreCustomCell(icon: iconAuthorizationList[indexPath.row], title: authorizationList[indexPath.row])
-    case 2: return MoreCustomCell(icon: iconSettingList[indexPath.row], title: settingList[indexPath.row])
-    case 3: return MoreCustomCell(icon: iconSystemList[indexPath.row], title: systemList[indexPath.row])
-    case 4: return MoreCustomCell(icon: iconHelpList[indexPath.row], title: helpList[indexPath.row])
-    default:
-      return UITableViewCell()
+    case .Authorization: return MoreCustomCell(icon: iconAuthorizationList[indexPath.row], title: authorizationList[indexPath.row])
+    case .Setting: return MoreCustomCell(icon: iconSettingList[indexPath.row], title: settingList[indexPath.row])
+    case .System: return MoreCustomCell(icon: iconSystemList[indexPath.row], title: systemList[indexPath.row])
+    case .Help: return MoreCustomCell(icon: iconHelpList[indexPath.row], title: helpList[indexPath.row])
     }
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    switch indexPath.section {
+    switch Section(rawValue: indexPath.section)! {
     /// 服务
-    case 0: return service(indexPath)
+    case .Service: return service(indexPath)
     /// 授权
-    case 1: return authorization(indexPath.row)
+    case .Authorization: return authorization(indexPath.row)
     /// 设置
-    case 2: return key(indexPath.row)
+    case .Setting: return key(indexPath.row)
     /// 系统
-    case 3: return system(indexPath)
+    case .System: return system(indexPath)
     /// 帮助
-    case 4: return help(indexPath.row)
+    case .Help: return help(indexPath.row)
     default:break
     }
   }
@@ -227,10 +232,10 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-    if section == 4 {
-      return CustomHeaderOrFooter(title: "© XXTouch", textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 14, pad: 18)), alignment: .Left, offset: -10)
+    switch Section(rawValue: section)! {
+    case .Help: return CustomHeaderOrFooter(title: "© XXTouch", textColor: UIColor.grayColor(), font: UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 14, pad: 18)), alignment: .Left, offset: -10)
+    default: return nil
     }
-    return nil
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -238,10 +243,10 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-    if section == 4 {
-      return Sizer.valueForDevice(phone: 50, pad: 70)
+    switch Section(rawValue: section)! {
+    case .Help: return Sizer.valueForDevice(phone: 50, pad: 70)
+    default: return 0.01
     }
-    return 0.01
   }
 }
 

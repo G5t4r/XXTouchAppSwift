@@ -58,11 +58,6 @@ class ScriptDetailViewController: UIViewController {
     NSNotificationCenter.defaultCenter().removeObserver(self)
   }
   
-  override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
-    textView.becomeFirstResponder()
-  }
-  
   private func fetchWriteScript() {
     self.view.showHUD(text: "正在保存")
     Service.writeScriptFile(filename: self.fileName, data: self.textView.text) { [weak self] (data, _, error) in

@@ -23,6 +23,12 @@ enum KeyBoardActionType: Int {
 }
 
 class KeyBoardSettingInfoViewController: UIViewController {
+  private enum Section: Int, Countable {
+    case Pop
+    case RunOrStop
+    case Nothing
+  }
+  
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private let infoTitle: String
   private let type: KeyBoardActionType
@@ -73,7 +79,7 @@ class KeyBoardSettingInfoViewController: UIViewController {
 
 extension KeyBoardSettingInfoViewController: UITableViewDelegate, UITableViewDataSource {
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return 3
+    return Section.count
   }
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -81,11 +87,10 @@ extension KeyBoardSettingInfoViewController: UITableViewDelegate, UITableViewDat
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    switch indexPath.section {
-    case 0: return popSelectedCell
-    case 1: return runAndStopCell
-    case 2: return nothingCell
-    default: return UITableViewCell()
+    switch Section(rawValue: indexPath.section)! {
+    case .Pop: return popSelectedCell
+    case .RunOrStop: return runAndStopCell
+    case .Nothing: return nothingCell
     }
   }
   

@@ -19,11 +19,10 @@ class XXTTextView: CYRTextView {
     //    self.textColor = UIColor.whiteColor()
     //    self.gutterLineColor = UIColor.blackColor()
     //    self.lineCursorEnabled = false
+    self.font = UIFont(name: "Menlo-Regular", size: Sizer.valueForDevice(phone: 11, pad: 15))
+    self.autocorrectionType = .No // 关闭自动更正
     
     
-    
-    //    self.font = UIFont(name: "Menlo-Regular", size: Sizer.valueForDevice(phone: 11, pad: 15))
-    //    self.autocorrectionType = .No // 关闭自动更正
     //    self.inputAccessoryView = RFKeyboardToolbar(
     //      buttons: [
     //        extensionButton,
