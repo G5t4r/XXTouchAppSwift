@@ -16,14 +16,23 @@ NSString *const SIAlertViewDidDismissNotification = @"SIAlertViewDidDismissNotif
 
 #define DEBUG_LAYOUT 0
 
+//#define MESSAGE_MIN_LINE_COUNT 3
+//#define MESSAGE_MAX_LINE_COUNT 5
+//#define GAP 10
+//#define CANCEL_BUTTON_PADDING_TOP 5
+//#define CONTENT_PADDING_LEFT 10
+//#define CONTENT_PADDING_TOP 12
+//#define CONTENT_PADDING_BOTTOM 10
+//#define BUTTON_HEIGHT 44
+//#define CONTAINER_WIDTH 300
 #define MESSAGE_MIN_LINE_COUNT 3
-#define MESSAGE_MAX_LINE_COUNT 5
-#define GAP 10
+#define MESSAGE_MAX_LINE_COUNT 10
+#define GAP 5
 #define CANCEL_BUTTON_PADDING_TOP 5
 #define CONTENT_PADDING_LEFT 10
-#define CONTENT_PADDING_TOP 12
-#define CONTENT_PADDING_BOTTOM 10
-#define BUTTON_HEIGHT 44
+#define CONTENT_PADDING_TOP 10
+#define CONTENT_PADDING_BOTTOM 8
+#define BUTTON_HEIGHT 37
 #define CONTAINER_WIDTH 300
 
 const UIWindowLevel UIWindowLevelSIAlert = 1999.0;  // don't overlap system's alert
