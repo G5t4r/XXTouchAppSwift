@@ -13,8 +13,8 @@ class Constants {
     static let onePixel = 1.0/UIScreen.mainScreen().scale
     static let axtNavigationBarHeight = CGFloat(64)
     static let tabBarHeight = CGFloat(49)
-//    static let heightMul: CGFloat = 2.0
-//    static let widthMul: CGFloat = 1.05
+    //    static let heightMul: CGFloat = 2.0
+    //    static let widthMul: CGFloat = 1.05
   }
 }
 
@@ -51,5 +51,6 @@ extension Constants {
     static let serverBusy = "服务器忙，请稍后再试"
     static let connectServerFail = "连接服务器失败，请检查网络"
     static let verificationFailure = "验证失败，请稍后再试"
+    static let networkFailure = "网络连接失败！"
   }
 }

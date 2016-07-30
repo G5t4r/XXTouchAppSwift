@@ -86,7 +86,6 @@
 		9526C66F1D4A08A400EFD1DD /* KeyFuncListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9526C66E1D4A08A400EFD1DD /* KeyFuncListViewController.swift */; };
 		953949D61D28FC8D00BE75AA /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953949D51D28FC8D00BE75AA /* Service.swift */; };
 		953C5D331D30E4E800477C35 /* UIAlertView+Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953C5D321D30E4E800477C35 /* UIAlertView+Block.swift */; };
-		953C5D371D30EB0400477C35 /* UIResponder+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953C5D361D30EB0400477C35 /* UIResponder+Alert.swift */; };
 		953C5D391D30EB3C00477C35 /* UIActionSheet+Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953C5D381D30EB3C00477C35 /* UIActionSheet+Block.swift */; };
 		953C5D3F1D30F99F00477C35 /* CustomButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953C5D3E1D30F99F00477C35 /* CustomButtonCell.swift */; };
 		955A45FF1D45DC55005C7372 /* ExtensionFuncListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955A45FE1D45DC55005C7372 /* ExtensionFuncListViewController.swift */; };
@@ -96,6 +95,8 @@
 		955DB23F1D1E3A4E00B598C4 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955DB23E1D1E3A4E00B598C4 /* FileManager.swift */; };
 		957EDDC61D320809000E1749 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957EDDC51D320809000E1749 /* Version.swift */; };
 		958372721D4B281500700973 /* LocalPhotoBrowsingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958372711D4B281500700973 /* LocalPhotoBrowsingViewController.swift */; };
+		958372741D4C8D8400700973 /* XXTAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958372731D4C8D8400700973 /* XXTAlertView.swift */; };
+		958372761D4C935800700973 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958372751D4C935800700973 /* UIViewController+Alert.swift */; };
 		9592B4F21D470DBF000B479B /* FuncCompletionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9592B4F11D470DBF000B479B /* FuncCompletionHandler.swift */; };
 		9592B4F41D4718C9000B479B /* PhotoBrowsingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9592B4F31D4718C9000B479B /* PhotoBrowsingViewController.swift */; };
 		9592B4F61D473E12000B479B /* PhotoBrowsingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9592B4F51D473E12000B479B /* PhotoBrowsingCell.swift */; };
@@ -207,7 +208,6 @@
 		9526C66E1D4A08A400EFD1DD /* KeyFuncListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyFuncListViewController.swift; sourceTree = "<group>"; };
 		953949D51D28FC8D00BE75AA /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		953C5D321D30E4E800477C35 /* UIAlertView+Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertView+Block.swift"; sourceTree = "<group>"; };
-		953C5D361D30EB0400477C35 /* UIResponder+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIResponder+Alert.swift"; sourceTree = "<group>"; };
 		953C5D381D30EB3C00477C35 /* UIActionSheet+Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActionSheet+Block.swift"; sourceTree = "<group>"; };
 		953C5D3E1D30F99F00477C35 /* CustomButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButtonCell.swift; sourceTree = "<group>"; };
 		955A45FE1D45DC55005C7372 /* ExtensionFuncListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionFuncListViewController.swift; sourceTree = "<group>"; };
@@ -217,6 +217,8 @@
 		955DB23E1D1E3A4E00B598C4 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		957EDDC51D320809000E1749 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		958372711D4B281500700973 /* LocalPhotoBrowsingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocalPhotoBrowsingViewController.swift; path = Photo/LocalPhotoBrowsingViewController.swift; sourceTree = "<group>"; };
+		958372731D4C8D8400700973 /* XXTAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XXTAlertView.swift; sourceTree = "<group>"; };
+		958372751D4C935800700973 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		9592B4F11D470DBF000B479B /* FuncCompletionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuncCompletionHandler.swift; sourceTree = "<group>"; };
 		9592B4F31D4718C9000B479B /* PhotoBrowsingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoBrowsingViewController.swift; sourceTree = "<group>"; };
 		9592B4F51D473E12000B479B /* PhotoBrowsingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoBrowsingCell.swift; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 				2C54F0E11D17F492005F35AD /* Switches.swift */,
 				95D555F31D30050200499947 /* XXTTextView.swift */,
 				2CB9ED861D43416200588357 /* BaseTextField.swift */,
+				958372731D4C8D8400700973 /* XXTAlertView.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -466,7 +469,7 @@
 				953C5D321D30E4E800477C35 /* UIAlertView+Block.swift */,
 				2CF749C61CFD8D1E007A273B /* UIColor+RGB.swift */,
 				2CD2F5681D13A280001C873F /* UIDevice+DeviceCheck.swift */,
-				953C5D361D30EB0400477C35 /* UIResponder+Alert.swift */,
+				958372751D4C935800700973 /* UIViewController+Alert.swift */,
 				2CD7E7AB1D2F9F7B0023D099 /* UIView+HUD.swift */,
 				2C06B4C61D339F0E000A780C /* UIViewController+Extension.swift */,
 				2C20D81B1D0FC74A009A4990 /* UIViewController+Transition.swift */,
@@ -910,6 +913,7 @@
 				2CC84C031D17B48600D4230D /* StartUpSettingViewController.swift in Sources */,
 				2C06B4CB1D35CF07000A780C /* ScriptInfoViewController.swift in Sources */,
 				2CD2F5731D13E7F3001C873F /* RecordSettingViewController.swift in Sources */,
+				958372761D4C935800700973 /* UIViewController+Alert.swift in Sources */,
 				2C06B4D21D360DF8000A780C /* UserSettingInfoViewController.swift in Sources */,
 				2CF18BFF1D1A5E31007535CD /* DevelopDocumentViewController.swift in Sources */,
 				2CD2F5701D13C00D001C873F /* KeyBoardSettingCell.swift in Sources */,
@@ -939,6 +943,7 @@
 				955A46011D45DF92005C7372 /* CustomOneLabelCell.swift in Sources */,
 				2CC84C091D17B69200D4230D /* CustomSettingCell.swift in Sources */,
 				9526C66F1D4A08A400EFD1DD /* KeyFuncListViewController.swift in Sources */,
+				958372741D4C8D8400700973 /* XXTAlertView.swift in Sources */,
 				2C06B4CE1D35D4D2000A780C /* CustomLabelCell.swift in Sources */,
 				2C7342E31D1140AE00CED0F3 /* EdgeInsets.swift in Sources */,
 				2C7342E21D1140AE00CED0F3 /* Debugging.swift in Sources */,
@@ -953,7 +958,6 @@
 				9592B4F21D470DBF000B479B /* FuncCompletionHandler.swift in Sources */,
 				957EDDC61D320809000E1749 /* Version.swift in Sources */,
 				9592B4F61D473E12000B479B /* PhotoBrowsingCell.swift in Sources */,
-				953C5D371D30EB0400477C35 /* UIResponder+Alert.swift in Sources */,
 				2C2E7D371D2C974E00117025 /* CaseString.swift in Sources */,
 				2CF749C51CFD8BA6007A273B /* NewScriptViewController.swift in Sources */,
 				2CF749D11D053A41007A273B /* ScriptModel.swift in Sources */,

@@ -179,10 +179,8 @@ extension AuthorizationViewController {
         }
       }
       if error != nil {
-        self.view.updateHUD(Constants.Error.failure)
-        MixC.sharedManager.restart { (_) in
-          self.getExpireDate()
-        }
+        self.view.dismissHUD()
+        self.alertShowOneButton(message: Constants.Error.networkFailure)
       }
     }
   }
@@ -209,10 +207,7 @@ extension AuthorizationViewController {
         }
       }
       if error != nil {
-        self.view.showHUD(text: Constants.Error.failure)
-        MixC.sharedManager.restart { (_) in
-          self.getDeviceAuthInfo()
-        }
+        self.alertShowOneButton(message: Constants.Error.networkFailure)
       }
     }
   }
