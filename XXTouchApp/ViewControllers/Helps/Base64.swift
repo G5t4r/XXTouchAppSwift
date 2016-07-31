@@ -13,7 +13,9 @@ class Base64 {
     let data = string.dataUsingEncoding(NSUTF8StringEncoding)
     guard let endata = data else { return nil }
     let base64Encoded = endata.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
-    return base64Encoded
+    // 为了解决一行最多74个强制换行的问题，这边需要替换掉
+    let base64 = base64Encoded.stringByReplacingOccurrencesOfString("\r", withString: "")
+    return base64.stringByReplacingOccurrencesOfString("\n", withString: "")
   }
   
   ///传入base64的字符串，可以是没有经过修改的转换成的以data开头的，也可以是base64的内容字符串，然后转换成UIImage
