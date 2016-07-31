@@ -51,6 +51,22 @@ class KeyBoardSettingViewController: UIViewController {
     return volumePromptList
   }()
   
+  private enum SetAction {
+    case SetHoldUp
+    case SetHoldDown
+    case SetClickUp
+    case SetClickDown
+    
+    var title: String {
+      switch self {
+      case .SetHoldUp: return "set_hold_volume_up_action"
+      case .SetHoldDown: return "set_hold_volume_down_action"
+      case .SetClickUp: return "set_click_volume_up_action"
+      case .SetClickDown: return "set_click_volume_down_action"
+      }
+    }
+  }
+  
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
     if let indexPath = tableView.indexPathForSelectedRow {
@@ -207,25 +223,25 @@ extension KeyBoardSettingViewController: UITableViewDelegate, UITableViewDataSou
 
 extension KeyBoardSettingViewController: KeyBoardSettingInfoViewControllerDelegate {
   func setHoldVolumeUpAction(index: Int) {
-    self.setVolumeAction(String(index),type: "setHoldVolumeUpAction")
+    self.setVolumeAction(String(index), action: SetAction.SetHoldUp.title)
   }
   
   func setHoldVolumeDownAction(index: Int) {
-    self.setVolumeAction(String(index),type: "setHoldVolumeDownAction")
+    self.setVolumeAction(String(index), action: SetAction.SetHoldDown.title)
   }
   
   func setClickVolumeUpAction(index: Int) {
-    self.setVolumeAction(String(index),type: "setClickVolumeUpAction")
+    self.setVolumeAction(String(index), action: SetAction.SetClickUp.title)
   }
   
   func setClickVolumeDownAction(index: Int) {
-    self.setVolumeAction(String(index),type: "setClickVolumeDownAction")
+    self.setVolumeAction(String(index), action: SetAction.SetClickDown.title)
   }
 }
 
 extension KeyBoardSettingViewController {
-  func setVolumeAction(value: String, type: String) {
-    Service.setVolumeActionConf(value: value, type: type) { [weak self] (data, _, error) in
+  func setVolumeAction(value: String, action: String) {
+    Service.setVolumeActionConf(value: value, action: action) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -240,7 +256,7 @@ extension KeyBoardSettingViewController {
       if error != nil {
         self.view.showHUD(text: Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
-          self.setVolumeAction(value, type: type)
+          self.setVolumeAction(value, action: action)
         }
       }
     }

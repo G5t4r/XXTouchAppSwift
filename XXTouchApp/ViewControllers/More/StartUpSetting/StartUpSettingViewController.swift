@@ -14,6 +14,18 @@ class StartUpSettingViewController: UIViewController {
     case ScriptList
   }
   
+  private enum StartupStatus {
+    case RunOn
+    case RunOff
+    
+    var title: String {
+      switch self {
+      case .RunOn: return "set_startup_run_on"
+      case .RunOff: return "set_startup_run_off"
+      }
+    }
+  }
+  
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private var scriptList = [ScriptModel]()
   private var currentSelectedScriptName = ""
@@ -57,10 +69,10 @@ class StartUpSettingViewController: UIViewController {
 extension StartUpSettingViewController {
   @objc private func startUpValueChanged(switchState: UISwitch) {
     if switchState.on {
-      setStartupRun("setStartupRunOn")
+      setStartupRun(StartupStatus.RunOn.title)
       startUpCell.updataInfoColor(UIColor.redColor())
     } else {
-      setStartupRun("setStartupRunOff")
+      setStartupRun(StartupStatus.RunOff.title)
       startUpCell.updataInfoColor(ThemeManager.Theme.lightTextColor)
     }
   }
@@ -146,9 +158,9 @@ extension StartUpSettingViewController {
     }
   }
   
-  private func setStartupRun(type: String) {
+  private func setStartupRun(action: String) {
     self.view.showHUD(text: Constants.Text.reloading)
-    Service.setStartupRunOnOrOff(type: type) { [weak self] (data, _, error) in
+    Service.setStartupRunOnOrOff(action: action) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -163,7 +175,7 @@ extension StartUpSettingViewController {
       if error != nil {
         self.view.updateHUD(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
-          self.setStartupRun(type)
+          self.setStartupRun(action)
         }
       }
     }

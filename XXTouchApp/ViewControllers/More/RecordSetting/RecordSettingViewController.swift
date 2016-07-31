@@ -14,6 +14,27 @@ class RecordSettingViewController: UIViewController {
     case RecordDown
   }
   
+  private enum Index: Int, Countable {
+    case On
+    case Off
+  }
+  
+  private enum SetAction {
+    case RecordUpOn
+    case RecordUpOff
+    case RecordDownOn
+    case RecordDownOff
+    
+    var title: String {
+      switch self {
+      case .RecordUpOn: return "set_record_volume_up_on"
+      case .RecordUpOff: return "set_record_volume_up_off"
+      case .RecordDownOn: return "set_record_volume_down_on"
+      case .RecordDownOff: return "set_record_volume_down_off"
+      }
+    }
+  }
+  
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   
   private lazy var recordSettingList: [String] = {
@@ -110,9 +131,9 @@ extension RecordSettingViewController {
 }
 
 extension RecordSettingViewController {
-  private func setRecordVolume(type: String) {
+  private func setRecordVolume(action: String) {
     self.view.showHUD(text: Constants.Text.reloading)
-    Service.setRecordConf(type: type) { [weak self] (data, _, error) in
+    Service.setRecordConf(action: action) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
@@ -127,7 +148,7 @@ extension RecordSettingViewController {
       if error != nil {
         self.view.updateHUD(Constants.Error.failure)
         MixC.sharedManager.restart { (_) in
-          self.setRecordVolume(type)
+          self.setRecordVolume(action)
         }
       }
     }
@@ -199,18 +220,16 @@ extension RecordSettingViewController: UITableViewDelegate, UITableViewDataSourc
 
 extension RecordSettingViewController: RecordSettingInfoViewControllerDelegate {
   func setRecordVolumeUpOnOrOff(index: Int) {
-    switch index {
-    case 0: setRecordVolume("setRecordVolumeUpOn")
-    case 1: setRecordVolume("setRecordVolumeUpOff")
-    default: break
+    switch Index(rawValue: index)! {
+    case .On: setRecordVolume(SetAction.RecordUpOn.title)
+    case .Off: setRecordVolume(SetAction.RecordUpOff.title)
     }
   }
   
   func setRecordVolumeDownOnOrOff(index: Int) {
-    switch index {
-    case 0: setRecordVolume("setRecordVolumeDownOn")
-    case 1: setRecordVolume("setRecordVolumeDownOff")
-    default: break
+    switch Index(rawValue: index)! {
+    case .On: setRecordVolume(SetAction.RecordDownOn.title)
+    case .Off: setRecordVolume(SetAction.RecordDownOff.title)
     }
   }
 }

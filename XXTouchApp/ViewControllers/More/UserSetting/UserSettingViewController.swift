@@ -19,6 +19,16 @@ class UserSettingViewController: UIViewController {
     case NoNeedPushidAlert
   }
   
+  private enum Index: Int, Countable {
+    case Off
+    case On
+  }
+  
+  private enum NoIndex: Int, Countable {
+    case On
+    case Off
+  }
+  
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   
   private lazy var alertValue: [String] = {
@@ -276,63 +286,56 @@ extension UserSettingViewController: UITableViewDelegate, UITableViewDataSource 
 
 extension UserSettingViewController: UserSettingInfoViewControllerDelegate {
   func setNoIdleOnOrOff(index: Int) {
-    switch index {
-    case 0: self.setUserConf(UserConfType.NoIdle.title, status: false)
-    case 1:
+    switch Index(rawValue: index)! {
+    case .Off: self.setUserConf(UserConfType.NoIdle.title, status: false)
+    case .On:
       guard self.remoteService else {
         self.alertShowOneButton(message: "此选项只有在远程服务为开启的状态生效")
         return
       }
       self.setUserConf(UserConfType.NoIdle.title, status: true)
-    default: break
     }
   }
   
   func setScriptOnDaemonOnOrOff(index: Int) {
-    switch index {
-    case 0: self.setUserConf(UserConfType.ScriptOnDaemon.title, status: false)
-    case 1: self.setUserConf(UserConfType.ScriptOnDaemon.title, status: true)
-    default: break
+    switch Index(rawValue: index)! {
+    case .Off: self.setUserConf(UserConfType.ScriptOnDaemon.title, status: false)
+    case .On: self.setUserConf(UserConfType.ScriptOnDaemon.title, status: true)
     }
   }
   
   func setScriptEndHintOnOrOff(index: Int) {
-    switch index {
-    case 0: self.setUserConf(UserConfType.ScriptEndHint.title, status: true)
-    case 1: self.setUserConf(UserConfType.ScriptEndHint.title, status: false)
-    default: break
+    switch NoIndex(rawValue: index)! {
+    case .On: self.setUserConf(UserConfType.ScriptEndHint.title, status: true)
+    case .Off: self.setUserConf(UserConfType.ScriptEndHint.title, status: false)
     }
   }
   
   func setNoSimAlertOnOrOff(index: Int) {
-    switch index {
-    case 0: self.setUserConf(UserConfType.NoSimAlert.title, status: false)
-    case 1: self.setUserConf(UserConfType.NoSimAlert.title, status: true)
-    default: break
+    switch NoIndex(rawValue: index)! {
+    case .On: self.setUserConf(UserConfType.NoSimAlert.title, status: false)
+    case .Off: self.setUserConf(UserConfType.NoSimAlert.title, status: true)
     }
   }
   
   func setNosimStatusbarOnOrOff(index: Int) {
-    switch index {
-    case 0: self.setUserConf(UserConfType.NoSimStatusbar.title, status: false)
-    case 1: self.setUserConf(UserConfType.NoSimStatusbar.title, status: true)
-    default: break
+    switch NoIndex(rawValue: index)! {
+    case .On: self.setUserConf(UserConfType.NoSimStatusbar.title, status: false)
+    case .Off: self.setUserConf(UserConfType.NoSimStatusbar.title, status: true)
     }
   }
   
   func setLowPowerAlertOnOrOff(index: Int) {
-    switch index {
-    case 0: self.setUserConf(UserConfType.NoLowPowerAlert.title, status: false)
-    case 1: self.setUserConf(UserConfType.NoLowPowerAlert.title, status: true)
-    default: break
+    switch NoIndex(rawValue: index)! {
+    case .On: self.setUserConf(UserConfType.NoLowPowerAlert.title, status: false)
+    case .Off: self.setUserConf(UserConfType.NoLowPowerAlert.title, status: true)
     }
   }
   
   func setNeedPushidAlertOnOrOff(index: Int) {
-    switch index {
-    case 0: self.setUserConf(UserConfType.NoNeedPushidAlert.title, status: false)
-    case 1: self.setUserConf(UserConfType.NoNeedPushidAlert.title, status: true)
-    default: break
+    switch NoIndex(rawValue: index)! {
+    case .On: self.setUserConf(UserConfType.NoNeedPushidAlert.title, status: false)
+    case .Off: self.setUserConf(UserConfType.NoNeedPushidAlert.title, status: true)
     }
   }
 }

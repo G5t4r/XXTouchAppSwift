@@ -60,7 +60,8 @@ class ScriptDetailViewController: UIViewController {
   
   private func fetchWriteScript() {
     self.view.showHUD(text: "正在保存")
-    Service.writeScriptFile(filename: self.fileName, data: self.textView.text) { [weak self] (data, _, error) in
+    guard let data = Base64.base64StringToString(self.textView.text) else { return }
+    Service.writeScriptFile(filename: self.fileName, data: data) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)

@@ -12,10 +12,10 @@ class Service {
   static let Local = "127.0.0.1"
   
   enum Method: String {
-    case GET = "GET"
-    case POST = "POST"
-    case DELETE = "DELETE"
-    case PUT = "PUT"
+    case GET
+    case POST
+    case DELETE
+    case PUT
   }
   
   static var baseURLString: String {
@@ -33,25 +33,17 @@ class Service {
     //    let path = "/1ferver.conf"
     //    let docPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
     let fileManager = NSFileManager.defaultManager()
-    //    let isExists = fileManager.fileExistsAtPath(docPath.first!.stringByAppendingString(path))
     let isExists = fileManager.fileExistsAtPath(path)
-    if isExists {
-      //      let url = NSURL(string: docPath.first!.stringByAppendingString(path))
-      let url = NSURL(string: path)
-      let readData = JSON(data: NSData(contentsOfFile: url!.path!)!)
-      if !readData["port"].stringValue.isEmpty {
-        return ":".stringByAppendingString(readData["port"].stringValue)
-      }
-      return ":46952"
-    }
-    return ":46952"
+    guard isExists else { return ":46952" }
+    let url = NSURL(string: path)
+    let readData = JSON(data: NSData(contentsOfFile: url!.path!)!)
+    guard !readData["port"].stringValue.isEmpty else { return ":46952" }
+    return ":".stringByAppendingString(readData["port"].stringValue)
   }
   
   class func requestTimeout() -> NSTimeInterval {
-    if UIDevice.currentDevice().modelName == "iPhone 4" {
-      return 10.0
-    }
-    return 5.0
+    guard UIDevice.currentDevice().modelName == "iPhone 4" else { return 5.0 }
+    return 10.0
   }
   
   class func config() -> NSURLSessionConfiguration {
@@ -223,13 +215,8 @@ extension Service {
   }
   
   // 设置远程访问
-  class func openOrCloseRemoteAccess(type type: String, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
-    var path: String
-    switch type {
-    case "openRemoteAccess":        path = "/open_remote_access"
-    case "closeRemoteAccess":         path = "/close_remote_access"
-    default: path = ""
-    }
+  class func openOrCloseRemoteAccess(action action: String, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
+    let path = "/".stringByAppendingString(action)
     return request(method: .POST, host: baseURLString, path: path, completionHandler: completionHandler)
   }
   
@@ -283,13 +270,8 @@ extension Service {
   }
   
   // 设置开机启动
-  class func setStartupRunOnOrOff(type type: String, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
-    var path: String
-    switch type {
-    case "setStartupRunOn":        path = "/set_startup_run_on"
-    case "setStartupRunOff":         path = "/set_startup_run_off"
-    default: path = ""
-    }
+  class func setStartupRunOnOrOff(action action: String, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
+    let path = "/".stringByAppendingString(action)
     return request(method: .POST, host: baseURLString, path: path, completionHandler: completionHandler)
   }
   
@@ -307,15 +289,8 @@ extension Service {
   }
   
   // 设置录制设置
-  class func setRecordConf(type type: String, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
-    var path: String
-    switch type {
-    case "setRecordVolumeUpOn":      path = "/set_record_volume_up_on"
-    case "setRecordVolumeUpOff":     path = "/set_record_volume_up_off"
-    case "setRecordVolumeDownOn":    path = "/set_record_volume_down_on"
-    case "setRecordVolumeDownOff":   path = "/set_record_volume_down_off"
-    default: path = ""
-    }
+  class func setRecordConf(action action: String, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
+    let path = "/".stringByAppendingString(action)
     return request(method: .POST, host: baseURLString, path: path, completionHandler: completionHandler)
   }
   
@@ -325,15 +300,8 @@ extension Service {
   }
   
   // 设置音量键事件设置
-  class func setVolumeActionConf(value value: String, type: String, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
-    var path: String
-    switch type {
-    case "setHoldVolumeUpAction":       path = "/set_hold_volume_up_action"
-    case "setHoldVolumeDownAction":     path = "/set_hold_volume_down_action"
-    case "setClickVolumeUpAction":      path = "/set_click_volume_up_action"
-    case "setClickVolumeDownAction":    path = "/set_click_volume_down_action"
-    default: path = ""
-    }
+  class func setVolumeActionConf(value value: String, action: String, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
+    let path = "/".stringByAppendingString(action)
     return request(method: .POST, host: baseURLString, path: path, value: value, completionHandler: completionHandler)
   }
   
@@ -361,9 +329,6 @@ extension Service {
   }
   
   // 获得当前设备的授权信息
-  //  class func getDeviceAuthInfo(completionHandler completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
-  //    return request(method: .POST, host: baseURLString, path: "/device_auth_info", completionHandler: completionHandler)
-  //  }
   class func getDeviceAuthInfo(deviceId deviceId: String, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask {
     let did = "did=".stringByAppendingString(deviceId)
     return request(method: .POST, host: baseAuthURLString, path: "/xxtouchee/device_info", value: did, completionHandler: completionHandler)

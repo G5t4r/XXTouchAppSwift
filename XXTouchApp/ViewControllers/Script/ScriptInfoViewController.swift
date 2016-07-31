@@ -25,6 +25,18 @@ class ScriptInfoViewController: UIViewController {
   weak var delegate: ScriptInfoViewControllerDelegate?
   weak var rootDelegate: NewScriptViewControllerDelegate?
   
+  private enum LaunchAndEditSection: Int, Countable {
+    case Launch
+    case Stop
+    case Edit
+    case Rename
+  }
+  
+  private enum NotLaunchAndEditSection: Int, Countable {
+    case Edit
+    case Rename
+  }
+  
   enum InfoType {
     case LaunchAndEdit
     case NotRunAndEdit
@@ -99,18 +111,16 @@ extension ScriptInfoViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     switch self.type.number {
     case InfoType.LaunchAndEdit.number:
-      switch indexPath.section {
-      case 0: return launchCell
-      case 1: return stopCell
-      case 2: return editCell
-      case 3: return renameCell
-      default: return UITableViewCell()
+      switch LaunchAndEditSection(rawValue: indexPath.section)! {
+      case .Launch: return launchCell
+      case .Stop: return stopCell
+      case .Edit: return editCell
+      case .Rename: return renameCell
       }
     case InfoType.NotRunAndEdit.number:
-      switch indexPath.section {
-      case 0: return editCell
-      case 1: return renameCell
-      default: return UITableViewCell()
+      switch NotLaunchAndEditSection(rawValue: indexPath.section)! {
+      case .Edit: return editCell
+      case .Rename: return renameCell
       }
     default: return UITableViewCell()
     }
@@ -119,26 +129,24 @@ extension ScriptInfoViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     switch self.type.number {
     case InfoType.LaunchAndEdit.number:
-      switch indexPath.section {
-      case 0: self.delegate?.scriptInfoLaunch()
-      case 1: self.delegate?.scriptInfoStop()
-      case 2: self.delegate?.scriptInfoEdit()
-      case 3:
+      switch LaunchAndEditSection(rawValue: indexPath.section)! {
+      case .Launch: self.delegate?.scriptInfoLaunch()
+      case .Stop: self.delegate?.scriptInfoStop()
+      case .Edit: self.delegate?.scriptInfoEdit()
+      case .Rename:
         let viewController = RenameViewController(oldName: self.infoTitle)
         viewController.delegale = self
         self.popupController.pushViewController(viewController, animated: true)
         return
-      default: break
       }
     case InfoType.NotRunAndEdit.number:
-      switch indexPath.section {
-      case 0: self.delegate?.scriptInfoEdit()
-      case 1:
+      switch NotLaunchAndEditSection(rawValue: indexPath.section)! {
+      case .Edit: self.delegate?.scriptInfoEdit()
+      case .Rename:
         let viewController = RenameViewController(oldName: self.infoTitle)
         viewController.delegale = self
         self.popupController.pushViewController(viewController, animated: true)
         return
-      default: break
       }
     default: break
     }

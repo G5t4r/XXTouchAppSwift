@@ -10,7 +10,6 @@ import UIKit
 import WebKit
 
 class ScriptViewController: UIViewController {
-  
   private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
   private var scriptList = [ScriptModel]()
   private var oldName = ""

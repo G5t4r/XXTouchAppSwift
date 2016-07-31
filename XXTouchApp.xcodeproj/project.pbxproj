@@ -132,7 +132,7 @@
 		2C20D81B1D0FC74A009A4990 /* UIViewController+Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Transition.swift"; sourceTree = "<group>"; };
 		2C2A051E1D3DE3A900F31EAE /* RecordSettingInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordSettingInfoViewController.swift; sourceTree = "<group>"; };
 		2C2E7D361D2C974E00117025 /* CaseString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseString.swift; sourceTree = "<group>"; };
-		2C4FFA3B1D2600B100DBEEDB /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoViewController.swift; path = Photo/PhotoViewController.swift; sourceTree = "<group>"; };
+		2C4FFA3B1D2600B100DBEEDB /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		2C4FFA421D2A173F00DBEEDB /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		2C4FFA4A1D2B708500DBEEDB /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Defaults.plist; sourceTree = "<group>"; };
 		2C4FFA4D1D2B71AD00DBEEDB /* LocalStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
@@ -218,7 +218,7 @@
 		955DB23C1D1E370200B598C4 /* MixC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MixC.swift; sourceTree = "<group>"; };
 		955DB23E1D1E3A4E00B598C4 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		957EDDC51D320809000E1749 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
-		958372711D4B281500700973 /* LocalPhotoBrowsingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocalPhotoBrowsingViewController.swift; path = Photo/LocalPhotoBrowsingViewController.swift; sourceTree = "<group>"; };
+		958372711D4B281500700973 /* LocalPhotoBrowsingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalPhotoBrowsingViewController.swift; sourceTree = "<group>"; };
 		958372731D4C8D8400700973 /* XXTAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XXTAlertView.swift; sourceTree = "<group>"; };
 		958372751D4C935800700973 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		9592B4F11D470DBF000B479B /* FuncCompletionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuncCompletionHandler.swift; sourceTree = "<group>"; };
@@ -258,8 +258,8 @@
 			isa = PBXGroup;
 			children = (
 				955DB23E1D1E3A4E00B598C4 /* FileManager.swift */,
-				2CF749D21D0562BE007A273B /* ThemeManager.swift */,
 				95D1BA6B1D44B6B700DAE7F9 /* JsManager.swift */,
+				2CF749D21D0562BE007A273B /* ThemeManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -293,11 +293,11 @@
 		2C54F0E01D17F483005F35AD /* General */ = {
 			isa = PBXGroup;
 			children = (
+				2CB9ED861D43416200588357 /* BaseTextField.swift */,
 				95AB90CC1D21717200FA4C52 /* Button.swift */,
 				2C54F0E11D17F492005F35AD /* Switches.swift */,
-				95D555F31D30050200499947 /* XXTTextView.swift */,
-				2CB9ED861D43416200588357 /* BaseTextField.swift */,
 				958372731D4C8D8400700973 /* XXTAlertView.swift */,
+				95D555F31D30050200499947 /* XXTTextView.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -370,11 +370,21 @@
 		2C67AB381CFD218E008D53E8 /* XXTouchApp */ = {
 			isa = PBXGroup;
 			children = (
-				9541B7431D4CA4A600F2A878 /* Protocols */,
 				95D1BA661D44B59A00DAE7F9 /* Js */,
-				2C67AB7A1CFD2AAA008D53E8 /* Classes */,
+				2C20D81D1D0FCB81009A4990 /* Managers */,
+				955DB23B1D1E36C000B598C4 /* Mix */,
+				2CF749CE1D053A09007A273B /* Model */,
+				2C7342E91D11448B00CED0F3 /* Networking */,
+				9541B7431D4CA4A600F2A878 /* Protocols */,
 				2C67AB681CFD22D4008D53E8 /* Resources */,
+				2C4FFA4C1D2B719B00DBEEDB /* Storage */,
 				2C67AB691CFD22F9008D53E8 /* Supporting Files */,
+				2C7340881D10FB4300CED0F3 /* ThirdParty */,
+				2C67AB7D1CFD2AAA008D53E8 /* ViewControllers */,
+				2C67AB801CFD2AAA008D53E8 /* Views */,
+				2C67AB7B1CFD2AAA008D53E8 /* AppDelegate.swift */,
+				2C67AB7C1CFD2AAA008D53E8 /* Bridging-Header.h */,
+				2C4FFA421D2A173F00DBEEDB /* main.swift */,
 			);
 			path = XXTouchApp;
 			sourceTree = "<group>";
@@ -405,24 +415,6 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		2C67AB7A1CFD2AAA008D53E8 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				2C20D81D1D0FCB81009A4990 /* Managers */,
-				955DB23B1D1E36C000B598C4 /* Mix */,
-				2CF749CE1D053A09007A273B /* Model */,
-				2C7342E91D11448B00CED0F3 /* Networking */,
-				2C4FFA4C1D2B719B00DBEEDB /* Storage */,
-				2C7340881D10FB4300CED0F3 /* ThirdParty */,
-				2C67AB7D1CFD2AAA008D53E8 /* ViewControllers */,
-				2C67AB801CFD2AAA008D53E8 /* Views */,
-				2C67AB7B1CFD2AAA008D53E8 /* AppDelegate.swift */,
-				2C67AB7C1CFD2AAA008D53E8 /* Bridging-Header.h */,
-				2C4FFA421D2A173F00DBEEDB /* main.swift */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
 		2C67AB7D1CFD2AAA008D53E8 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -439,19 +431,19 @@
 		2C67AB7E1CFD2AAA008D53E8 /* Script */ = {
 			isa = PBXGroup;
 			children = (
-				2C4FFA3B1D2600B100DBEEDB /* PhotoViewController.swift */,
+				9526C66C1D4A055900EFD1DD /* BasisFuncListViewController.swift */,
+				955A45FE1D45DC55005C7372 /* ExtensionFuncListViewController.swift */,
+				9592B4F11D470DBF000B479B /* FuncCompletionHandler.swift */,
+				9526C66E1D4A08A400EFD1DD /* KeyFuncListViewController.swift */,
 				958372711D4B281500700973 /* LocalPhotoBrowsingViewController.swift */,
 				2C06B4D51D3618FF000A780C /* NewNameViewController.swift */,
 				2CF749C41CFD8BA6007A273B /* NewScriptViewController.swift */,
+				9592B4F31D4718C9000B479B /* PhotoBrowsingViewController.swift */,
+				2C4FFA3B1D2600B100DBEEDB /* PhotoViewController.swift */,
 				2C06B4D71D36264B000A780C /* RenameViewController.swift */,
 				2CF749BA1CFD80A0007A273B /* ScriptDetailViewController.swift */,
 				2C06B4CA1D35CF07000A780C /* ScriptInfoViewController.swift */,
 				2C67AB7F1CFD2AAA008D53E8 /* ScriptViewController.swift */,
-				955A45FE1D45DC55005C7372 /* ExtensionFuncListViewController.swift */,
-				9526C66E1D4A08A400EFD1DD /* KeyFuncListViewController.swift */,
-				9526C66C1D4A055900EFD1DD /* BasisFuncListViewController.swift */,
-				9592B4F11D470DBF000B479B /* FuncCompletionHandler.swift */,
-				9592B4F31D4718C9000B479B /* PhotoBrowsingViewController.swift */,
 			);
 			path = Script;
 			sourceTree = "<group>";
@@ -472,8 +464,8 @@
 				953C5D321D30E4E800477C35 /* UIAlertView+Block.swift */,
 				2CF749C61CFD8D1E007A273B /* UIColor+RGB.swift */,
 				2CD2F5681D13A280001C873F /* UIDevice+DeviceCheck.swift */,
-				958372751D4C935800700973 /* UIViewController+Alert.swift */,
 				2CD7E7AB1D2F9F7B0023D099 /* UIView+HUD.swift */,
+				958372751D4C935800700973 /* UIViewController+Alert.swift */,
 				2C06B4C61D339F0E000A780C /* UIViewController+Extension.swift */,
 				2C20D81B1D0FC74A009A4990 /* UIViewController+Transition.swift */,
 			);
@@ -539,8 +531,8 @@
 			children = (
 				953C5D3E1D30F99F00477C35 /* CustomButtonCell.swift */,
 				2C06B4CD1D35D4D2000A780C /* CustomLabelCell.swift */,
-				2CC84C081D17B69200D4230D /* CustomSettingCell.swift */,
 				955A46001D45DF92005C7372 /* CustomOneLabelCell.swift */,
+				2CC84C081D17B69200D4230D /* CustomSettingCell.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -616,9 +608,9 @@
 			isa = PBXGroup;
 			children = (
 				2C7342F21D1260D800CED0F3 /* NewNameView.swift */,
+				9592B4F51D473E12000B479B /* PhotoBrowsingCell.swift */,
 				2C7342EC1D123E9C00CED0F3 /* RenameView.swift */,
 				2CF749C91CFDA16F007A273B /* ScriptCell.swift */,
-				9592B4F51D473E12000B479B /* PhotoBrowsingCell.swift */,
 			);
 			path = Script;
 			sourceTree = "<group>";
@@ -693,7 +685,7 @@
 			children = (
 				9541B7441D4CA4BB00F2A878 /* Countable.swift */,
 			);
-			name = Protocols;
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		955DB23B1D1E36C000B598C4 /* Mix */ = {
@@ -796,6 +788,9 @@
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 2C67AB2D1CFD218E008D53E8;
 			productRefGroup = 2C67AB371CFD218E008D53E8 /* Products */;
 			projectDirPath = "";
@@ -1092,17 +1087,13 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/XXTouchApp/Classes/ThirdParty/LPRefresh",
-				);
 				INFOPLIST_FILE = "XXTouchApp/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-DSNAPKIT_DEPLOYMENT_LEGACY";
 				PRODUCT_BUNDLE_IDENTIFIER = com.1func.xxtouch;
 				PRODUCT_NAME = XXTouchApp;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "XXTouchApp/Classes/Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "XXTouchApp/Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
@@ -1116,17 +1107,13 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/XXTouchApp/Classes/ThirdParty/LPRefresh",
-				);
 				INFOPLIST_FILE = "XXTouchApp/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-DSNAPKIT_DEPLOYMENT_LEGACY";
 				PRODUCT_BUNDLE_IDENTIFIER = com.1func.xxtouch;
 				PRODUCT_NAME = XXTouchApp;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "XXTouchApp/Classes/Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "XXTouchApp/Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
