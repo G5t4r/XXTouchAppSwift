@@ -1,6 +1,6 @@
 PODS:
   - CYRTextView (0.4.0)
-  - MJRefresh (3.1.7)
+  - MJRefresh (3.1.12)
   - NJKWebViewProgress (0.2.3):
     - NJKWebViewProgress/Core (= 0.2.3)
     - NJKWebViewProgress/ProgressView (= 0.2.3)
@@ -14,7 +14,7 @@ PODS:
   - VIPhotoView (0.1)
 
 DEPENDENCIES:
-  - CYRTextView
+  - CYRTextView (from `Vendors/CYRTextView`)
   - MJRefresh
   - NJKWebViewProgress
   - RFKeyboardToolbar
@@ -25,6 +25,8 @@ DEPENDENCIES:
   - VIPhotoView (from `Vendors/VIPhotoView`)
 
 EXTERNAL SOURCES:
+  CYRTextView:
+    :path: Vendors/CYRTextView
   SIAlertView:
     :path: Vendors/SIAlertView
   TAOverlay:
@@ -34,7 +36,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CYRTextView: 1c1a4d708eee54ecad66b8ad42dbfe73083bdfce
-  MJRefresh: f67f0750d57a4e4ae433da549359ca53b52cdc7d
+  MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
   RFKeyboardToolbar: c96a7d9458564d1fedc8ef6844b6c467934aade2
   SIAlertView: 20c794b55eaf44d888773ea51647cf8907723919
@@ -43,6 +45,6 @@ SPEC CHECKSUMS:
   TAOverlay: 940e37fdb45fbc9acfc73bf1089668367e3b1be6
   VIPhotoView: c29131f260c3a23b0dcbe2d2c50a0d25004114f4
 
-PODFILE CHECKSUM: b079427c6e6727f733416284cc58a18ed1f967ff
+PODFILE CHECKSUM: d289f717f615ab8d3585643fd6807bb75549edc1
 
 COCOAPODS: 1.0.1

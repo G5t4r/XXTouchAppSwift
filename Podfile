@@ -6,7 +6,7 @@ target :XXTouchApp do
   #pod 'SDWebImage'
   #pod 'KVOController'
   #pod 'iOS-blur'
-  pod 'CYRTextView'
+  pod 'CYRTextView', :path => 'Vendors/CYRTextView'
   pod 'MJRefresh'
   pod 'SWTableViewCell'
   pod 'NJKWebViewProgress'
