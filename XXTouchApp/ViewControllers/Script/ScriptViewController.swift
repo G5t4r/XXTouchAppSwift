@@ -158,6 +158,7 @@ class ScriptViewController: UIViewController {
   
   /// 扫一扫
   func sweep() {
+    self.navigationItem.leftBarButtonItem?.enabled = false
     self.view.showHUD(text: "扫一扫 正在加载")
     Service.sweep { [weak self] (data, _, error) in
       guard let `self` = self else { return }
@@ -167,6 +168,7 @@ class ScriptViewController: UIViewController {
         case 0:
           dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(3 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
             self.view.dismissHUD()
+            self.navigationItem.leftBarButtonItem?.enabled = true
           })
         default:
           self.alertShowOneButton(message: json["message"].stringValue)
