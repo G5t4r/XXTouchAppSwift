@@ -26,7 +26,7 @@ class PhotoBrowsingViewController: UIViewController {
     fatalError("init(coder:) has not been implemented")
   }
   
-  override func viewDidLoad() {
+  override func viewDidLoad() { 
     super.viewDidLoad()
     setupUI()
     makeConstriants()
