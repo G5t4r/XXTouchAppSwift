@@ -10,9 +10,9 @@ target :XXTouchApp do
   pod 'MJRefresh'
   pod 'SWTableViewCell'
   pod 'NJKWebViewProgress'
-  pod 'VIPhotoView'
+  pod 'VIPhotoView', :path => ‘Vendors/VIPhotoView’
   pod 'RFKeyboardToolbar'
   pod 'TAOverlay'
-  pod 'SIAlertView'
+  pod 'SIAlertView', :path => ‘Vendors/SIAlertView’
   pod 'STPopup'
 end

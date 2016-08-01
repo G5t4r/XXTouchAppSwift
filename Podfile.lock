@@ -18,11 +18,17 @@ DEPENDENCIES:
   - MJRefresh
   - NJKWebViewProgress
   - RFKeyboardToolbar
-  - SIAlertView
+  - SIAlertView (from `Vendors/SIAlertView`)
   - STPopup
   - SWTableViewCell
   - TAOverlay
-  - VIPhotoView
+  - VIPhotoView (from `Vendors/VIPhotoView`)
+
+EXTERNAL SOURCES:
+  SIAlertView:
+    :path: Vendors/SIAlertView
+  VIPhotoView:
+    :path: Vendors/VIPhotoView
 
 SPEC CHECKSUMS:
   CYRTextView: 1c1a4d708eee54ecad66b8ad42dbfe73083bdfce
@@ -33,8 +39,8 @@ SPEC CHECKSUMS:
   STPopup: 36b45120f51ab3cdf7a10c1b9032b7fc8eef75ac
   SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
   TAOverlay: 940e37fdb45fbc9acfc73bf1089668367e3b1be6
-  VIPhotoView: bdc0cf8ddadda754b451869bd3a919e8eb5c11ab
+  VIPhotoView: c29131f260c3a23b0dcbe2d2c50a0d25004114f4
 
-PODFILE CHECKSUM: 93bd9ee7181059893513ca63abbd3b2015cdad23
+PODFILE CHECKSUM: bb6933ca4282ffc4c3d83e5c5a851101f8267703
 
 COCOAPODS: 1.0.1
