@@ -1,1 +1,0 @@
-../../../VIPhotoView/VIPhotoView/VIPhotoView.h
