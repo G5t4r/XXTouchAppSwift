@@ -21,12 +21,14 @@ DEPENDENCIES:
   - SIAlertView (from `Vendors/SIAlertView`)
   - STPopup
   - SWTableViewCell
-  - TAOverlay
+  - TAOverlay (from `Vendors/TAOverlay`)
   - VIPhotoView (from `Vendors/VIPhotoView`)
 
 EXTERNAL SOURCES:
   SIAlertView:
     :path: Vendors/SIAlertView
+  TAOverlay:
+    :path: Vendors/TAOverlay
   VIPhotoView:
     :path: Vendors/VIPhotoView
 
@@ -41,6 +43,6 @@ SPEC CHECKSUMS:
   TAOverlay: 940e37fdb45fbc9acfc73bf1089668367e3b1be6
   VIPhotoView: c29131f260c3a23b0dcbe2d2c50a0d25004114f4
 
-PODFILE CHECKSUM: bb6933ca4282ffc4c3d83e5c5a851101f8267703
+PODFILE CHECKSUM: b079427c6e6727f733416284cc58a18ed1f967ff
 
 COCOAPODS: 1.0.1
