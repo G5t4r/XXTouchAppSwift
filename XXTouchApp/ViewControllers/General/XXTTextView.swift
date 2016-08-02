@@ -23,13 +23,13 @@ class XXTTextView: CYRTextView {
     self.autocorrectionType = .No // 关闭自动更正
     
     
-    //    self.inputAccessoryView = RFKeyboardToolbar(
-    //      buttons: [
-    //        extensionButton,
-    //        basisButton,
-    //        indentationButton
-    //      ]
-    //    )
+    self.inputAccessoryView = RFKeyboardToolbar(
+      buttons: [
+        extensionButton,
+        basisButton,
+        indentationButton
+      ]
+    )
   }
   
   required init?(coder aDecoder: NSCoder) {

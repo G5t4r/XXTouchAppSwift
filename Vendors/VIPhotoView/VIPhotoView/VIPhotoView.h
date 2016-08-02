@@ -15,8 +15,8 @@
 
 - (instancetype)initWithFrame:(CGRect)frame andImage:(UIImage *)image;
 
-- (void)setContentOffsetToView;
+- (void)setContentOffsetToView:(CGFloat)offset;
 
-@property(nonatomic)BOOL isScroll;
+@property (nonatomic, strong) UIImageView *imageView;
 
 @end

@@ -24,3 +24,4 @@
 #import "TAOverlay/TAOverlay.h"
 #import "SIAlertView/SIAlertView.h"
 #import "STPopup/STPopup.h"
+#import "XXTPixelImage.h"

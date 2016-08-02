@@ -95,7 +95,7 @@ extension ExtensionFuncListViewController: UITableViewDelegate, UITableViewDataS
     }
     switch type {
     case FuncListType.Pos.title:
-      let viewController = PhotoBrowsingViewController(funcCompletionHandler: self.funcCompletionHandler)
+      let viewController = PhotoBrowsingViewController(type: .Pos, funcCompletionHandler: self.funcCompletionHandler)
       self.navigationController?.pushViewController(viewController, animated: true)
     case FuncListType.Bid.title:
       let viewController = ApplicationListViewController(type: .Bid, funcCompletionHandler: self.funcCompletionHandler)
@@ -103,8 +103,9 @@ extension ExtensionFuncListViewController: UITableViewDelegate, UITableViewDataS
     case FuncListType.Key.title:
       let viewController = KeyFuncListViewController(funcCompletionHandler: self.funcCompletionHandler)
       self.navigationController?.pushViewController(viewController, animated: true)
-      
-    //    case FuncListType.MPos.title:
+    case FuncListType.MPos.title:
+      let viewController = PhotoBrowsingViewController(type: .MPos, funcCompletionHandler: self.funcCompletionHandler)
+      self.navigationController?.pushViewController(viewController, animated: true)
     default: break
     }
   }

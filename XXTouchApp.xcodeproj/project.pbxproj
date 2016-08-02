@@ -102,6 +102,7 @@
 		9592B4F41D4718C9000B479B /* PhotoBrowsingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9592B4F31D4718C9000B479B /* PhotoBrowsingViewController.swift */; };
 		9592B4F61D473E12000B479B /* PhotoBrowsingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9592B4F51D473E12000B479B /* PhotoBrowsingCell.swift */; };
 		95AB90CD1D21717200FA4C52 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AB90CC1D21717200FA4C52 /* Button.swift */; };
+		95BDB8911D502E6500A118B6 /* libXXTPixelImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95BDB88E1D502E6500A118B6 /* libXXTPixelImage.a */; };
 		95D1BA681D44B59A00DAE7F9 /* customformats.js in Resources */ = {isa = PBXBuildFile; fileRef = 95D1BA671D44B59A00DAE7F9 /* customformats.js */; };
 		95D1BA6A1D44B5AE00DAE7F9 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95D1BA691D44B5AE00DAE7F9 /* JavaScriptCore.framework */; };
 		95D1BA6C1D44B6B700DAE7F9 /* JsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D1BA6B1D44B6B700DAE7F9 /* JsManager.swift */; };
@@ -225,6 +226,9 @@
 		9592B4F31D4718C9000B479B /* PhotoBrowsingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoBrowsingViewController.swift; sourceTree = "<group>"; };
 		9592B4F51D473E12000B479B /* PhotoBrowsingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoBrowsingCell.swift; sourceTree = "<group>"; };
 		95AB90CC1D21717200FA4C52 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		95BDB88E1D502E6500A118B6 /* libXXTPixelImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libXXTPixelImage.a; sourceTree = "<group>"; };
+		95BDB88F1D502E6500A118B6 /* XXTColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTColor.h; sourceTree = "<group>"; };
+		95BDB8901D502E6500A118B6 /* XXTPixelImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPixelImage.h; sourceTree = "<group>"; };
 		95D1BA671D44B59A00DAE7F9 /* customformats.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = customformats.js; sourceTree = "<group>"; };
 		95D1BA691D44B5AE00DAE7F9 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		95D1BA6B1D44B6B700DAE7F9 /* JsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsManager.swift; sourceTree = "<group>"; };
@@ -239,6 +243,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95BDB8911D502E6500A118B6 /* libXXTPixelImage.a in Frameworks */,
 				95D1BA6A1D44B5AE00DAE7F9 /* JavaScriptCore.framework in Frameworks */,
 				A5301A4B68230B93462B1215 /* libPods-XXTouchApp.a in Frameworks */,
 			);
@@ -475,6 +480,7 @@
 		2C7340881D10FB4300CED0F3 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				95BDB88D1D502E6500A118B6 /* libXXTPixelImage */,
 				2C7342CD1D1140AE00CED0F3 /* SnapKit */,
 				2C7340891D10FC6100CED0F3 /* SwiftyJSON */,
 			);
@@ -694,6 +700,16 @@
 				955DB23C1D1E370200B598C4 /* MixC.swift */,
 			);
 			path = Mix;
+			sourceTree = "<group>";
+		};
+		95BDB88D1D502E6500A118B6 /* libXXTPixelImage */ = {
+			isa = PBXGroup;
+			children = (
+				95BDB88E1D502E6500A118B6 /* libXXTPixelImage.a */,
+				95BDB88F1D502E6500A118B6 /* XXTColor.h */,
+				95BDB8901D502E6500A118B6 /* XXTPixelImage.h */,
+			);
+			path = libXXTPixelImage;
 			sourceTree = "<group>";
 		};
 		95D1BA661D44B59A00DAE7F9 /* Js */ = {
@@ -1089,6 +1105,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "XXTouchApp/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/XXTouchApp/ThirdParty/libXXTPixelImage",
+				);
 				OTHER_SWIFT_FLAGS = "-DSNAPKIT_DEPLOYMENT_LEGACY";
 				PRODUCT_BUNDLE_IDENTIFIER = com.1func.xxtouch;
 				PRODUCT_NAME = XXTouchApp;
@@ -1109,6 +1129,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "XXTouchApp/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/XXTouchApp/ThirdParty/libXXTPixelImage",
+				);
 				OTHER_SWIFT_FLAGS = "-DSNAPKIT_DEPLOYMENT_LEGACY";
 				PRODUCT_BUNDLE_IDENTIFIER = com.1func.xxtouch;
 				PRODUCT_NAME = XXTouchApp;

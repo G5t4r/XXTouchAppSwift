@@ -53,15 +53,15 @@
 @interface VIPhotoView () <UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIView *containerView;
-@property (nonatomic, strong) UIImageView *imageView;
 
 @property (nonatomic) BOOL rotating;
 @property (nonatomic) CGSize minSize;
 @property (nonatomic) CGFloat multiple;
 @property (nonatomic) CGFloat navigationBarHeight;
-@property (nonatomic) CGFloat oneTouchViewHeight;
 @property (nonatomic) CGFloat top;
 @property (nonatomic) CGFloat left;
+@property (nonatomic) CGFloat offset;
+@property(nonatomic)BOOL isScroll;
 
 @end
 
@@ -78,7 +78,7 @@
     self.showsHorizontalScrollIndicator = NO;
     _multiple = 8;
     _navigationBarHeight = 44;
-    _oneTouchViewHeight = 30;
+    _isScroll = NO;
     
     // Add container view
     UIView *containerView = [[UIView alloc] initWithFrame:self.bounds];
@@ -89,6 +89,7 @@
     // Add image view
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
     imageView.frame = containerView.bounds;
+    imageView.layer.magnificationFilter = kCAFilterNearest;
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     [containerView addSubview:imageView];
     _imageView = imageView;
@@ -116,10 +117,13 @@
   return self;
 }
 
-- (void)setContentOffsetToView
+- (void)setContentOffsetToView:(CGFloat)offset
 {
-  [self setContentOffset:CGPointMake(0, -_navigationBarHeight-_oneTouchViewHeight) animated:YES];
-  self.contentInset = UIEdgeInsetsMake(_top+_navigationBarHeight+_oneTouchViewHeight, _left, _top, _left);
+  _isScroll = YES;
+  _offset = offset;
+  self.contentInset = UIEdgeInsetsMake(_top+_navigationBarHeight+offset, _left, _top, _left);
+  [self setContentOffset:CGPointMake(0, -_navigationBarHeight-offset) animated:YES];
+  
 }
 
 - (void)layoutSubviews
@@ -242,7 +246,11 @@
   _top -= frame.origin.y;
   _left -= frame.origin.x;
   
-  self.contentInset = UIEdgeInsetsMake(_top+_navigationBarHeight, _left, _top, _left);
+  if (_isScroll) {
+    self.contentInset = UIEdgeInsetsMake(_top+_navigationBarHeight+_offset, _left, _top, _left);
+  } else {
+    self.contentInset = UIEdgeInsetsMake(_top+_navigationBarHeight, _left, _top, _left);
+  }
 }
 
 @end

@@ -16,8 +16,10 @@ class PhotoBrowsingViewController: UIViewController {
   private let assetsLibrary =  ALAssetsLibrary()
   //相册照片
   private var assets = [ALAsset]()
+  private let type: FuncListType
   
-  init(funcCompletionHandler: FuncCompletionHandler) {
+  init(type: FuncListType, funcCompletionHandler: FuncCompletionHandler) {
+    self.type = type
     self.funcCompletionHandler = funcCompletionHandler
     super.init(nibName: nil, bundle: nil)
   }
@@ -117,7 +119,7 @@ extension PhotoBrowsingViewController: UICollectionViewDelegate, UICollectionVie
   func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
     let representation = self.assets[indexPath.item].defaultRepresentation()
     let image = UIImage(CGImage: representation.fullResolutionImage().takeUnretainedValue(), scale: CGFloat(representation.scale()), orientation: .Up)
-    let viewController = PhotoViewController(type: .Pos,image: image, funcCompletionHandler: self.funcCompletionHandler)
+    let viewController = PhotoViewController(type: self.type, image: image, funcCompletionHandler: self.funcCompletionHandler)
     self.navigationController?.pushViewController(viewController, animated: true)
   }
   

@@ -132,5 +132,13 @@ customFunction = function(funcId, pos_color_list, bid, keyid) {
         case "key.up":
 			var ret = "key.up(\"" + keyid + "\")";
             return ret;
+        case "touch.swipe":
+			if (pos_color_list[1]) {
+				var ret = "touch.swipe(" + pos_color_list[0].x + ", " + pos_color_list[0].y + ", " + pos_color_list[1].x + ", " + pos_color_list[1].y + ")";
+				return ret;
+			} else {
+				var ret = "touch.swipe(" + pos_color_list[0].x + ", " + pos_color_list[0].y + ", 0, 0)";
+				return ret;
+			}
     }
 }
