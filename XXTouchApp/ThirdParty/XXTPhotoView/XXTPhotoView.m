@@ -78,7 +78,7 @@
     self.bouncesZoom = YES;
     self.showsVerticalScrollIndicator = NO;
     self.showsHorizontalScrollIndicator = NO;
-    _multiple = 12;
+    _multiple = 100;
     _customOffset = 50;
     _customTopOffset = 144;
     _navigationBarHeight = 44;

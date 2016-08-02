@@ -53,7 +53,7 @@ class PhotoViewController: UIViewController {
     photoView.backgroundColor = UIColor.blackColor()
     view.addSubview(photoView)
     
-    touchContentView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.9)
+    touchContentView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.85)
     touchContentView.hidden = true
     view.addSubview(touchContentView)
     
