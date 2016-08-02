@@ -17,7 +17,7 @@ class PhotoViewController: UIViewController {
   private var pixelImage: XXTPixelImage!
   private let touchContentView = TouchContentView()
   private var posNumber = 0
-  private var mposNumber: CGFloat = 30
+  private var mposHeight: CGFloat = 45
   private let customHeight: CGFloat = 35
   
   init(type: FuncListType, image: UIImage, funcCompletionHandler: FuncCompletionHandler) {
@@ -60,15 +60,25 @@ class PhotoViewController: UIViewController {
   }
   
   private func makeConstriants() {
-    touchContentView.snp_makeConstraints { (make) in
-      make.top.equalTo(snp_topLayoutGuideBottom)
-      make.leading.trailing.equalTo(view)
-      make.height.equalTo(customHeight)
+    switch self.type {
+    case .Pos:
+      touchContentView.snp_makeConstraints { (make) in
+        make.top.equalTo(snp_topLayoutGuideBottom)
+        make.leading.trailing.equalTo(view)
+        make.height.equalTo(customHeight)
+      }
+    case .MPos:
+      touchContentView.snp_makeConstraints { (make) in
+        make.top.equalTo(snp_topLayoutGuideBottom)
+        make.leading.trailing.equalTo(view)
+        make.height.equalTo(mposHeight)
+      }
+    default: break
     }
   }
   
   private func setupAction() {
-    photoView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
+    photoView.imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
     touchContentView.insetButton.addTarget(self, action: #selector(inset), forControlEvents: .TouchUpInside)
     touchContentView.clearButton.addTarget(self, action: #selector(clear), forControlEvents: .TouchUpInside)
   }
@@ -79,13 +89,19 @@ class PhotoViewController: UIViewController {
 }
 
 extension PhotoViewController {
-  private func setData(point: CGPoint, height: CGFloat, title: String = "选择完成") {
+  private func createPointView(point: CGPoint) {
+    let pView = PointView()
+    pView.frame.origin = point
+    photoView.imageView.addSubview(pView)
+  }
+  
+  private func setData(point: CGPoint, title: String = "选择完成") {
     let x = point.x * UIScreen.mainScreen().scale
     let y = point.y * UIScreen.mainScreen().scale
-    touchContentView.insetButtonStatusUpdate(true, backgroundColor: ThemeManager.Theme.tintColor, titleColor: UIColor.whiteColor())
+    touchContentView.buttonStatusUpdate(touchContentView.insetButton, enabled: true, backgroundColor: ThemeManager.Theme.tintColor, titleColor: UIColor.whiteColor())
+    touchContentView.buttonStatusUpdate(touchContentView.clearButton, enabled: true, backgroundColor: ThemeManager.Theme.tintColor, titleColor: UIColor.whiteColor())
     navigationItem.title = title
     touchContentView.hidden = false
-    self.photoView.setContentOffsetToView(height)
     let colorHex = pixelImage.getColorHexOfPoint(CGPoint(x: Int(x),y: Int(y)))
     let model = PosColorListModel(x: String(Int(x)), y: String(Int(y)), color: colorHex)
     let dic = ["x" : model.x, "y" : model.y, "color": model.color]
@@ -95,32 +111,38 @@ extension PhotoViewController {
   }
   
   @objc private func handleTap(tap: UITapGestureRecognizer) {
-    let point = tap.locationInView(photoView.imageView)
+    let point = tap.locationInView(tap.view)
     
     switch self.type {
     case .Pos:
       if self.funcCompletionHandler.titleNames.count > 1 {
         posNumber += 1
         switch posNumber {
-        case 1: setData(point, height: customHeight, title: self.funcCompletionHandler.titleNames[posNumber])
-        case 2: setData(point, height: customHeight)
+        case 1:
+          createPointView(point)
+          setData(point, title: self.funcCompletionHandler.titleNames[posNumber])
+        case 2:
+          createPointView(point)
+          setData(point)
         default: break
         }
       } else {
         posNumber += 1
         switch posNumber {
-        case 1: setData(point, height: customHeight)
+        case 1:
+          createPointView(point)
+          setData(point)
         default: break
         }
       }
     case .MPos:
-      switch posNumber {
-      case 1:
-        setData(point, height: mposNumber)
-        mposNumber += 20
-      default: break
+      createPointView(point)
+      setData(point, title: "可继续选择")
+      touchContentView.snp_remakeConstraints { (make) in
+        make.top.equalTo(snp_topLayoutGuideBottom)
+        make.leading.trailing.equalTo(view)
+        make.height.equalTo(touchContentView.getContentHeight() + 5.5)
       }
-      
     default: break
     }
   }
@@ -132,16 +154,31 @@ extension PhotoViewController {
   
   @objc private func clear(button: UIButton) {
     touchContentView.label.text = ""
-    touchContentView.insetButtonStatusUpdate(false, backgroundColor: ThemeManager.Theme.separatorColor, titleColor: ThemeManager.Theme.lightTextColor)
+    touchContentView.buttonStatusUpdate(touchContentView.insetButton, enabled: false, backgroundColor: ThemeManager.Theme.separatorColor, titleColor: ThemeManager.Theme.lightTextColor)
+    touchContentView.buttonStatusUpdate(touchContentView.clearButton, enabled: false, backgroundColor: ThemeManager.Theme.separatorColor, titleColor: ThemeManager.Theme.lightTextColor)
+    for view in photoView.imageView.subviews {
+      if view is PointView {
+        view.removeFromSuperview()
+      }
+    }
     posNumber = 0
     self.modelDic.removeAll()
     navigationItem.title = self.funcCompletionHandler.titleNames.first
-    touchContentView.snp_remakeConstraints { (make) in
-      make.top.equalTo(snp_topLayoutGuideBottom)
-      make.leading.trailing.equalTo(view)
-      make.height.equalTo(customHeight)
+    switch self.type {
+    case .Pos:
+      touchContentView.snp_remakeConstraints { (make) in
+        make.top.equalTo(snp_topLayoutGuideBottom)
+        make.leading.trailing.equalTo(view)
+        make.height.equalTo(customHeight)
+      }
+    case .MPos:
+      touchContentView.snp_remakeConstraints { (make) in
+        make.top.equalTo(snp_topLayoutGuideBottom)
+        make.leading.trailing.equalTo(view)
+        make.height.equalTo(mposHeight)
+      }
+    default: break
     }
-    self.photoView.setContentOffsetToView(customHeight)
   }
 }
 
@@ -180,7 +217,7 @@ class TouchContentView: UIView {
   private func setupUI() {
     label.textColor = UIColor.blackColor()
     label.numberOfLines = 0
-    label.font = UIFont.systemFontOfSize(12)
+    label.font = UIFont.systemFontOfSize(11)
     
     self.addSubview(label)
     self.addSubview(insetButton)
@@ -191,7 +228,7 @@ class TouchContentView: UIView {
     label.snp_makeConstraints { (make) in
       make.leading.trailing.equalTo(self).inset(5)
       make.centerY.equalTo(self)
-      make.top.equalTo(self).offset(5)
+      make.top.equalTo(self).offset(2)
     }
     
     clearButton.snp_makeConstraints { (make) in
@@ -209,13 +246,34 @@ class TouchContentView: UIView {
     }
   }
   
-  func insetButtonStatusUpdate(enabled: Bool, backgroundColor: UIColor, titleColor: UIColor) {
-    insetButton.enabled = enabled
-    insetButton.backgroundColor = backgroundColor
-    insetButton.setTitleColor(titleColor, forState: .Normal)
+  func buttonStatusUpdate(button: UIButton, enabled: Bool, backgroundColor: UIColor, titleColor: UIColor) {
+    button.enabled = enabled
+    button.backgroundColor = backgroundColor
+    button.setTitleColor(titleColor, forState: .Normal)
   }
   
   func addContent(content: String) {
     label.text = content
+  }
+  
+  func getContentHeight() -> CGFloat {
+    let text: NSString = NSString(CString: label.text!.cStringUsingEncoding(NSUTF8StringEncoding)!,
+                                  encoding: NSUTF8StringEncoding)!
+    let attributes = [NSFontAttributeName: label.font]
+    let option = NSStringDrawingOptions.UsesLineFragmentOrigin
+    let rect = text.boundingRectWithSize(CGSize(width: 0, height: 1000), options: option, attributes: attributes, context: nil)
+    return rect.size.height
+  }
+}
+
+class PointView: UIView {
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    self.backgroundColor = UIColor.redColor()
+    self.frame.size = CGSize(width: 0.5, height: 0.5)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
 }

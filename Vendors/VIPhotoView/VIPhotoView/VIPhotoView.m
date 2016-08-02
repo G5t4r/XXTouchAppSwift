@@ -57,11 +57,13 @@
 @property (nonatomic) BOOL rotating;
 @property (nonatomic) CGSize minSize;
 @property (nonatomic) CGFloat multiple;
+@property (nonatomic) CGFloat customOffset;
+@property (nonatomic) CGFloat customTopOffset;
 @property (nonatomic) CGFloat navigationBarHeight;
 @property (nonatomic) CGFloat top;
 @property (nonatomic) CGFloat left;
-@property (nonatomic) CGFloat offset;
-@property(nonatomic)BOOL isScroll;
+//@property (nonatomic) CGFloat offset;
+//@property(nonatomic)BOOL isScroll;
 
 @end
 
@@ -76,9 +78,11 @@
     self.bouncesZoom = YES;
     self.showsVerticalScrollIndicator = NO;
     self.showsHorizontalScrollIndicator = NO;
-    _multiple = 8;
+    _multiple = 12;
+    _customOffset = 50;
+    _customTopOffset = 144;
     _navigationBarHeight = 44;
-    _isScroll = NO;
+    //    _isScroll = NO;
     
     // Add container view
     UIView *containerView = [[UIView alloc] initWithFrame:self.bounds];
@@ -89,6 +93,7 @@
     // Add image view
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
     imageView.frame = containerView.bounds;
+    imageView.userInteractionEnabled = YES;
     imageView.layer.magnificationFilter = kCAFilterNearest;
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     [containerView addSubview:imageView];
@@ -103,6 +108,7 @@
     self.contentSize = imageSize;
     self.minSize = imageSize;
     self.contentOffset = CGPointMake(0, -_navigationBarHeight);
+    self.contentInset = UIEdgeInsetsMake(_customTopOffset, _customOffset, _customOffset, _customOffset);
     
     [self setMaxMinZoomScale];
     
@@ -117,14 +123,17 @@
   return self;
 }
 
-- (void)setContentOffsetToView:(CGFloat)offset
-{
-  _isScroll = YES;
-  _offset = offset;
-  self.contentInset = UIEdgeInsetsMake(_top+_navigationBarHeight+offset, _left, _top, _left);
-  [self setContentOffset:CGPointMake(0, -_navigationBarHeight-offset) animated:YES];
-  
-}
+//- (void)setContentOffsetToView:(CGFloat)offset
+//{
+//  _isScroll = YES;
+//  _offset = offset;
+//  if (self.contentInset.top != _top+_navigationBarHeight+offset) {
+//    self.contentInset = UIEdgeInsetsMake(_top+_navigationBarHeight+offset, _left, _top, _left);
+//    [self setContentOffset:CGPointMake(0, -_navigationBarHeight-offset) animated:YES];
+//  } else {
+//    self.contentInset = UIEdgeInsetsMake(_top+_navigationBarHeight+offset, _left, _top, _left);
+//  }
+//}
 
 - (void)layoutSubviews
 {
@@ -246,11 +255,11 @@
   _top -= frame.origin.y;
   _left -= frame.origin.x;
   
-  if (_isScroll) {
-    self.contentInset = UIEdgeInsetsMake(_top+_navigationBarHeight+_offset, _left, _top, _left);
-  } else {
-    self.contentInset = UIEdgeInsetsMake(_top+_navigationBarHeight, _left, _top, _left);
-  }
+  //  if (_isScroll) {
+  //    self.contentInset = UIEdgeInsetsMake(_top+_navigationBarHeight+_offset, _left, _top, _left);
+  //  } else {
+  self.contentInset = UIEdgeInsetsMake(_top+_customTopOffset, _left+_customOffset, _top+_customOffset, _left+_customOffset);
+  //  }
 }
 
 @end

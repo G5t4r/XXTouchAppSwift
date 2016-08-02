@@ -121,7 +121,7 @@ customFunction = function(funcId, pos_color_list, bid, keyid) {
             return "app.run(\"" + bid + "\")";
         case "screen.find_color":
 			var ret = "x, y = screen.find_color({\n";
-			for (var i=0; i<cars.length; i++) {
+			for (var i=0; i<pos_color_list.length; i++) {
 				ret += "\t{" + pos_color_list[i].x + ", " + pos_color_list[i].y + ", " + pos_color_list[i].color + "},\n";
 			}
 			ret += "}, 90)";
