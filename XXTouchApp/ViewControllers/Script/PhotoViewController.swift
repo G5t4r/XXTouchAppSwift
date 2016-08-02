@@ -112,7 +112,6 @@ extension PhotoViewController {
   
   @objc private func handleTap(tap: UITapGestureRecognizer) {
     let point = tap.locationInView(tap.view)
-    
     switch self.type {
     case .Pos:
       if self.funcCompletionHandler.titleNames.count > 1 {

@@ -17,6 +17,7 @@ class ScriptDetailViewController: UIViewController {
     super.viewDidLoad()
     setupUI()
     makeConstriants()
+    setupAction()
     bind()
   }
   
@@ -47,6 +48,46 @@ class ScriptDetailViewController: UIViewController {
     textView.snp_makeConstraints { (make) in
       make.edges.equalTo(view)
     }
+  }
+  
+  private func setupAction() {
+    // 扩展函数
+    textView.extensionButton.addEventHandler({ [weak self] _ in
+      guard let `self` = self else { return }
+      self.textView.resignFirstResponder()
+      let viewController = ExtensionFuncListViewController()
+      viewController.delegate = self
+      let navController = UINavigationController()
+      navController.pushViewController(viewController, animated: false)
+      UIViewController.topMostViewController?.presentViewController(navController, animated: true, completion: nil)
+      viewController.funcCompletionHandler.completionHandler = { [weak self] string in
+        guard let `self` = self else { return }
+        self.textView.insertText(string)
+        self.textView.becomeFirstResponder()
+      }
+      }, forControlEvents: .TouchUpInside)
+    
+    // 基础函数
+    textView.basisButton.addEventHandler({ [weak self] _ in
+      guard let `self` = self else { return }
+      self.textView.resignFirstResponder()
+      let viewController = BasisFuncListViewController()
+      viewController.delegate = self
+      let navController = UINavigationController()
+      navController.pushViewController(viewController, animated: false)
+      UIViewController.topMostViewController?.presentViewController(navController, animated: true, completion: nil)
+      viewController.funcCompletionHandler.completionHandler = { [weak self] string in
+        guard let `self` = self else { return }
+        self.textView.insertText(string)
+        self.textView.becomeFirstResponder()
+      }
+      }, forControlEvents: .TouchUpInside)
+    
+    // 代码缩进
+    textView.indentationButton.addEventHandler({ [weak self] _ in
+      guard let `self` = self else { return }
+      self.textView.insertText("\t")
+      }, forControlEvents: .TouchUpInside)
   }
   
   private func bind() {
@@ -122,6 +163,12 @@ class ScriptDetailViewController: UIViewController {
       self.textView.scrollIndicatorInsets.top = self.textView.contentInset.top
       self.view.frame.origin.y = 0
       }, completion: nil)
+  }
+}
+
+extension ScriptDetailViewController: ExtensionFuncListViewControllerDelegate {
+  func becomeFirstResponderToTextView() {
+    textView.becomeFirstResponder()
   }
 }
 
