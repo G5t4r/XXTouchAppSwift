@@ -11,7 +11,6 @@ PODS:
   - STPopup (1.7.0)
   - SWTableViewCell (0.3.7)
   - TAOverlay (2.0.1)
-  - VIPhotoView (0.1)
 
 DEPENDENCIES:
   - CYRTextView (from `Vendors/CYRTextView`)
@@ -22,7 +21,6 @@ DEPENDENCIES:
   - STPopup
   - SWTableViewCell
   - TAOverlay (from `Vendors/TAOverlay`)
-  - VIPhotoView (from `Vendors/VIPhotoView`)
 
 EXTERNAL SOURCES:
   CYRTextView:
@@ -31,8 +29,6 @@ EXTERNAL SOURCES:
     :path: Vendors/SIAlertView
   TAOverlay:
     :path: Vendors/TAOverlay
-  VIPhotoView:
-    :path: Vendors/VIPhotoView
 
 SPEC CHECKSUMS:
   CYRTextView: 1c1a4d708eee54ecad66b8ad42dbfe73083bdfce
@@ -43,8 +39,7 @@ SPEC CHECKSUMS:
   STPopup: 36b45120f51ab3cdf7a10c1b9032b7fc8eef75ac
   SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
   TAOverlay: 940e37fdb45fbc9acfc73bf1089668367e3b1be6
-  VIPhotoView: c29131f260c3a23b0dcbe2d2c50a0d25004114f4
 
-PODFILE CHECKSUM: d289f717f615ab8d3585643fd6807bb75549edc1
+PODFILE CHECKSUM: 11e87fef9e0fdd14185db1620ca50026501a6e58
 
 COCOAPODS: 1.0.1

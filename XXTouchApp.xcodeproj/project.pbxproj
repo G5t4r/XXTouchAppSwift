@@ -102,6 +102,7 @@
 		9592B4F41D4718C9000B479B /* PhotoBrowsingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9592B4F31D4718C9000B479B /* PhotoBrowsingViewController.swift */; };
 		9592B4F61D473E12000B479B /* PhotoBrowsingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9592B4F51D473E12000B479B /* PhotoBrowsingCell.swift */; };
 		95AB90CD1D21717200FA4C52 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AB90CC1D21717200FA4C52 /* Button.swift */; };
+		95B1A22B1D50F88200ADC9A1 /* XXTPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95B1A22A1D50F88200ADC9A1 /* XXTPhotoView.m */; };
 		95BDB8911D502E6500A118B6 /* libXXTPixelImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95BDB88E1D502E6500A118B6 /* libXXTPixelImage.a */; };
 		95D1BA681D44B59A00DAE7F9 /* customformats.js in Resources */ = {isa = PBXBuildFile; fileRef = 95D1BA671D44B59A00DAE7F9 /* customformats.js */; };
 		95D1BA6A1D44B5AE00DAE7F9 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95D1BA691D44B5AE00DAE7F9 /* JavaScriptCore.framework */; };
@@ -226,6 +227,8 @@
 		9592B4F31D4718C9000B479B /* PhotoBrowsingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoBrowsingViewController.swift; sourceTree = "<group>"; };
 		9592B4F51D473E12000B479B /* PhotoBrowsingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoBrowsingCell.swift; sourceTree = "<group>"; };
 		95AB90CC1D21717200FA4C52 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		95B1A2291D50F88200ADC9A1 /* XXTPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPhotoView.h; sourceTree = "<group>"; };
+		95B1A22A1D50F88200ADC9A1 /* XXTPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTPhotoView.m; sourceTree = "<group>"; };
 		95BDB88E1D502E6500A118B6 /* libXXTPixelImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libXXTPixelImage.a; sourceTree = "<group>"; };
 		95BDB88F1D502E6500A118B6 /* XXTColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTColor.h; sourceTree = "<group>"; };
 		95BDB8901D502E6500A118B6 /* XXTPixelImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPixelImage.h; sourceTree = "<group>"; };
@@ -480,6 +483,7 @@
 		2C7340881D10FB4300CED0F3 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				95B1A2281D50F87300ADC9A1 /* XXTPhotoView */,
 				95BDB88D1D502E6500A118B6 /* libXXTPixelImage */,
 				2C7342CD1D1140AE00CED0F3 /* SnapKit */,
 				2C7340891D10FC6100CED0F3 /* SwiftyJSON */,
@@ -700,6 +704,15 @@
 				955DB23C1D1E370200B598C4 /* MixC.swift */,
 			);
 			path = Mix;
+			sourceTree = "<group>";
+		};
+		95B1A2281D50F87300ADC9A1 /* XXTPhotoView */ = {
+			isa = PBXGroup;
+			children = (
+				95B1A2291D50F88200ADC9A1 /* XXTPhotoView.h */,
+				95B1A22A1D50F88200ADC9A1 /* XXTPhotoView.m */,
+			);
+			path = XXTPhotoView;
 			sourceTree = "<group>";
 		};
 		95BDB88D1D502E6500A118B6 /* libXXTPixelImage */ = {
@@ -974,6 +987,7 @@
 				2C67AB821CFD2AAA008D53E8 /* ScriptViewController.swift in Sources */,
 				2C7342E61D1140AE00CED0F3 /* SnapKit.swift in Sources */,
 				2C7342E71D1140AE00CED0F3 /* View+SnapKit.swift in Sources */,
+				95B1A22B1D50F88200ADC9A1 /* XXTPhotoView.m in Sources */,
 				955A46051D45F2AC005C7372 /* PosColorListModel.swift in Sources */,
 				2CB9ED871D43416200588357 /* BaseTextField.swift in Sources */,
 				9592B4F21D470DBF000B479B /* FuncCompletionHandler.swift in Sources */,

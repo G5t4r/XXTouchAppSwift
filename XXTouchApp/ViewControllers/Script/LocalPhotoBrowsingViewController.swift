@@ -11,7 +11,7 @@ import UIKit
 class LocalPhotoBrowsingViewController: UIViewController {
   private let titleName: String
   private let image: UIImage
-  private var photoView: VIPhotoView!
+  private var photoView: XXTPhotoView!
   
   init(titleName: String, image: UIImage) {
     self.titleName = titleName
@@ -39,7 +39,7 @@ class LocalPhotoBrowsingViewController: UIViewController {
     automaticallyAdjustsScrollViewInsets = false
     view.backgroundColor = UIColor.whiteColor()
     
-    photoView = VIPhotoView(frame: view.bounds, andImage: self.image)
+    photoView = XXTPhotoView(frame: view.bounds, andImage: self.image)
     photoView.backgroundColor = UIColor.blackColor()
     view.addSubview(photoView)
   }

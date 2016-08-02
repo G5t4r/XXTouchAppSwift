@@ -1,12 +1,12 @@
 //
-//  VIPhotoView.m
-//  VIPhotoViewDemo
+//  XXTPhotoView.m
+//  XXTouchApp
 //
-//  Created by Vito on 1/7/15.
-//  Copyright (c) 2015 vito. All rights reserved.
+//  Created by 教主 on 16/8/2.
+//  Copyright © 2016年 mcy. All rights reserved.
 //
 
-#import "VIPhotoView.h"
+#import "XXTPhotoView.h"
 
 @interface UIImage (VIUtil)
 
@@ -50,7 +50,7 @@
 
 @end
 
-@interface VIPhotoView () <UIScrollViewDelegate>
+@interface XXTPhotoView () <UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIView *containerView;
 
@@ -67,7 +67,7 @@
 
 @end
 
-@implementation VIPhotoView
+@implementation XXTPhotoView
 
 
 - (instancetype)initWithFrame:(CGRect)frame andImage:(UIImage *)image
@@ -123,18 +123,6 @@
   return self;
 }
 
-//- (void)setContentOffsetToView:(CGFloat)offset
-//{
-//  _isScroll = YES;
-//  _offset = offset;
-//  if (self.contentInset.top != _top+_navigationBarHeight+offset) {
-//    self.contentInset = UIEdgeInsetsMake(_top+_navigationBarHeight+offset, _left, _top, _left);
-//    [self setContentOffset:CGPointMake(0, -_navigationBarHeight-offset) animated:YES];
-//  } else {
-//    self.contentInset = UIEdgeInsetsMake(_top+_navigationBarHeight+offset, _left, _top, _left);
-//  }
-//}
-
 - (void)layoutSubviews
 {
   [super layoutSubviews];
@@ -182,7 +170,7 @@
 //  UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHandler:)];
 //  doubleTap.numberOfTapsRequired = 2;
 //  [_containerView addGestureRecognizer:doubleTap];
-//  
+//
 //  [oneTap requireGestureRecognizerToFail:doubleTap];
 //}
 
@@ -206,7 +194,7 @@
 //    CGPoint point = [recognizer locationInView: self.superview];
 //    NSInteger x = point.x * [[UIScreen mainScreen] scale];
 //    NSInteger y = point.y * [[UIScreen mainScreen] scale];
-//    
+//
 //    __weak __typeof(&*self)weakSelf = self;
 //    weakSelf.pointBlock(CGPointMake(x, y));
 //  }
@@ -255,11 +243,7 @@
   _top -= frame.origin.y;
   _left -= frame.origin.x;
   
-  //  if (_isScroll) {
-  //    self.contentInset = UIEdgeInsetsMake(_top+_navigationBarHeight+_offset, _left, _top, _left);
-  //  } else {
   self.contentInset = UIEdgeInsetsMake(_top+_customTopOffset, _left+_customOffset, _top+_customOffset, _left+_customOffset);
-  //  }
 }
 
 @end

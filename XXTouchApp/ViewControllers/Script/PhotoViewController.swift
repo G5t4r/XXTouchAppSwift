@@ -11,10 +11,11 @@ import UIKit
 class PhotoViewController: UIViewController {
   var funcCompletionHandler: FuncCompletionHandler
   private let image: UIImage
-  private var photoView: VIPhotoView!
+  private var photoView: XXTPhotoView!
   private var modelDic = [[String: String]]()
   private let type: FuncListType
   private var pixelImage: XXTPixelImage!
+  private var originalPixelImage: XXTPixelImage!
   private let touchContentView = TouchContentView()
   private var posNumber = 0
   private var mposHeight: CGFloat = 45
@@ -48,7 +49,7 @@ class PhotoViewController: UIViewController {
     automaticallyAdjustsScrollViewInsets = false
     view.backgroundColor = UIColor.whiteColor()
     
-    photoView = VIPhotoView(frame: view.bounds, andImage: self.image)
+    photoView = XXTPhotoView(frame: view.bounds, andImage: self.image)
     photoView.backgroundColor = UIColor.blackColor()
     view.addSubview(photoView)
     
@@ -56,6 +57,7 @@ class PhotoViewController: UIViewController {
     touchContentView.hidden = true
     view.addSubview(touchContentView)
     
+    originalPixelImage = XXTPixelImage(UIImage: self.image)
     pixelImage = XXTPixelImage(UIImage: self.image)
   }
   
@@ -89,12 +91,6 @@ class PhotoViewController: UIViewController {
 }
 
 extension PhotoViewController {
-  private func createPointView(point: CGPoint) {
-    let pView = PointView()
-    pView.frame.origin = point
-    photoView.imageView.addSubview(pView)
-  }
-  
   private func setData(point: CGPoint, title: String = "选择完成") {
     let x = point.x * UIScreen.mainScreen().scale
     let y = point.y * UIScreen.mainScreen().scale
@@ -108,6 +104,8 @@ extension PhotoViewController {
     self.modelDic.append(dic)
     let content = JsManager.sharedManager.getCustomFunction(self.funcCompletionHandler.id, models: self.modelDic)
     touchContentView.addContent(content)
+    pixelImage.setColor(XXTColor(red: 255, green: 0, blue: 0, alpha: 255), ofPoint: CGPointMake(x, y))
+    photoView.imageView.image = pixelImage.getUIImage()
   }
   
   @objc private func handleTap(tap: UITapGestureRecognizer) {
@@ -118,10 +116,8 @@ extension PhotoViewController {
         posNumber += 1
         switch posNumber {
         case 1:
-          createPointView(point)
           setData(point, title: self.funcCompletionHandler.titleNames[posNumber])
         case 2:
-          createPointView(point)
           setData(point)
         default: break
         }
@@ -129,13 +125,11 @@ extension PhotoViewController {
         posNumber += 1
         switch posNumber {
         case 1:
-          createPointView(point)
           setData(point)
         default: break
         }
       }
     case .MPos:
-      createPointView(point)
       setData(point, title: "可继续选择")
       touchContentView.snp_remakeConstraints { (make) in
         make.top.equalTo(snp_topLayoutGuideBottom)
@@ -155,11 +149,9 @@ extension PhotoViewController {
     touchContentView.label.text = ""
     touchContentView.buttonStatusUpdate(touchContentView.insetButton, enabled: false, backgroundColor: ThemeManager.Theme.separatorColor, titleColor: ThemeManager.Theme.lightTextColor)
     touchContentView.buttonStatusUpdate(touchContentView.clearButton, enabled: false, backgroundColor: ThemeManager.Theme.separatorColor, titleColor: ThemeManager.Theme.lightTextColor)
-    for view in photoView.imageView.subviews {
-      if view is PointView {
-        view.removeFromSuperview()
-      }
-    }
+    photoView.imageView.image = originalPixelImage.getUIImage()
+    pixelImage = nil
+    pixelImage = XXTPixelImage(UIImage: self.image)
     posNumber = 0
     self.modelDic.removeAll()
     navigationItem.title = self.funcCompletionHandler.titleNames.first
@@ -262,17 +254,5 @@ class TouchContentView: UIView {
     let option = NSStringDrawingOptions.UsesLineFragmentOrigin
     let rect = text.boundingRectWithSize(CGSize(width: 0, height: 1000), options: option, attributes: attributes, context: nil)
     return rect.size.height
-  }
-}
-
-class PointView: UIView {
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-    self.backgroundColor = UIColor.redColor()
-    self.frame.size = CGSize(width: 0.5, height: 0.5)
-  }
-  
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
   }
 }
