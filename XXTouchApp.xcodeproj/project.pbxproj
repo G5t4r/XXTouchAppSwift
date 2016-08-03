@@ -110,6 +110,8 @@
 		95D1BA6A1D44B5AE00DAE7F9 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95D1BA691D44B5AE00DAE7F9 /* JavaScriptCore.framework */; };
 		95D1BA6C1D44B6B700DAE7F9 /* JsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D1BA6B1D44B6B700DAE7F9 /* JsManager.swift */; };
 		95D555F41D30050200499947 /* XXTTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D555F31D30050200499947 /* XXTTextView.swift */; };
+		95EEC7961D5243DE000DC71B /* XXTSymbolButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EEC7951D5243DE000DC71B /* XXTSymbolButton.swift */; };
+		95EEC7981D52491A000DC71B /* XXTSymbolKeyboardToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EEC7971D52491A000DC71B /* XXTSymbolKeyboardToolbar.swift */; };
 		95F94B821D1832C300532016 /* StartUpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F94B811D1832C300532016 /* StartUpCell.swift */; };
 		A5301A4B68230B93462B1215 /* libPods-XXTouchApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ACF28B837117B6CAD47A3345 /* libPods-XXTouchApp.a */; };
 /* End PBXBuildFile section */
@@ -242,6 +244,8 @@
 		95D1BA691D44B5AE00DAE7F9 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		95D1BA6B1D44B6B700DAE7F9 /* JsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsManager.swift; sourceTree = "<group>"; };
 		95D555F31D30050200499947 /* XXTTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XXTTextView.swift; sourceTree = "<group>"; };
+		95EEC7951D5243DE000DC71B /* XXTSymbolButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XXTSymbolButton.swift; sourceTree = "<group>"; };
+		95EEC7971D52491A000DC71B /* XXTSymbolKeyboardToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XXTSymbolKeyboardToolbar.swift; sourceTree = "<group>"; };
 		95F94B811D1832C300532016 /* StartUpCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartUpCell.swift; sourceTree = "<group>"; };
 		ACF28B837117B6CAD47A3345 /* libPods-XXTouchApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XXTouchApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAF7FD6C2555EECC81802827 /* Pods-XXTouchApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XXTouchApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XXTouchApp/Pods-XXTouchApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -312,6 +316,8 @@
 				2C54F0E11D17F492005F35AD /* Switches.swift */,
 				958372731D4C8D8400700973 /* XXTAlertView.swift */,
 				95D555F31D30050200499947 /* XXTTextView.swift */,
+				95EEC7951D5243DE000DC71B /* XXTSymbolButton.swift */,
+				95EEC7971D52491A000DC71B /* XXTSymbolKeyboardToolbar.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -465,6 +471,7 @@
 		2C67AB801CFD2AAA008D53E8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				95EEC7921D523E14000DC71B /* General */,
 				2CD2F55F1D127A2E001C873F /* More */,
 				2CF749C81CFD9069007A273B /* Script */,
 			);
@@ -751,6 +758,13 @@
 			path = Js;
 			sourceTree = "<group>";
 		};
+		95EEC7921D523E14000DC71B /* General */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = General;
+			sourceTree = "<group>";
+		};
 		B96DB0EBF161BCE984E4E716 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -929,6 +943,7 @@
 				2CF749D81D0577C4007A273B /* MoreViewController.swift in Sources */,
 				2C06B4D81D36264B000A780C /* RenameViewController.swift in Sources */,
 				2C7342E51D1140AE00CED0F3 /* LayoutConstraint.swift in Sources */,
+				95EEC7961D5243DE000DC71B /* XXTSymbolButton.swift in Sources */,
 				2C54F0EB1D1907BC005F35AD /* AuthorizationViewController.swift in Sources */,
 				2C7342DF1D1140AE00CED0F3 /* ConstraintItem.swift in Sources */,
 				2C7342E11D1140AE00CED0F3 /* ConstraintRelation.swift in Sources */,
@@ -997,6 +1012,7 @@
 				955A46011D45DF92005C7372 /* CustomOneLabelCell.swift in Sources */,
 				2CC84C091D17B69200D4230D /* CustomSettingCell.swift in Sources */,
 				9526C66F1D4A08A400EFD1DD /* KeyFuncListViewController.swift in Sources */,
+				95EEC7981D52491A000DC71B /* XXTSymbolKeyboardToolbar.swift in Sources */,
 				958372741D4C8D8400700973 /* XXTAlertView.swift in Sources */,
 				2C06B4CE1D35D4D2000A780C /* CustomLabelCell.swift in Sources */,
 				2C7342E31D1140AE00CED0F3 /* EdgeInsets.swift in Sources */,

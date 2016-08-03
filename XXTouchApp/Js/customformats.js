@@ -97,7 +97,7 @@ formatList = function() {
             },
             {
                 "name":"while (true) do .. end",
-                "content":"while(true)do\n\nend\n"
+                "content":"while (true) do\n\nend\n"
             },
             {
                 "name":"repeat ... until (false)",
@@ -111,6 +111,22 @@ formatList = function() {
                 "name":"sys.msleep(1000)",
                 "content":"sys.msleep(1000)\n"
             },
+            {
+                "name":"sys.toast('')",
+                "content":"sys.toast('')\n"
+            },
+            {
+                "name":"sys.alert('', 0)",
+                "content":"sys.alert('', 0)\n"
+            },
+            {
+                "name":"print()",
+                "content":"print()"
+            },
+            {
+                "name":"print.out()",
+                "content":"print.out()"
+            },
 			{
                 "name":"app.input_text('')",
                 "content":"app.input_text('')\n"
@@ -118,14 +134,6 @@ formatList = function() {
 			{
                 "name":"accelerometer.shake()",
                 "content":"accelerometer.shake()\n"
-            },
-            {
-                "name":"sys.toast('')",
-                "content":"sys.toast('')\n"
-            },
-            {
-                "name":"sys.alert('',0)",
-                "content":"sys.alert('',0)\n"
             },
             {
                 "name":"r = sys.input_box('')",
@@ -145,11 +153,11 @@ formatList = function() {
             },
             {
                 "name":"io.open 读取文件",
-                "content":"local f = io.open('/private/var/mobile/Media/1ferver/lua/scripts/1.txt','r')\nlocal r = f:read('*a')\nf:close()\n"
+                "content":"local f = io.open('/private/var/mobile/Media/1ferver/lua/scripts/1.txt', 'rb')\nlocal r = f:read('*a')\nf:close()\n"
             },
             {
                 "name":"io.open 写入文件",
-                "content":"local f = io.open('/private/var/mobile/Media/1ferver/lua/scripts/1.txt','w')\n:write('')\nf:close()\n"
+                "content":"local f = io.open('/private/var/mobile/Media/1ferver/lua/scripts/1.txt', 'wb')\n:write('')\nf:close()\n"
             }
 			
         ],

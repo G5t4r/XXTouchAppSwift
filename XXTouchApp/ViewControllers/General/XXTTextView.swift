@@ -15,6 +15,7 @@ class XXTTextView: UIView {
   let leftCursorButton = RFToolbarButton(title: " < ")
   let rightCursorButton = RFToolbarButton(title: " > ")
   var textView = LineNumberTextView()
+  let parenthesesButton = XXTSymbolButton(title: "( )")
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -43,7 +44,7 @@ class XXTTextView: UIView {
   }
   
   private func setupAction() {
-    self.textView.inputAccessoryView = RFKeyboardToolbar(
+    let toolBar = RFKeyboardToolbar(
       buttons: [
         extensionButton,
         basisButton,
@@ -52,5 +53,33 @@ class XXTTextView: UIView {
         rightCursorButton
       ]
     )
+    
+    let xxtToolBar = XXTSymbolKeyboardToolbar(
+      width: self.frame.width,
+      buttons: [
+        parenthesesButton
+      ]
+    )
+    
+    
+    let view = UIView()
+    view.frame = CGRectMake(0, 0, self.frame.width, 80)
+    view.addSubview(toolBar)
+    view.addSubview(xxtToolBar)
+    
+    
+    
+    self.textView.inputAccessoryView = view
+    
+    
+    //    self.textView.inputAccessoryView = RFKeyboardToolbar(
+    //      buttons: [
+    //        extensionButton,
+    //        basisButton,
+    //        indentationButton,
+    //        leftCursorButton,
+    //        rightCursorButton
+    //      ]
+    //    )
   }
 }
