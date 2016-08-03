@@ -98,7 +98,7 @@ class NewScriptViewController: UIViewController {
       }
       }, forControlEvents: .TouchUpInside)
     
-    // 基础函数
+    // 代码片段
     xxtView.basisButton.addEventHandler({ [weak self] _ in
       guard let `self` = self else { return }
       self.xxtView.textView.resignFirstResponder()
