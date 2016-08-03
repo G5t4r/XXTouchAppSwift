@@ -44,18 +44,13 @@ class NewScriptViewController: UIViewController {
     return button
   }()
   
-  private let textView = XXTTextView(frame: CGRectZero)
+  private let xxtView = XXTTextView()
   
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
     makeConstriants()
     setupAction()
-  }
-  
-  override func viewWillDisappear(animated: Bool) {
-    super.viewWillDisappear(animated)
-    NSNotificationCenter.defaultCenter().removeObserver(self)
   }
   
   private func setupUI() {
@@ -69,12 +64,12 @@ class NewScriptViewController: UIViewController {
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     
-    view.addSubview(textView)
+    view.addSubview(xxtView)
     view.addSubview(placeHolderButton)
   }
   
   private func makeConstriants() {
-    textView.snp_makeConstraints { (make) in
+    xxtView.snp_makeConstraints { (make) in
       make.edges.equalTo(view)
     }
     
@@ -88,9 +83,9 @@ class NewScriptViewController: UIViewController {
     placeHolderButton.addTarget(self, action: #selector(handlePlaceHolder), forControlEvents: .TouchUpInside)
     
     // 扩展函数
-    textView.extensionButton.addEventHandler({ [weak self] _ in
+    xxtView.extensionButton.addEventHandler({ [weak self] _ in
       guard let `self` = self else { return }
-      self.textView.resignFirstResponder()
+      self.xxtView.textView.resignFirstResponder()
       let viewController = ExtensionFuncListViewController()
       viewController.delegate = self
       let navController = UINavigationController()
@@ -98,15 +93,15 @@ class NewScriptViewController: UIViewController {
       UIViewController.topMostViewController?.presentViewController(navController, animated: true, completion: nil)
       viewController.funcCompletionHandler.completionHandler = { [weak self] string in
         guard let `self` = self else { return }
-        self.textView.insertText(string)
-        self.textView.becomeFirstResponder()
+        self.xxtView.textView.insertText(string)
+        self.xxtView.textView.becomeFirstResponder()
       }
       }, forControlEvents: .TouchUpInside)
     
     // 基础函数
-    textView.basisButton.addEventHandler({ [weak self] _ in
+    xxtView.basisButton.addEventHandler({ [weak self] _ in
       guard let `self` = self else { return }
-      self.textView.resignFirstResponder()
+      self.xxtView.textView.resignFirstResponder()
       let viewController = BasisFuncListViewController()
       viewController.delegate = self
       let navController = UINavigationController()
@@ -114,21 +109,21 @@ class NewScriptViewController: UIViewController {
       UIViewController.topMostViewController?.presentViewController(navController, animated: true, completion: nil)
       viewController.funcCompletionHandler.completionHandler = { [weak self] string in
         guard let `self` = self else { return }
-        self.textView.insertText(string)
-        self.textView.becomeFirstResponder()
+        self.xxtView.textView.insertText(string)
+        self.xxtView.textView.becomeFirstResponder()
       }
       }, forControlEvents: .TouchUpInside)
     
     // 代码缩进
-    textView.indentationButton.addEventHandler({ [weak self] _ in
+    xxtView.indentationButton.addEventHandler({ [weak self] _ in
       guard let `self` = self else { return }
-      self.textView.insertText("\t")
+      self.xxtView.textView.insertText("\t")
       }, forControlEvents: .TouchUpInside)
   }
   
   @objc private func next() {
-    textView.resignFirstResponder()
-    let viewController = NewNameViewController(data: self.textView.text)
+    xxtView.textView.resignFirstResponder()
+    let viewController = NewNameViewController(data: self.xxtView.textView.text)
     viewController.delegate = self
     newNameViewControllerPopupController = STPopupController(rootViewController: viewController)
     newNameViewControllerPopupController.backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(backgroundDismiss)))
@@ -137,29 +132,36 @@ class NewScriptViewController: UIViewController {
   }
   
   @objc private func backgroundDismiss() {
-    textView.becomeFirstResponder()
     newNameViewControllerPopupController.dismiss()
+    xxtView.textView.becomeFirstResponder()
+  }
+  
+  private func removeObserver() {
+    NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+    NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
   }
   
   @objc private func back() {
-    guard self.textView.text.characters.count != 0 else {
+    guard self.xxtView.textView.text.characters.count != 0 else {
       self.navigationController?.popViewControllerAnimated(true)
+      removeObserver()
       return
     }
-    textView.resignFirstResponder()
+    xxtView.textView.resignFirstResponder()
     self.alertShowTwoButton(message: "是否丢弃当前更改？", cancelHandler: { [weak self] (_) in
       guard let `self` = self else { return }
-      self.textView.becomeFirstResponder()
+      self.xxtView.textView.becomeFirstResponder()
     }) { [weak self] (_) in
       guard let `self` = self else { return }
       self.navigationController?.popViewControllerAnimated(true)
+      self.removeObserver()
     }
   }
   
   @objc private func handlePlaceHolder(button: UIButton) {
     navigationItem.rightBarButtonItem?.enabled = true
     button.hidden = true
-    textView.becomeFirstResponder()
+    xxtView.textView.becomeFirstResponder()
   }
   
   @objc private func keyboardWillShow(notification: NSNotification) {
@@ -168,18 +170,14 @@ class NewScriptViewController: UIViewController {
     let nsValue = userinfo.objectForKey(UIKeyboardFrameEndUserInfoKey)
     let keyboardRec = nsValue?.CGRectValue()
     let height = keyboardRec!.size.height
-    UIView.animateWithDuration(0.5, animations: {
-      self.textView.contentInset.top = height+Constants.Size.axtNavigationBarHeight
-      self.textView.scrollIndicatorInsets.top = self.textView.contentInset.top
-      self.view.frame.origin.y = -height
+    UIView.animateWithDuration(0.4, animations: {
+      self.xxtView.textView.frame.size = CGSizeMake(self.view.frame.width, self.view.frame.height - height)
       }, completion: nil)
   }
   
   @objc private func keyboardWillHide(notification: NSNotification) {
-    UIView.animateWithDuration(0.5, animations: {
-      self.textView.contentInset.top = Constants.Size.axtNavigationBarHeight
-      self.textView.scrollIndicatorInsets.top = self.textView.contentInset.top
-      self.view.frame.origin.y = 0
+    UIView.animateWithDuration(0.3, animations: {
+      self.xxtView.textView.frame.size = CGSizeMake(self.view.frame.width, self.view.frame.height)
       }, completion: nil)
   }
 }
@@ -193,7 +191,7 @@ extension NewScriptViewController: NewNameViewControllerDelegate {
 
 extension NewScriptViewController: ExtensionFuncListViewControllerDelegate {
   func becomeFirstResponderToTextView() {
-    textView.becomeFirstResponder()
+    self.xxtView.textView.becomeFirstResponder()
   }
 }
 

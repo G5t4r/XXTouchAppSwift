@@ -18,8 +18,9 @@ class PhotoViewController: UIViewController {
   private var originalPixelImage: XXTPixelImage!
   private let touchContentView = TouchContentView()
   private var posNumber = 0
-  private var mposHeight: CGFloat = 45
-  private let customHeight: CGFloat = 35
+  //  private var mposHeight: CGFloat = 45
+  //  private let customHeight: CGFloat = 35
+  private var originalHeight: CGFloat = 0
   
   init(type: FuncListType, image: UIImage, funcCompletionHandler: FuncCompletionHandler) {
     self.type = type
@@ -62,21 +63,21 @@ class PhotoViewController: UIViewController {
   }
   
   private func makeConstriants() {
-    switch self.type {
-    case .Pos:
-      touchContentView.snp_makeConstraints { (make) in
-        make.top.equalTo(snp_topLayoutGuideBottom)
-        make.leading.trailing.equalTo(view)
-        make.height.equalTo(customHeight)
-      }
-    case .MPos:
-      touchContentView.snp_makeConstraints { (make) in
-        make.top.equalTo(snp_topLayoutGuideBottom)
-        make.leading.trailing.equalTo(view)
-        make.height.equalTo(mposHeight)
-      }
-    default: break
-    }
+    //    switch self.type {
+    //    case .Pos:
+    //      touchContentView.snp_makeConstraints { (make) in
+    //        make.top.equalTo(snp_topLayoutGuideBottom)
+    //        make.leading.trailing.equalTo(view)
+    //        make.height.equalTo(customHeight)
+    //      }
+    //    case .MPos:
+    //      touchContentView.snp_makeConstraints { (make) in
+    //        make.top.equalTo(snp_topLayoutGuideBottom)
+    //        make.leading.trailing.equalTo(view)
+    //        make.height.equalTo(mposHeight)
+    //      }
+    //    default: break
+    //    }
   }
   
   private func setupAction() {
@@ -131,12 +132,15 @@ extension PhotoViewController {
       }
     case .MPos:
       setData(point, title: "可继续选择")
-      touchContentView.snp_remakeConstraints { (make) in
-        make.top.equalTo(snp_topLayoutGuideBottom)
-        make.leading.trailing.equalTo(view)
-        make.height.equalTo(touchContentView.getContentHeight() + 5.5)
-      }
     default: break
+    }
+    touchContentView.snp_remakeConstraints { (make) in
+      make.top.equalTo(snp_topLayoutGuideBottom)
+      make.leading.trailing.equalTo(view)
+      make.height.equalTo(touchContentView.getContentHeight() + 22)
+    }
+    if originalHeight == 0 {
+      originalHeight = touchContentView.getContentHeight() + 22
     }
   }
   
@@ -160,13 +164,13 @@ extension PhotoViewController {
       touchContentView.snp_remakeConstraints { (make) in
         make.top.equalTo(snp_topLayoutGuideBottom)
         make.leading.trailing.equalTo(view)
-        make.height.equalTo(customHeight)
+        make.height.equalTo(originalHeight)
       }
     case .MPos:
       touchContentView.snp_remakeConstraints { (make) in
         make.top.equalTo(snp_topLayoutGuideBottom)
         make.leading.trailing.equalTo(view)
-        make.height.equalTo(mposHeight)
+        make.height.equalTo(originalHeight)
       }
     default: break
     }
@@ -217,7 +221,8 @@ class TouchContentView: UIView {
   
   private func makeConstriants() {
     label.snp_makeConstraints { (make) in
-      make.leading.trailing.equalTo(self).inset(5)
+      make.leading.equalTo(self).offset(5)
+      make.trailing.equalTo(self).offset(-95)
       make.centerY.equalTo(self)
       make.top.equalTo(self).offset(2)
     }

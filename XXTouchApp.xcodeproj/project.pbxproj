@@ -104,6 +104,8 @@
 		95AB90CD1D21717200FA4C52 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AB90CC1D21717200FA4C52 /* Button.swift */; };
 		95B1A22B1D50F88200ADC9A1 /* XXTPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95B1A22A1D50F88200ADC9A1 /* XXTPhotoView.m */; };
 		95BDB8911D502E6500A118B6 /* libXXTPixelImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95BDB88E1D502E6500A118B6 /* libXXTPixelImage.a */; };
+		95BDB8991D51AC5100A118B6 /* LineNumberLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BDB8961D51AC5100A118B6 /* LineNumberLayoutManager.m */; };
+		95BDB89A1D51AC5100A118B6 /* LineNumberTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BDB8981D51AC5100A118B6 /* LineNumberTextView.m */; };
 		95D1BA681D44B59A00DAE7F9 /* customformats.js in Resources */ = {isa = PBXBuildFile; fileRef = 95D1BA671D44B59A00DAE7F9 /* customformats.js */; };
 		95D1BA6A1D44B5AE00DAE7F9 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95D1BA691D44B5AE00DAE7F9 /* JavaScriptCore.framework */; };
 		95D1BA6C1D44B6B700DAE7F9 /* JsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D1BA6B1D44B6B700DAE7F9 /* JsManager.swift */; };
@@ -232,6 +234,10 @@
 		95BDB88E1D502E6500A118B6 /* libXXTPixelImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libXXTPixelImage.a; sourceTree = "<group>"; };
 		95BDB88F1D502E6500A118B6 /* XXTColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTColor.h; sourceTree = "<group>"; };
 		95BDB8901D502E6500A118B6 /* XXTPixelImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTPixelImage.h; sourceTree = "<group>"; };
+		95BDB8951D51AC5100A118B6 /* LineNumberLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineNumberLayoutManager.h; sourceTree = "<group>"; };
+		95BDB8961D51AC5100A118B6 /* LineNumberLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineNumberLayoutManager.m; sourceTree = "<group>"; };
+		95BDB8971D51AC5100A118B6 /* LineNumberTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineNumberTextView.h; sourceTree = "<group>"; };
+		95BDB8981D51AC5100A118B6 /* LineNumberTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineNumberTextView.m; sourceTree = "<group>"; };
 		95D1BA671D44B59A00DAE7F9 /* customformats.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = customformats.js; sourceTree = "<group>"; };
 		95D1BA691D44B5AE00DAE7F9 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		95D1BA6B1D44B6B700DAE7F9 /* JsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsManager.swift; sourceTree = "<group>"; };
@@ -483,6 +489,7 @@
 		2C7340881D10FB4300CED0F3 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				95BDB8941D51AC5100A118B6 /* XXTTextView */,
 				95B1A2281D50F87300ADC9A1 /* XXTPhotoView */,
 				95BDB88D1D502E6500A118B6 /* libXXTPixelImage */,
 				2C7342CD1D1140AE00CED0F3 /* SnapKit */,
@@ -725,6 +732,17 @@
 			path = libXXTPixelImage;
 			sourceTree = "<group>";
 		};
+		95BDB8941D51AC5100A118B6 /* XXTTextView */ = {
+			isa = PBXGroup;
+			children = (
+				95BDB8951D51AC5100A118B6 /* LineNumberLayoutManager.h */,
+				95BDB8961D51AC5100A118B6 /* LineNumberLayoutManager.m */,
+				95BDB8971D51AC5100A118B6 /* LineNumberTextView.h */,
+				95BDB8981D51AC5100A118B6 /* LineNumberTextView.m */,
+			);
+			path = XXTTextView;
+			sourceTree = "<group>";
+		};
 		95D1BA661D44B59A00DAE7F9 /* Js */ = {
 			isa = PBXGroup;
 			children = (
@@ -937,11 +955,13 @@
 				2CF749CA1CFDA16F007A273B /* ScriptCell.swift in Sources */,
 				955DB23F1D1E3A4E00B598C4 /* FileManager.swift in Sources */,
 				2CF18BF71D1946B5007535CD /* ApplicationDetailCell.swift in Sources */,
+				95BDB89A1D51AC5100A118B6 /* LineNumberTextView.m in Sources */,
 				2C67AB811CFD2AAA008D53E8 /* AppDelegate.swift in Sources */,
 				2C54F0DD1D17ED5D005F35AD /* UserSettingViewController.swift in Sources */,
 				2CF18BFA1D1A440B007535CD /* AboutViewController.swift in Sources */,
 				95AB90CD1D21717200FA4C52 /* Button.swift in Sources */,
 				2C4FFA4E1D2B71AD00DBEEDB /* LocalStorage.swift in Sources */,
+				95BDB8991D51AC5100A118B6 /* LineNumberLayoutManager.m in Sources */,
 				2C54F0DA1D17E436005F35AD /* StartUpListCell.swift in Sources */,
 				2CD2F5631D127B90001C873F /* MoreCustomCell.swift in Sources */,
 				2CC84C031D17B48600D4230D /* StartUpSettingViewController.swift in Sources */,

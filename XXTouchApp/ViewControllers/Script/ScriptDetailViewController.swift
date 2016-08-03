@@ -11,7 +11,8 @@ import UIKit
 class ScriptDetailViewController: UIViewController {
   private let fileName: String
   private var fileText: String
-  private let textView = XXTTextView(frame: CGRectZero)
+  private let xxtView = XXTTextView()
+  private var isFirst = false
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -31,6 +32,14 @@ class ScriptDetailViewController: UIViewController {
     fatalError("init(coder:) has not been implemented")
   }
   
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+    if !isFirst {
+      isFirst = true
+      xxtView.textView.becomeFirstResponder()
+    }
+  }
+  
   private func setupUI() {
     view.backgroundColor = UIColor.whiteColor()
     navigationController?.interactivePopGestureRecognizer?.delegate = self
@@ -41,20 +50,20 @@ class ScriptDetailViewController: UIViewController {
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     
-    view.addSubview(textView)
+    view.addSubview(xxtView)
   }
   
   private func makeConstriants() {
-    textView.snp_makeConstraints { (make) in
+    xxtView.snp_makeConstraints { (make) in
       make.edges.equalTo(view)
     }
   }
   
   private func setupAction() {
     // 扩展函数
-    textView.extensionButton.addEventHandler({ [weak self] _ in
+    xxtView.extensionButton.addEventHandler({ [weak self] _ in
       guard let `self` = self else { return }
-      self.textView.resignFirstResponder()
+      self.xxtView.textView.resignFirstResponder()
       let viewController = ExtensionFuncListViewController()
       viewController.delegate = self
       let navController = UINavigationController()
@@ -62,15 +71,15 @@ class ScriptDetailViewController: UIViewController {
       UIViewController.topMostViewController?.presentViewController(navController, animated: true, completion: nil)
       viewController.funcCompletionHandler.completionHandler = { [weak self] string in
         guard let `self` = self else { return }
-        self.textView.insertText(string)
-        self.textView.becomeFirstResponder()
+        self.xxtView.textView.insertText(string)
+        self.xxtView.textView.becomeFirstResponder()
       }
       }, forControlEvents: .TouchUpInside)
     
     // 基础函数
-    textView.basisButton.addEventHandler({ [weak self] _ in
+    xxtView.basisButton.addEventHandler({ [weak self] _ in
       guard let `self` = self else { return }
-      self.textView.resignFirstResponder()
+      self.xxtView.textView.resignFirstResponder()
       let viewController = BasisFuncListViewController()
       viewController.delegate = self
       let navController = UINavigationController()
@@ -78,37 +87,32 @@ class ScriptDetailViewController: UIViewController {
       UIViewController.topMostViewController?.presentViewController(navController, animated: true, completion: nil)
       viewController.funcCompletionHandler.completionHandler = { [weak self] string in
         guard let `self` = self else { return }
-        self.textView.insertText(string)
-        self.textView.becomeFirstResponder()
+        self.xxtView.textView.insertText(string)
+        self.xxtView.textView.becomeFirstResponder()
       }
       }, forControlEvents: .TouchUpInside)
     
     // 代码缩进
-    textView.indentationButton.addEventHandler({ [weak self] _ in
+    xxtView.indentationButton.addEventHandler({ [weak self] _ in
       guard let `self` = self else { return }
-      self.textView.insertText("\t")
+      self.xxtView.textView.insertText("\t")
       }, forControlEvents: .TouchUpInside)
   }
   
   private func bind() {
-    textView.text = self.fileText
-  }
-  
-  override func viewWillDisappear(animated: Bool) {
-    super.viewWillDisappear(animated)
-    NSNotificationCenter.defaultCenter().removeObserver(self)
+    xxtView.textView.text = self.fileText
   }
   
   private func fetchWriteScript() {
     self.view.showHUD(text: "正在保存")
-    guard let data = Base64.base64StringToString(self.textView.text) else { return }
+    guard let data = Base64.base64StringToString(self.xxtView.textView.text) else { return }
     Service.writeScriptFile(filename: self.fileName, data: data) { [weak self] (data, _, error) in
       guard let `self` = self else { return }
       if let data = data where JSON(data: data) != nil {
         let json = JSON(data: data)
         switch json["code"].intValue {
         case 0:
-          self.fileText = self.textView.text
+          self.fileText = self.xxtView.textView.text
           self.view.showHUD(.Success, text: Constants.Text.saveSuccessful)
         default:
           self.alertShowOneButton(message: json["message"].stringValue)
@@ -129,18 +133,25 @@ class ScriptDetailViewController: UIViewController {
     fetchWriteScript()
   }
   
+  private func removeObserver() {
+    NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+    NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+  }
+  
   @objc private func back() {
-    guard self.fileText != self.textView.text else {
+    guard self.fileText != self.xxtView.textView.text else {
       self.navigationController?.popViewControllerAnimated(true)
+      removeObserver()
       return
     }
-    textView.resignFirstResponder()
+    xxtView.textView.resignFirstResponder()
     self.alertShowTwoButton(message: "是否丢弃当前更改？", cancelHandler: { [weak self] (_) in
       guard let `self` = self else { return }
-      self.textView.becomeFirstResponder()
+      self.xxtView.textView.becomeFirstResponder()
     }) { [weak self] (_) in
       guard let `self` = self else { return }
       self.navigationController?.popViewControllerAnimated(true)
+      self.removeObserver()
     }
   }
   
@@ -150,25 +161,21 @@ class ScriptDetailViewController: UIViewController {
     let nsValue = userinfo.objectForKey(UIKeyboardFrameEndUserInfoKey)
     let keyboardRec = nsValue?.CGRectValue()
     let height = keyboardRec!.size.height
-    UIView.animateWithDuration(0.5, animations: {
-      self.textView.contentInset.top = height+Constants.Size.axtNavigationBarHeight
-      self.textView.scrollIndicatorInsets.top = self.textView.contentInset.top
-      self.view.frame.origin.y = -height
+    UIView.animateWithDuration(0.4, animations: {
+      self.xxtView.textView.frame.size = CGSizeMake(self.view.frame.width, self.view.frame.height - height)
       }, completion: nil)
   }
   
   @objc private func keyboardWillHide(notification: NSNotification) {
-    UIView.animateWithDuration(0.5, animations: {
-      self.textView.contentInset.top = Constants.Size.axtNavigationBarHeight
-      self.textView.scrollIndicatorInsets.top = self.textView.contentInset.top
-      self.view.frame.origin.y = 0
+    UIView.animateWithDuration(0.3, animations: {
+      self.xxtView.textView.frame.size = CGSizeMake(self.view.frame.width, self.view.frame.height)
       }, completion: nil)
   }
 }
 
 extension ScriptDetailViewController: ExtensionFuncListViewControllerDelegate {
   func becomeFirstResponderToTextView() {
-    textView.becomeFirstResponder()
+    xxtView.textView.becomeFirstResponder()
   }
 }
 
