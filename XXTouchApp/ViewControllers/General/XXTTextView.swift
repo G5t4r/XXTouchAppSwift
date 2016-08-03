@@ -10,8 +10,10 @@ import UIKit
 
 class XXTTextView: UIView {
   let extensionButton = RFToolbarButton(title: "扩展函数")
-  let basisButton = RFToolbarButton(title: "语法片段")
+  let basisButton = RFToolbarButton(title: "代码片段")
   let indentationButton = RFToolbarButton(title: "Tab")
+  let leftCursorButton = RFToolbarButton(title: " < ")
+  let rightCursorButton = RFToolbarButton(title: " > ")
   var textView = LineNumberTextView()
   
   override init(frame: CGRect) {
@@ -45,7 +47,9 @@ class XXTTextView: UIView {
       buttons: [
         extensionButton,
         basisButton,
-        indentationButton
+        indentationButton,
+        leftCursorButton,
+        rightCursorButton
       ]
     )
   }

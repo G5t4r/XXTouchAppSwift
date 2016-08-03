@@ -24,7 +24,7 @@ class BasisFuncListViewController: UIViewController {
   }
   
   private func setupUI() {
-    navigationItem.title = "基础函数"
+    navigationItem.title = "代码片段"
     view.backgroundColor = UIColor.whiteColor()
     
     navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: #selector(dismiss))

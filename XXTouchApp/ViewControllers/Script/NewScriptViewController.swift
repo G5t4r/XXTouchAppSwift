@@ -119,6 +119,23 @@ class NewScriptViewController: UIViewController {
       guard let `self` = self else { return }
       self.xxtView.textView.insertText("\t")
       }, forControlEvents: .TouchUpInside)
+    
+    // 左移光标
+    xxtView.leftCursorButton.addEventHandler({ [weak self] _ in
+      guard let `self` = self else { return }
+      let current = self.xxtView.textView.selectedRange.location
+      if current == 0 {
+        self.xxtView.textView.selectedRange.location = 0
+      } else {
+        self.xxtView.textView.selectedRange.location -= 1
+      }
+      }, forControlEvents: .TouchUpInside)
+    
+    // 右移光标
+    xxtView.rightCursorButton.addEventHandler({ [weak self] _ in
+      guard let `self` = self else { return }
+      self.xxtView.textView.selectedRange.location += 1
+      }, forControlEvents: .TouchUpInside)
   }
   
   @objc private func next() {
