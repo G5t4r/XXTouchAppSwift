@@ -112,11 +112,15 @@ formatList = function() {
                 "content":"sys.msleep(1000)\n"
             },
             {
-                "name":"sys.toast('')",
+                "name":"touch.tap(x, y)",
+                "content":"touch.tap(x, y)\n"
+            },
+            {
+                "name":"sys.toast('')\n",
                 "content":"sys.toast('')\n"
             },
             {
-                "name":"sys.alert('', 0)",
+                "name":"sys.alert('', 0)\n",
                 "content":"sys.alert('', 0)\n"
             },
             {
@@ -270,7 +274,7 @@ customFunction = function(funcId, pos_color_list, bid, keyid) {
 				return "screen.ocr_text(" + pos_color_list[0].x + ", " + pos_color_list[0].y + ", " + pos_color_list[1].x + ", " + pos_color_list[1].y + ")\n";
 			}
         case "screen.is_colors":
-			var ret = "x, y = screen.is_colors({\n";
+			var ret = "screen.is_colors({\n";
 			for (var i=0; i<pos_color_list.length; i++) {
 				ret += "\t{" + pos_color_list[i].x + ", " + pos_color_list[i].y + ", " + pos_color_list[i].color + "},\n";
 			}
@@ -281,7 +285,7 @@ customFunction = function(funcId, pos_color_list, bid, keyid) {
         case "app.close":
             return "app.close(\"" + bid + "\")\n";
         case "screen.find_color":
-			var ret = "x, y = screen.find_color({\n";
+			var ret = "local x, y = screen.find_color({\n";
 			for (var i=0; i<pos_color_list.length; i++) {
 				ret += "\t{" + pos_color_list[i].x + ", " + pos_color_list[i].y + ", " + pos_color_list[i].color + "},\n";
 			}

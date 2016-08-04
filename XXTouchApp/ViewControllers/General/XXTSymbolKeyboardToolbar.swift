@@ -18,19 +18,13 @@ class XXTSymbolKeyboardToolbar: UIView {
     self.buttons = buttons
     super.init(frame: CGRectMake(0, 40, width, 40))
     setupUI()
-    //    makeConstriants()
   }
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
   
-  //  override func layoutSubviews() {
-  //    topBorder.frame.size.height = 0.5
-  //  }
-  
   private func setupUI() {
-    //    self.addSubview(self.inputAccessoryView!)
     self.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
     self.addSubview(inputAccessoryView())
     self.addSubview(topBorder)
@@ -40,22 +34,6 @@ class XXTSymbolKeyboardToolbar: UIView {
       make.height.equalTo(0.5)
     }
   }
-  
-  //  private func makeConstriants() {
-  //    toolbarView.snp_makeConstraints { (make) in
-  //      make.edges.equalTo(self)
-  //    }
-  //    
-  //    topBorder.snp_makeConstraints { (make) in
-  //      make.top.equalTo(toolbarView)
-  //      make.leading.trailing.equalTo(toolbarView)
-  //      make.height.equalTo(0.5)
-  //    }
-  //    
-  //    scrollView.snp_makeConstraints { (make) in
-  //      make.edges.equalTo(toolbarView)
-  //    }
-  //  }
   
   private func inputAccessoryView() -> UIView {
     toolbarView.frame = CGRectMake(0, 0, self.bounds.width, 40)

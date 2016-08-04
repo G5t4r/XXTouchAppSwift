@@ -9,7 +9,7 @@
 import UIKit
 
 class XXTSymbolButton: Button {
-  typealias eventHandlerBlock = (Void) -> ()
+  typealias eventHandlerBlock = String -> ()
   var buttonPressBlock: eventHandlerBlock?
   let title: String
   
@@ -35,13 +35,14 @@ class XXTSymbolButton: Button {
     self.titleLabel?.font = UIFont.boldSystemFontOfSize(14)
   }
   
-  func addHandlerEvent(buttonPressBlock: eventHandlerBlock, events: UIControlEvents) {
+  func addHandlerEvent(buttonPressBlock: eventHandlerBlock) {
     self.buttonPressBlock = buttonPressBlock
-    self.addTarget(self, action: #selector(handlerAction), forControlEvents: events)
+    self.addTarget(self, action: #selector(handlerAction), forControlEvents: .TouchUpInside)
   }
   
   @objc private func handlerAction() {
-    buttonPressBlock?()
+    let string = self.title.stringByReplacingOccurrencesOfString(" ", withString: "")
+    buttonPressBlock?(string)
   }
   
 }

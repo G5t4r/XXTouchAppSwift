@@ -35,6 +35,7 @@ protocol NewScriptViewControllerDelegate: NSObjectProtocol {
 class NewScriptViewController: UIViewController {
   weak var delegate: NewScriptViewControllerDelegate?
   private var newNameViewControllerPopupController: STPopupController!
+  private var symbolViewControllerPopupController: STPopupController!
   
   private lazy var placeHolderButton: UIButton = {
     let button = UIButton(type: .Custom)
@@ -120,22 +121,54 @@ class NewScriptViewController: UIViewController {
       self.xxtView.textView.insertText("\t")
       }, forControlEvents: .TouchUpInside)
     
-    // 左移光标
-    xxtView.leftCursorButton.addEventHandler({ [weak self] _ in
+    // 更多符号
+    xxtView.moreSymbolButton.addEventHandler({ [weak self] _ in
       guard let `self` = self else { return }
-      let current = self.xxtView.textView.selectedRange.location
-      if current == 0 {
-        self.xxtView.textView.selectedRange.location = 0
-      } else {
-        self.xxtView.textView.selectedRange.location -= 1
-      }
+      self.xxtView.textView.resignFirstResponder()
+      let viewController = SymbolViewController()
+      viewController.delegate = self
+      self.symbolViewControllerPopupController = STPopupController(rootViewController: viewController)
+      self.symbolViewControllerPopupController.backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.symbolbackgroundDismiss)))
+      self.symbolViewControllerPopupController.containerView.layer.cornerRadius = Sizer.valueForDevice(phone: 2, pad: 3)
+      self.symbolViewControllerPopupController.navigationBarHidden = true
+      self.symbolViewControllerPopupController.presentInViewController(self)
       }, forControlEvents: .TouchUpInside)
     
-    // 右移光标
-    xxtView.rightCursorButton.addEventHandler({ [weak self] _ in
+    // 一对的符号
+    xxtView.parenthesesButton.addHandlerEvent { [weak self] title in
       guard let `self` = self else { return }
-      self.xxtView.textView.selectedRange.location += 1
-      }, forControlEvents: .TouchUpInside)
+      self.xxtView.textView.insertText(title)
+      self.xxtView.textView.selectedRange.location -= 1
+    }
+    
+    xxtView.curlyBracesButton.addHandlerEvent { [weak self] title in
+      guard let `self` = self else { return }
+      self.xxtView.textView.insertText(title)
+      self.xxtView.textView.selectedRange.location -= 1
+    }
+    
+    xxtView.bracketsButton.addHandlerEvent { [weak self] title in
+      guard let `self` = self else { return }
+      self.xxtView.textView.insertText(title)
+      self.xxtView.textView.selectedRange.location -= 1
+    }
+    
+    xxtView.doubleBracketsButton.addHandlerEvent { [weak self] title in
+      guard let `self` = self else { return }
+      self.xxtView.textView.insertText(title)
+      self.xxtView.textView.selectedRange.location -= 2
+    }
+    
+    xxtView.doubleQuotesButton.addHandlerEvent { [weak self] title in
+      guard let `self` = self else { return }
+      self.xxtView.textView.insertText(title)
+      self.xxtView.textView.selectedRange.location -= 1
+    }
+  }
+  
+  @objc private func symbolbackgroundDismiss() {
+    symbolViewControllerPopupController.dismiss()
+    xxtView.textView.becomeFirstResponder()
   }
   
   @objc private func next() {
@@ -208,6 +241,13 @@ extension NewScriptViewController: NewNameViewControllerDelegate {
 
 extension NewScriptViewController: ExtensionFuncListViewControllerDelegate {
   func becomeFirstResponderToTextView() {
+    self.xxtView.textView.becomeFirstResponder()
+  }
+}
+
+extension NewScriptViewController: SymbolViewControllerDelegate {
+  func insetText(text: String) {
+    self.xxtView.textView.insertText(text)
     self.xxtView.textView.becomeFirstResponder()
   }
 }

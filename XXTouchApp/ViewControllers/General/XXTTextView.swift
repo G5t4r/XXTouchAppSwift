@@ -12,10 +12,14 @@ class XXTTextView: UIView {
   let extensionButton = RFToolbarButton(title: "扩展函数")
   let basisButton = RFToolbarButton(title: "代码片段")
   let indentationButton = RFToolbarButton(title: "Tab")
-  let leftCursorButton = RFToolbarButton(title: " < ")
-  let rightCursorButton = RFToolbarButton(title: " > ")
+  let moreSymbolButton = RFToolbarButton(title: "符")
   var textView = LineNumberTextView()
+  
   let parenthesesButton = XXTSymbolButton(title: "( )")
+  let curlyBracesButton = XXTSymbolButton(title: "{ }")
+  let bracketsButton = XXTSymbolButton(title: "[ ]")
+  let doubleBracketsButton = XXTSymbolButton(title: "[ [ ] ]")
+  let doubleQuotesButton = XXTSymbolButton(title: "\" \"")
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -44,42 +48,32 @@ class XXTTextView: UIView {
   }
   
   private func setupAction() {
+    // 函数类
+    
     let toolBar = RFKeyboardToolbar(
       buttons: [
         extensionButton,
         basisButton,
         indentationButton,
-        leftCursorButton,
-        rightCursorButton
+        moreSymbolButton
       ]
     )
     
-    let xxtToolBar = XXTSymbolKeyboardToolbar(
-      width: self.frame.width,
+    // 常用符号类
+    let symbolToolBar = XXTSymbolKeyboardToolbar(
+      width: frame.width,
       buttons: [
-        parenthesesButton
+        parenthesesButton,
+        curlyBracesButton,
+        bracketsButton,
+        doubleBracketsButton,
+        doubleQuotesButton
       ]
     )
     
-    
-    let view = UIView()
-    view.frame = CGRectMake(0, 0, self.frame.width, 80)
-    view.addSubview(toolBar)
-    view.addSubview(xxtToolBar)
-    
-    
-    
-    self.textView.inputAccessoryView = view
-    
-    
-    //    self.textView.inputAccessoryView = RFKeyboardToolbar(
-    //      buttons: [
-    //        extensionButton,
-    //        basisButton,
-    //        indentationButton,
-    //        leftCursorButton,
-    //        rightCursorButton
-    //      ]
-    //    )
+    let inputCustomAccessoryView = UIView(frame: CGRectMake(0, 0, self.frame.width, 80))
+    inputCustomAccessoryView.addSubview(toolBar)
+    inputCustomAccessoryView.addSubview(symbolToolBar)
+    self.textView.inputAccessoryView = inputCustomAccessoryView
   }
 }
