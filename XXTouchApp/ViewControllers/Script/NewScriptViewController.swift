@@ -153,16 +153,25 @@ class NewScriptViewController: UIViewController {
       self.xxtView.textView.selectedRange.location -= 1
     }
     
-    xxtView.doubleBracketsButton.addHandlerEvent { [weak self] title in
-      guard let `self` = self else { return }
-      self.xxtView.textView.insertText(title)
-      self.xxtView.textView.selectedRange.location -= 2
-    }
-    
     xxtView.doubleQuotesButton.addHandlerEvent { [weak self] title in
       guard let `self` = self else { return }
       self.xxtView.textView.insertText(title)
       self.xxtView.textView.selectedRange.location -= 1
+    }
+    
+    xxtView.commaButton.addHandlerEvent { [weak self] title in
+      guard let `self` = self else { return }
+      self.xxtView.textView.insertText(title)
+    }
+    
+    xxtView.endButton.addHandlerEvent { [weak self] title in
+      guard let `self` = self else { return }
+      self.xxtView.textView.insertText(title)
+    }
+    
+    xxtView.equalButton.addHandlerEvent { [weak self] title in
+      guard let `self` = self else { return }
+      self.xxtView.textView.insertText(title)
     }
   }
   

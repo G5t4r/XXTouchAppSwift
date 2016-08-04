@@ -15,18 +15,9 @@ protocol SymbolViewControllerDelegate: NSObjectProtocol {
 class SymbolViewController: UIViewController {
   private lazy var titles: [String] = {
     let titles: [String] = [
-      ",",
-      ".",
-      ":",
-      "+",
-      "-",
-      "*",
-      "/",
-      "#",
-      "<",
-      ">",
-      "~",
-      "=",
+      "+", "-", "*", "/", "^",
+      "%", ":", "_", "#", "~",
+      "'", ";", "<", ">", "\\",
       ]
     return titles
   }()
@@ -35,7 +26,7 @@ class SymbolViewController: UIViewController {
   
   init() {
     super.init(nibName: nil, bundle: nil)
-    self.contentSizeInPopup = CGSize(width: 200, height: 150)
+    self.contentSizeInPopup = CGSize(width: 250, height: 150)
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -90,7 +81,7 @@ extension SymbolViewController: UICollectionViewDelegate, UICollectionViewDataSo
   }
   
   func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-    let itemWidth = CGRectGetWidth(collectionView.frame)/4-3
+    let itemWidth = CGRectGetWidth(collectionView.frame)/5-4
     let itemHeight: CGFloat = 50
     return CGSize(width: itemWidth, height: itemHeight)
   }

@@ -13,6 +13,7 @@ class ScriptDetailViewController: UIViewController {
   private var fileText: String
   private let xxtView = XXTTextView()
   private var isFirst = false
+  private var symbolViewControllerPopupController: STPopupController!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -97,6 +98,64 @@ class ScriptDetailViewController: UIViewController {
       guard let `self` = self else { return }
       self.xxtView.textView.insertText("\t")
       }, forControlEvents: .TouchUpInside)
+    
+    // 更多符号
+    xxtView.moreSymbolButton.addEventHandler({ [weak self] _ in
+      guard let `self` = self else { return }
+      self.xxtView.textView.resignFirstResponder()
+      let viewController = SymbolViewController()
+      viewController.delegate = self
+      self.symbolViewControllerPopupController = STPopupController(rootViewController: viewController)
+      self.symbolViewControllerPopupController.backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.symbolbackgroundDismiss)))
+      self.symbolViewControllerPopupController.containerView.layer.cornerRadius = Sizer.valueForDevice(phone: 2, pad: 3)
+      self.symbolViewControllerPopupController.navigationBarHidden = true
+      self.symbolViewControllerPopupController.presentInViewController(self)
+      }, forControlEvents: .TouchUpInside)
+    
+    // 一对的符号
+    xxtView.parenthesesButton.addHandlerEvent { [weak self] title in
+      guard let `self` = self else { return }
+      self.xxtView.textView.insertText(title)
+      self.xxtView.textView.selectedRange.location -= 1
+    }
+    
+    xxtView.curlyBracesButton.addHandlerEvent { [weak self] title in
+      guard let `self` = self else { return }
+      self.xxtView.textView.insertText(title)
+      self.xxtView.textView.selectedRange.location -= 1
+    }
+    
+    xxtView.bracketsButton.addHandlerEvent { [weak self] title in
+      guard let `self` = self else { return }
+      self.xxtView.textView.insertText(title)
+      self.xxtView.textView.selectedRange.location -= 1
+    }
+    
+    xxtView.doubleQuotesButton.addHandlerEvent { [weak self] title in
+      guard let `self` = self else { return }
+      self.xxtView.textView.insertText(title)
+      self.xxtView.textView.selectedRange.location -= 1
+    }
+    
+    xxtView.commaButton.addHandlerEvent { [weak self] title in
+      guard let `self` = self else { return }
+      self.xxtView.textView.insertText(title)
+    }
+    
+    xxtView.endButton.addHandlerEvent { [weak self] title in
+      guard let `self` = self else { return }
+      self.xxtView.textView.insertText(title)
+    }
+    
+    xxtView.equalButton.addHandlerEvent { [weak self] title in
+      guard let `self` = self else { return }
+      self.xxtView.textView.insertText(title)
+    }
+  }
+  
+  @objc private func symbolbackgroundDismiss() {
+    symbolViewControllerPopupController.dismiss()
+    xxtView.textView.becomeFirstResponder()
   }
   
   private func bind() {
@@ -176,6 +235,13 @@ class ScriptDetailViewController: UIViewController {
 extension ScriptDetailViewController: ExtensionFuncListViewControllerDelegate {
   func becomeFirstResponderToTextView() {
     xxtView.textView.becomeFirstResponder()
+  }
+}
+
+extension ScriptDetailViewController: SymbolViewControllerDelegate {
+  func insetText(text: String) {
+    self.xxtView.textView.insertText(text)
+    self.xxtView.textView.becomeFirstResponder()
   }
 }
 

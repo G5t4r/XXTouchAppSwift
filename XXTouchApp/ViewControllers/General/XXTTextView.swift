@@ -16,10 +16,12 @@ class XXTTextView: UIView {
   var textView = LineNumberTextView()
   
   let parenthesesButton = XXTSymbolButton(title: "( )")
-  let curlyBracesButton = XXTSymbolButton(title: "{ }")
   let bracketsButton = XXTSymbolButton(title: "[ ]")
-  let doubleBracketsButton = XXTSymbolButton(title: "[ [ ] ]")
+  let curlyBracesButton = XXTSymbolButton(title: "{ }")
   let doubleQuotesButton = XXTSymbolButton(title: "\" \"")
+  let commaButton = XXTSymbolButton(title: " , ")
+  let endButton = XXTSymbolButton(title: " . ")
+  let equalButton = XXTSymbolButton(title: " =")
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -64,10 +66,12 @@ class XXTTextView: UIView {
       width: frame.width,
       buttons: [
         parenthesesButton,
-        curlyBracesButton,
         bracketsButton,
-        doubleBracketsButton,
-        doubleQuotesButton
+        curlyBracesButton,
+        doubleQuotesButton,
+        commaButton,
+        endButton,
+        equalButton
       ]
     )
     
