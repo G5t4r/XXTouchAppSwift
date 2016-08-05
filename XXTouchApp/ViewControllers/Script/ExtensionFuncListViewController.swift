@@ -18,7 +18,7 @@ class ExtensionFuncListViewController: UIViewController {
   var funcCompletionHandler = FuncCompletionHandler()
   weak var delegate: ExtensionFuncListViewControllerDelegate?
   
-  private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
+  private let tableView = UITableView(frame: CGRectZero, style: .Plain)
   private var list = [JSON]()
   
   override func viewWillAppear(animated: Bool) {
@@ -71,26 +71,22 @@ class ExtensionFuncListViewController: UIViewController {
 }
 
 extension ExtensionFuncListViewController: UITableViewDelegate, UITableViewDataSource {
-  func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return self.list.count
-  }
-  
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 1
+    return self.list.count
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier(NSStringFromClass(CustomOneLabelCell), forIndexPath: indexPath) as! CustomOneLabelCell
-    cell.bind(self.list[indexPath.section])
+    cell.bind(self.list[indexPath.row])
     
     return cell
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     self.funcCompletionHandler.titleNames.removeAll()
-    let type = self.list[indexPath.section]["args"][0]["type"].stringValue
-    self.funcCompletionHandler.id = self.list[indexPath.section]["id"].stringValue
-    for args in self.list[indexPath.section]["args"].arrayValue {
+    let type = self.list[indexPath.row]["args"][0]["type"].stringValue
+    self.funcCompletionHandler.id = self.list[indexPath.row]["id"].stringValue
+    for args in self.list[indexPath.row]["args"].arrayValue {
       self.funcCompletionHandler.titleNames.append(args["title"].stringValue)
     }
     switch type {
@@ -108,14 +104,6 @@ extension ExtensionFuncListViewController: UITableViewDelegate, UITableViewDataS
       self.navigationController?.pushViewController(viewController, animated: true)
     default: break
     }
-  }
-  
-  func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return 0.01
-  }
-  
-  func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-    return 5
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

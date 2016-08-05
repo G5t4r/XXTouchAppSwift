@@ -20,7 +20,7 @@
 #import "NJKWebViewProgress/NJKWebViewProgressView.h"
 #import "XXTPhotoView.h"
 #import "LineNumberTextView.h"
-#import "RFKeyboardToolbar/RFKeyboardToolbar.h"
+#import "RFKeyboardToolbar.h"
 #import "TAOverlay/TAOverlay.h"
 #import "SIAlertView/SIAlertView.h"
 #import "STPopup/STPopup.h"

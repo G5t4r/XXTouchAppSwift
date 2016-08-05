@@ -12,7 +12,7 @@ class BasisFuncListViewController: UIViewController {
   var funcCompletionHandler = FuncCompletionHandler()
   weak var delegate: ExtensionFuncListViewControllerDelegate?
   
-  private let tableView = UITableView(frame: CGRectZero, style: .Grouped)
+  private let tableView = UITableView(frame: CGRectZero, style: .Plain)
   private var list = [JSON]()
   
   override func viewDidLoad() {
@@ -58,33 +58,21 @@ class BasisFuncListViewController: UIViewController {
 }
 
 extension BasisFuncListViewController: UITableViewDelegate, UITableViewDataSource {
-  func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return self.list.count
-  }
-  
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 1
+    return self.list.count
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier(NSStringFromClass(CustomOneLabelCell), forIndexPath: indexPath) as! CustomOneLabelCell
-    cell.bind(self.list[indexPath.section])
+    cell.bind(self.list[indexPath.row])
     
     return cell
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    let code = self.list[indexPath.section]["content"].stringValue
+    let code = self.list[indexPath.row]["content"].stringValue
     self.funcCompletionHandler.completionHandler?(code)
     self.dismissViewControllerAnimated(true, completion: nil)
-  }
-  
-  func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return 0.01
-  }
-  
-  func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-    return 5
   }
   
   func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

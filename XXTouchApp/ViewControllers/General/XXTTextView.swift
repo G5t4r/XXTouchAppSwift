@@ -11,6 +11,14 @@ import UIKit
 class XXTTextView: UIView {
   let extensionButton = RFToolbarButton(title: "扩展函数")
   let basisButton = RFToolbarButton(title: "代码片段")
+  lazy var operationButton: RFToolbarButton = {
+    let button = RFToolbarButton(title: "  ")
+    button.backgroundColor = UIColor.clearColor()
+    button.layer.borderColor = UIColor.clearColor().CGColor
+    button.setImage(UIImage(named: "pan_normal"), forState: .Normal)
+    button.setImage(UIImage(named: "pan_highlight"), forState: .Highlighted)
+    return button
+  }()
   let indentationButton = RFToolbarButton(title: "Tab")
   let moreSymbolButton = RFToolbarButton(title: "符")
   var textView = LineNumberTextView()
@@ -22,6 +30,18 @@ class XXTTextView: UIView {
   let commaButton = XXTSymbolButton(title: " , ")
   let endButton = XXTSymbolButton(title: " . ")
   let equalButton = XXTSymbolButton(title: " =")
+  
+  //  private lazy var codeSmartTipsView: CodeSmartTipsView = {
+  //    let view = CodeSmartTipsView()
+  //    view.frame.size = CGSizeMake(200, 80)
+  //    view.layer.cornerRadius = 2
+  //    view.layer.shadowOffset = CGSizeMake(0, 3)
+  //    view.layer.shadowRadius = 3.0
+  //    view.layer.shadowColor = UIColor.blackColor().CGColor
+  //    view.layer.shadowOpacity = 0.8
+  //    view.hidden = true
+  //    return view
+  //  }()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -42,7 +62,19 @@ class XXTTextView: UIView {
     textView.font = UIFont(name: "Menlo-Regular", size: Sizer.valueForDevice(phone: 11, pad: 15))
     textView.autocorrectionType = .No // 关闭自动更正
     
+//    textView.highlightDefinition = [
+//      "number" : "[0-9]+", // 所有数字
+//      "symbol" : "((\"|\").*?(\"))",
+//      "lua" : "function[ ]++[a-zA-Z]*)"
+//    ]
+//    textView.highlightTheme = [
+//      "number" : UIColor(rgb: 0xff0000),
+//      "symbol" : UIColor(rgb: 0x0ad00a),
+//      "lua" : UIColor(rgb: 0x9900ff)
+//    ]
+    
     self.addSubview(textView)
+    //    self.addSubview(codeSmartTipsView)
   }
   
   private func makeConstriants() {
@@ -56,6 +88,7 @@ class XXTTextView: UIView {
       buttons: [
         extensionButton,
         basisButton,
+        operationButton,
         indentationButton,
         moreSymbolButton
       ]
@@ -81,3 +114,13 @@ class XXTTextView: UIView {
     self.textView.inputAccessoryView = inputCustomAccessoryView
   }
 }
+
+//extension XXTTextView: UITextViewDelegate {
+//  func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+//    let str = textView.text as NSString
+//    let sizeOfText = str.sizeWithAttributes([NSFontAttributeName : UIFont(name: "Menlo-Regular", size: Sizer.valueForDevice(phone: 11, pad: 15))!])
+//    codeSmartTipsView.frame.origin = CGPointMake(50, sizeOfText.height+codeSmartTipsView.frame.height)
+//    codeSmartTipsView.updateCodeList(text)
+//    return true
+//  }
+//}

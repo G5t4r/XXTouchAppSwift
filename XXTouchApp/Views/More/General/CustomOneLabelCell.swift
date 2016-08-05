@@ -22,7 +22,7 @@ class CustomOneLabelCell: UITableViewCell {
   }
   
   private func setupUI() {
-    titleLabel.font = UIFont.systemFontOfSize(Sizer.valueForDevice(phone: 17, pad: 19))
+    titleLabel.font = UIFont(name: "Menlo-Regular", size: Sizer.valueForDevice(phone: 15, pad: 17))
     titleLabel.textColor = UIColor(rgb: 0x003945)
     
     contentView.addSubview(titleLabel)

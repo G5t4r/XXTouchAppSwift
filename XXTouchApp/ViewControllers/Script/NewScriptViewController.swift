@@ -46,6 +46,8 @@ class NewScriptViewController: UIViewController {
   }()
   
   private let xxtView = XXTTextView()
+  private var startRange = NSRange()
+  private let kCursorVelocity: CGFloat = 1.0/8.0
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -120,6 +122,28 @@ class NewScriptViewController: UIViewController {
       guard let `self` = self else { return }
       self.xxtView.textView.insertText("\t")
       }, forControlEvents: .TouchUpInside)
+    
+    // 摇杆
+    xxtView.operationButton.addTouchHandler { [weak self] touch in
+      guard let `self` = self else { return }
+      let pan = touch as! UIPanGestureRecognizer
+      switch pan.state {
+      case .Began:
+        self.xxtView.operationButton.setImage(UIImage(named: "pan_highlight"), forState: .Normal)
+        self.startRange = self.xxtView.textView.selectedRange
+      case .Ended:
+        self.xxtView.operationButton.setImage(UIImage(named: "pan_normal"), forState: .Normal)
+      default: break
+      }
+      //      let text = self.xxtView.textView.text as NSString
+      //      let size: CGSize = text.sizeWithAttributes([NSFontAttributeName : UIFont(name: "Menlo-Regular", size: Sizer.valueForDevice(phone: 11, pad: 15))!])
+      //      let lineNumber = self.xxtView.textView.contentSize.height/size.height
+      //      let rect = self.xxtView.textView.caretRectForPosition(self.xxtView.textView.selectedTextRange!.start)
+      
+      let location = self.startRange.location + Int(pan.translationInView(self.xxtView.textView).x * self.kCursorVelocity)
+      let cursorLocation = max(location, 0)
+      self.xxtView.textView.selectedRange.location = cursorLocation
+    }
     
     // 更多符号
     xxtView.moreSymbolButton.addEventHandler({ [weak self] _ in

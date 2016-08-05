@@ -11,6 +11,10 @@
 
 #define kLineNumberGutterWidth      35.0
 
-@interface LineNumberTextView : UITextView
+@interface LineNumberTextView : UITextView <NSTextStorageDelegate>
 @property (nonatomic, strong)UIColor *lineBackgroundColor;
+@property NSDictionary *highlightDefinition;
+@property NSDictionary *highlightTheme;
+
+- (void)requireGestureRecognizerToFail:(UIGestureRecognizer *)gestureRecognizer;
 @end

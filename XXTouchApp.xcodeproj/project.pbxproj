@@ -107,6 +107,9 @@
 		95BDB8991D51AC5100A118B6 /* LineNumberLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BDB8961D51AC5100A118B6 /* LineNumberLayoutManager.m */; };
 		95BDB89A1D51AC5100A118B6 /* LineNumberTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BDB8981D51AC5100A118B6 /* LineNumberTextView.m */; };
 		95BDB8AC1D530EFD00A118B6 /* SymbolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95BDB8AB1D530EFD00A118B6 /* SymbolViewController.swift */; };
+		95BDB8B01D5428FF00A118B6 /* CodeSmartTipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95BDB8AF1D5428FF00A118B6 /* CodeSmartTipsView.swift */; };
+		95BDB8B61D54632200A118B6 /* RFKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BDB8B31D54632200A118B6 /* RFKeyboardToolbar.m */; };
+		95BDB8B71D54632200A118B6 /* RFToolbarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BDB8B51D54632200A118B6 /* RFToolbarButton.m */; };
 		95D1BA681D44B59A00DAE7F9 /* customformats.js in Resources */ = {isa = PBXBuildFile; fileRef = 95D1BA671D44B59A00DAE7F9 /* customformats.js */; };
 		95D1BA6A1D44B5AE00DAE7F9 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95D1BA691D44B5AE00DAE7F9 /* JavaScriptCore.framework */; };
 		95D1BA6C1D44B6B700DAE7F9 /* JsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D1BA6B1D44B6B700DAE7F9 /* JsManager.swift */; };
@@ -130,7 +133,7 @@
 /* Begin PBXFileReference section */
 		2C06B4C61D339F0E000A780C /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		2C06B4CA1D35CF07000A780C /* ScriptInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptInfoViewController.swift; sourceTree = "<group>"; };
-		2C06B4CD1D35D4D2000A780C /* CustomLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLabelCell.swift; sourceTree = "<group>"; };
+		2C06B4CD1D35D4D2000A780C /* CustomLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomLabelCell.swift; path = More/General/CustomLabelCell.swift; sourceTree = "<group>"; };
 		2C06B4CF1D35F167000A780C /* KeyBoardSettingInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyBoardSettingInfoViewController.swift; sourceTree = "<group>"; };
 		2C06B4D11D360DF8000A780C /* UserSettingInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingInfoViewController.swift; sourceTree = "<group>"; };
 		2C06B4D31D3614DA000A780C /* DevelopDocumentInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevelopDocumentInfoViewController.swift; sourceTree = "<group>"; };
@@ -184,7 +187,7 @@
 		2CC5F5871D1CFD040028467F /* MoreRemoteServiceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreRemoteServiceCell.swift; sourceTree = "<group>"; };
 		2CC84BFF1D178E2600D4230D /* Suffix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Suffix.swift; sourceTree = "<group>"; };
 		2CC84C021D17B48600D4230D /* StartUpSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartUpSettingViewController.swift; sourceTree = "<group>"; };
-		2CC84C081D17B69200D4230D /* CustomSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSettingCell.swift; sourceTree = "<group>"; };
+		2CC84C081D17B69200D4230D /* CustomSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomSettingCell.swift; path = More/General/CustomSettingCell.swift; sourceTree = "<group>"; };
 		2CD2F5621D127B90001C873F /* MoreCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreCustomCell.swift; sourceTree = "<group>"; };
 		2CD2F5661D13A1C0001C873F /* Sizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sizer.swift; sourceTree = "<group>"; };
 		2CD2F5681D13A280001C873F /* UIDevice+DeviceCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+DeviceCheck.swift"; sourceTree = "<group>"; };
@@ -217,10 +220,10 @@
 		953949D51D28FC8D00BE75AA /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		953C5D321D30E4E800477C35 /* UIAlertView+Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertView+Block.swift"; sourceTree = "<group>"; };
 		953C5D381D30EB3C00477C35 /* UIActionSheet+Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActionSheet+Block.swift"; sourceTree = "<group>"; };
-		953C5D3E1D30F99F00477C35 /* CustomButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButtonCell.swift; sourceTree = "<group>"; };
+		953C5D3E1D30F99F00477C35 /* CustomButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomButtonCell.swift; path = More/General/CustomButtonCell.swift; sourceTree = "<group>"; };
 		9541B7441D4CA4BB00F2A878 /* Countable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Countable.swift; sourceTree = "<group>"; };
 		955A45FE1D45DC55005C7372 /* ExtensionFuncListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionFuncListViewController.swift; sourceTree = "<group>"; };
-		955A46001D45DF92005C7372 /* CustomOneLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomOneLabelCell.swift; sourceTree = "<group>"; };
+		955A46001D45DF92005C7372 /* CustomOneLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomOneLabelCell.swift; path = More/General/CustomOneLabelCell.swift; sourceTree = "<group>"; };
 		955A46041D45F2AC005C7372 /* PosColorListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PosColorListModel.swift; sourceTree = "<group>"; };
 		955DB23C1D1E370200B598C4 /* MixC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MixC.swift; sourceTree = "<group>"; };
 		955DB23E1D1E3A4E00B598C4 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
@@ -242,6 +245,11 @@
 		95BDB8971D51AC5100A118B6 /* LineNumberTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineNumberTextView.h; sourceTree = "<group>"; };
 		95BDB8981D51AC5100A118B6 /* LineNumberTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineNumberTextView.m; sourceTree = "<group>"; };
 		95BDB8AB1D530EFD00A118B6 /* SymbolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SymbolViewController.swift; sourceTree = "<group>"; };
+		95BDB8AF1D5428FF00A118B6 /* CodeSmartTipsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeSmartTipsView.swift; sourceTree = "<group>"; };
+		95BDB8B21D54632200A118B6 /* RFKeyboardToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFKeyboardToolbar.h; sourceTree = "<group>"; };
+		95BDB8B31D54632200A118B6 /* RFKeyboardToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFKeyboardToolbar.m; sourceTree = "<group>"; };
+		95BDB8B41D54632200A118B6 /* RFToolbarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFToolbarButton.h; sourceTree = "<group>"; };
+		95BDB8B51D54632200A118B6 /* RFToolbarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFToolbarButton.m; sourceTree = "<group>"; };
 		95D1BA671D44B59A00DAE7F9 /* customformats.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = customformats.js; sourceTree = "<group>"; };
 		95D1BA691D44B5AE00DAE7F9 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		95D1BA6B1D44B6B700DAE7F9 /* JsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsManager.swift; sourceTree = "<group>"; };
@@ -499,6 +507,7 @@
 		2C7340881D10FB4300CED0F3 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				95BDB8B11D54632200A118B6 /* RFKeyboardToolbar */,
 				95BDB8941D51AC5100A118B6 /* XXTTextView */,
 				95B1A2281D50F87300ADC9A1 /* XXTPhotoView */,
 				95BDB88D1D502E6500A118B6 /* libXXTPixelImage */,
@@ -553,24 +562,12 @@
 			path = StartUpSetting;
 			sourceTree = "<group>";
 		};
-		2CC84C071D17B65F00D4230D /* General */ = {
-			isa = PBXGroup;
-			children = (
-				953C5D3E1D30F99F00477C35 /* CustomButtonCell.swift */,
-				2C06B4CD1D35D4D2000A780C /* CustomLabelCell.swift */,
-				955A46001D45DF92005C7372 /* CustomOneLabelCell.swift */,
-				2CC84C081D17B69200D4230D /* CustomSettingCell.swift */,
-			);
-			path = General;
-			sourceTree = "<group>";
-		};
 		2CD2F55F1D127A2E001C873F /* More */ = {
 			isa = PBXGroup;
 			children = (
 				2CF18C001D1A725E007535CD /* About */,
 				2C54F0F51D1927F8005F35AD /* ApplicationList */,
 				2C54F0EC1D190BD1005F35AD /* Authorization */,
-				2CC84C071D17B65F00D4230D /* General */,
 				2CD2F56E1D13BFF2001C873F /* KeyBoardSetting */,
 				2C54F0D61D17DF97005F35AD /* StartUpSetting */,
 				2CD2F5621D127B90001C873F /* MoreCustomCell.swift */,
@@ -761,6 +758,17 @@
 			name = Symbol;
 			sourceTree = "<group>";
 		};
+		95BDB8B11D54632200A118B6 /* RFKeyboardToolbar */ = {
+			isa = PBXGroup;
+			children = (
+				95BDB8B21D54632200A118B6 /* RFKeyboardToolbar.h */,
+				95BDB8B31D54632200A118B6 /* RFKeyboardToolbar.m */,
+				95BDB8B41D54632200A118B6 /* RFToolbarButton.h */,
+				95BDB8B51D54632200A118B6 /* RFToolbarButton.m */,
+			);
+			path = RFKeyboardToolbar;
+			sourceTree = "<group>";
+		};
 		95D1BA661D44B59A00DAE7F9 /* Js */ = {
 			isa = PBXGroup;
 			children = (
@@ -772,6 +780,11 @@
 		95EEC7921D523E14000DC71B /* General */ = {
 			isa = PBXGroup;
 			children = (
+				95BDB8AF1D5428FF00A118B6 /* CodeSmartTipsView.swift */,
+				953C5D3E1D30F99F00477C35 /* CustomButtonCell.swift */,
+				2C06B4CD1D35D4D2000A780C /* CustomLabelCell.swift */,
+				955A46001D45DF92005C7372 /* CustomOneLabelCell.swift */,
+				2CC84C081D17B69200D4230D /* CustomSettingCell.swift */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -1011,6 +1024,7 @@
 				2C7342DE1D1140AE00CED0F3 /* ConstraintDescription.swift in Sources */,
 				2C06B4D01D35F167000A780C /* KeyBoardSettingInfoViewController.swift in Sources */,
 				958372721D4B281500700973 /* LocalPhotoBrowsingViewController.swift in Sources */,
+				95BDB8B01D5428FF00A118B6 /* CodeSmartTipsView.swift in Sources */,
 				2C7342ED1D123E9C00CED0F3 /* RenameView.swift in Sources */,
 				2C7342DC1D1140AE00CED0F3 /* Constraint.swift in Sources */,
 				953949D61D28FC8D00BE75AA /* Service.swift in Sources */,
@@ -1025,6 +1039,7 @@
 				2CC84C091D17B69200D4230D /* CustomSettingCell.swift in Sources */,
 				9526C66F1D4A08A400EFD1DD /* KeyFuncListViewController.swift in Sources */,
 				95EEC7981D52491A000DC71B /* XXTSymbolKeyboardToolbar.swift in Sources */,
+				95BDB8B61D54632200A118B6 /* RFKeyboardToolbar.m in Sources */,
 				958372741D4C8D8400700973 /* XXTAlertView.swift in Sources */,
 				2C06B4CE1D35D4D2000A780C /* CustomLabelCell.swift in Sources */,
 				2C7342E31D1140AE00CED0F3 /* EdgeInsets.swift in Sources */,
@@ -1038,6 +1053,7 @@
 				95B1A22B1D50F88200ADC9A1 /* XXTPhotoView.m in Sources */,
 				955A46051D45F2AC005C7372 /* PosColorListModel.swift in Sources */,
 				2CB9ED871D43416200588357 /* BaseTextField.swift in Sources */,
+				95BDB8B71D54632200A118B6 /* RFToolbarButton.m in Sources */,
 				9592B4F21D470DBF000B479B /* FuncCompletionHandler.swift in Sources */,
 				957EDDC61D320809000E1749 /* Version.swift in Sources */,
 				9592B4F61D473E12000B479B /* PhotoBrowsingCell.swift in Sources */,
