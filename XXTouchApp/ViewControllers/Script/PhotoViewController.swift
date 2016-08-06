@@ -93,8 +93,11 @@ class PhotoViewController: UIViewController {
 
 extension PhotoViewController {
   private func setData(point: CGPoint, title: String = "选择完成") {
-    let x = point.x * UIScreen.mainScreen().scale
-    let y = point.y * UIScreen.mainScreen().scale
+    guard let imgSize = photoView.imageView.image?.size else { return }
+    let frameSize = photoView.imageView.frame.size
+    let scale = (imgSize.width/frameSize.width)
+    let x = point.x * scale
+    let y = point.y * scale
     touchContentView.buttonStatusUpdate(touchContentView.insetButton, enabled: true, backgroundColor: ThemeManager.Theme.tintColor, titleColor: UIColor.whiteColor())
     touchContentView.buttonStatusUpdate(touchContentView.clearButton, enabled: true, backgroundColor: ThemeManager.Theme.tintColor, titleColor: UIColor.whiteColor())
     navigationItem.title = title
