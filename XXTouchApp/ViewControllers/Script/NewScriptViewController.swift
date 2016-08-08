@@ -45,7 +45,7 @@ class NewScriptViewController: UIViewController {
     return button
   }()
   
-  private let xxtView = XXTTextView()
+  private let textView = XXTTextView(frame: CGRectZero)
   private var startRange = NSRange()
   private let kCursorVelocity: CGFloat = 1.0/8.0
   
@@ -67,12 +67,12 @@ class NewScriptViewController: UIViewController {
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     
-    view.addSubview(xxtView)
+    view.addSubview(textView)
     view.addSubview(placeHolderButton)
   }
   
   private func makeConstriants() {
-    xxtView.snp_makeConstraints { (make) in
+    textView.snp_makeConstraints { (make) in
       make.edges.equalTo(view)
     }
     
@@ -86,9 +86,9 @@ class NewScriptViewController: UIViewController {
     placeHolderButton.addTarget(self, action: #selector(handlePlaceHolder), forControlEvents: .TouchUpInside)
     
     // 扩展函数
-    xxtView.extensionButton.addEventHandler({ [weak self] _ in
+    textView.extensionButton.addEventHandler({ [weak self] _ in
       guard let `self` = self else { return }
-      self.xxtView.textView.resignFirstResponder()
+      self.textView.resignFirstResponder()
       let viewController = ExtensionFuncListViewController()
       viewController.delegate = self
       let navController = UINavigationController()
@@ -96,15 +96,15 @@ class NewScriptViewController: UIViewController {
       UIViewController.topMostViewController?.presentViewController(navController, animated: true, completion: nil)
       viewController.funcCompletionHandler.completionHandler = { [weak self] string in
         guard let `self` = self else { return }
-        self.xxtView.textView.insertText(string)
-        self.xxtView.textView.becomeFirstResponder()
+        self.textView.insertText(string)
+        self.textView.becomeFirstResponder()
       }
       }, forControlEvents: .TouchUpInside)
     
     // 代码片段
-    xxtView.basisButton.addEventHandler({ [weak self] _ in
+    textView.basisButton.addEventHandler({ [weak self] _ in
       guard let `self` = self else { return }
-      self.xxtView.textView.resignFirstResponder()
+      self.textView.resignFirstResponder()
       let viewController = BasisFuncListViewController()
       viewController.delegate = self
       let navController = UINavigationController()
@@ -112,27 +112,27 @@ class NewScriptViewController: UIViewController {
       UIViewController.topMostViewController?.presentViewController(navController, animated: true, completion: nil)
       viewController.funcCompletionHandler.completionHandler = { [weak self] string in
         guard let `self` = self else { return }
-        self.xxtView.textView.insertText(string)
-        self.xxtView.textView.becomeFirstResponder()
+        self.textView.insertText(string)
+        self.textView.becomeFirstResponder()
       }
       }, forControlEvents: .TouchUpInside)
     
     // 代码缩进
-    xxtView.indentationButton.addEventHandler({ [weak self] _ in
+    textView.indentationButton.addEventHandler({ [weak self] _ in
       guard let `self` = self else { return }
-      self.xxtView.textView.insertText("\t")
+      self.textView.insertText("\t")
       }, forControlEvents: .TouchUpInside)
     
     // 摇杆
-    xxtView.operationButton.addTouchHandler { [weak self] touch in
+    textView.operationButton.addTouchHandler { [weak self] touch in
       guard let `self` = self else { return }
       let pan = touch as! UIPanGestureRecognizer
       switch pan.state {
       case .Began:
-        self.xxtView.operationButton.setImage(UIImage(named: "pan_highlight"), forState: .Normal)
-        self.startRange = self.xxtView.textView.selectedRange
+        self.textView.operationButton.setImage(UIImage(named: "pan_highlight"), forState: .Normal)
+        self.startRange = self.textView.selectedRange
       case .Ended:
-        self.xxtView.operationButton.setImage(UIImage(named: "pan_normal"), forState: .Normal)
+        self.textView.operationButton.setImage(UIImage(named: "pan_normal"), forState: .Normal)
       default: break
       }
       //      let text = self.xxtView.textView.text as NSString
@@ -140,15 +140,15 @@ class NewScriptViewController: UIViewController {
       //      let lineNumber = self.xxtView.textView.contentSize.height/size.height
       //      let rect = self.xxtView.textView.caretRectForPosition(self.xxtView.textView.selectedTextRange!.start)
       
-      let location = self.startRange.location + Int(pan.translationInView(self.xxtView.textView).x * self.kCursorVelocity)
+      let location = self.startRange.location + Int(pan.translationInView(self.textView).x * self.kCursorVelocity)
       let cursorLocation = max(location, 0)
-      self.xxtView.textView.selectedRange.location = cursorLocation
+      self.textView.selectedRange.location = cursorLocation
     }
     
     // 更多符号
-    xxtView.moreSymbolButton.addEventHandler({ [weak self] _ in
+    textView.moreSymbolButton.addEventHandler({ [weak self] _ in
       guard let `self` = self else { return }
-      self.xxtView.textView.resignFirstResponder()
+      self.textView.resignFirstResponder()
       let viewController = SymbolViewController()
       viewController.delegate = self
       self.symbolViewControllerPopupController = STPopupController(rootViewController: viewController)
@@ -159,54 +159,54 @@ class NewScriptViewController: UIViewController {
       }, forControlEvents: .TouchUpInside)
     
     // 一对的符号
-    xxtView.parenthesesButton.addHandlerEvent { [weak self] title in
+    textView.parenthesesButton.addHandlerEvent { [weak self] title in
       guard let `self` = self else { return }
-      self.xxtView.textView.insertText(title)
-      self.xxtView.textView.selectedRange.location -= 1
+      self.textView.insertText(title)
+      self.textView.selectedRange.location -= 1
     }
     
-    xxtView.curlyBracesButton.addHandlerEvent { [weak self] title in
+    textView.curlyBracesButton.addHandlerEvent { [weak self] title in
       guard let `self` = self else { return }
-      self.xxtView.textView.insertText(title)
-      self.xxtView.textView.selectedRange.location -= 1
+      self.textView.insertText(title)
+      self.textView.selectedRange.location -= 1
     }
     
-    xxtView.bracketsButton.addHandlerEvent { [weak self] title in
+    textView.bracketsButton.addHandlerEvent { [weak self] title in
       guard let `self` = self else { return }
-      self.xxtView.textView.insertText(title)
-      self.xxtView.textView.selectedRange.location -= 1
+      self.textView.insertText(title)
+      self.textView.selectedRange.location -= 1
     }
     
-    xxtView.doubleQuotesButton.addHandlerEvent { [weak self] title in
+    textView.doubleQuotesButton.addHandlerEvent { [weak self] title in
       guard let `self` = self else { return }
-      self.xxtView.textView.insertText(title)
-      self.xxtView.textView.selectedRange.location -= 1
+      self.textView.insertText(title)
+      self.textView.selectedRange.location -= 1
     }
     
-    xxtView.commaButton.addHandlerEvent { [weak self] title in
+    textView.commaButton.addHandlerEvent { [weak self] title in
       guard let `self` = self else { return }
-      self.xxtView.textView.insertText(title)
+      self.textView.insertText(title)
     }
     
-    xxtView.endButton.addHandlerEvent { [weak self] title in
+    textView.endButton.addHandlerEvent { [weak self] title in
       guard let `self` = self else { return }
-      self.xxtView.textView.insertText(title)
+      self.textView.insertText(title)
     }
     
-    xxtView.equalButton.addHandlerEvent { [weak self] title in
+    textView.equalButton.addHandlerEvent { [weak self] title in
       guard let `self` = self else { return }
-      self.xxtView.textView.insertText(title)
+      self.textView.insertText(title)
     }
   }
   
   @objc private func symbolbackgroundDismiss() {
     symbolViewControllerPopupController.dismiss()
-    xxtView.textView.becomeFirstResponder()
+    textView.becomeFirstResponder()
   }
   
   @objc private func next() {
-    xxtView.textView.resignFirstResponder()
-    let viewController = NewNameViewController(data: self.xxtView.textView.text)
+    textView.resignFirstResponder()
+    let viewController = NewNameViewController(data: self.textView.text)
     viewController.delegate = self
     newNameViewControllerPopupController = STPopupController(rootViewController: viewController)
     newNameViewControllerPopupController.backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(backgroundDismiss)))
@@ -216,7 +216,7 @@ class NewScriptViewController: UIViewController {
   
   @objc private func backgroundDismiss() {
     newNameViewControllerPopupController.dismiss()
-    xxtView.textView.becomeFirstResponder()
+    textView.becomeFirstResponder()
   }
   
   private func removeObserver() {
@@ -225,15 +225,15 @@ class NewScriptViewController: UIViewController {
   }
   
   @objc private func back() {
-    guard self.xxtView.textView.text.characters.count != 0 else {
+    guard self.textView.text.characters.count != 0 else {
       self.navigationController?.popViewControllerAnimated(true)
       removeObserver()
       return
     }
-    xxtView.textView.resignFirstResponder()
+    textView.resignFirstResponder()
     self.alertShowTwoButton(message: "是否丢弃当前更改？", cancelHandler: { [weak self] (_) in
       guard let `self` = self else { return }
-      self.xxtView.textView.becomeFirstResponder()
+      self.textView.becomeFirstResponder()
     }) { [weak self] (_) in
       guard let `self` = self else { return }
       self.navigationController?.popViewControllerAnimated(true)
@@ -244,7 +244,7 @@ class NewScriptViewController: UIViewController {
   @objc private func handlePlaceHolder(button: UIButton) {
     navigationItem.rightBarButtonItem?.enabled = true
     button.hidden = true
-    xxtView.textView.becomeFirstResponder()
+    textView.becomeFirstResponder()
   }
   
   @objc private func keyboardWillShow(notification: NSNotification) {
@@ -254,13 +254,13 @@ class NewScriptViewController: UIViewController {
     let keyboardRec = nsValue?.CGRectValue()
     let height = keyboardRec!.size.height
     UIView.animateWithDuration(0.4, animations: {
-      self.xxtView.textView.frame.size = CGSizeMake(self.view.frame.width, self.view.frame.height - height)
+      self.textView.frame.size = CGSizeMake(self.view.frame.width, self.view.frame.height - height)
       }, completion: nil)
   }
   
   @objc private func keyboardWillHide(notification: NSNotification) {
     UIView.animateWithDuration(0.3, animations: {
-      self.xxtView.textView.frame.size = CGSizeMake(self.view.frame.width, self.view.frame.height)
+      self.textView.frame.size = CGSizeMake(self.view.frame.width, self.view.frame.height)
       }, completion: nil)
   }
 }
@@ -274,14 +274,14 @@ extension NewScriptViewController: NewNameViewControllerDelegate {
 
 extension NewScriptViewController: ExtensionFuncListViewControllerDelegate {
   func becomeFirstResponderToTextView() {
-    self.xxtView.textView.becomeFirstResponder()
+    self.textView.becomeFirstResponder()
   }
 }
 
 extension NewScriptViewController: SymbolViewControllerDelegate {
   func insetText(text: String) {
-    self.xxtView.textView.insertText(text)
-    self.xxtView.textView.becomeFirstResponder()
+    self.textView.insertText(text)
+    self.textView.becomeFirstResponder()
   }
 }
 

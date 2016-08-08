@@ -84,6 +84,11 @@
 		950FC3611D1988660091DBA4 /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950FC3601D1988660091DBA4 /* Base64.swift */; };
 		9526C66D1D4A055900EFD1DD /* BasisFuncListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9526C66C1D4A055900EFD1DD /* BasisFuncListViewController.swift */; };
 		9526C66F1D4A08A400EFD1DD /* KeyFuncListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9526C66E1D4A08A400EFD1DD /* KeyFuncListViewController.swift */; };
+		95295C3B1D581B3E00D2E063 /* CYRLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 95295C321D581B3E00D2E063 /* CYRLayoutManager.m */; };
+		95295C3C1D581B3E00D2E063 /* CYRTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 95295C341D581B3E00D2E063 /* CYRTextStorage.m */; };
+		95295C3D1D581B3E00D2E063 /* CYRTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95295C361D581B3E00D2E063 /* CYRTextView.m */; };
+		95295C3E1D581B3E00D2E063 /* CYRToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 95295C391D581B3E00D2E063 /* CYRToken.m */; };
+		95295C3F1D581B3E00D2E063 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 95295C3A1D581B3E00D2E063 /* Info.plist */; };
 		953949D61D28FC8D00BE75AA /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953949D51D28FC8D00BE75AA /* Service.swift */; };
 		953C5D331D30E4E800477C35 /* UIAlertView+Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953C5D321D30E4E800477C35 /* UIAlertView+Block.swift */; };
 		953C5D391D30EB3C00477C35 /* UIActionSheet+Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953C5D381D30EB3C00477C35 /* UIActionSheet+Block.swift */; };
@@ -107,7 +112,6 @@
 		95BDB8991D51AC5100A118B6 /* LineNumberLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BDB8961D51AC5100A118B6 /* LineNumberLayoutManager.m */; };
 		95BDB89A1D51AC5100A118B6 /* LineNumberTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BDB8981D51AC5100A118B6 /* LineNumberTextView.m */; };
 		95BDB8AC1D530EFD00A118B6 /* SymbolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95BDB8AB1D530EFD00A118B6 /* SymbolViewController.swift */; };
-		95BDB8B01D5428FF00A118B6 /* CodeSmartTipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95BDB8AF1D5428FF00A118B6 /* CodeSmartTipsView.swift */; };
 		95BDB8B61D54632200A118B6 /* RFKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BDB8B31D54632200A118B6 /* RFKeyboardToolbar.m */; };
 		95BDB8B71D54632200A118B6 /* RFToolbarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BDB8B51D54632200A118B6 /* RFToolbarButton.m */; };
 		95D1BA681D44B59A00DAE7F9 /* customformats.js in Resources */ = {isa = PBXBuildFile; fileRef = 95D1BA671D44B59A00DAE7F9 /* customformats.js */; };
@@ -217,6 +221,16 @@
 		950FC3601D1988660091DBA4 /* Base64.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64.swift; sourceTree = "<group>"; };
 		9526C66C1D4A055900EFD1DD /* BasisFuncListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasisFuncListViewController.swift; sourceTree = "<group>"; };
 		9526C66E1D4A08A400EFD1DD /* KeyFuncListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyFuncListViewController.swift; sourceTree = "<group>"; };
+		95295C311D581B3E00D2E063 /* CYRLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYRLayoutManager.h; sourceTree = "<group>"; };
+		95295C321D581B3E00D2E063 /* CYRLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYRLayoutManager.m; sourceTree = "<group>"; };
+		95295C331D581B3E00D2E063 /* CYRTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYRTextStorage.h; sourceTree = "<group>"; };
+		95295C341D581B3E00D2E063 /* CYRTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYRTextStorage.m; sourceTree = "<group>"; };
+		95295C351D581B3E00D2E063 /* CYRTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYRTextView.h; sourceTree = "<group>"; };
+		95295C361D581B3E00D2E063 /* CYRTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYRTextView.m; sourceTree = "<group>"; };
+		95295C371D581B3E00D2E063 /* CYRTextViewKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYRTextViewKit.h; sourceTree = "<group>"; };
+		95295C381D581B3E00D2E063 /* CYRToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYRToken.h; sourceTree = "<group>"; };
+		95295C391D581B3E00D2E063 /* CYRToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYRToken.m; sourceTree = "<group>"; };
+		95295C3A1D581B3E00D2E063 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		953949D51D28FC8D00BE75AA /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		953C5D321D30E4E800477C35 /* UIAlertView+Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertView+Block.swift"; sourceTree = "<group>"; };
 		953C5D381D30EB3C00477C35 /* UIActionSheet+Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActionSheet+Block.swift"; sourceTree = "<group>"; };
@@ -245,7 +259,6 @@
 		95BDB8971D51AC5100A118B6 /* LineNumberTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineNumberTextView.h; sourceTree = "<group>"; };
 		95BDB8981D51AC5100A118B6 /* LineNumberTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineNumberTextView.m; sourceTree = "<group>"; };
 		95BDB8AB1D530EFD00A118B6 /* SymbolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SymbolViewController.swift; sourceTree = "<group>"; };
-		95BDB8AF1D5428FF00A118B6 /* CodeSmartTipsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeSmartTipsView.swift; sourceTree = "<group>"; };
 		95BDB8B21D54632200A118B6 /* RFKeyboardToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFKeyboardToolbar.h; sourceTree = "<group>"; };
 		95BDB8B31D54632200A118B6 /* RFKeyboardToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFKeyboardToolbar.m; sourceTree = "<group>"; };
 		95BDB8B41D54632200A118B6 /* RFToolbarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFToolbarButton.h; sourceTree = "<group>"; };
@@ -507,6 +520,7 @@
 		2C7340881D10FB4300CED0F3 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				95295C301D581B3E00D2E063 /* CRYTextViewKit */,
 				95BDB8B11D54632200A118B6 /* RFKeyboardToolbar */,
 				95BDB8941D51AC5100A118B6 /* XXTTextView */,
 				95B1A2281D50F87300ADC9A1 /* XXTPhotoView */,
@@ -704,6 +718,23 @@
 			path = Catalog;
 			sourceTree = "<group>";
 		};
+		95295C301D581B3E00D2E063 /* CRYTextViewKit */ = {
+			isa = PBXGroup;
+			children = (
+				95295C311D581B3E00D2E063 /* CYRLayoutManager.h */,
+				95295C321D581B3E00D2E063 /* CYRLayoutManager.m */,
+				95295C331D581B3E00D2E063 /* CYRTextStorage.h */,
+				95295C341D581B3E00D2E063 /* CYRTextStorage.m */,
+				95295C351D581B3E00D2E063 /* CYRTextView.h */,
+				95295C361D581B3E00D2E063 /* CYRTextView.m */,
+				95295C371D581B3E00D2E063 /* CYRTextViewKit.h */,
+				95295C381D581B3E00D2E063 /* CYRToken.h */,
+				95295C391D581B3E00D2E063 /* CYRToken.m */,
+				95295C3A1D581B3E00D2E063 /* Info.plist */,
+			);
+			path = CRYTextViewKit;
+			sourceTree = "<group>";
+		};
 		9541B7431D4CA4A600F2A878 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -780,7 +811,6 @@
 		95EEC7921D523E14000DC71B /* General */ = {
 			isa = PBXGroup;
 			children = (
-				95BDB8AF1D5428FF00A118B6 /* CodeSmartTipsView.swift */,
 				953C5D3E1D30F99F00477C35 /* CustomButtonCell.swift */,
 				2C06B4CD1D35D4D2000A780C /* CustomLabelCell.swift */,
 				955A46001D45DF92005C7372 /* CustomOneLabelCell.swift */,
@@ -895,6 +925,7 @@
 				2C7342E41D1140AE00CED0F3 /* Info.plist in Resources */,
 				2C67AB411CFD218E008D53E8 /* Assets.xcassets in Resources */,
 				95D1BA681D44B59A00DAE7F9 /* customformats.js in Resources */,
+				95295C3F1D581B3E00D2E063 /* Info.plist in Resources */,
 				2C4FFA4B1D2B708500DBEEDB /* Defaults.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -962,6 +993,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C06B4C71D339F0E000A780C /* UIViewController+Extension.swift in Sources */,
+				95295C3C1D581B3E00D2E063 /* CYRTextStorage.m in Sources */,
 				2C54F0F01D1916E5005F35AD /* AuthorizationBindCell.swift in Sources */,
 				2CD2F56D1D13B0D6001C873F /* KeyBoardSettingViewController.swift in Sources */,
 				2CF749D81D0577C4007A273B /* MoreViewController.swift in Sources */,
@@ -974,6 +1006,7 @@
 				2C73408B1D10FC6100CED0F3 /* SwiftyJSON.swift in Sources */,
 				953C5D331D30E4E800477C35 /* UIAlertView+Block.swift in Sources */,
 				955DB23D1D1E370200B598C4 /* MixC.swift in Sources */,
+				95295C3D1D581B3E00D2E063 /* CYRTextView.m in Sources */,
 				2CF749CD1D0536CB007A273B /* Formatter.swift in Sources */,
 				2CF18C041D1A741B007535CD /* DeviceInfoModel.swift in Sources */,
 				2CF749BB1CFD80A0007A273B /* ScriptDetailViewController.swift in Sources */,
@@ -992,6 +1025,7 @@
 				95F94B821D1832C300532016 /* StartUpCell.swift in Sources */,
 				2C4FFA3C1D2600B100DBEEDB /* PhotoViewController.swift in Sources */,
 				2CF749CA1CFDA16F007A273B /* ScriptCell.swift in Sources */,
+				95295C3E1D581B3E00D2E063 /* CYRToken.m in Sources */,
 				955DB23F1D1E3A4E00B598C4 /* FileManager.swift in Sources */,
 				2CF18BF71D1946B5007535CD /* ApplicationDetailCell.swift in Sources */,
 				95BDB89A1D51AC5100A118B6 /* LineNumberTextView.m in Sources */,
@@ -1005,6 +1039,7 @@
 				2CD2F5631D127B90001C873F /* MoreCustomCell.swift in Sources */,
 				2CC84C031D17B48600D4230D /* StartUpSettingViewController.swift in Sources */,
 				2C06B4CB1D35CF07000A780C /* ScriptInfoViewController.swift in Sources */,
+				95295C3B1D581B3E00D2E063 /* CYRLayoutManager.m in Sources */,
 				95BDB8AC1D530EFD00A118B6 /* SymbolViewController.swift in Sources */,
 				2CD2F5731D13E7F3001C873F /* RecordSettingViewController.swift in Sources */,
 				958372761D4C935800700973 /* UIViewController+Alert.swift in Sources */,
@@ -1024,7 +1059,6 @@
 				2C7342DE1D1140AE00CED0F3 /* ConstraintDescription.swift in Sources */,
 				2C06B4D01D35F167000A780C /* KeyBoardSettingInfoViewController.swift in Sources */,
 				958372721D4B281500700973 /* LocalPhotoBrowsingViewController.swift in Sources */,
-				95BDB8B01D5428FF00A118B6 /* CodeSmartTipsView.swift in Sources */,
 				2C7342ED1D123E9C00CED0F3 /* RenameView.swift in Sources */,
 				2C7342DC1D1140AE00CED0F3 /* Constraint.swift in Sources */,
 				953949D61D28FC8D00BE75AA /* Service.swift in Sources */,

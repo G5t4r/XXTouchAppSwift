@@ -25,3 +25,4 @@
 #import "SIAlertView/SIAlertView.h"
 #import "STPopup/STPopup.h"
 #import "XXTPixelImage.h"
+#import "CYRTextViewKit.h"
