@@ -36,9 +36,14 @@ class Service {
     let isExists = fileManager.fileExistsAtPath(path)
     guard isExists else { return ":46952" }
     let url = NSURL(string: path)
-    let readData = JSON(data: NSData(contentsOfFile: url!.path!)!)
-    guard !readData["port"].stringValue.isEmpty else { return ":46952" }
-    return ":".stringByAppendingString(readData["port"].stringValue)
+    let data = NSData(contentsOfFile: url!.path!)
+    if (data == nil) { // 在装有 XXTouch 的设备上的沙盒进行测试防止闪退
+        return ":46952"
+    } else {
+        let readData = JSON(data: data!)
+        guard !readData["port"].stringValue.isEmpty else { return ":46952" }
+        return ":".stringByAppendingString(readData["port"].stringValue)
+    }
   }
   
   class func requestTimeout() -> NSTimeInterval {
