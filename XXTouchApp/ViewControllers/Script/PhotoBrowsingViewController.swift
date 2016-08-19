@@ -111,8 +111,14 @@ extension PhotoBrowsingViewController: UICollectionViewDelegate, UICollectionVie
     //    let data =  NSData(bytesNoCopy: imageBuffer, length:bufferSize, freeWhenDone: true)
     //    let image = UIImage(data: data)
     
-    let image = UIImage(CGImage: asset.thumbnail().takeUnretainedValue())
-    cell.bind(image)
+    if (UIDevice.currentDevice().systemVersion.hasPrefix("9")) {
+        let image = UIImage(CGImage: asset.aspectRatioThumbnail().takeUnretainedValue()) // iOS9 asset.tumbnail 缩略图模糊
+        cell.bind(image)
+    } else {
+        let image = UIImage(CGImage: asset.thumbnail().takeUnretainedValue())
+        cell.bind(image)
+    }
+    
     return cell
   }
   
