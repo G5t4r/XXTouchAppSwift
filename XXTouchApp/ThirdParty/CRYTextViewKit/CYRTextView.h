@@ -66,10 +66,12 @@
 @property UIColor *gutterLineColor;
 
 @property (nonatomic, assign) BOOL lineCursorEnabled;
+
 - (id)initWithFrame:(CGRect)frame;
 - (void)xxtMoveUp;
 - (void)xxtMoveDown;
 - (void)xxtMoveLeft;
 - (void)xxtMoveRight;
+- (void)xxtStartMove;
 
 @end

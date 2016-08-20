@@ -111,6 +111,7 @@ class ScriptDetailViewController: UIViewController {
         self.textView.operationButton.setImage(UIImage(named: "pan_highlight"), forState: .Normal)
         self.startRange = self.textView.selectedRange
         self.lastOperationLocation = pan.translationInView(self.textView)
+        self.textView.xxtStartMove()
       case .Ended:
         self.textView.operationButton.setImage(UIImage(named: "pan_normal"), forState: .Normal)
       default: break

@@ -220,6 +220,11 @@ static const float kCursorVelocity = 1.0f/8.0f;
     _arrowHistory = [self _moveRight:self.selectedRange.length > 1 withHistory:_arrowHistory];
 }
 
+- (void)xxtStartMove
+{
+    _arrowHistory = nil;
+}
+
 
 #pragma mark - Line Drawing
 
