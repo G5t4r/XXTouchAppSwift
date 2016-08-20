@@ -47,6 +47,7 @@ static const float kCursorVelocity = 1.0f/8.0f;
 
 @property (nonatomic, strong) CYRLayoutManager *lineNumberLayoutManager;
 @property (nonatomic, strong) CYRTextStorage *syntaxTextStorage;
+@property (nonatomic, strong) UITextInputArrowKeyHistory *arrowHistory;
 
 @end
 
@@ -199,6 +200,26 @@ static const float kCursorVelocity = 1.0f/8.0f;
     [self replaceRange:textRange withText:text];
 }
 
+- (void)xxtMoveUp
+{
+    _arrowHistory = [self _moveUp:self.selectedRange.length > 1 withHistory:_arrowHistory];
+}
+
+- (void)xxtMoveDown
+{
+    _arrowHistory = [self _moveDown:self.selectedRange.length > 1 withHistory:_arrowHistory];
+}
+
+- (void)xxtMoveLeft
+{
+    _arrowHistory = [self _moveLeft:self.selectedRange.length > 1 withHistory:_arrowHistory];
+}
+
+- (void)xxtMoveRight
+{
+    _arrowHistory = [self _moveRight:self.selectedRange.length > 1 withHistory:_arrowHistory];
+}
+
 
 #pragma mark - Line Drawing
 
@@ -278,7 +299,7 @@ static const float kCursorVelocity = 1.0f/8.0f;
     }
     else
     {
-        self.selectedRange = NSMakeRange(cursorLocation, fabs(startRange.location - cursorLocation));
+        self.selectedRange = NSMakeRange(cursorLocation, fabs(startRange.location - cursorLocation + 1));
     }
 }
 

@@ -38,6 +38,22 @@
 #import <UIKit/UIKit.h>
 #import "CYRToken.h"
 
+@class UITextInputArrowKeyHistory;
+@interface UIResponder()
+- (UITextInputArrowKeyHistory *)_moveUp:(bool)arg1 withHistory:(id)arg2;
+- (UITextInputArrowKeyHistory *)_moveToStartOfDocument:(bool)arg1 withHistory:(UITextInputArrowKeyHistory *)arg2;
+- (UITextInputArrowKeyHistory *)_moveToStartOfParagraph:(bool)arg1 withHistory:(UITextInputArrowKeyHistory *)arg2;
+- (UITextInputArrowKeyHistory *)_moveDown:(bool)arg1 withHistory:(UITextInputArrowKeyHistory *)arg2;
+- (UITextInputArrowKeyHistory *)_moveToEndOfDocument:(bool)arg1 withHistory:(UITextInputArrowKeyHistory *)arg2;
+- (UITextInputArrowKeyHistory *)_moveToEndOfParagraph:(bool)arg1 withHistory:(UITextInputArrowKeyHistory *)arg2;
+- (UITextInputArrowKeyHistory *)_moveLeft:(bool)arg1 withHistory:(UITextInputArrowKeyHistory *)arg2;
+- (UITextInputArrowKeyHistory *)_moveToStartOfLine:(bool)arg1 withHistory:(UITextInputArrowKeyHistory *)arg2;
+- (UITextInputArrowKeyHistory *)_moveToStartOfWord:(bool)arg1 withHistory:(UITextInputArrowKeyHistory *)arg2;
+- (UITextInputArrowKeyHistory *)_moveRight:(bool)arg1 withHistory:(UITextInputArrowKeyHistory *)arg2;
+- (UITextInputArrowKeyHistory *)_moveToEndOfLine:(bool)arg1 withHistory:(UITextInputArrowKeyHistory *)arg2;
+- (UITextInputArrowKeyHistory *)_moveToEndOfWord:(bool)arg1 withHistory:(UITextInputArrowKeyHistory *)arg2;
+@end
+
 @class CYRToken;
 
 @interface CYRTextView : UITextView
@@ -51,5 +67,9 @@
 
 @property (nonatomic, assign) BOOL lineCursorEnabled;
 - (id)initWithFrame:(CGRect)frame;
+- (void)xxtMoveUp;
+- (void)xxtMoveDown;
+- (void)xxtMoveLeft;
+- (void)xxtMoveRight;
 
 @end
