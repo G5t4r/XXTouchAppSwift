@@ -16,6 +16,7 @@ class ScriptDetailViewController: UIViewController {
   private var symbolViewControllerPopupController: STPopupController!
   private var startRange = NSRange()
   private let kCursorVelocity: CGFloat = 1.0/8.0
+  private var lastOperationLocation = CGPoint()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -39,7 +40,7 @@ class ScriptDetailViewController: UIViewController {
     super.viewDidAppear(animated)
     if !isFirst {
       isFirst = true
-      textView.becomeFirstResponder()
+//      textView.becomeFirstResponder()
     }
   }
   
@@ -109,18 +110,44 @@ class ScriptDetailViewController: UIViewController {
       case .Began:
         self.textView.operationButton.setImage(UIImage(named: "pan_highlight"), forState: .Normal)
         self.startRange = self.textView.selectedRange
+        self.lastOperationLocation = pan.translationInView(self.textView)
       case .Ended:
         self.textView.operationButton.setImage(UIImage(named: "pan_normal"), forState: .Normal)
       default: break
       }
-      //      let text = self.xxtView.textView.text as NSString
-      //      let size: CGSize = text.sizeWithAttributes([NSFontAttributeName : UIFont(name: "Menlo-Regular", size: Sizer.valueForDevice(phone: 11, pad: 15))!])
-      //      let lineNumber = self.xxtView.textView.contentSize.height/size.height
-      //      let rect = self.xxtView.textView.caretRectForPosition(self.xxtView.textView.selectedTextRange!.start)
-      
-      let location = self.startRange.location + Int(pan.translationInView(self.textView).x * self.kCursorVelocity)
-      let cursorLocation = max(location, 0)
-      self.textView.selectedRange.location = cursorLocation
+        
+        var moved = false
+        let leftRight = pan.translationInView(self.textView).x - self.lastOperationLocation.x
+        if (leftRight > 8) {
+            for _ in 0 ..< Int(leftRight * self.kCursorVelocity) {
+                self.textView.xxtMoveRight()
+            }
+            moved = true
+        } else if (leftRight < -8) {
+            for _ in 0 ..< abs(Int(leftRight * self.kCursorVelocity)) {
+                self.textView.xxtMoveLeft()
+            }
+            moved = true
+        }
+        let upDown = pan.translationInView(self.textView).y - self.lastOperationLocation.y
+        if (upDown > 8) {
+            for _ in 0 ..< Int(upDown * self.kCursorVelocity) {
+                self.textView.xxtMoveDown()
+            }
+            moved = true
+        } else if (upDown < -8) {
+            for _ in 0 ..< abs(Int(upDown * self.kCursorVelocity)) {
+                self.textView.xxtMoveUp()
+            }
+            moved = true
+        }
+        if (moved) {
+            self.lastOperationLocation = pan.translationInView(self.textView)
+        }
+        
+//      let location = self.startRange.location + Int(pan.translationInView(self.textView).x * self.kCursorVelocity)
+//      let cursorLocation = max(location, 0)
+//      self.textView.selectedRange.location = cursorLocation
     }
     
     // 更多符号
