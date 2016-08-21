@@ -16,7 +16,7 @@ class ScriptDetailViewController: UIViewController {
   private var symbolViewControllerPopupController: STPopupController!
   private var startRange = NSRange()
   private let kCursorVelocity: CGFloat = 1.0/8.0
-  private var lastOperationLocation = CGPoint()
+  private var lastTrackLocation = CGPoint()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -52,7 +52,7 @@ class ScriptDetailViewController: UIViewController {
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "保存", style: .Plain, target: self, action: #selector(saveScript))
     navigationItem.leftBarButtonItem = UIBarButtonItem(title: "返回", style: .Plain, target: self, action: #selector(back))
     
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardDidShow(_:)), name: UIKeyboardDidShowNotification, object: nil)
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     
     view.addSubview(textView)
@@ -111,7 +111,7 @@ class ScriptDetailViewController: UIViewController {
       case .Began:
         self.textView.operationButton.setImage(UIImage(named: "pan_highlight"), forState: .Normal)
         self.startRange = self.textView.selectedRange
-        self.lastOperationLocation = pan.translationInView(self.textView)
+        self.lastTrackLocation = pan.translationInView(self.textView)
         self.textView.xxtStartMove()
       case .Ended:
         self.textView.operationButton.setImage(UIImage(named: "pan_normal"), forState: .Normal)
@@ -119,7 +119,7 @@ class ScriptDetailViewController: UIViewController {
       }
         
       var moved = false
-      let leftRight = pan.translationInView(self.textView).x - self.lastOperationLocation.x
+      let leftRight = pan.translationInView(self.textView).x - self.lastTrackLocation.x
       if (leftRight > 8) {
         for _ in 0 ..< Int(leftRight * self.kCursorVelocity) {
           self.textView.xxtMoveRight()
@@ -131,7 +131,7 @@ class ScriptDetailViewController: UIViewController {
         }
         moved = true
       }
-      let upDown = pan.translationInView(self.textView).y - self.lastOperationLocation.y
+      let upDown = pan.translationInView(self.textView).y - self.lastTrackLocation.y
       if (upDown > 8) {
         for _ in 0 ..< Int(upDown * self.kCursorVelocity) {
           self.textView.xxtMoveDown()
@@ -144,7 +144,7 @@ class ScriptDetailViewController: UIViewController {
         moved = true
       }
       if (moved) {
-        self.lastOperationLocation = pan.translationInView(self.textView)
+        self.lastTrackLocation = pan.translationInView(self.textView)
       }
         
 //      let location = self.startRange.location + Int(pan.translationInView(self.textView).x * self.kCursorVelocity)
@@ -246,8 +246,13 @@ class ScriptDetailViewController: UIViewController {
   }
   
   private func removeObserver() {
-    NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+    NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidShowNotification, object: nil)
     NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+  }
+  
+  func textViewDidChangeSelection(textView : XXTTextView)
+  {
+    
   }
   
   @objc private func back() {
@@ -267,21 +272,22 @@ class ScriptDetailViewController: UIViewController {
     }
   }
   
-  @objc private func keyboardWillShow(notification: NSNotification) {
+  @objc private func keyboardDidShow(notification: NSNotification) {
     // 获取键盘信息
     let userinfo: NSDictionary = notification.userInfo!
-    let nsValue = userinfo.objectForKey(UIKeyboardFrameEndUserInfoKey)
-    let keyboardRec = nsValue?.CGRectValue()
-    let height = keyboardRec!.size.height
+    let keyboardRec = userinfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue()
+    let height: CGFloat = CGRectGetHeight(keyboardRec)
     UIView.animateWithDuration(0.4, animations: {
-      self.textView.frame.size = CGSizeMake(self.view.frame.width, self.view.frame.height - height)
-      }, completion: nil)
+      self.textView.frame.size = CGSizeMake(self.view.frame.width, UIScreen.mainScreen().bounds.height - height)
+      self.view.frame.size = CGSizeMake(self.view.frame.width, UIScreen.mainScreen().bounds.height - height)
+    }, completion: nil)
   }
   
   @objc private func keyboardWillHide(notification: NSNotification) {
     UIView.animateWithDuration(0.3, animations: {
-      self.textView.frame.size = CGSizeMake(self.view.frame.width, self.view.frame.height)
-      }, completion: nil)
+      self.view.frame.size = CGSizeMake(self.view.frame.width, UIScreen.mainScreen().bounds.height)
+      self.textView.frame.size = CGSizeMake(self.view.frame.width, UIScreen.mainScreen().bounds.height)
+    }, completion: nil)
   }
 }
 
