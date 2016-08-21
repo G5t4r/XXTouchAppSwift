@@ -137,51 +137,51 @@ class NewScriptViewController: UIViewController {
     
     // 摇杆
     textView.operationButton.addTouchHandler { [weak self] touch in
-        guard let `self` = self else { return }
-        let pan = touch as! UIPanGestureRecognizer
-        switch pan.state {
+      guard let `self` = self else { return }
+      let pan = touch as! UIPanGestureRecognizer
+      switch pan.state {
         case .Began:
-            self.textView.operationButton.setImage(UIImage(named: "pan_highlight"), forState: .Normal)
-            self.startRange = self.textView.selectedRange
-            self.lastOperationLocation = pan.translationInView(self.textView)
-            self.textView.xxtStartMove()
+          self.textView.operationButton.setImage(UIImage(named: "pan_highlight"), forState: .Normal)
+          self.startRange = self.textView.selectedRange
+          self.lastOperationLocation = pan.translationInView(self.textView)
+          self.textView.xxtStartMove()
         case .Ended:
-            self.textView.operationButton.setImage(UIImage(named: "pan_normal"), forState: .Normal)
+          self.textView.operationButton.setImage(UIImage(named: "pan_normal"), forState: .Normal)
         default: break
+      }
+      
+      var moved = false
+      let leftRight = pan.translationInView(self.textView).x - self.lastOperationLocation.x
+      if (leftRight > 8) {
+        for _ in 0 ..< Int(leftRight * self.kCursorVelocity) {
+          self.textView.xxtMoveRight()
         }
+          moved = true
+      } else if (leftRight < -8) {
+        for _ in 0 ..< abs(Int(leftRight * self.kCursorVelocity)) {
+          self.textView.xxtMoveLeft()
+        }
+        moved = true
+      }
+      let upDown = pan.translationInView(self.textView).y - self.lastOperationLocation.y
+      if (upDown > 8) {
+        for _ in 0 ..< Int(upDown * self.kCursorVelocity) {
+          self.textView.xxtMoveDown()
+        }
+        moved = true
+      } else if (upDown < -8) {
+        for _ in 0 ..< abs(Int(upDown * self.kCursorVelocity)) {
+          self.textView.xxtMoveUp()
+        }
+        moved = true
+      }
+      if (moved) {
+        self.lastOperationLocation = pan.translationInView(self.textView)
+      }
         
-        var moved = false
-        let leftRight = pan.translationInView(self.textView).x - self.lastOperationLocation.x
-        if (leftRight > 8) {
-            for _ in 0 ..< Int(leftRight * self.kCursorVelocity) {
-                self.textView.xxtMoveRight()
-            }
-            moved = true
-        } else if (leftRight < -8) {
-            for _ in 0 ..< abs(Int(leftRight * self.kCursorVelocity)) {
-                self.textView.xxtMoveLeft()
-            }
-            moved = true
-        }
-        let upDown = pan.translationInView(self.textView).y - self.lastOperationLocation.y
-        if (upDown > 8) {
-            for _ in 0 ..< Int(upDown * self.kCursorVelocity) {
-                self.textView.xxtMoveDown()
-            }
-            moved = true
-        } else if (upDown < -8) {
-            for _ in 0 ..< abs(Int(upDown * self.kCursorVelocity)) {
-                self.textView.xxtMoveUp()
-            }
-            moved = true
-        }
-        if (moved) {
-            self.lastOperationLocation = pan.translationInView(self.textView)
-        }
-        
-        //      let location = self.startRange.location + Int(pan.translationInView(self.textView).x * self.kCursorVelocity)
-        //      let cursorLocation = max(location, 0)
-        //      self.textView.selectedRange.location = cursorLocation
+//      let location = self.startRange.location + Int(pan.translationInView(self.textView).x * self.kCursorVelocity)
+//      let cursorLocation = max(location, 0)
+//      self.textView.selectedRange.location = cursorLocation
     }
     
     // 更多符号

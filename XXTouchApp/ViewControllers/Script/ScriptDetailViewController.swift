@@ -118,34 +118,34 @@ class ScriptDetailViewController: UIViewController {
       default: break
       }
         
-        var moved = false
-        let leftRight = pan.translationInView(self.textView).x - self.lastOperationLocation.x
-        if (leftRight > 8) {
-            for _ in 0 ..< Int(leftRight * self.kCursorVelocity) {
-                self.textView.xxtMoveRight()
-            }
-            moved = true
-        } else if (leftRight < -8) {
-            for _ in 0 ..< abs(Int(leftRight * self.kCursorVelocity)) {
-                self.textView.xxtMoveLeft()
-            }
-            moved = true
+      var moved = false
+      let leftRight = pan.translationInView(self.textView).x - self.lastOperationLocation.x
+      if (leftRight > 8) {
+        for _ in 0 ..< Int(leftRight * self.kCursorVelocity) {
+          self.textView.xxtMoveRight()
         }
-        let upDown = pan.translationInView(self.textView).y - self.lastOperationLocation.y
-        if (upDown > 8) {
-            for _ in 0 ..< Int(upDown * self.kCursorVelocity) {
-                self.textView.xxtMoveDown()
-            }
-            moved = true
-        } else if (upDown < -8) {
-            for _ in 0 ..< abs(Int(upDown * self.kCursorVelocity)) {
-                self.textView.xxtMoveUp()
-            }
-            moved = true
+        moved = true
+      } else if (leftRight < -8) {
+        for _ in 0 ..< abs(Int(leftRight * self.kCursorVelocity)) {
+          self.textView.xxtMoveLeft()
         }
-        if (moved) {
-            self.lastOperationLocation = pan.translationInView(self.textView)
+        moved = true
+      }
+      let upDown = pan.translationInView(self.textView).y - self.lastOperationLocation.y
+      if (upDown > 8) {
+        for _ in 0 ..< Int(upDown * self.kCursorVelocity) {
+          self.textView.xxtMoveDown()
         }
+        moved = true
+      } else if (upDown < -8) {
+        for _ in 0 ..< abs(Int(upDown * self.kCursorVelocity)) {
+          self.textView.xxtMoveUp()
+        }
+        moved = true
+      }
+      if (moved) {
+        self.lastOperationLocation = pan.translationInView(self.textView)
+      }
         
 //      let location = self.startRange.location + Int(pan.translationInView(self.textView).x * self.kCursorVelocity)
 //      let cursorLocation = max(location, 0)

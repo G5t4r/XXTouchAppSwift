@@ -41,19 +41,19 @@ class XXTTextView: CYRTextView {
   }
   
   
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
   
-    private func setupUI() {
-//        self.backgroundColor = UIColor(rgb: 0x272822)
-//        self.textColor = UIColor.whiteColor()
-        self.backgroundColor = UIColor.whiteColor()
-        self.textColor = UIColor.blackColor()
-        self.font = defaultFont
-        self.autocorrectionType = .No // 关闭自动更正
-        self.tokens = solverTokens()
-    }
+  private func setupUI() {
+//    self.backgroundColor = UIColor(rgb: 0x272822)
+//    self.textColor = UIColor.whiteColor()
+    self.backgroundColor = UIColor.whiteColor()
+    self.textColor = UIColor.blackColor()
+    self.font = defaultFont
+    self.autocorrectionType = .No // 关闭自动更正
+    self.tokens = solverTokens()
+  }
   
   private func makeConstriants() {
     
@@ -100,7 +100,7 @@ class XXTTextView: CYRTextView {
 //      
 //      // 字符串
 //        CYRToken(name: "string", expression: "\".*?(\"|$)", attributes: [NSForegroundColorAttributeName : UIColor(rgb: 0xe7dc74)]),
-//        CYRToken(name: "string", expression: "\'.*?(\'|$)", attributes: [NSForegroundColorAttributeName : UIColor(rgb: 0xe7dc74)]),
+//        CYRToken(name: "string1", expression: "\'.*?(\'|$)", attributes: [NSForegroundColorAttributeName : UIColor(rgb: 0xe7dc74)]),
 //      
 //      // 16进制
 //      CYRToken(name: "hex", expression: "[\\s\\{\\}\\[\\]\\(\\)/\\*,\\;:=<>\\+\\-\\^!·≤≥](0x[0-9 a-f]+)[\\s\\{\\}\\[\\]\\(\\)/\\*,\\;:=<>\\+\\-\\^!·≤≥]", attributes: [NSForegroundColorAttributeName : UIColor(rgb: 0xae81ff)]),
@@ -140,9 +140,15 @@ class XXTTextView: CYRTextView {
 //      
 //      // 参数
 //      //      CYRToken(name: "chart_parameters", expression: "color|width", attributes: [NSForegroundColorAttributeName : UIColor(rgb: 0xe2871d)]),
-//      
+//        
 //        // 注释
-//        CYRToken(name: "comment", expression: "--.*", attributes: [
+//        CYRToken(name: "comment", expression: "--\\[\\[.*\\]\\]", attributes: [
+//            NSForegroundColorAttributeName : UIColor(rgb: 0x1f8300),
+//            NSFontAttributeName : self.italicFont
+//            ]
+//        ),
+//        // 注释
+//        CYRToken(name: "comment1", expression: "--.*", attributes: [
 //            NSForegroundColorAttributeName : UIColor(rgb: 0x1f8300),
 //            NSFontAttributeName : self.italicFont
 //            ]
