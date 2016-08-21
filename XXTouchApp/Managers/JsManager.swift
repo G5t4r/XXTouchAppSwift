@@ -43,7 +43,7 @@ class JsManager {
     return json["key_list"].arrayValue
   }
   
-  func getCustomFunction(id: String, models: [[String : String]], bid: String = "", keyid: String = "") -> String {
+  func getCustomFunction(id: String, models: [[String : AnyObject]], bid: String = "", keyid: String = "") -> String {
     let customFunc = context.evaluateScript("customFunction")
     let string = customFunc.callWithArguments(
       [

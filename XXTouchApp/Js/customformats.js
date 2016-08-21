@@ -1,7 +1,7 @@
 formatList = function() {
     return {
         "func_list":[
-            {	//点击
+            {
                 "id": "touch.tap",
                 "name": "touch.tap(x, y)",
                 "args": [
@@ -11,7 +11,7 @@ formatList = function() {
 					}
 				]
             },
-            {	//拖动
+            {
                 "id": "touch.swipe",
                 "name": "touch.on(x, y):move(x1, y1)...",
                 "args": [
@@ -25,7 +25,7 @@ formatList = function() {
 					}
 				]
             },
-            {	//识别
+            {
                 "id": "screen.ocr_text",
                 "name": "screen.ocr_text(left, top, right, bottom)",
                 "args": [
@@ -39,7 +39,7 @@ formatList = function() {
 					}
 				]
             },
-            {	//比色
+            {
                 "id": "screen.is_colors",
                 "name": "screen.is_colors(multicolor,sim)",
                 "args": [
@@ -49,7 +49,7 @@ formatList = function() {
 					}
 				]
             },
-            {	//多点找色
+            {
                 "id": "screen.find_color",
                 "name": "screen.find_color(multicolor, sim, ...)",
                 "args": [
@@ -59,9 +59,9 @@ formatList = function() {
 					}
 				]
             },
-            {	//按下
-                "id": "key.press ",
-                "name": "key.press (KEY)",
+            {
+                "id": "key.press",
+                "name": "key.press(KEY)",
                 "args": [
 					{
 						"type":"key",
@@ -69,7 +69,7 @@ formatList = function() {
 					}
 				]
             },
-            {	//启动app
+            {
                 "id": "app.run",
                 "name": "app.run(bid)",
                 "args": [
@@ -79,15 +79,95 @@ formatList = function() {
 					}
 				]
             },
-			{	//关闭app
+            {
                 "id": "app.close",
                 "name": "app.close(bid)",
                 "args": [
-					{
-						"type":"bid",
-						"title":"请选择需要关闭的应用"
-					}
-				]
+                    {
+                        "type":"bid",
+                        "title":"请选择需要关闭的应用"
+                    }
+                ]
+            },
+            {
+                "id": "app.quit",
+                "name": "app.quit(bid)",
+                "args": [
+                    {
+                        "type":"bid",
+                        "title":"请选择需要退出的应用"
+                    }
+                ]
+            },
+            {
+                "id": "app.bundle_path",
+                "name": "app.bundle_path(bid)",
+                "args": [
+                    {
+                        "type":"bid",
+                        "title":"选择应用"
+                    }
+                ]
+            },
+            {
+                "id": "app.data_path",
+                "name": "app.data_path(bid)",
+                "args": [
+                    {
+                        "type":"bid",
+                        "title":"选择应用"
+                    }
+                ]
+            },
+            {
+                "id": "app.is_running",
+                "name": "app.is_running(bid)",
+                "args": [
+                    {
+                        "type":"bid",
+                        "title":"选择应用"
+                    }
+                ]
+            },
+            {
+                "id": "app.is_front",
+                "name": "app.is_front(bid)",
+                "args": [
+                    {
+                        "type":"bid",
+                        "title":"选择应用"
+                    }
+                ]
+            },
+            {
+                "id": "app.uninstall",
+                "name": "app.uninstall(bid)",
+                "args": [
+                    {
+                        "type":"bid",
+                        "title":"选择需要卸载应用"
+                    }
+                ]
+            },
+            {
+                "id": "clear.keychain",
+                "name": "clear.keychain(bid)",
+                "args": [
+                    {
+                        "type":"bid",
+                        "title":"选择应用"
+                    }
+                ]
+            },
+            {
+                "id": "clear.app_data",
+                "name": "clear.app_data(bid)",
+                "args": [
+                    {
+                        "type":"bid",
+                        "title":"选择应用"
+                    }
+                ]
             }
         ],
         "snippet_list":[
@@ -250,12 +330,11 @@ formatList = function() {
 // RGB色
 
 
-
 customFunction = function(funcId, pos_color_list, bid, keyid) {
     switch(funcId) {
-        case "touch.tap":				//点击
+        case "touch.tap":
             return "touch.tap(" + pos_color_list[0].x + ", " + pos_color_list[0].y + ")\n";
-        case "touch.swipe":				//拖动
+        case "touch.swipe":
 			var b = true;
 			var ret = "";
 			for (var i=0; i<pos_color_list.length; i++) {
@@ -267,7 +346,7 @@ customFunction = function(funcId, pos_color_list, bid, keyid) {
 				b = !b;
 			}
 			return ret;
-        case "screen.ocr_text":				//拖动
+        case "screen.ocr_text":
 			if (!pos_color_list[1]) {
 				return "screen.ocr_text(" + pos_color_list[0].x + ", " + pos_color_list[0].y + ", 0, 0)\n";
 			} else {
@@ -280,20 +359,35 @@ customFunction = function(funcId, pos_color_list, bid, keyid) {
 			}
 			ret += "}, 90)\n";
             return ret;
+        case "screen.find_color":
+            var ret = "local x, y = screen.find_color({\n";
+            for (var i=0; i<pos_color_list.length; i++) {
+                ret += "\t{" + pos_color_list[i].x + ", " + pos_color_list[i].y + ", " + pos_color_list[i].color + "},\n";
+            }
+            ret += "}, 90)\n";
+            return ret;
+        case "key.press":
+            return "key.press(\"" + keyid + "\")\n";
         case "app.run":
             return "app.run(\"" + bid + "\")\n";
         case "app.close":
             return "app.close(\"" + bid + "\")\n";
-        case "screen.find_color":
-			var ret = "local x, y = screen.find_color({\n";
-			for (var i=0; i<pos_color_list.length; i++) {
-				ret += "\t{" + pos_color_list[i].x + ", " + pos_color_list[i].y + ", " + pos_color_list[i].color + "},\n";
-			}
-			ret += "}, 90)\n";
-            return ret;
-        case "key.press ":
-			var ret = "key.press (\"" + keyid + "\")\n";
-            return ret;
+        case "app.quit":
+            return "app.quit(\"" + bid + "\")\n";
+        case "app.bundle_path":
+            return "app.bundle_path(\"" + bid + "\")\n";
+        case "app.data_path":
+            return "app.data_path(\"" + bid + "\")\n";
+        case "app.is_running":
+            return "app.is_running(\"" + bid + "\")";
+        case "app.is_front":
+            return "(\"" + bid + "\" == app.front_bid())";
+        case "app.uninstall":
+            return "app.uninstall(\"" + bid + "\")";
+        case "clear.keychain":
+            return "clear.keychain(\"%" + bid + "%\")\n";
+        case "clear.app_data":
+            return "clear.app_data(\"" + bid + "\")\n";
 
     }
 }

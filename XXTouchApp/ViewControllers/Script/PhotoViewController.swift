@@ -12,7 +12,7 @@ class PhotoViewController: UIViewController {
   var funcCompletionHandler: FuncCompletionHandler
   private let image: UIImage
   private var photoView: XXTPhotoView!
-  private var modelDic = [[String: String]]()
+  private var modelDic = [[String: AnyObject]]()
   private let type: FuncListType
   private var pixelImage: XXTPixelImage!
   private var originalPixelImage: XXTPixelImage!
@@ -82,7 +82,8 @@ class PhotoViewController: UIViewController {
   
   private func setupAction() {
     photoView.imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
-    touchContentView.insetButton.addTarget(self, action: #selector(inset), forControlEvents: .TouchUpInside)
+    touchContentView.insertButton.addTarget(self, action: #selector(insert), forControlEvents: .TouchUpInside)
+    touchContentView.copyButton.addTarget(self, action: #selector(copyText), forControlEvents: .TouchUpInside)
     touchContentView.clearButton.addTarget(self, action: #selector(clear), forControlEvents: .TouchUpInside)
   }
   
@@ -98,13 +99,21 @@ extension PhotoViewController {
     let scale = (imgSize.width/frameSize.width)
     let x = point.x * scale
     let y = point.y * scale
-    touchContentView.buttonStatusUpdate(touchContentView.insetButton, enabled: true, backgroundColor: ThemeManager.Theme.tintColor, titleColor: UIColor.whiteColor())
+    touchContentView.buttonStatusUpdate(touchContentView.insertButton, enabled: true, backgroundColor: ThemeManager.Theme.tintColor, titleColor: UIColor.whiteColor())
+    touchContentView.buttonStatusUpdate(touchContentView.copyButton, enabled: true, backgroundColor: ThemeManager.Theme.tintColor, titleColor: UIColor.whiteColor())
     touchContentView.buttonStatusUpdate(touchContentView.clearButton, enabled: true, backgroundColor: ThemeManager.Theme.tintColor, titleColor: UIColor.whiteColor())
     navigationItem.title = title
     touchContentView.hidden = false
-    let colorHex = pixelImage.getColorHexOfPoint(CGPoint(x: Int(x),y: Int(y)))
-    let model = PosColorListModel(x: String(Int(x)), y: String(Int(y)), color: colorHex)
-    let dic = ["x" : model.x, "y" : model.y, "color": model.color]
+    let color = pixelImage.getColorOfPoint(CGPoint(x: Int(x),y: Int(y)))
+    let dic = [
+      "x" : Int(x),
+      "y" : Int(y),
+      "r": Int(color.red),
+      "g": Int(color.green),
+      "b": Int(color.blue),
+      "c": NSNumber(unsignedInt: color.getColor()),
+      "color": color.getColorHex()
+    ]
     self.modelDic.append(dic)
     let content = JsManager.sharedManager.getCustomFunction(self.funcCompletionHandler.id, models: self.modelDic)
     touchContentView.addContent(content)
@@ -147,14 +156,20 @@ extension PhotoViewController {
     }
   }
   
-  @objc private func inset(button: UIButton) {
+  @objc private func insert(button: UIButton) {
     funcCompletionHandler.completionHandler?(touchContentView.label.text!)
     dismissViewControllerAnimated(true, completion: nil)
   }
   
+  @objc private func copyText(button: UIButton) {
+    UIPasteboard.generalPasteboard().string = touchContentView.label.text!
+    self.view.showHUD(.Success, text: Constants.Text.copy)
+  }
+  
   @objc private func clear(button: UIButton) {
     touchContentView.label.text = ""
-    touchContentView.buttonStatusUpdate(touchContentView.insetButton, enabled: false, backgroundColor: ThemeManager.Theme.separatorColor, titleColor: ThemeManager.Theme.lightTextColor)
+    touchContentView.buttonStatusUpdate(touchContentView.insertButton, enabled: false, backgroundColor: ThemeManager.Theme.separatorColor, titleColor: ThemeManager.Theme.lightTextColor)
+    touchContentView.buttonStatusUpdate(touchContentView.copyButton, enabled: false, backgroundColor: ThemeManager.Theme.separatorColor, titleColor: ThemeManager.Theme.lightTextColor)
     touchContentView.buttonStatusUpdate(touchContentView.clearButton, enabled: false, backgroundColor: ThemeManager.Theme.separatorColor, titleColor: ThemeManager.Theme.lightTextColor)
     photoView.imageView.image = originalPixelImage.getUIImage()
     pixelImage = nil
@@ -182,9 +197,19 @@ extension PhotoViewController {
 
 class TouchContentView: UIView {
   let label = UILabel()
-  lazy var insetButton: Button = {
+  lazy var insertButton: Button = {
     let button = Button(type: .Custom)
     button.setTitle("插入", forState: .Normal)
+    button.backgroundColor = ThemeManager.Theme.tintColor
+    button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+    button.titleLabel?.font = UIFont.systemFontOfSize(14)
+    button.layer.cornerRadius = 4.0
+    return button
+  }()
+  
+  lazy var copyButton: Button = {
+    let button = Button(type: .Custom)
+    button.setTitle("拷贝", forState: .Normal)
     button.backgroundColor = ThemeManager.Theme.tintColor
     button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
     button.titleLabel?.font = UIFont.systemFontOfSize(14)
@@ -215,17 +240,19 @@ class TouchContentView: UIView {
   private func setupUI() {
     label.textColor = UIColor.blackColor()
     label.numberOfLines = 0
+    label.lineBreakMode = .ByWordWrapping
     label.font = UIFont.systemFontOfSize(11)
     
     self.addSubview(label)
-    self.addSubview(insetButton)
+    self.addSubview(insertButton)
+    self.addSubview(copyButton)
     self.addSubview(clearButton)
   }
   
   private func makeConstriants() {
     label.snp_makeConstraints { (make) in
       make.leading.equalTo(self).offset(5)
-      make.trailing.equalTo(self).offset(-95)
+      make.trailing.equalTo(self).offset(-120)
       make.centerY.equalTo(self)
       make.top.equalTo(self).offset(2)
     }
@@ -233,14 +260,21 @@ class TouchContentView: UIView {
     clearButton.snp_makeConstraints { (make) in
       make.trailing.equalTo(self).offset(-5)
       make.centerY.equalTo(self)
-      make.width.equalTo(40)
+      make.width.equalTo(35)
       make.height.equalTo(25)
     }
     
-    insetButton.snp_makeConstraints { (make) in
+    copyButton.snp_makeConstraints { (make) in
       make.trailing.equalTo(clearButton.snp_leading).offset(-5)
       make.centerY.equalTo(self)
-      make.width.equalTo(40)
+      make.width.equalTo(35)
+      make.height.equalTo(25)
+    }
+    
+    insertButton.snp_makeConstraints { (make) in
+      make.trailing.equalTo(copyButton.snp_leading).offset(-5)
+      make.centerY.equalTo(self)
+      make.width.equalTo(35)
       make.height.equalTo(25)
     }
   }
