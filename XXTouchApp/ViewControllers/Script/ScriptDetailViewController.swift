@@ -40,7 +40,8 @@ class ScriptDetailViewController: UIViewController {
     super.viewDidAppear(animated)
     if !isFirst {
       isFirst = true
-//      textView.becomeFirstResponder()
+      textView.becomeFirstResponder()
+      textView.selectedRange = NSMakeRange(0, 0)
     }
   }
   
