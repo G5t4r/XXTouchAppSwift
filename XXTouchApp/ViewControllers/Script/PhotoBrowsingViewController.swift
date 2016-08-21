@@ -43,7 +43,7 @@ class PhotoBrowsingViewController: UIViewController {
     let flowLayout = UICollectionViewFlowLayout()
     flowLayout.minimumInteritemSpacing = 2
     flowLayout.minimumLineSpacing = 2
-    collectionView.backgroundColor = UIColor.blackColor()
+    collectionView.backgroundColor = UIColor.whiteColor()
     collectionView.collectionViewLayout = flowLayout
     collectionView.registerClass(PhotoBrowsingCell.self, forCellWithReuseIdentifier: NSStringFromClass(PhotoBrowsingCell))
     collectionView.delegate = self
