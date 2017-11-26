@@ -1,4 +1,3 @@
-# XXTouch #
+# XXTouch
 
-* Cocoapods
-* 所有的项目依赖使用Cocoapods(Repo)进行管理
+This is XXTouch (Client) Version 2, work with XXTouch (Daemon) 1.0.x.
